@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +21,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.widget.taglayout.FlowTagLayout;
+import com.cgbsoft.lib.widget.taglayout.OnTagClickListener;
 import com.cgbsoft.lib.widget.taglayout.OnTagSelectListener;
 
 import java.util.ArrayList;
@@ -194,9 +194,16 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
                     @Override
                     public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
                         setviewData(h, selectedList);
+
                     }
                 });
                 filteAdapter.onlyAddAll(h.getItems());
+                flaFloatView.setOnTagClickListener(new OnTagClickListener() {
+                    @Override
+                    public void onItemClick(FlowTagLayout parent, View view, int position) {
+
+                    }
+                });
                 break;
             case EDIT://编辑范围
                 itemView = layoutInflater.inflate(R.layout.view_pop_filter_ed, null);
