@@ -12,6 +12,7 @@ import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.bean.TrackingDataBean;
 import com.cgbsoft.lib.utils.cache.OtherDataProvider;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -38,24 +39,37 @@ public class TrackingDataUtils {
     public static Subscription subscription;
     private static DaoUtils daoUtils;
 
+    private static Long timeOffset = 0L;
+    private static int maxUpdateCount = 20;
+
     /**
      * 存储埋点数据
+     *
      * @param context
-     * @param event 事件ID　
-     * @param param 参数，多个参数以 | 分割
+     * @param event   事件ID
+     * @param param   参数，多个参数以 | 分割
      */
     public static void save(Context context, String event, String param) {
         Context applicationContext = context.getApplicationContext();
+        try {
+            timeOffset = Long.valueOf(SPreference.getString(context, "timeOffset"));
+            maxUpdateCount = Integer.valueOf(SPreference.getString(context, "maxUpdateCount"));
+        }catch (Exception e){
+            timeOffset = 0L;
+            maxUpdateCount = 20;
+        }
+
         if (daoUtils == null) {
             daoUtils = new DaoUtils(applicationContext, DaoUtils.W_TRACKINGDATA);
         }
         //先查询已经存入的个数，如果已经存入20个直接拼上当前这个埋点，发送给服务器，清除数据
         int size = daoUtils.getTrackingDataListSize();
-        if (size < 20) {
-            daoUtils.saveTrackingData(new TrackingDataBean(event, System.currentTimeMillis(), param));
+
+        if (size < maxUpdateCount) {
+            daoUtils.saveTrackingData(new TrackingDataBean(event, System.currentTimeMillis() + timeOffset, param));
         } else {
             List<TrackingDataBean> trackingDataBeens = daoUtils.getTrackingData();
-            trackingDataBeens.add(new TrackingDataBean(event, System.currentTimeMillis(), param));
+            trackingDataBeens.add(new TrackingDataBean(event, System.currentTimeMillis() + timeOffset, param));
             post(applicationContext, trackingDataBeens);
             daoUtils.deleteTrackData();
         }
@@ -93,9 +107,9 @@ public class TrackingDataUtils {
         for (int i = 0; i < trackingDataBeens.size(); i++) {
             JSONObject track = new JSONObject();
             try {
-                track.put("e",trackingDataBeens.get(i).getE());
-                track.put("t",trackingDataBeens.get(i).getT());
-                track.put("d",trackingDataBeens.get(i).getD());
+                track.put("e", trackingDataBeens.get(i).getE());
+                track.put("t", trackingDataBeens.get(i).getT());
+                track.put("d", trackingDataBeens.get(i).getD());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -103,7 +117,7 @@ public class TrackingDataUtils {
         }
 
         try {
-            js.put("data",jsonArray);
+            js.put("data", jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }

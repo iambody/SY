@@ -1495,6 +1495,14 @@ public class ApiClient {
     }
 
     /**
+     * 获取埋点配置文件
+     * @return
+     */
+    public static Observable<String> getTrackingConfig(){
+        return OKHTTP.getInstance().getRequestManager().getTrackingConfig().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 获取生活家banner
      *
      * @param offset

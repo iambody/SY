@@ -124,6 +124,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             setPresenter();
         }
 //        welecomePage();
+        getPresenter().initTrackingConfig();
         getPresenter().requestResourceInfo();
         getPresenter().toInitInfo();
         //解压一些资源

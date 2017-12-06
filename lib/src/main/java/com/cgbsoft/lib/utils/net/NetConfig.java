@@ -12,8 +12,8 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 public class NetConfig {
     public static boolean isLocal = true;
     public static String UPLOAD_FILE = "https://upload.simuyun.com/";
-//    public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
-        public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
+    //    public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
+    public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
     public static String START_APPEND = "https://";
 
     //        private static String START_APP = "https://app";
@@ -302,10 +302,10 @@ public class NetConfig {
     public final static String TENCENT_VIDEO_URL = "http://1251892263.vod2.myqcloud.com/9dbfd9a6vodgzp1251892263/14f16f914564972818450529832/wW2YHIkwbNoA.mp4";
 
     static class TRACKDATA {
-
-        final static String TRACKING = TRACKING_V2 + "track/app";
-
+        final static String TRACKING = TRACKING_V2 + "/track/app";
+        final static String CONFIG = TRACKING_V2 + "/track/config";
     }
+
     //视频相关模块
     static class VIDEO {
         private final static String video = "/information/video";

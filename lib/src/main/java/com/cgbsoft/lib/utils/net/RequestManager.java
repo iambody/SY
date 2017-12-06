@@ -947,5 +947,8 @@ interface RequestManager {
      */
     @GET(NetConfig.RESOURCE_FILE_INFO)
     Observable<ResponseBody> requestResourceInfo();
+
+    @GET(NetConfig.TRACKDATA.CONFIG)
+    Observable<ResponseBody> getTrackingConfig();
 //sss
 }

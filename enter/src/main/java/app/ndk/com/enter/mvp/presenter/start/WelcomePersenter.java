@@ -273,6 +273,37 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
 
     }
 
+    /**
+     * 初始化埋点配置
+     */
+    @Override
+    public void initTrackingConfig() {
+        addSubscription(ApiClient.getTrackingConfig().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String json) {
+                try {
+                    System.out.println("------initTrackingConfig--reulst=" + json);
+                    JSONObject jsonObject = new JSONObject(json);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    int maxUpdateCount = result.getInt("maxUpdateCount");
+                    long serverTime = result.getLong("serverTime");
+                    long timeOffset = serverTime - System.currentTimeMillis();
+                    int maxUpdateInterval = result.getInt("maxUpdateInterval");
+                    SPreference.putString(getContext(),"maxUpdateCount",maxUpdateCount+"");
+                    SPreference.putString(getContext(),"timeOffset",timeOffset+"");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                error.toString();
+                System.out.println("------initTrackingConfig--reulst=" + error.toString());
+            }
+        }));
+    }
+
 //    private String getAddressFromLocation(Location location) {
 //        Geocoder geocoder = new Geocoder(getContext());
 //
