@@ -47,6 +47,7 @@ import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDataManger;
+import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.ProgressWheel;
@@ -436,7 +437,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
                 }
             });
             if (videoInfoModel != null) {
-                DataStatistApiParam.urlAddressIntercept(videoInfoModel.categoryName, videoInfoModel.videoName);
+                TrackingDiscoveryDataStatistics.videoUrlIntercept(VideoDetailActivity.this, videoInfoModel.videoName);
             }
         } else if (refreshPage){
             ThreadUtils.runOnMainThread(() -> {

@@ -95,4 +95,11 @@ public class TrackingDiscoveryDataStatistics {
     public static void rightShare(Context context, String discoveryTitle) {
         TrackingDataUtils.save(context, "1060001021", discoveryTitle);
     }
+
+    /**
+     * 视频劫持埋点
+     */
+    public static void videoUrlIntercept(Context context,String videoName) {
+        TrackingDataUtils.save(context, "1065001991", videoName);
+    }
 }
