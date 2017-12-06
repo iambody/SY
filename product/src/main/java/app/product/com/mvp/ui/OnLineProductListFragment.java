@@ -28,6 +28,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
 import com.cgbsoft.lib.utils.ui.RecycleViewDivider;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
@@ -303,10 +304,11 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
         productlsAdapter.setOnItemClickListener(new ProductlsAdapter.OnRecyclerItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (productlsAdapter.getItemViewType(position) == productlsAdapter.CHECKOLD){
+                if (productlsAdapter.getItemViewType(position) == productlsAdapter.CHECKOLD) {
                     productlsAdapter.destoryFootView();
                     reSetConditionAction();
-                }else {
+                    TrackingDataUtils.save(baseActivity,"1010011081","");
+                } else {
                     if (fromShare) {
                         openShareProductDialog(position);
                     } else {
@@ -314,7 +316,9 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                         ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
                         DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.shortName, "1".equals(productlsBean.isHotProduct));
                     }
+                    TrackingDataUtils.save(baseActivity, "1010010101", productlsBeen.get(position).productName +"|"+ productlsBeen.get(position).schemeId);
                 }
+
             }
         });
         fragmentProductrecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -484,6 +488,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
             int y = location[1];
             orderbyPop.showAtLocation(productProductfragmentPaixu, Gravity.NO_GRAVITY, 0, y + productProductfragmentPaixu.getHeight());
         }
+        TrackingDataUtils.save(baseActivity, "1010010051", "");
 
     }
 
@@ -509,6 +514,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
             int y = location[1];
             filterPop.showAtLocation(productProductfragmentPaixu, Gravity.NO_GRAVITY, 0, y + productProductfragmentPaixu.getHeight() + 2);
         }
+        TrackingDataUtils.save(baseActivity, "1010010061", "");
     }
 
 
@@ -553,7 +559,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                     productlsBeen.add(productlsBean);
 //                    swipe_load_more_footer.setVisibility(View.GONE);
                     swipeToLoadLayout.setLoadMoreEnabled(false);
-                }else {
+                } else {
                     swipeToLoadLayout.setLoadMoreEnabled(true);
 //                    swipe_load_more_footer.setVisibility(View.VISIBLE);
                 }
@@ -643,6 +649,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                     if (null != series)
                         DataStatistApiParam.onStatisToCProductTabTag(series.getName());
                 }
+                TrackingDataUtils.save(baseActivity, "1010010071", textView.getText().toString());
             }
         });
         if (dataList.size() > 10) {
@@ -706,6 +713,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
             isLoadmore = true;
             reSetConditionAction();
         }
+        TrackingDataUtils.save(baseActivity, "1010010102", "");
     }
 
     @Override
@@ -713,6 +721,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
         CurrentOffset = 0;
         reSetConditionAction();
         onLineProduct = true;
+        TrackingDataUtils.save(baseActivity, "1010010103", "");
     }
 
     /**

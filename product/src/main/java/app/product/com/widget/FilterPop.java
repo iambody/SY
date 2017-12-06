@@ -20,8 +20,10 @@ import android.widget.TextView;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
+import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.widget.taglayout.FlowTagLayout;
+import com.cgbsoft.lib.widget.taglayout.OnTagClickListener;
 import com.cgbsoft.lib.widget.taglayout.OnTagSelectListener;
 
 import java.util.ArrayList;
@@ -137,6 +139,7 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
             tempFilterItemList = new ArrayList<>();
             tempFilterItemList = resetView(filterItemList);
             initView(tempFilterItemList);
+            TrackingDataUtils.save(pContext, "1010011061", "");
         }
         if (v.getId() == R.id.product_filtepop_enter_filter) //确定按钮
         {
@@ -168,6 +171,7 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
 
             }
             RxBus.get().post(ProductPresenter.PRODUCT_FILTER_TO_FRAGMENT, new EventFiltBean(getData));
+            TrackingDataUtils.save(pContext, "1010011071", "");
             this.dismiss();
         }
 
@@ -187,13 +191,19 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
                 //画标题**************************************
                 BStrUtils.SetTxt(titleView, h.getName());
                 //画tag**************************************
-                FilteAdapter filteAdapter = new FilteAdapter(pContext);
+                final FilteAdapter filteAdapter = new FilteAdapter(pContext);
                 flaFloatView.setTagCheckedMode(RADIO.equals(Type) ? FlowTagLayout.FLOW_TAG_CHECKED_SINGLE : FlowTagLayout.FLOW_TAG_CHECKED_MULTI);
                 flaFloatView.setAdapter(filteAdapter);
                 flaFloatView.setOnTagSelectListener(new OnTagSelectListener() {
                     @Override
                     public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
                         setviewData(h, selectedList);
+                    }
+                });
+                flaFloatView.setOnTagClickListener(new OnTagClickListener() {
+                    @Override
+                    public void onItemClick(FlowTagLayout parent, View view, int position) {
+                        TrackingDataUtils.save(pContext, "1010011011", h.getName() + "|" + h.getItems().get(position).getName() + "|" + (filteAdapter.isSelectedPosition(position) ? "选中" : "取消选中"));
                     }
                 });
                 filteAdapter.onlyAddAll(h.getItems());
@@ -203,6 +213,18 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
                 titleView = ViewHolders.get(itemView, R.id.view_pop_filter_ed_title);
                 EditText editTextleft = ViewHolders.get(itemView, R.id.view_pop_filter_ed_edleft);
                 EditText editTextright = ViewHolders.get(itemView, R.id.view_pop_filter_ed_edright);
+                editTextleft.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TrackingDataUtils.save(pContext,"1010011031","");
+                    }
+                });
+                editTextright.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TrackingDataUtils.save(pContext,"1010011041","");
+                    }
+                });
                 BStrUtils.SetTxt1(editTextleft, h.getMinNumber());
                 BStrUtils.SetTxt1(editTextright, h.getMaxNumber());
                 //画标题**************************************
