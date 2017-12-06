@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
@@ -158,5 +160,8 @@ public class PrivateBanksFragment extends BasePageFragment {
     protected void clickTabButton(String tabName) {
         super.clickTabButton(tabName);
         DataStatistApiParam.honourPBitemClick(tabName);
+        if (TextUtils.equals("资讯",tabName)) {
+            TrackingDiscoveryDataStatistics.discoveryClickFlag(getContext(), tabName);
+        }
     }
 }

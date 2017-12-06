@@ -12,6 +12,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
+import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.R;
 
@@ -109,7 +110,10 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
                 return 0;
             }
         });
-        commonPagerTitleView.setOnClickListener(v -> viewPager.setCurrentItem(i));
+        commonPagerTitleView.setOnClickListener(v -> {
+            viewPager.setCurrentItem(i);
+            TrackingDiscoveryDataStatistics.goDiscoveryDetailPage(context, categoryList.get(i).text);
+        });
         return commonPagerTitleView;
     }
 

@@ -18,6 +18,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.R;
@@ -100,6 +101,17 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         commonNavigator.setAdapter(disCoveryNavigationAdapter);
         commonNavigator.setSmoothScroll(true);
         magicIndicator.setNavigator(commonNavigator);
+        magicIndicator.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+              System.out.println("--------left=" + (left - oldLeft));
+                 if (left - oldLeft > 5) { // z
+                     TrackingDiscoveryDataStatistics.discoveryLeftScroll(getContext());
+                 } else {
+                     TrackingDiscoveryDataStatistics.discoveryRightScroll(getContext());
+                 }
+            }
+        });
     }
 
     private void initViewPage() {

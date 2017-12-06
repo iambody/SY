@@ -31,6 +31,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.shake.ShakeListener;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -251,6 +252,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         mWebview.loadUrl(javascript);
         if (!TextUtils.isEmpty(url) && url.contains("&goCustomFeedBack=0")){ // 健康项目详情页面埋点
             TrackingHealthDataStatistics.projectDetailRightShare(this);
+        } else if (!TextUtils.isEmpty(url) && url.contains("information/details.html")) {
+            TrackingDiscoveryDataStatistics.rightShare(this,title);
         }
     }
 
@@ -279,8 +282,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener((View v) -> {
             finish();
-            if (!TextUtils.isEmpty(url) && url.contains("&goCustomFeedBack=0")){ // 健康项目详情页面埋点
+            if (!TextUtils.isEmpty(url) && url.contains("&goCustomFeedBack=0")) { // 健康项目详情页面埋点
                 TrackingHealthDataStatistics.projectDetailLeftBack(this);
+            } else if (!TextUtils.isEmpty(url) && url.contains("information/details.html")) {
+                TrackingDiscoveryDataStatistics.leftBack(this, title);
             } else  { // 免费咨询页面返回
                 // TrackingHealthDataStatistics.freeConsultLeftBack(this);
             }
