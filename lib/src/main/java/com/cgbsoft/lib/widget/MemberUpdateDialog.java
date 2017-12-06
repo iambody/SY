@@ -61,7 +61,9 @@ public abstract class MemberUpdateDialog extends BaseDialog {
         if (memeberInfo == null) {
             return;
         }
-        ViewUtils.scaleUserAchievment(memberLevel, memeberInfo.getLevel(), 0 , 2, 0.5f);
+        if (!TextUtils.isEmpty(memeberInfo.getLevel()) && memeberInfo.getLevel().length() >2) {
+            ViewUtils.scaleUserAchievment(memberLevel, memeberInfo.getLevel(), 0 , 2, 0.5f);
+        }
         memberValue.setText(memeberInfo.getCurrentWealthNumber());
         for (MemeberInfo.MemeberProject memeberProject : memeberInfo.getItem()) {
             View itemView = layoutInflater.inflate(R.layout.item_dialog_member_update, null);
