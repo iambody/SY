@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
-                android:text="@string/now_look_new_member"
+                android:text="@string/know_more"
                 android:layout_alignBottom="@id/scroll_view"
                 android:id="@+id/lookMember"
                 android:gravity="center"
