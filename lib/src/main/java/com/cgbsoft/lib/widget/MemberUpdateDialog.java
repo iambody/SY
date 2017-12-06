@@ -18,6 +18,7 @@ import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.bean.MemeberInfo;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
+import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 
 import java.util.List;
@@ -60,7 +61,7 @@ public abstract class MemberUpdateDialog extends BaseDialog {
         if (memeberInfo == null) {
             return;
         }
-        memberLevel.setText(memeberInfo.getLevel());
+        ViewUtils.scaleUserAchievment(memberLevel, memeberInfo.getLevel(), 0 , 2, 0.5f);
         memberValue.setText(memeberInfo.getCurrentWealthNumber());
         for (MemeberInfo.MemeberProject memeberProject : memeberInfo.getItem()) {
             View itemView = layoutInflater.inflate(R.layout.item_dialog_member_update, null);
@@ -90,12 +91,12 @@ public abstract class MemberUpdateDialog extends BaseDialog {
                 }
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 if (i != list.size() -1) {
-                    layoutParams.rightMargin = 15;
+                    layoutParams.rightMargin = 30;
                 }
                 layoutParams.height = DimensionPixelUtil.dp2px(getContext(), 58);
-                int parentWidth = contentLayout.getWidth();
-                System.out.println("-----parentWidth=" + parentWidth);
-                layoutParams.width =  (parentWidth - 60)/3;
+//                int parentWidth = contentLayout.getWidth();
+//                System.out.println("-----parentWidth=" + parentWidth);
+//                layoutParams.width =  (parentWidth - 60)/3;
                 itemView.setLayoutParams(layoutParams);
                 contentLayout.addView(itemView);
             }
