@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.bean.MemeberInfo;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 
 import java.util.List;
@@ -37,6 +39,8 @@ public abstract class MemberUpdateDialog extends BaseDialog {
     public MemberUpdateDialog(Context context) {
         this(context, R.style.ios_dialog_alpha);
         layoutInflater = LayoutInflater.from(context);
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        screenWidth = dm.widthPixels;
     }
 
     public MemberUpdateDialog(Context context, int theme) {
@@ -84,11 +88,15 @@ public abstract class MemberUpdateDialog extends BaseDialog {
                 } else {
                     stepText.setText(memeberItemProject.getFrequencyInfo());
                 }
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 if (i != list.size() -1) {
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     layoutParams.rightMargin = 15;
-                    itemView.setLayoutParams(layoutParams);
                 }
+                layoutParams.height = DimensionPixelUtil.dp2px(getContext(), 58);
+                int parentWidth = contentLayout.getWidth();
+                System.out.println("-----parentWidth=" + parentWidth);
+                layoutParams.width =  (parentWidth - 60)/3;
+                itemView.setLayoutParams(layoutParams);
                 contentLayout.addView(itemView);
             }
         }
