@@ -378,7 +378,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                 CurrentOderBy = series.getKey();
                 CurrentOffset = 0;
                 isLoadmore = false;
-                onLineProduct = true;
+//                onLineProduct = true;
                 productProductfragmentPaixu.setTextColor(getResources().getColor(R.color.app_golden));
                 reSetConditionAction();
             }
@@ -412,7 +412,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                 CurrentFilter = filterItems.getFilterItemList();
                 CurrentOffset = 0;
                 isLoadmore = false;
-                onLineProduct = true;
+//                onLineProduct = true;
 
                 productProductfragmentShaixuan.setTextColor(getResources().getColor(isHaveFilter(CurrentFilter) ? R.color.app_golden : R.color.black));
                 reSetConditionAction();
@@ -462,7 +462,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
     public void reload() {
         CurrentOffset = 0;
         reSetConditionAction();
-        onLineProduct = true;
+//        onLineProduct = true;
     }
 
 
@@ -643,7 +643,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                     CurrentSeries = ((Series) textView.getTag()).getKey();
                     isInitData = true;
 //                    reSetConditionAction();
-                    onLineProduct = true;
+//                    onLineProduct = true;
                     resetSeries();
                     //埋点
                     if (null != series)
@@ -720,7 +720,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
     public void onRefresh() {
         CurrentOffset = 0;
         reSetConditionAction();
-        onLineProduct = true;
+//        onLineProduct = true;
         TrackingDataUtils.save(baseActivity, "1010010103", "");
     }
 
@@ -732,7 +732,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
         CurrentSeries = "0";//默认系列是全部  0代表全部
         CurrentOderBy = "";//默认排序是没有的  这样做是传递空的话 后台会返回默认的排序方式
         isLoadmore = false;
-        onLineProduct = true;
+//        onLineProduct = true;
 
         for (FilterItem h : CurrentFilter) {
             for (int i = 0; i < h.getItems().size(); i++) {

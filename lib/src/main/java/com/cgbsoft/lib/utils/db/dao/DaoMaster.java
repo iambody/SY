@@ -25,10 +25,10 @@ public class DaoMaster extends AbstractDaoMaster {
         OtherInfoDao.createTable(db, ifNotExists);
         ToBBeanDao.createTable(db, ifNotExists);
         ToCBeanDao.createTable(db, ifNotExists);
+        TrackingDataBeanDao.createTable(db, ifNotExists);
         UserInfoDao.createTable(db, ifNotExists);
         VideoInfoDao.createTable(db, ifNotExists);
         HistorySearchBeanDao.createTable(db, ifNotExists);
-        TrackingDataBeanDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -37,10 +37,10 @@ public class DaoMaster extends AbstractDaoMaster {
         OtherInfoDao.dropTable(db, ifExists);
         ToBBeanDao.dropTable(db, ifExists);
         ToCBeanDao.dropTable(db, ifExists);
+        TrackingDataBeanDao.dropTable(db, ifExists);
         UserInfoDao.dropTable(db, ifExists);
         VideoInfoDao.dropTable(db, ifExists);
         HistorySearchBeanDao.dropTable(db, ifExists);
-        TrackingDataBeanDao.dropTable(db, ifExists);
     }
 
     /**
@@ -63,10 +63,10 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(OtherInfoDao.class);
         registerDaoClass(ToBBeanDao.class);
         registerDaoClass(ToCBeanDao.class);
+        registerDaoClass(TrackingDataBeanDao.class);
         registerDaoClass(UserInfoDao.class);
         registerDaoClass(VideoInfoDao.class);
         registerDaoClass(HistorySearchBeanDao.class);
-        registerDaoClass(TrackingDataBeanDao.class);
     }
 
     public DaoSession newSession() {
