@@ -29,6 +29,7 @@ import com.cgbsoft.lib.utils.poster.ElevenPoster;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.widget.FlowLayoutView;
@@ -44,11 +45,6 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
-/**
- * desc
- * author wangyongkui  wangyongkui@simuyun.com
- * 日期 17/3/31-18:26
- */
 
 public class CommonShareDialog extends Dialog implements PlatformActionListener, View.OnClickListener {
 
@@ -217,6 +213,10 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
 //     根据需求分享理财是名片
         IsCanShare = !BStrUtils.isEmpty(userInfo.realName) && userInfo.isAdvisers.endsWith("y") && AppManager.isAdViser(Dcontext);
         IUrl(commonShareBean);
+        try {
+            TrackingDataManger.shareIn(Dcontext, commonShareBean.getShareTitle());
+        } catch (Exception e) {
+        }
     }
 
     //配置url 进行选中未选择的替换
@@ -385,6 +385,10 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
                     share_Type = SHARE_WXCIRCLE;
                     WxCircleShare(commonShareBean);
 //                    WxCircrImg(commonShareBean);
+                    try {
+                        TrackingDataManger.shareClickCricle(Dcontext);
+                    } catch (Exception e) {
+                    }
                     break;
                 case 3://邮件
                     break;
@@ -392,6 +396,10 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
                     break;
                 case 5://复制链接
                     break;
+            }
+            try {
+                TrackingDataManger.shareClick(Dcontext,1==PostionType?"微信":"朋友圈" );
+            } catch (Exception e) {
             }
             CommonShareDialog.this.dismiss();
         }
@@ -593,6 +601,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
             CloseShareSdk();
         } catch (Exception e) {
         }
+        TrackingDataManger.shareClose(Dcontext);
     }
 
     /**

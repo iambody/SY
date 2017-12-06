@@ -248,98 +248,241 @@ public class TrackingDataManger {
     /**
      * 我的消息消息list
      */
-    public static void imListItem(Context context,String itemMeg) {
+    public static void imListItem(Context context, String itemMeg) {
         TrackingDataUtils.save(context, "1003001031", itemMeg);
     }
 
     /**
      * 云豆充值页面进入
      */
-    public static void rechargeIn(Context context){
+    public static void rechargeIn(Context context) {
         TrackingDataUtils.save(context, "1005003001", "");
     }
+
     /**
      * 云豆充值退出
      */
-    public static void rechargeBack(Context context){
+    public static void rechargeBack(Context context) {
         TrackingDataUtils.save(context, "1005003011", "");
     }
+
     /**
      * 云豆充值右上角贵宾卡
      */
-    public static void rechargeGuest (Context context){
+    public static void rechargeGuest(Context context) {
         TrackingDataUtils.save(context, "1005003021", "");
     }
+
     /**
      * 云豆充值数量文本框
      */
-    public static void rechargeNumberEd (Context context){
+    public static void rechargeNumberEd(Context context) {
         TrackingDataUtils.save(context, "1005003031", "");
     }
+
     /**
      * 云豆充值1000云豆点击
      */
-    public static void rechargeThousand (Context context){
+    public static void rechargeThousand(Context context) {
         TrackingDataUtils.save(context, "1005003041", "");
     }
+
     /**
      * 云豆充值5000云豆点击
      */
-    public static void rechargeFiveThousand (Context context){
+    public static void rechargeFiveThousand(Context context) {
         TrackingDataUtils.save(context, "1005003051", "");
     }
+
     /**
      * 云豆充值10000云豆点击
      */
-    public static void rechargeTenThousand (Context context){
+    public static void rechargeTenThousand(Context context) {
         TrackingDataUtils.save(context, "1005003061", "");
     }
+
     /**
      * 云豆充值+10云豆点击
      */
-    public static void rechargeAddTen (Context context){
+    public static void rechargeAddTen(Context context) {
         TrackingDataUtils.save(context, "1005003071", "");
     }
+
     /**
      * 云豆充值+100云豆点击
      */
-    public static void rechargeAddHundred(Context context){
+    public static void rechargeAddHundred(Context context) {
         TrackingDataUtils.save(context, "1005003081", "");
     }
+
     /**
      * 云豆充值+1000云豆点击
      */
-    public static void rechargeAddThousand(Context context){
+    public static void rechargeAddThousand(Context context) {
         TrackingDataUtils.save(context, "1005003091", "");
     }
+
     /**
      * 云豆充值 支付方式-银联卡 按钮
      */
-    public static void rechargeCard(Context context){
+    public static void rechargeCard(Context context) {
         TrackingDataUtils.save(context, "1005003101", "");
     }
+
     /**
      * 云豆充值 支付按钮
      */
-    public static void rechargePay(Context context){
+    public static void rechargePay(Context context) {
         TrackingDataUtils.save(context, "1005003111", "");
     }
+
     /**
      * 支付页面进入
      */
-    public static void payIn(Context context){
+    public static void payIn(Context context) {
         TrackingDataUtils.save(context, "1005004001", "");
     }
+
     /**
      * 支付页面 后退
      */
-    public static void payBack(Context context){
+    public static void payBack(Context context) {
         TrackingDataUtils.save(context, "1005004011", "");
     }
+
     /**
      * 支付页面 后退
      */
-    public static void payAffirm(Context context){
+    public static void payAffirm(Context context) {
         TrackingDataUtils.save(context, "1005004021", "");
+    }
+
+    /**
+     * 视频详情进入
+     */
+    public static void videoDetailEnter(Context context) {
+        TrackingDataUtils.save(context, "1065001001", "视频详情");
+    }
+
+    /**
+     * 视频详情左上角返回键
+     */
+    public static void videoDetailTopBack(Context context) {
+        TrackingDataUtils.save(context, "1065001011", "");
+    }
+
+    /**
+     * 视频详情 右上角分享
+     */
+    public static void videoDetailRightShare(Context context, String title) {
+        TrackingDataUtils.save(context, "1065001021", BStrUtils.isEmpty(title) ? "视频详情" : title);
+    }
+
+    /**
+     * 视频详情  只听不看按钮
+     */
+    public static void videoDetailOnlyListener(Context context) {
+        TrackingDataUtils.save(context, "1065001031", "");
+    }
+
+    /**
+     * 视频详情  缓存按钮按钮
+     */
+    public static void videoDetailCache(Context context) {
+        TrackingDataUtils.save(context, "1065001041", "");
+    }
+
+    /**
+     * 视频详情  我来说一说文本框
+     */
+    public static void videoDetailToCommont(Context context) {
+        TrackingDataUtils.save(context, "1065001051", "");
+    }
+
+    /**
+     * 视频详情  评论按钮
+     */
+    public static void videoDetailRecommend(Context context) {
+        TrackingDataUtils.save(context, "1065001061", "");
+    }
+
+    /**
+     * 视频详情  评论取消
+     */
+    public static void videoDetailRecommendCancle(Context context) {
+        TrackingDataUtils.save(context, "1065002011", "");
+    }
+
+    /**
+     * 视频详情  发送
+     */
+    public static void videoDetailRecommendSend(Context context) {
+        TrackingDataUtils.save(context, "1065002021", "");
+    }
+
+    /**
+     * 视频首页导航入口
+     */
+    public static void videoSchoolIn(Context context) {
+        TrackingDataUtils.save(context, "1065002021", "");
+    }
+
+    /**
+     * 视频首页导航 左滑
+     */
+    public static void videoSchoolLeftScroll(Context context) {
+        TrackingDataUtils.save(context, "1010070012", "");
+    }
+
+    /**
+     * 视频首页导航 左滑
+     */
+    public static void videoSchoolRightScroll(Context context) {
+        TrackingDataUtils.save(context, "1010070013", "");
+    }
+
+    /**
+     * 视频首页导航  点击item
+     */
+    public static void videoSchoolItem(Context context, String title) {
+        TrackingDataUtils.save(context, "1010070101", BStrUtils.isEmpty(title)?"视频":title);
+    }
+
+    /**
+     * 视频首页导航 刷新
+     */
+    public static void videoSchoolRefreash(Context context) {
+        TrackingDataUtils.save(context, "1010070102", "");
+    }
+
+    /**
+     * 视频首页导航 刷新
+     */
+    public static void videoSchoolMore(Context context) {
+        TrackingDataUtils.save(context, "1010070103", "");
+    }
+    /**
+     * 分享进入
+     */
+    public static void shareIn(Context context,String title) {
+        TrackingDataUtils.save(context, "1050001001", BStrUtils.isEmpty(title)?"分享":title);
+    }
+    /**
+     * 分享关闭
+     */
+    public static void shareClose(Context context  ) {
+        TrackingDataUtils.save(context, "1050001011", "");
+    }
+    /**
+     * 分享点击
+     */
+    public static void shareClick(Context context ,String shareTitle ) {
+        TrackingDataUtils.save(context, "1050001021", shareTitle);
+    }
+    /**
+     * 分享点击 朋友圈
+     */
+    public static void shareClickCricle(Context context   ) {
+        TrackingDataUtils.save(context, "1050001031", "");
     }
 }
