@@ -62,7 +62,7 @@ public abstract class MemberUpdateDialog extends BaseDialog {
             return;
         }
         if (!TextUtils.isEmpty(memeberInfo.getLevel()) && memeberInfo.getLevel().length() >2) {
-            ViewUtils.scaleUserAchievment(memberLevel, memeberInfo.getLevel(), 0 , 2, 0.5f);
+            ViewUtils.scaleUserAchievment(memberLevel, memeberInfo.getLevel(), 0 , 2, 1.5f);
         }
         memberValue.setText(memeberInfo.getCurrentWealthNumber());
         for (MemeberInfo.MemeberProject memeberProject : memeberInfo.getItem()) {
