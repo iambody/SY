@@ -101,17 +101,6 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         commonNavigator.setAdapter(disCoveryNavigationAdapter);
         commonNavigator.setSmoothScroll(true);
         magicIndicator.setNavigator(commonNavigator);
-        magicIndicator.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-              System.out.println("--------left=" + (left - oldLeft));
-                 if (left - oldLeft > 5) { // z
-                     TrackingDiscoveryDataStatistics.discoveryLeftScroll(getContext());
-                 } else {
-                     TrackingDiscoveryDataStatistics.discoveryRightScroll(getContext());
-                 }
-            }
-        });
     }
 
     private void initViewPage() {
@@ -144,6 +133,12 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         if (CollectionUtils.isEmpty(lazyFragments)) {
             initIndicatorList(discoverModel);
         }
+    }
+
+    @Override
+    protected void viewBeShow() {
+        super.viewBeShow();
+        TrackingDiscoveryDataStatistics.discoveryClickFlag(getContext(), "");
     }
 
     @Override

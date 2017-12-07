@@ -160,8 +160,5 @@ public class PrivateBanksFragment extends BasePageFragment {
     protected void clickTabButton(String tabName) {
         super.clickTabButton(tabName);
         DataStatistApiParam.honourPBitemClick(tabName);
-        if (TextUtils.equals("资讯",tabName)) {
-            TrackingDiscoveryDataStatistics.discoveryClickFlag(getContext(), tabName);
-        }
     }
 }

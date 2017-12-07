@@ -81,12 +81,12 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
 
             @Override
             public void onLeave(int i, int i1, float v, boolean b) {
-
+                TrackingDiscoveryDataStatistics.discoveryLeftScroll(context);
             }
 
             @Override
             public void onEnter(int i, int i1, float v, boolean b) {
-
+                TrackingDiscoveryDataStatistics.discoveryRightScroll(context);
             }
         });
         commonPagerTitleView.setContentPositionDataProvider(new CommonPagerTitleView.ContentPositionDataProvider() {
