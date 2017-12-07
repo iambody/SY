@@ -286,6 +286,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeVisterAdviserLayyy.setVisibility(View.VISIBLE);
         isVisiterShow = true;
         initShowCardAnimator(mainHomeVisterAdviserLayyy, true);
+        TrackingDataManger.homePersonOpen(baseActivity);
+//        homePersonOpen
     }
 
     /**
@@ -342,7 +344,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         DataStatistApiParam.homeClickNew();
         TrackingDataManger.homeNew(baseActivity);
 
-  }
+    }
 
     /**
      * 配置view各种资源
@@ -610,7 +612,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         homeBannerview.setOnclickBannerItemView(bannerBean -> {
             NavigationUtils.gotoRightShareWebActivity(baseActivity, bannerBean.getJumpUrl(), bannerBean.getTitle());
             DataStatistApiParam.HomeBannerClick(bannerBean.getTitle());
-            TrackingDataManger.homeBannerFocus(baseActivity);
+            TrackingDataManger.homeBannerFocus(baseActivity, bannerBean.getTitle());
         });
         if (homeBannerview != null) {
             homeBannerview.startBanner();

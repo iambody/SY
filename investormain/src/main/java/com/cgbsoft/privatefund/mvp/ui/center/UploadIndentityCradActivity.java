@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -1331,11 +1332,25 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
         }
         intent.putExtra("crop", "true");
         // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 0.1);
-        intent.putExtra("aspectY", 0.1);
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 500);
+        intent.putExtra("aspectY", 309);
+        intent.putExtra("outputX", 500);
+        intent.putExtra("outputY", 309);
+//        intent.putExtra("aspectX", 0.1);
+//        intent.putExtra("aspectY", 0.1);
         // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", CARD_WIDTH);
-        intent.putExtra("outputY", CARD_HEIGHT);
+//        intent.putExtra("outputX", CARD_WIDTH);
+//        intent.putExtra("outputY", CARD_HEIGHT);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+
+
+//        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//        intent.putExtra("crop", "true");
+//        intent.putExtra("aspectX", 500);
+//        intent.putExtra("aspectY", 309);
+//        intent.putExtra("outputX", 500);
+//        intent.putExtra("outputY", 309);
+//        intent.putExtra("return-data", false);
     }
 }
