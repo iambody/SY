@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,12 +64,14 @@ public abstract class MemberUpdateDialog extends BaseDialog {
         }
         if (!TextUtils.isEmpty(memeberInfo.getLevel()) && memeberInfo.getLevel().length() >2) {
             ViewUtils.scaleUserAchievment(memberLevel, memeberInfo.getLevel(), 0 , 2, 1.5f);
+            memberLevel.setGravity(Gravity.CENTER_VERTICAL);
         }
         memberValue.setText(memeberInfo.getCurrentWealthNumber());
         for (MemeberInfo.MemeberProject memeberProject : memeberInfo.getItem()) {
             View itemView = layoutInflater.inflate(R.layout.item_dialog_member_update, null);
             TextView nameText = (TextView) itemView.findViewById(R.id.name);
-            LinearLayout linearLayout = (LinearLayout) itemView.findViewById(R.id.content_ll);
+//            LinearLayout linearLayout = (LinearLayout) itemView.findViewById(R.id.content_ll);
+            FlowLayoutView linearLayout = (FlowLayoutView) itemView.findViewById(R.id.content_ll);
             nameText.setText(memeberProject.getProjectType());
             createContentView(memeberProject.getProjectList(), linearLayout);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -78,7 +81,7 @@ public abstract class MemberUpdateDialog extends BaseDialog {
         }
     }
 
-    private void createContentView(List<MemeberInfo.MemeberItemProject> list, LinearLayout contentLayout) {
+    private void createContentView(List<MemeberInfo.MemeberItemProject> list, FlowLayoutView contentLayout) {
         if (!CollectionUtils.isEmpty(list)) {
             for (int i = 0; i < list.size(); i++) {
                 MemeberInfo.MemeberItemProject memeberItemProject = list.get(i);
@@ -95,6 +98,7 @@ public abstract class MemberUpdateDialog extends BaseDialog {
                 if (i != list.size() -1) {
                     layoutParams.rightMargin = 30;
                 }
+                layoutParams.bottomMargin = 20;
                 layoutParams.height = DimensionPixelUtil.dp2px(getContext(), 58);
 //                int parentWidth = contentLayout.getWidth();
 //                System.out.println("-----parentWidth=" + parentWidth);
