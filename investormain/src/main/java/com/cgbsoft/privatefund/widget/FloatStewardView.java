@@ -26,7 +26,7 @@ import com.cgbsoft.privatefund.R;
  * 日期 2017/11/29-15:06
  */
 public class FloatStewardView extends RelativeLayout implements View.OnClickListener {
-    private boolean isVisitor = false;
+    private boolean isVisitor = true;
     private String serveCode, headerurl, userName;
     private Context floatContext;
     private SemicircleView semicircleview;
@@ -93,24 +93,27 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.steward_round_iv:
+            case R.id.steward_round_iv://头像点击
                 if (null != floatStewardListener) floatStewardListener.roundImageViewClick();
                 openFloat();
                 break;
-            case R.id.cardnumber_lay:
+            case R.id.cardnumber_lay://绑定理财师的邀请码布局点击
                 closeFloat();
                 break;
-            case R.id.rectangle_in_lay:
+            case R.id.rectangle_in_lay://绑定和未绑定公用的外层布局
                 closeFloat();
                 break;
-            case R.id.steward_phone_bt:
+            case R.id.steward_phone_bt://电话点击
                 if (null != floatStewardListener) floatStewardListener.phoneClick();
                 break;
-            case R.id.steward_note_bt:
+            case R.id.steward_note_bt://短信点击
                 if (null != floatStewardListener) floatStewardListener.noteClick();
                 break;
-            case R.id.steward_im_bt:
+            case R.id.steward_im_bt://im点击
                 if (null != floatStewardListener) floatStewardListener.imClick();
+                break;
+            case R.id.rectangle_in_text_lay://未绑定理财师或者游客模式的文字点击
+                closeFloat();
                 break;
 
 
@@ -168,7 +171,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     float fraction = animatorValue / 100f;
                     rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 40) + (int) (surplusWidth * fraction);
                     rectangle_in_lay.requestLayout();
-                    rectangle_in_text_lay.setVisibility(100 == animatorValue ? VISIBLE : GONE);
+                    rectangle_in_text_lay.setVisibility(95<= animatorValue ? VISIBLE : GONE);
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
@@ -195,7 +198,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     semicircleview.getLayoutParams().height = rectangle_out_lay.getLayoutParams().height;
                     semicircleview.getLayoutParams().width = rectangle_out_lay.getLayoutParams().height;
                     semicircleview.requestLayout();
-                    cardnumber_lay.setVisibility(30 < animatorValue ? VISIBLE : GONE);//(1==animatorValue);
+                    cardnumber_lay.setVisibility(60 < animatorValue ? VISIBLE : GONE);//(1==animatorValue);
                     rectangle_in_user_text_lay.setVisibility(80 < animatorValue ? VISIBLE : GONE);
                     rectangle_in_user_text.setVisibility(100 == animatorValue ? VISIBLE : INVISIBLE);
                 }
