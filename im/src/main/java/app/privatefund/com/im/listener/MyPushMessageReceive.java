@@ -101,7 +101,7 @@ public class MyPushMessageReceive extends PushMessageReceiver {
 //                notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                context.startActivity(notificationIntent);
 //            return true;
-//         }`
+//         }
         if (!TextUtils.isEmpty(pushNotificationMessage.getTargetId()) && RongCouldUtil.getInstance().customConversationAll(pushNotificationMessage.getTargetId())) {
 //             PageJumpMananger.jumpPageFromToMainActivity(context, pushNotificationMessage);
             System.out.println("------onnotifacationmessageclicked");

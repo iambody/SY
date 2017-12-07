@@ -308,6 +308,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                     productlsAdapter.destoryFootView();
                     reSetConditionAction();
                     TrackingDataUtils.save(baseActivity,"1010011081","");
+                    onLineProduct = false;
                 } else {
                     if (fromShare) {
                         openShareProductDialog(position);
@@ -553,7 +554,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                     }
                 }
                 if (disOnLine) {
-                    onLineProduct = false;
+//                    onLineProduct = false;
                     ProductlsBean productlsBean = new ProductlsBean();
                     productlsBean.productName = String.format("%d", productlsAdapter.CHECKOLD);
                     productlsBeen.add(productlsBean);
