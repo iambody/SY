@@ -87,12 +87,13 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
+            android:gravity="center_horizontal|top"
             android:id="@+id/account_info_caifu_value_ll">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/mine_account_info_text"
+                android:gravity="top"
                 android:text="@string/account_info_caifu_value"
                 android:layout_marginBottom="8dp"/>
 
@@ -108,8 +109,9 @@
         </LinearLayout>
 
         <TextView
-            android:layout_height="30dp"
+            android:layout_height="28dp"
             android:layout_width="0.5dp"
+            android:layout_marginTop="3dp"
             android:background="@color/app_split_line"/>
 
         <LinearLayout
@@ -117,13 +119,14 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
+            android:gravity="center_horizontal|top"
             android:id="@+id/account_info_yundou_value_ll">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/mine_account_info_text"
+                android:gravity="top"
                 android:text="@string/account_info_mine_yundou"
                 android:layout_marginBottom="8dp"/>
 
@@ -155,6 +158,7 @@
         <TextView
             android:layout_height="30dp"
             android:layout_width="0.5dp"
+            android:layout_marginTop="3dp"
             android:background="@color/app_split_line"/>
 
         <LinearLayout
@@ -162,7 +166,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
+            android:gravity="center_horizontal|top"
             android:id="@+id/account_info_private_bank_value_ll">
 
             <TextView
@@ -170,6 +174,7 @@
                 android:layout_height="wrap_content"
                 style="@style/mine_account_info_text"
                 android:text="@string/account_info_mine_private_banker"
+                android:gravity="top"
                 android:layout_marginBottom="8dp"/>
 
             <me.grantland.widget.AutofitTextView

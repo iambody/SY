@@ -2,13 +2,17 @@ package com.cgbsoft.lib.utils.tools;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -23,7 +27,7 @@ public class BackgroundManager implements Application.ActivityLifecycleCallbacks
   private Calendar expireDate = Calendar.getInstance();
   private boolean isDisplay = false;
   private Activity currentActivity;
-
+  private HashMap<Activity, List<Dialog>> hashMap = new HashMap();
   public Activity getCurrentActivity() {
     return currentActivity;
   }
@@ -69,5 +73,32 @@ public class BackgroundManager implements Application.ActivityLifecycleCallbacks
   public void onActivitySaveInstanceState(Activity activity, Bundle outState) {}
 
   @Override
-  public void onActivityDestroyed(Activity activity) {}
+  public void onActivityDestroyed(Activity activity) {
+    System.out.println("-------activity=" + activity);
+    if (activity != null && !CollectionUtils.isEmpty(hashMap.get(activity))) {
+      for(Dialog dialog: hashMap.get(activity)) {
+        if (dialog != null && dialog.isShowing()) {
+          dialog.dismiss();
+        }
+      }
+      hashMap.remove(activity);
+    }
+  }
+
+  public void bindActivityDialog(Dialog dialog) {
+    if (currentActivity != null && !currentActivity.isFinishing()) {
+       if (hashMap.containsKey(currentActivity)) {
+         List<Dialog> list = hashMap.get(currentActivity);
+         if (dialog != null) {
+           list.add(dialog);
+         }
+       } else {
+         List<Dialog> list = new ArrayList<>();
+         if (dialog != null) {
+           list.add(dialog);
+           hashMap.put(currentActivity, list);
+         }
+       }
+    }
+  }
 }
