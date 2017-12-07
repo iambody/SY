@@ -78,6 +78,7 @@ import app.privatefund.com.im.listener.MyGroupUserInfoProvider;
 import app.privatefund.com.im.listener.MyUserInfoListener;
 import app.privatefund.com.im.utils.PushPreference;
 import app.privatefund.com.im.utils.ReceiveInfoManager;
+import app.privatefund.com.im.utils.RongConnect;
 import app.privatefund.com.im.utils.RongCouldUtil;
 import app.privatefund.com.vido.service.FloatVideoService;
 import app.privatefund.investor.health.mvp.ui.HealthCourseFragment;
@@ -221,6 +222,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         initRxObservable();
 
         initUserInfo();
+
+        RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
 
 //        initPlatformCustomer();
 

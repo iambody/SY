@@ -99,7 +99,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 if (loginBean.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
                 }
-                RongConnect.initRongTokenConnect(loginBean.userId);
+//                RongConnect.initRongTokenConnect(loginBean.userId);
                 loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
                 MobclickAgent.onProfileSignIn(loginBean.userId);
             }

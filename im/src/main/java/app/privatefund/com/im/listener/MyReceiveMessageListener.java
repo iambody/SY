@@ -64,7 +64,9 @@ public class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageLi
                 Gson g = new Gson();
                 SMMessage smMessage = g.fromJson(msg, SMMessage.class);
                 smMessage.setContent(content.getContent());
-                smMessage.setContent(((TextMessage) message.getContent()).getContent());
+                if (!TextUtils.isEmpty(((TextMessage) message.getContent()).getContent())) {
+                    smMessage.setContent(((TextMessage) message.getContent()).getContent());
+                }
                 String shareType = smMessage.getShareType();
                 boolean hasPush = SPreference.getBoolean(InvestorAppli.getContext(), Constant.HAS_PUSH_MESSAGE);
                 if (hasPush) {
