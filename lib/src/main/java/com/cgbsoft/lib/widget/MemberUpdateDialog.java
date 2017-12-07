@@ -2,9 +2,7 @@ package com.cgbsoft.lib.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;

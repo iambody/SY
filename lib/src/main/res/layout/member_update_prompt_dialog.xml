@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/dialog_transparent1"
-    android:paddingBottom="@dimen/ui_20_dip">
+    android:background="@color/dialog_transparent1">
 
   <RelativeLayout
     android:layout_width="match_parent"
@@ -82,11 +81,16 @@
           android:textColor="@color/black"
           android:textSize="16sp" />
 
-      <LinearLayout
-          android:id="@+id/show_content_ll"
+      <ScrollView
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical" />
+          android:layout_height="200dp"
+          android:scrollbars="none">
+          <LinearLayout
+              android:id="@+id/show_content_ll"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical" />
+      </ScrollView>
   </LinearLayout>
 </ScrollView>
 
@@ -99,11 +103,11 @@
     android:gravity="center"
     android:background="@drawable/shape_member_dialog_btn_bg"
     android:textColor="@color/white"
-    android:textSize="12sp"/>
+    android:textSize="16sp"/>
 </RelativeLayout>
   <TextView
-      android:layout_width="3dp"
-      android:layout_height="40dp"
+      android:layout_width="2dp"
+      android:layout_height="30dp"
       android:id="@+id/line_divide"
       android:layout_below="@id/content_rl"
       android:layout_centerHorizontal="true"
