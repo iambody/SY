@@ -246,6 +246,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
 //        initLogo();
         zipResourceDownload.initZipResource();
+        TrackingDataManger.gohome(baseContext);
     }
 
     private void initLogo() {
@@ -437,6 +438,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 StatusBarUtil.translucentStatusBar(this);
                 switchID = R.id.nav_left_first;
                 currentPostion = 0;
+                TrackingDataManger.gohome(baseContext);
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;

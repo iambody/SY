@@ -187,7 +187,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         getPresenter().getHomeData();
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv, false);
         DataStatistApiParam.gohome();
-        TrackingDataManger.gohome(baseActivity);
+
     }
 
     @Override
@@ -949,6 +949,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
             return false;
         }
+
+
     }
 
 
