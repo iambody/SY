@@ -21,6 +21,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingLifeDataStatistics;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
@@ -142,6 +143,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
                 intent.putExtra(WebViewConstant.push_message_title, AppManager.isBindAdviser(baseActivity) ? "我的私人银行家" : "私人银行家");
                 intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, false);
                 getActivity().startActivity(intent);
+                TrackingLifeDataStatistics.homeClickAdviser(getContext());
                 break;
             case R.id.iv_title_right://toolbar右边按钮点击事件
                 DataStatistApiParam.clickMsgCenterInElegantPage();
@@ -153,6 +155,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
                     return;
                 }
                 NavigationUtils.startActivity(getActivity(), MessageListActivity.class);
+                TrackingLifeDataStatistics.homeClickNews(getContext());
 //                Router.build(RouteConfig.GOTOCSETTINGACTIVITY).go(baseActivity);
                 break;
         }
@@ -161,6 +164,12 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     @Override
     protected void bindTitle(View titleView) {
 
+    }
+
+    @Override
+    protected void viewBeShow() {
+        super.viewBeShow();
+        TrackingLifeDataStatistics.goLifeHomePage(getContext());
     }
 
     @Override
