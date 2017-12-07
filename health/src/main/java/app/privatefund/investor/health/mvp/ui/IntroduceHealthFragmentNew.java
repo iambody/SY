@@ -109,85 +109,105 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
         });
 
         getPresenter().introduceNavigation(String.valueOf(WebViewConstant.Navigation.HEALTH_INTRODUCTION_PAGE));
-//        testDilaog();
-//        testds();
+        testDilaog();
+        testds();
     }
 
-//    private void testds() {
-//        String ss= "{\"content\":\"根据私享云会员成长体系评估，您当前的财富值为30，会员等级由V3降至V2，评估时间是20171103日23:33:08\",\n" +
-//                " \"memberProfit\":[\"购买金融产品\",\"消费体验健康项目\",\"在乐享生活中消费产品\",\"推荐好友奖励财富值\"]}";
-//        MemberDegrade result = new Gson().fromJson(ss, MemberDegrade.class);
-//        MemberDegradeDialog memberUpdateDialog = new MemberDegradeDialog(getContext()) {
-//            @Override
-//            public void buttonClick() {
-//                String url = CwebNetConfig.memeberArea;
-//                Intent intent = new Intent(getContext(), BaseWebViewActivity.class);
-//                intent.putExtra(WebViewConstant.push_message_url, url);
-//                intent.putExtra(WebViewConstant.push_message_title, "会员权益");
-//                intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
-//                startActivity(intent);
-//            }
-//        };
-//        memberUpdateDialog.show();
-//        memberUpdateDialog.updateDialogUi(result);
-//    }
-//
-//    private void testDilaog() {
-//        String vas = "{\n" +
-//                "    \"level\": \"V4副卡\",\n" +
-//                "    \"currentWealthNumber\": \"当前财富值2900\",\n" +
-//                "    \"item\": [\n" +
-//                "        {\n" +
-//                "            \"projectType\": \"健康服务\",\n" +
-//                "            \"projectList\": [\n" +
-//                "                {\n" +
-//                "                    \"projectName\": \"血液排毒项目\",\n" +
-//                "                    \"frequencyInfo\": \"1次/年\"\n" +
-//                "                },\n" +
-//                "                {\n" +
-//                "                    \"projectName\": \"基因检测项目\",\n" +
-//                "                    \"frequencyInfo\": \"1次/年\"\n" +
-//                "                },\n" +
-//                "                {\n" +
-//                "                    \"projectName\": \"靶向治疗项目\",\n" +
-//                "                    \"frequencyInfo\": \"1次/年\"\n" +
-//                "                }\n" +
-//                "            ]\n" +
-//                "        },\n" +
-//                "        {\n" +
-//                "            \"projectType\": \"生活服务\",\n" +
-//                "            \"projectList\": [\n" +
-//                "                {\n" +
-//                "                    \"projectName\": \"云淘圈*30\",\n" +
-//                "                    \"frequencyInfo\": \"\"\n" +
-//                "                },\n" +
-//                "                {\n" +
-//                "                    \"projectName\": \"专享洁牙服务卡\",\n" +
-//                "                    \"frequencyInfo\": \"1次/年\"\n" +
-//                "                },\n" +
-//                "                {\n" +
-//                "                    \"projectName\": \"私人订制旅游\",\n" +
-//                "                    \"frequencyInfo\": \"1次/年 价值3万\"\n" +
-//                "                }\n" +
-//                "            ]\n" +
-//                "        }\n" +
-//                "    ]\n" +
-//                "}";
-//        MemeberInfo result = new Gson().fromJson(vas, MemeberInfo.class);
-//        MemberUpdateDialog memberUpdateDialog = new MemberUpdateDialog(getContext()) {
-//            @Override
-//            public void buttonClick() {
-//                String url = CwebNetConfig.memeberArea;
-//                Intent intent = new Intent(getContext(), BaseWebViewActivity.class);
-//                intent.putExtra(WebViewConstant.push_message_url, url);
-//                intent.putExtra(WebViewConstant.push_message_title, "会员权益");
-//                intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
-//                startActivity(intent);
-//            }
-//        };
-//        memberUpdateDialog.show();
-//        memberUpdateDialog.updateDialogUi(result);
-//    }
+    private void testds() {
+        String ss= "{\"content\":\"根据私享云会员成长体系评估，您当前的财富值为30，会员等级由V3降至V2，评估时间是20171103日23:33:08\",\n" +
+                " \"memberProfit\":[\"购买金融产品\",\"消费体验健康项目\",\"在乐享生活中消费产品\",\"推荐好友奖励财富值\"]}";
+        MemberDegrade result = new Gson().fromJson(ss, MemberDegrade.class);
+        MemberDegradeDialog memberUpdateDialog = new MemberDegradeDialog(getContext()) {
+            @Override
+            public void buttonClick() {
+                String url = CwebNetConfig.memeberArea;
+                Intent intent = new Intent(getContext(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, url);
+                intent.putExtra(WebViewConstant.push_message_title, "会员权益");
+                intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
+                startActivity(intent);
+            }
+        };
+        memberUpdateDialog.show();
+        memberUpdateDialog.updateDialogUi(result);
+    }
+
+    private void testDilaog() {
+        String vas = "{\n" +
+                "    \"level\": \"V4副卡\",\n" +
+                "    \"currentWealthNumber\": \"当前财富值2900\",\n" +
+                "    \"item\": [\n" +
+                "        {\n" +
+                "            \"projectType\": \"健康服务\",\n" +
+                "            \"projectList\": [\n" +
+                "                {\n" +
+                "                    \"projectName\": \"血液排毒项目\",\n" +
+                "                    \"frequencyInfo\": \"1次/年\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"projectName\": \"基因检测项目\",\n" +
+                "                    \"frequencyInfo\": \"1次/年\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"projectName\": \"靶向治疗项目\",\n" +
+                "                    \"frequencyInfo\": \"1次/年\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"projectName\": \"靶向治疗项目\",\n" +
+                "                    \"frequencyInfo\": \"1次/年\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"projectName\": \"靶向治疗项目\",\n" +
+                "                    \"frequencyInfo\": \"1次/年\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"projectName\": \"靶向治疗项目\",\n" +
+                "                    \"frequencyInfo\": \"1次/年\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"projectName\": \"靶向治疗项目\",\n" +
+                "                    \"frequencyInfo\": \"1次/年\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"projectName\": \"靶向治疗项目\",\n" +
+                "                    \"frequencyInfo\": \"1次/年\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"projectType\": \"生活服务\",\n" +
+                "            \"projectList\": [\n" +
+                "                {\n" +
+                "                    \"projectName\": \"云淘圈*30\",\n" +
+                "                    \"frequencyInfo\": \"\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"projectName\": \"专享洁牙服务卡\",\n" +
+                "                    \"frequencyInfo\": \"1次/年\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"projectName\": \"私人订制旅游\",\n" +
+                "                    \"frequencyInfo\": \"1次/年 价值3万\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
+        MemeberInfo result = new Gson().fromJson(vas, MemeberInfo.class);
+        MemberUpdateDialog memberUpdateDialog = new MemberUpdateDialog(getContext()) {
+            @Override
+            public void buttonClick() {
+                String url = CwebNetConfig.memeberArea;
+                Intent intent = new Intent(getContext(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, url);
+                intent.putExtra(WebViewConstant.push_message_title, "会员权益");
+                intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
+                startActivity(intent);
+            }
+        };
+        memberUpdateDialog.show();
+        memberUpdateDialog.updateDialogUi(result);
+    }
 
 //    @Override
 //    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

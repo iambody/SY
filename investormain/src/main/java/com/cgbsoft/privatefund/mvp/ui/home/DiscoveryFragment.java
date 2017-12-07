@@ -58,6 +58,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @BindView(R.id.discover_list_pager)
     ViewPager viewPager;
+    private int currentPosition = -1;
 
     CommonNavigator commonNavigator;
     FragmentAdapter fragmentAdapter;
@@ -107,7 +108,30 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
         viewPager.setOffscreenPageLimit(8);
         viewPager.setAdapter(fragmentAdapter);
-        ViewPagerHelper.bind(magicIndicator, viewPager);
+//        ViewPagerHelper.bind(magicIndicator, viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                magicIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            public void onPageSelected(int position) {
+                magicIndicator.onPageSelected(position);
+                System.out.println("-------postion=" + position);
+                if (currentPosition == position) {
+                    return;
+                }
+                if (currentPosition > position){
+                    TrackingDiscoveryDataStatistics.discoveryLeftScroll(getContext());
+                } else {
+                    TrackingDiscoveryDataStatistics.discoveryRightScroll(getContext());
+                }
+                currentPosition = position;
+            }
+
+            public void onPageScrollStateChanged(int state) {
+                magicIndicator.onPageScrollStateChanged(state);
+            }
+        });
     }
 
     @Override
