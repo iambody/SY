@@ -82,12 +82,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ui_13_dip"
                         android:background="@color/white">
-
-                        <ImageView
+                      <!--  <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/ui_z_dip"
-                            android:layout_alignParentBottom="true"
-                            android:src="@color/app_divider_gary" />
+                            android:src="@color/app_divider_gary"
+                            android:layout_alignParentBottom="true"/>-->
                     </RelativeLayout>
                     <!-- 横向滑动的布局。。。。。 -->
                     <com.cgbsoft.lib.base.webview.BaseWebview
