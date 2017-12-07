@@ -22,6 +22,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
+
 import java.util.List;
 
 /**
@@ -49,6 +50,12 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         }
     }
 
+    private boolean isVisble;
+
+    public void setvisible(boolean isvisble) {
+        isVisble = isvisble;
+    }
+
     @Override
     public int getCount() {
         return null == categoryList ? 0 : categoryList.size();
@@ -71,22 +78,25 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
             public void onSelected(int i, int i1) {//被选中
                 Imageload.display(adapterContext, discoverCategory.prelog, imageView);
                 textViewdd.setTextColor(adapterContext.getResources().getColor(app.privatefund.com.vido.R.color.app_golden));
+                if(isVisble) TrackingDiscoveryDataStatistics.discoveryLeftScroll(context);
+
             }
 
             @Override
             public void onDeselected(int i, int i1) {//取消被选中状态
                 Imageload.display(adapterContext, discoverCategory.norlog, imageView);
                 textViewdd.setTextColor(adapterContext.getResources().getColor(app.privatefund.com.vido.R.color.black));
+                if(isVisble)   TrackingDiscoveryDataStatistics.discoveryRightScroll(context);
             }
 
             @Override
             public void onLeave(int i, int i1, float v, boolean b) {
-                TrackingDiscoveryDataStatistics.discoveryLeftScroll(context);
+
             }
 
             @Override
             public void onEnter(int i, int i1, float v, boolean b) {
-                TrackingDiscoveryDataStatistics.discoveryRightScroll(context);
+
             }
         });
         commonPagerTitleView.setContentPositionDataProvider(new CommonPagerTitleView.ContentPositionDataProvider() {

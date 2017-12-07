@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.utils.tools;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * desc  ${DESC}
@@ -432,13 +433,16 @@ public class TrackingDataManger {
      */
     public static void videoSchoolLeftScroll(Context context) {
         TrackingDataUtils.save(context, "1010070012", "");
+        Log.i("ssssaaaaa","视频左滑动。。。");
     }
 
     /**
      * 视频首页导航 左滑
      */
     public static void videoSchoolRightScroll(Context context) {
+
         TrackingDataUtils.save(context, "1010070013", "");
+        Log.i("ssssaaaaa","视频右滑动。。。");
     }
 
     /**

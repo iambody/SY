@@ -190,22 +190,26 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
                 public void onSelected(int i, int i1) {//被选中
                     Imageload.display(adapterContext, videoCategory.prelog, imageView);
                     textViewdd.setTextColor(adapterContext.getResources().getColor(R.color.app_golden));
+                    if(isvisible)
+                        TrackingDataManger.videoSchoolLeftScroll(baseActivity);
                 }
 
                 @Override
                 public void onDeselected(int i, int i1) {//取消被选中状态
                     Imageload.display(adapterContext, videoCategory.norlog, imageView);
                     textViewdd.setTextColor(adapterContext.getResources().getColor(R.color.black));
+                    if(isvisible)
+                        TrackingDataManger.videoSchoolRightScroll(baseActivity);
                 }
 
                 @Override
                 public void onLeave(int i, int i1, float v, boolean b) {
-                    TrackingDataManger.videoSchoolLeftScroll(baseActivity);
+
                 }
 
                 @Override
                 public void onEnter(int i, int i1, float v, boolean b) {
-                    TrackingDataManger.videoSchoolRightScroll(baseActivity);
+
                 }
             });
             commonPagerTitleView.setOnClickListener(v -> videoVideolistPager.setCurrentItem(i));
@@ -225,11 +229,18 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         }
     }
 
+    private boolean isvisible;
     @Override
     protected void viewBeShow() {
         super.viewBeShow();
         TrackingDataManger.videoSchoolIn(baseActivity);
         TrackingDataManger.privateBanckVideoShow(baseActivity);
+        isvisible=true;
+    }
 
+    @Override
+    protected void viewBeHide() {
+        super.viewBeHide();
+        isvisible=false;
     }
 }

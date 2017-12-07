@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.utils.tools;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * @author chenlong
@@ -32,6 +33,7 @@ public class TrackingDiscoveryDataStatistics {
      */
     public static void discoveryClickFlag(Context context, String tagName) {
         TrackingDataUtils.save(context, "1010040011", tagName);
+        Log.i("slslsllslslsslls","开始调用资讯****");
     }
 
     /**
