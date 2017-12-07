@@ -2,7 +2,7 @@
     <string name="app_name">Share</string>
     <string name="share_my_card">&#160;&#160;&#160;分享我的职业名片</string>
     <string name="copyscuuced">复制成功</string>
-    <string name="no_weixin">未安装微信</string>
+    <string name="no_weixin">私享云打开微信失败</string>
     <string name="nulll">--</string>
 
 
@@ -12,5 +12,5 @@
     <string name="youjian">邮件</string>
     <string name="duanxin">短信</string>
     <string name="fuzhilianjie">复制链接</string>
-    <string name="pleaseinstanllweixin">请安装微信</string>
+    <string name="pleaseinstanllweixin">私享云打开微信失败</string>
 </resources>
