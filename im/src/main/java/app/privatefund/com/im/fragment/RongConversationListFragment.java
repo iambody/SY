@@ -1497,6 +1497,10 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
 ////            uiconversation.setUnReadMessageCount(0);
 //            this.mAdapter.notifyDataSetChanged();
 //        }
+        try {
+            TrackingDataManger.imListItem(getActivity(), uiconversation.getUIConversationTitle());
+        } catch (Exception e) {
+        }
 
         String targetId = uiconversation.getConversationTargetId();
         SPreference.putBoolean(getContext(), "isTop", uiconversation.isTop());
@@ -1560,11 +1564,8 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             }
             RongIM.getInstance().startConversation(this.getActivity(), type, uiconversation.getConversationTargetId(), uiconversation.getUIConversationTitle());
         }
-        try {
-            TrackingDataManger.imListItem(getActivity(), uiconversation.getUIConversationTitle());
-        } catch (Exception e) {
-        }
     }
+
 
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         UIConversation uiConversation = (UIConversation) this.mAdapter.getItem(position);

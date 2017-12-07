@@ -17,6 +17,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.bean.video.VideoAllModel;
@@ -100,6 +101,8 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
     }
 
+    private boolean isInit;
+
     /*设置缓存*/
     private void initCache() {
         if (null != AppManager.getVideoSchoolCache(baseActivity))
@@ -123,6 +126,18 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         }
         videoNavigationAdapter.FreashAp(videoAllModel.category);
         fragmentAdapter.freshAp(lazyFragments);
+
+        RxCountDown.countTimeDown(3, new RxCountDown.ICountTime() {
+            @Override
+            public void onCompleted() {
+                isInit = true;
+            }
+
+            @Override
+            public void onNext(int timer) {
+
+            }
+        });
     }
 
     @Override
@@ -166,6 +181,8 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
             this.notifyDataSetChanged();
         }
 
+        private int currentPage = 0;
+
         @Override
         public int getCount() {
             return null == categoryList ? 0 : categoryList.size();
@@ -190,16 +207,22 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
                 public void onSelected(int i, int i1) {//被选中
                     Imageload.display(adapterContext, videoCategory.prelog, imageView);
                     textViewdd.setTextColor(adapterContext.getResources().getColor(R.color.app_golden));
-                    if(isvisible)
-                        TrackingDataManger.videoSchoolLeftScroll(baseActivity);
+                    if (isvisible && isInit) {
+                        if (currentPage < i) {
+                            TrackingDataManger.videoSchoolRightScroll(baseActivity);
+                        } else {
+                            TrackingDataManger.videoSchoolLeftScroll(baseActivity);
+                        }
+                        currentPage = i;
+                    }
                 }
 
                 @Override
                 public void onDeselected(int i, int i1) {//取消被选中状态
                     Imageload.display(adapterContext, videoCategory.norlog, imageView);
                     textViewdd.setTextColor(adapterContext.getResources().getColor(R.color.black));
-                    if(isvisible)
-                        TrackingDataManger.videoSchoolRightScroll(baseActivity);
+
+
                 }
 
                 @Override
@@ -230,17 +253,18 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     }
 
     private boolean isvisible;
+
     @Override
     protected void viewBeShow() {
         super.viewBeShow();
         TrackingDataManger.videoSchoolIn(baseActivity);
         TrackingDataManger.privateBanckVideoShow(baseActivity);
-        isvisible=true;
+        isvisible = true;
     }
 
     @Override
     protected void viewBeHide() {
         super.viewBeHide();
-        isvisible=false;
+        isvisible = false;
     }
 }

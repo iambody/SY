@@ -1,6 +1,8 @@
 package com.cgbsoft.privatefund.adapter;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
