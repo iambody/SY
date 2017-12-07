@@ -714,7 +714,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
             isLoadmore = true;
             reSetConditionAction();
         }
-        TrackingDataUtils.save(baseActivity, "1010010102", "");
+        TrackingDataUtils.save(baseActivity, "1010010103", "");
     }
 
     @Override
@@ -722,7 +722,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
         CurrentOffset = 0;
         reSetConditionAction();
 //        onLineProduct = true;
-        TrackingDataUtils.save(baseActivity, "1010010103", "");
+        TrackingDataUtils.save(baseActivity, "1010010102", "");
     }
 
     /**
