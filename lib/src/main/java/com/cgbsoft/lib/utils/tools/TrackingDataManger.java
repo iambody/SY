@@ -44,8 +44,8 @@ public class TrackingDataManger {
      *
      * @param context
      */
-    public static void homeBannerFocus(Context context) {
-        TrackingDataUtils.save(context, "1001001031", " ");
+    public static void homeBannerFocus(Context context,String title) {
+        TrackingDataUtils.save(context, "1001001031", title);
     }
 
     /**
