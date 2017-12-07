@@ -95,5 +95,5 @@
             android:layout_gravity="center_horizontal"
             android:layout_below="@id/line_divide"
             android:id="@+id/close"
-            android:src="@drawable/popup_button_close_default"/>
+            android:src="@drawable/signdialog_up_cha_iv"/>
 </RelativeLayout>

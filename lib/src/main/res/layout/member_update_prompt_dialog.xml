@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/dialog_transparent1">
+    android:background="@color/dialog_transparent1"
+    android:paddingBottom="@dimen/ui_20_dip">
 
   <RelativeLayout
     android:layout_width="match_parent"
@@ -115,5 +116,5 @@
       android:layout_centerHorizontal="true"
       android:layout_below="@id/line_divide"
       android:id="@+id/close"
-    android:src="@drawable/popup_button_close_default"/>
+    android:src="@drawable/signdialog_up_cha_iv"/>
 </RelativeLayout>
