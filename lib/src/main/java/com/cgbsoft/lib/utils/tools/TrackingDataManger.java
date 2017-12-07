@@ -442,7 +442,7 @@ public class TrackingDataManger {
     public static void videoSchoolRightScroll(Context context) {
 
         TrackingDataUtils.save(context, "1010070013", "");
-        Log.i("ssssaaaaa","视频右滑动。。。");
+        Log.i("ssssaaaaa","视频滑动。。。");
     }
 
     /**

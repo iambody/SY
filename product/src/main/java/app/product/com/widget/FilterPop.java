@@ -206,6 +206,7 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
                         TrackingDataUtils.save(pContext, "1010011011", h.getName() + "|" + h.getItems().get(position).getName() + "|" + (filteAdapter.isSelectedPosition(position) ? "选中" : "取消选中"));
                     }
                 });
+
                 filteAdapter.onlyAddAll(h.getItems());
                 flaFloatView.setOnTagClickListener(new OnTagClickListener() {
                     @Override

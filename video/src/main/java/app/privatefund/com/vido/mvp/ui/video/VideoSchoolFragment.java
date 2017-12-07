@@ -81,6 +81,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         MobclickAgent.onPageEnd(Constant.SXY_SIHANG_SP);
     }
 
+    private int currentPosition = -1;
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         commonNavigator = new CommonNavigator(baseActivity);
@@ -98,6 +99,30 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         ViewPagerHelper.bind(videoVideolistIndicator, videoVideolistPager);
         initCache();
         getPresenter().getVideoSchoolAllInf();
+
+        videoVideolistPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                videoVideolistIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            public void onPageSelected(int position) {
+                videoVideolistIndicator.onPageSelected(position);
+                System.out.println("-------postion=" + position);
+                if (currentPosition == position) {
+                    return;
+                }
+                if (currentPosition > position){
+                    TrackingDataManger.videoSchoolLeftScroll(baseActivity);
+                } else {
+                    TrackingDataManger.videoSchoolRightScroll(baseActivity);
+                }
+                currentPosition = position;
+            }
+
+            public void onPageScrollStateChanged(int state) {
+                videoVideolistIndicator.onPageScrollStateChanged(state);
+            }
+        });
 
     }
 
@@ -207,14 +232,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
                 public void onSelected(int i, int i1) {//被选中
                     Imageload.display(adapterContext, videoCategory.prelog, imageView);
                     textViewdd.setTextColor(adapterContext.getResources().getColor(R.color.app_golden));
-                    if (isvisible && isInit) {
-                        if (currentPage < i) {
-                            TrackingDataManger.videoSchoolRightScroll(baseActivity);
-                        } else {
-                            TrackingDataManger.videoSchoolLeftScroll(baseActivity);
-                        }
-                        currentPage = i;
-                    }
+
                 }
 
                 @Override
