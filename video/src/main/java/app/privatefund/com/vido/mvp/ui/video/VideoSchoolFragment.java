@@ -97,7 +97,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         ViewPagerHelper.bind(videoVideolistIndicator, videoVideolistPager);
         initCache();
         getPresenter().getVideoSchoolAllInf();
-        TrackingDataManger.videoSchoolIn(baseActivity);
 
     }
 
@@ -226,5 +225,11 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         }
     }
 
+    @Override
+    protected void viewBeShow() {
+        super.viewBeShow();
+        TrackingDataManger.videoSchoolIn(baseActivity);
+        TrackingDataManger.privateBanckVideoShow(baseActivity);
 
+    }
 }

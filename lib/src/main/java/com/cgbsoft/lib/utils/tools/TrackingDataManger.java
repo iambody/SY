@@ -44,7 +44,7 @@ public class TrackingDataManger {
      *
      * @param context
      */
-    public static void homeBannerFocus(Context context,String title) {
+    public static void homeBannerFocus(Context context, String title) {
         TrackingDataUtils.save(context, "1001001031", title);
     }
 
@@ -445,7 +445,7 @@ public class TrackingDataManger {
      * 视频首页导航  点击item
      */
     public static void videoSchoolItem(Context context, String title) {
-        TrackingDataUtils.save(context, "1010070101", BStrUtils.isEmpty(title)?"视频":title);
+        TrackingDataUtils.save(context, "1010070101", BStrUtils.isEmpty(title) ? "视频" : title);
     }
 
     /**
@@ -461,28 +461,39 @@ public class TrackingDataManger {
     public static void videoSchoolMore(Context context) {
         TrackingDataUtils.save(context, "1010070103", "");
     }
+
     /**
      * 分享进入
      */
-    public static void shareIn(Context context,String title) {
-        TrackingDataUtils.save(context, "1050001001", BStrUtils.isEmpty(title)?"分享":title);
+    public static void shareIn(Context context, String title) {
+        TrackingDataUtils.save(context, "1050001001", BStrUtils.isEmpty(title) ? "分享" : title);
     }
+
     /**
      * 分享关闭
      */
-    public static void shareClose(Context context  ) {
+    public static void shareClose(Context context) {
         TrackingDataUtils.save(context, "1050001011", "");
     }
+
     /**
      * 分享点击
      */
-    public static void shareClick(Context context ,String shareTitle ) {
+    public static void shareClick(Context context, String shareTitle) {
         TrackingDataUtils.save(context, "1050001021", shareTitle);
     }
+
     /**
      * 分享点击 朋友圈
      */
-    public static void shareClickCricle(Context context   ) {
+    public static void shareClickCricle(Context context) {
         TrackingDataUtils.save(context, "1050001031", "");
+    }
+
+    /**
+     * 尊享私行 视频可见
+     */
+    public static void privateBanckVideoShow(Context context) {
+        TrackingDataUtils.save(context, "1010070011", "");
     }
 }
