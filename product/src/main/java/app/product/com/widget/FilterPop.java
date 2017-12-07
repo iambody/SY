@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -223,13 +224,13 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
                 editTextleft.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        TrackingDataUtils.save(pContext,"1010011031","");
+
                     }
                 });
                 editTextright.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        TrackingDataUtils.save(pContext,"1010011041","");
+
                     }
                 });
                 BStrUtils.SetTxt1(editTextleft, h.getMinNumber());
@@ -249,6 +250,7 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
      * 设置view内部date的标识
      */
     private void setviewData(FilterItem data, List<Integer> selectedLists) {
+        recordClick(data, selectedLists);
         //先暴力清楚所有的标识
         for (int i = 0; i < data.getItems().size(); i++) {
             data.getItems().get(i).setChecked(false);
@@ -257,6 +259,22 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
         if (null == selectedLists || selectedLists.size() == 0) return;
         for (int j = 0; j < selectedLists.size(); j++) {
             data.getItems().get(selectedLists.get(j)).setChecked(true);
+        }
+
+
+    }
+
+    /**
+     * 埋点进行记录那个被点击了
+     *
+     * @param data
+     * @param selectedLists
+     */
+    private void recordClick(FilterItem data, List<Integer> selectedLists) {
+        for (int i = 0; i < data.getItems().size(); i++) {
+            if (!data.getItems().get(i).isChecked() && selectedLists.contains(i)) {
+                Log.i("sskskkssksk", "点击了" + data.getItems().get(i).getName());
+            }
         }
     }
 
@@ -301,8 +319,14 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
         @Override
         public void afterTextChanged(Editable s) {
             filterItemList.get(0);
-            if (0 == editType) filterItem.setMinNumber(s.toString());
-            if (1 == editType) filterItem.setMaxNumber(s.toString());
+            if (0 == editType) {
+                filterItem.setMinNumber(s.toString());
+                TrackingDataUtils.save(pContext, "1010011031", "");
+            }
+            if (1 == editType) {
+                filterItem.setMaxNumber(s.toString());
+                TrackingDataUtils.save(pContext, "1010011041", "");
+            }
         }
     }
 
