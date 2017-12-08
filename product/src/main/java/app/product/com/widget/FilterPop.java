@@ -218,6 +218,22 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
 
                 BStrUtils.SetTxt1(editTextleft, h.getMinNumber());
                 BStrUtils.SetTxt1(editTextright, h.getMaxNumber());
+                editTextleft.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus){
+                            TrackingDataUtils.save(pContext,"1010011031","");
+                        }
+                    }
+                });
+                editTextright.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus){
+                            TrackingDataUtils.save(pContext,"1010011041","");
+                        }
+                    }
+                });
                 //画标题**************************************
                 BStrUtils.SetTxt(titleView, h.getName());
                 editTextleft.addTextChangedListener(new EditChangeListene(h, 0));
@@ -313,13 +329,9 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
             filterItemList.get(0);
             if (0 == editType) {
                 filterItem.setMinNumber(s.toString());
-                TrackingDataUtils.save(pContext, "1010011031", "");
-                Log.i("sskskkssksk", "点击了输入框" + s.toString());
             }
             if (1 == editType) {
                 filterItem.setMaxNumber(s.toString());
-                TrackingDataUtils.save(pContext, "1010011041", "");
-                Log.i("sskskkssksk", "点击了输入框" + s.toString());
             }
         }
     }
