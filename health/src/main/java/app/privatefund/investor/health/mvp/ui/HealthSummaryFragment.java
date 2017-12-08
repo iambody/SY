@@ -120,8 +120,8 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(discoveryListModel.getUrl()).concat("?healthId=").concat(discoveryListModel.getId()).concat("&healthImg=")
                     .concat(discoveryListModel.getImageUrl()).concat("&healthTitle=").concat(discoveryListModel.getTitle()).concat("&goCustomFeedBack=0"));
             NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
-            DataStatistApiParam.operateHealthIntroduceClick(discoveryListModel.getTitle());
             TrackingHealthDataStatistics.gotoProjectDetailPage(getContext());
+            DataStatistApiParam.operateHealthIntroduceClick(discoveryListModel.getTitle());
         });
         swipeTarget.setAdapter(checkHealthAdapter);
         getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
@@ -243,11 +243,11 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             isLoadMore = true;
             getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
             DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
-            TrackingHealthDataStatistics.projectUpload(getContext());
         } else {
             Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
             clodLsAnim(swipeToLoadLayout);
         }
+        TrackingHealthDataStatistics.projectUpload(getContext());
     }
 
     @Override

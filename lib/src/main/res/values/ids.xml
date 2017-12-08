@@ -9,5 +9,5 @@
     <item type="id" name="bind_summary_title"/>
     <item type="id" name="bind_summary_subtitle"/>
     <item type="id" name="bind_summary_more"/>
-    <item type="id" name="bind_summary_more_ll"/>
+    <item type="id" name="bind_summary_evluate"/>
 </resources>

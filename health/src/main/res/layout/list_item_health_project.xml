@@ -56,6 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:id="@+id/custom_item_text_ll"
         android:orientation="vertical">
 
         <LinearLayout

@@ -287,8 +287,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 TrackingHealthDataStatistics.projectDetailLeftBack(this);
             } else if (!TextUtils.isEmpty(url) && url.contains("information/details.html")) {
                 TrackingDiscoveryDataStatistics.leftBack(this, title);
-            } else  { // 免费咨询页面返回
-                // TrackingHealthDataStatistics.freeConsultLeftBack(this);
+            } else if (!TextUtils.isEmpty(url) && url.contains("health/free_consult.html")){ // 免费咨询页面返回
+                 TrackingHealthDataStatistics.freeConsultLeftBack(this);
+            } else {
+
             }
         });
         mWebview.setClick(result -> executeOverideUrlCallBack(result));
@@ -304,8 +306,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         changeTitileStyle();
         initShakeInSetPage();
         mWebview.loadUrl(url);
-
-
     }
 
     private void changeTitileStyle() {

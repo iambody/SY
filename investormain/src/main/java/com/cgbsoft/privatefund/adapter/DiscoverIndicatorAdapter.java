@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.R;
 
@@ -36,6 +38,7 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
     LayoutInflater layoutInflater;
     private ViewPager viewPager;
     private int screenWidth;
+    private float currentX;
 
     public DiscoverIndicatorAdapter(Context adaptercontext, ViewPager viewPager) {
         super();
@@ -63,6 +66,7 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         return null == categoryList ? 0 : categoryList.size();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public IPagerTitleView getTitleView(Context context, int i) {
         DiscoverModel.DiscoverCategory discoverCategory = categoryList.get(i);
@@ -75,6 +79,32 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         Imageload.display(adapterContext, 0 == i ? discoverCategory.prelog : discoverCategory.norlog, imageView);
         BStrUtils.SetTxt(textViewdd, discoverCategory.text);
         commonPagerTitleView.setContentView(view);
+        commonPagerTitleView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> System.out.println("-------scrollX=" + scrollX + "----oldScrollX=" + oldScrollX));
+        commonPagerTitleView.setOnGenericMotionListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    System.out.println("-----cha-downs");
+                    currentX = event.getX();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    float postion = event.getX();
+                    float cha = currentX - postion;
+                    if (Math.abs(cha) > 5) {
+                        if (cha > 0) {
+                            System.out.println("-----cha-left");
+                            TrackingHealthDataStatistics.introduceLeftScroll(context);
+                        } else {
+                            System.out.println("-----cha--right");
+                            TrackingHealthDataStatistics.introduceRightScroll(context);
+                        }
+                    }
+                    currentX = event.getX();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    break;
+            }
+            return false;
+        });
         commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
             @Override
             public void onSelected(int i, int i1) {//被选中

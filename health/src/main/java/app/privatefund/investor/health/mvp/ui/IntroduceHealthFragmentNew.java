@@ -20,6 +20,7 @@ import com.cgbsoft.lib.utils.ZipResourceDownload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.widget.MemberDegradeDialog;
 import com.cgbsoft.lib.widget.MemberUpdateDialog;
 import com.cgbsoft.lib.widget.MyBaseWebview;
@@ -91,6 +92,25 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
         healthIntroduceFlagRecyclerAdapter.setCategoryItemClickListener((view1, posBean) -> {
             category = posBean.getCode();
             getPresenter().initNavigationContent(baseWebview, posBean);
+            TrackingHealthDataStatistics.introduceClickFlag(getContext(), posBean.getTitle());
+        });
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (Math.abs(dx) > 5) {
+                    if (dx > 0) {
+                        TrackingHealthDataStatistics.introduceLeftScroll(getContext());
+                    } else {
+                        TrackingHealthDataStatistics.introduceRightScroll(getContext());
+                    }
+                }
+            }
         });
         baseWebview.setOnScrollChangedCallback(new MyBaseWebview.OnScrollChangedCallback() {
             @Override

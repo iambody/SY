@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.cgbsoft.lib.AppInfStore;
@@ -19,6 +20,7 @@ import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.R;
@@ -64,6 +66,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     FragmentAdapter fragmentAdapter;
     List<BaseLazyFragment> lazyFragments = new ArrayList<>();
     DiscoverIndicatorAdapter disCoveryNavigationAdapter;
+    private float currentX;
 
     @Override
     protected int layoutID() {

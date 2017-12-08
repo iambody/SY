@@ -199,11 +199,11 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
             CurrentPostion = CurrentPostion + 1;
             isLoadMore = true;
             getPresenter().getHealthCourseList(String.valueOf(CurrentPostion * LIMIT_PAGE));
-            TrackingHealthDataStatistics.healthCoureseUploadMore(getContext());
         } else {
             Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
             clodLsAnim(swipeToLoadLayout);
         }
+        TrackingHealthDataStatistics.healthCoureseUploadMore(getContext());
     }
 
     @Override
