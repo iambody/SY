@@ -1,11 +1,11 @@
 package com.cgbsoft.privatefund.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +16,6 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
-import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.R;
 
@@ -55,64 +54,28 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         }
     }
 
-    private boolean isVisble;
-
-    public void setvisible(boolean isvisble) {
-        isVisble = isvisble;
-    }
-
     @Override
     public int getCount() {
         return null == categoryList ? 0 : categoryList.size();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     @Override
     public IPagerTitleView getTitleView(Context context, int i) {
         DiscoverModel.DiscoverCategory discoverCategory = categoryList.get(i);
         CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
         View view = layoutInflater.inflate(R.layout.view_discovery_item_navigation, null);
-
         ImageView imageView = (ImageView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_iv);
         TextView textViewdd = (TextView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_txt);
 
         Imageload.display(adapterContext, 0 == i ? discoverCategory.prelog : discoverCategory.norlog, imageView);
         BStrUtils.SetTxt(textViewdd, discoverCategory.text);
         commonPagerTitleView.setContentView(view);
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        System.out.println("-----cha-downs");
-                        currentX = event.getX();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        float postion = event.getX();
-                        float cha = currentX - postion;
-                        if (Math.abs(cha) > 5) {
-                            if (cha > 0) {
-                                System.out.println("-----cha-left");
-                                TrackingHealthDataStatistics.introduceLeftScroll(context);
-                            } else {
-                                System.out.println("-----cha--right");
-                                TrackingHealthDataStatistics.introduceRightScroll(context);
-                            }
-                        }
-                        currentX = event.getX();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        break;
-                }
-                return true;
-            }
-        });
         commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
             @Override
             public void onSelected(int i, int i1) {//被选中
                 Imageload.display(adapterContext, discoverCategory.prelog, imageView);
                 textViewdd.setTextColor(adapterContext.getResources().getColor(app.privatefund.com.vido.R.color.app_golden));
-
             }
 
             @Override
@@ -123,12 +86,12 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
 
             @Override
             public void onLeave(int i, int i1, float v, boolean b) {
-
+                System.out.println("-----i--onLeave=" + i + "----il=" + i1);
             }
 
             @Override
             public void onEnter(int i, int i1, float v, boolean b) {
-
+                System.out.println("-----i--onLeave=" + i + "----il=" + i1);
             }
         });
         commonPagerTitleView.setContentPositionDataProvider(new CommonPagerTitleView.ContentPositionDataProvider() {
@@ -156,6 +119,32 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
             viewPager.setCurrentItem(i);
             TrackingDiscoveryDataStatistics.goDiscoveryDetailPage(context, categoryList.get(i).text);
         });
+
+//        commonPagerTitleView.setOnTouchListener((View v, MotionEvent event) -> {
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    System.out.println("-----cha-downs");
+//                    currentX = event.getX();
+//                    return true;
+//                case MotionEvent.ACTION_MOVE:
+//                    float postion = event.getX();
+//                    float cha = currentX - postion;
+//                    if (Math.abs(cha) > 5) {
+//                        if (cha > 0) {
+//                            System.out.println("-----cha-left");
+//                            TrackingHealthDataStatistics.introduceLeftScroll(context);
+//                        } else {
+//                            System.out.println("-----cha--right");
+//                            TrackingHealthDataStatistics.introduceRightScroll(context);
+//                        }
+//                    }
+//                    currentX = event.getX();
+//                    break;
+//                case MotionEvent.ACTION_UP:
+//                    break;
+//            }
+//            return false;
+//        });
         return commonPagerTitleView;
     }
 
