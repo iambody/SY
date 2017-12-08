@@ -286,7 +286,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeVisterAdviserLayyy.setVisibility(View.VISIBLE);
         isVisiterShow = true;
         initShowCardAnimator(mainHomeVisterAdviserLayyy, true);
-        TrackingDataManger.homePersonOpen(baseActivity);
+
 //        homePersonOpen
     }
 
@@ -766,6 +766,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
         });
         animationSet.start();
+        TrackingDataManger.homePersonOpen(baseActivity);
     }
 
 
