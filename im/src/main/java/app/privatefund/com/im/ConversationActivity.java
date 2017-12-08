@@ -190,7 +190,7 @@ public class ConversationActivity extends BaseActivity {
 
                                     @Override
                                     public void right() {
-                                        Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + "400-188-8848"));
+                                        Intent phoneIntent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + bindMobileNumber));
                                         startActivity(phoneIntent);
                                         this.cancel();
                                     }
