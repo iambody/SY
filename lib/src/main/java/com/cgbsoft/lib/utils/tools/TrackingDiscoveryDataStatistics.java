@@ -88,7 +88,7 @@ public class TrackingDiscoveryDataStatistics {
      * 资讯左上返回
      */
     public static void leftBack(Context context, String discoveryTitle) {
-        TrackingDataUtils.save(context, "1060001011", "");
+        TrackingDataUtils.save(context, "1060001011", discoveryTitle);
     }
 
     /**
