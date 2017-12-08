@@ -274,14 +274,13 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
             String filterName = data.getName();
             String tagName = data.getItems().get(i).getName();
             if (!data.getItems().get(i).isChecked() && selectedLists.contains(i)) {
-
                 TrackingDataUtils.save(pContext, "1010011011", filterName + "|" + tagName + "|选中");
-
+                Log.i("kkkalaaa", "选中");
             }
             if (data.getItems().get(i).isChecked() && !selectedLists.contains(i)) {
 
                 TrackingDataUtils.save(pContext, "1010011011", filterName + "|" + tagName + "|取消选中");
-
+                Log.i("kkkalaaa", "取消中");
             }
         }
     }
