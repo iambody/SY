@@ -50,6 +50,7 @@ public class TrackingDataManger {
      */
     public static void homeBannerFocus(Context context, String title) {
         TrackingDataUtils.save(context, "1001001031", title);
+        Log.i("opopaaaaa","点击banner*******");
     }
 
     /**
