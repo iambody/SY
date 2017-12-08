@@ -28,7 +28,7 @@ public class TrackingDiscoveryDataStatistics {
 //    }
 
     /**
-     * 点击介绍标签
+     * 点击资讯标签
      * @param context
      */
     public static void discoveryClickFlag(Context context, String tagName) {
