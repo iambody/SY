@@ -315,10 +315,11 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
                     hashMap1.put(WebViewConstant.push_message_url, data.getTitleRightUrl());
                     hashMap1.put(WebViewConstant.push_message_title, getResources().getString(R.string.vipCardExchange));
                     NavigationUtils.startActivityByRouter(PayActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap1);
+                    TrackingDataManger.rechargeGuest(baseContext);
                 }
             });
             Imageload.display(this, data.getTitleRightImg(), titleRight);
-            TrackingDataManger.rechargeGuest(baseContext);
+
         }
     }
 
