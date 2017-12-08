@@ -81,14 +81,14 @@ public class TrackingDiscoveryDataStatistics {
      * 进入资讯详情
      */
     public static void gotoDiscoveryDetail(Context context, String discoveryTitle) {
-        TrackingDataUtils.save(context, "1060001001", "");
+        TrackingDataUtils.save(context, "1060001001", discoveryTitle);
     }
 
     /**
      * 资讯左上返回
      */
     public static void leftBack(Context context, String discoveryTitle) {
-        TrackingDataUtils.save(context, "1060001011", "");
+        TrackingDataUtils.save(context, "1060001011", discoveryTitle);
     }
 
     /**
