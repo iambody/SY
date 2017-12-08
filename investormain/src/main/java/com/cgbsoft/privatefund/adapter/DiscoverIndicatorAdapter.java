@@ -79,31 +79,33 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         Imageload.display(adapterContext, 0 == i ? discoverCategory.prelog : discoverCategory.norlog, imageView);
         BStrUtils.SetTxt(textViewdd, discoverCategory.text);
         commonPagerTitleView.setContentView(view);
-        commonPagerTitleView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> System.out.println("-------scrollX=" + scrollX + "----oldScrollX=" + oldScrollX));
-        commonPagerTitleView.setOnGenericMotionListener((v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    System.out.println("-----cha-downs");
-                    currentX = event.getX();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    float postion = event.getX();
-                    float cha = currentX - postion;
-                    if (Math.abs(cha) > 5) {
-                        if (cha > 0) {
-                            System.out.println("-----cha-left");
-                            TrackingHealthDataStatistics.introduceLeftScroll(context);
-                        } else {
-                            System.out.println("-----cha--right");
-                            TrackingHealthDataStatistics.introduceRightScroll(context);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        System.out.println("-----cha-downs");
+                        currentX = event.getX();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float postion = event.getX();
+                        float cha = currentX - postion;
+                        if (Math.abs(cha) > 5) {
+                            if (cha > 0) {
+                                System.out.println("-----cha-left");
+                                TrackingHealthDataStatistics.introduceLeftScroll(context);
+                            } else {
+                                System.out.println("-----cha--right");
+                                TrackingHealthDataStatistics.introduceRightScroll(context);
+                            }
                         }
-                    }
-                    currentX = event.getX();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    break;
+                        currentX = event.getX();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        break;
+                }
+                return false;
             }
-            return false;
         });
         commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
             @Override
