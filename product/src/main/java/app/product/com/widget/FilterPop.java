@@ -23,7 +23,6 @@ import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.widget.taglayout.FlowTagLayout;
-import com.cgbsoft.lib.widget.taglayout.OnTagClickListener;
 import com.cgbsoft.lib.widget.taglayout.OnTagSelectListener;
 
 import java.util.ArrayList;
@@ -201,12 +200,12 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
 
                     }
                 });
-                flaFloatView.setOnTagClickListener(new OnTagClickListener() {
-                    @Override
-                    public void onItemClick(FlowTagLayout parent, View view, int position) {
-                        TrackingDataUtils.save(pContext, "1010011011", h.getName() + "|" + h.getItems().get(position).getName() + "|" + (filteAdapter.isSelectedPosition(position) ? "选中" : "取消选中"));
-                    }
-                });
+//                flaFloatView.setOnTagClickListener(new OnTagClickListener() {
+//                    @Override
+//                    public void onItemClick(FlowTagLayout parent, View view, int position) {
+//                        TrackingDataUtils.save(pContext, "1010011011", h.getName() + "|" + h.getItems().get(position).getName() + "|" + (filteAdapter.isSelectedPosition(position) ? "选中" : "取消选中"));
+//                    }
+//                });
 
                 filteAdapter.onlyAddAll(h.getItems());
 
