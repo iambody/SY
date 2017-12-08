@@ -426,13 +426,13 @@ public class TrackingDataManger {
         TrackingDataUtils.save(context, "1065002021", "");
     }
 
-    /**
-     * 视频首页导航入口
-     */
-    public static void videoSchoolIn(Context context) {
-        TrackingDataUtils.save(context, "1065002021", "");
-        Log.i("ssssaaaaa","视频进入。。。");
-    }
+//    /**
+//     * 视频首页导航入口
+//     */
+//    public static void videoSchoolIn(Context context) {
+//        TrackingDataUtils.save(context, "1010070011", "");
+//        Log.i("ssssaaaaa","视频进入。。。");
+//    }
 
     /**
      * 视频首页导航 左滑

@@ -42,7 +42,7 @@ public class TrackingDiscoveryDataStatistics {
      * @param context
      */
     public static void discoveryLeftScroll(Context context) {
-        TrackingDataUtils.save(context, "1010040012", "");
+        TrackingDataUtils.save(context, "1010040012", "左滑");
     }
 
     /**
@@ -51,7 +51,7 @@ public class TrackingDiscoveryDataStatistics {
      * @param context
      */
     public static void discoveryRightScroll(Context context) {
-        TrackingDataUtils.save(context, "1010040013", "");
+        TrackingDataUtils.save(context, "1010040012", "右滑");
     }
 
     /**

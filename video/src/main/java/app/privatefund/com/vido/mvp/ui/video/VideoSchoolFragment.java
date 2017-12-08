@@ -302,7 +302,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     @Override
     protected void viewBeShow() {
         super.viewBeShow();
-        TrackingDataManger.videoSchoolIn(baseActivity);
+//        TrackingDataManger.videoSchoolIn(baseActivity);
         TrackingDataManger.privateBanckVideoShow(baseActivity);
         isvisible = true;
     }
