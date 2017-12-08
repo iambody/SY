@@ -111,7 +111,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
             hashMap1.put(WebViewConstant.push_message_title, discoveryListModel.getLabel());
             NavigationUtils.startActivity(getActivity(), RightShareWebViewActivity.class, hashMap1);
             DataStatistApiParam.operatePrivateBankDiscoverDetailClick(discoveryListModel.getTitle(), discoveryListModel.getLabel());
-            TrackingDiscoveryDataStatistics.gotoDiscoveryDetail(getContext(), discoveryListModel.getTitle());
+            TrackingDiscoveryDataStatistics.gotoDiscoveryDetail(getContext(), discoveryListModel.getLabel());
         });
         swipeTarget.setAdapter(discoveryListAdapter);
         if (null == list) {
