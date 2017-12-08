@@ -460,7 +460,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         toDataStatistics(1021, 10103, new String[]{"下载", SPreference.isColorCloud(this), SPreference.getOrganizationName(this)});
         if (!isCancache) return;
         openCacheView();
-        TrackingDataManger.videoDetailRecommend(baseContext);
+        TrackingDataManger.videoDetailCache(baseContext);
     }
 
     @OnClick(R2.id.iv_avd_close)
@@ -1220,7 +1220,8 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     @OnClick(R2.id.video_videplay_edit_comment_lay)
     public void oncommontClicked() {
-
+        TrackingDataManger.videoDetailToCommont(baseContext);
+        TrackingDataManger.videoDetailRecommend(baseContext);
         CommentDialog commentDialog = new CommentDialog(baseContext) {
             @Override
             public void left() {
@@ -1247,7 +1248,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             }
         }, 200);
 
-        TrackingDataManger.videoDetailRecommend(baseContext);
+
     }
 
 

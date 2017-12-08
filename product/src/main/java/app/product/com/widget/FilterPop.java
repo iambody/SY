@@ -209,12 +209,7 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
                 });
 
                 filteAdapter.onlyAddAll(h.getItems());
-                flaFloatView.setOnTagClickListener(new OnTagClickListener() {
-                    @Override
-                    public void onItemClick(FlowTagLayout parent, View view, int position) {
 
-                    }
-                });
                 break;
             case EDIT://编辑范围
                 itemView = layoutInflater.inflate(R.layout.view_pop_filter_ed, null);
@@ -262,7 +257,18 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
     private void recordClick(FilterItem data, List<Integer> selectedLists) {
         for (int i = 0; i < data.getItems().size(); i++) {
             if (!data.getItems().get(i).isChecked() && selectedLists.contains(i)) {
-                Log.i("sskskkssksk", "点击了" + data.getItems().get(i).getName());
+
+                String filterName=data.getName();
+                String tagName=data.getItems().get(i).getName();
+                TrackingDataUtils.save(pContext, "1010011011", filterName + "|" + tagName + "|选中"  );
+
+            }
+            if (data.getItems().get(i).isChecked() && !selectedLists.contains(i)) {
+
+                String filterName=data.getName();
+                String tagName=data.getItems().get(i).getName();
+                TrackingDataUtils.save(pContext, "1010011011", filterName + "|" + tagName + "|取消选中"  );
+
             }
         }
     }
@@ -311,10 +317,12 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
             if (0 == editType) {
                 filterItem.setMinNumber(s.toString());
                 TrackingDataUtils.save(pContext, "1010011031", "");
+                Log.i("sskskkssksk", "点击了输入框" +s.toString() );
             }
             if (1 == editType) {
                 filterItem.setMaxNumber(s.toString());
                 TrackingDataUtils.save(pContext, "1010011041", "");
+                Log.i("sskskkssksk", "点击了输入框" +s.toString() );
             }
         }
     }
