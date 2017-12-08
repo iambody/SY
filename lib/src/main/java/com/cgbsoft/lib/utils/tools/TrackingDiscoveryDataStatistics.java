@@ -81,7 +81,7 @@ public class TrackingDiscoveryDataStatistics {
      * 进入资讯详情
      */
     public static void gotoDiscoveryDetail(Context context, String discoveryTitle) {
-        TrackingDataUtils.save(context, "1060001001", "");
+        TrackingDataUtils.save(context, "1060001001", discoveryTitle);
     }
 
     /**
