@@ -104,7 +104,7 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
                     case MotionEvent.ACTION_UP:
                         break;
                 }
-                return false;
+                return true;
             }
         });
         commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
