@@ -137,7 +137,10 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     public void paizhao(View V) {
         if (!isCanclick) return;
         isCanclick = false;
-        getPicImageResult();
+        try {
+            getPicImageResult();
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -249,7 +252,10 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
                         } else {
                             AnimUtils.playNotece(FacePictureActivity.this);
                             PromptManager.ShowCustomToast(FacePictureActivity.this, "请人脸对准相框");
-                            getPicImageResult();
+                            try {
+                                getPicImageResult();
+                            } catch (Exception e) {
+                            }
                         }
                     }
                 });
@@ -365,7 +371,10 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
             public void call(Integer integer) {
                 Log.i("daojishi", "时间" + integer);
                 if (0 == integer) {
-                    getPicImageResult();
+                    try {
+                        getPicImageResult();
+                    } catch (Exception e) {
+                    }
                 }
             }
         });
