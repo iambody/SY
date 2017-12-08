@@ -2,7 +2,6 @@ package app.mall.com.mvp.ui;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -20,6 +19,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -143,6 +143,8 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
                 payMethod = payMethods.get(position);
             }
         });
+
+        TrackingDataManger.payIn(this);
     }
 
     @Override
@@ -170,6 +172,12 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TrackingDataManger.payBack(this);
+    }
+
+    @Override
     public boolean onMenuItemClick(MenuItem item) {
 
         for (int i = 0; i < payMethods.size(); i++) {
@@ -191,6 +199,7 @@ public class PayMethodActivity extends BaseActivity<PayMethodPresenter> implemen
         setResult(RESULT_OK, intent); //intent为A传来的带有Bundle的intent，当然也可以自己定义新的Bundle
         choiceMethodStasist(payMethod.getName());
         finish();
+        TrackingDataManger.payAffirm(baseContext);
         return false;
     }
 }
