@@ -11,6 +11,7 @@ import android.util.Log;
 public class TrackingDataManger {
     public static void gohome(Context context) {
         TrackingDataUtils.save(context, "1001001001", "");
+        Log.i("sooollaa","进入首页*******");
     }
 
     /**
@@ -19,7 +20,8 @@ public class TrackingDataManger {
      * @param context
      */
     public static void homePersonOpen(Context context) {
-        TrackingDataUtils.save(context, "1001001001", "打开");
+        TrackingDataUtils.save(context, "1001001011", "打开");
+        Log.i("sooollaa","打开*******");
     }
 
     /**
@@ -28,7 +30,8 @@ public class TrackingDataManger {
      * @param context
      */
     public static void homePersonClose(Context context) {
-        TrackingDataUtils.save(context, "1001001001", "关闭");
+        TrackingDataUtils.save(context, "1001001011", "关闭");
+        Log.i("sooollaa","关上*******");
     }
 
     /**

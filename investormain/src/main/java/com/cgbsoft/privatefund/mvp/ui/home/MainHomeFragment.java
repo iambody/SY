@@ -498,7 +498,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 mainHomeVisterLay.setVisibility(View.GONE);
 
                 mainHomeAdviserTitle.setText(String.format("尊敬的%s，我是您的专属私人银行家，很高兴为您服务", AppManager.getUserInfo(baseActivity).realName));
-                hindCard();
+                hindCard(200);
                 initshowlay();
                 initDataInf();
             }
@@ -789,7 +789,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void onSmartScrollListener(boolean isTop, boolean isBottom, int scrollX, int scrollY, int scrolloldX, int scrolloldY) {
         LogUtils.Log("scrolllll", "新Y" + scrollY + "原来的Y" + scrolloldY);
         if ((scrollY > scrolloldY) && scrollY >= 200) {
-            hindCard();
+
+            hindCard(  scrollY);
         } else if ((scrolloldY > scrollY) && scrollY <= 200) {
             if (mainHomeAdviserLayyy.getVisibility() == View.GONE) {
             }
@@ -876,7 +877,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
 
-    private void hindCard() {
+    private void hindCard(int Y) {
         if (null == mainHomeAdviserLayyy) return;
 
         if (mainHomeAdviserLayyy.getVisibility() == View.VISIBLE) {
@@ -895,7 +896,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             mainHomeInvisiterTxtLay.setVisibility(View.GONE);
             isVisiterShow = false;
         }
-        TrackingDataManger.homePersonClose(baseActivity);
+        if ( 200==Y) {
+            TrackingDataManger.homePersonClose(baseActivity);
+        }
     }
 
     /**
@@ -910,7 +913,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }).subscribe(new Subscriber<Integer>() {
             @Override
             public void onCompleted() {
-                hindCard();
+                hindCard(200);
             }
 
             @Override

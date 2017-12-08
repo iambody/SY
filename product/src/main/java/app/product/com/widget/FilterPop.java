@@ -221,18 +221,7 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
                 titleView = ViewHolders.get(itemView, R.id.view_pop_filter_ed_title);
                 EditText editTextleft = ViewHolders.get(itemView, R.id.view_pop_filter_ed_edleft);
                 EditText editTextright = ViewHolders.get(itemView, R.id.view_pop_filter_ed_edright);
-                editTextleft.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                    }
-                });
-                editTextright.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
                 BStrUtils.SetTxt1(editTextleft, h.getMinNumber());
                 BStrUtils.SetTxt1(editTextright, h.getMaxNumber());
                 //画标题**************************************
