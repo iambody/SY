@@ -82,6 +82,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     }
 
     private int currentPosition = -1;
+
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         commonNavigator = new CommonNavigator(baseActivity);
@@ -111,7 +112,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
                 if (currentPosition == position) {
                     return;
                 }
-                if (currentPosition > position){
+                if (currentPosition > position) {
                     TrackingDataManger.videoSchoolLeftScroll(baseActivity);
                 } else {
                     TrackingDataManger.videoSchoolRightScroll(baseActivity);
@@ -123,8 +124,34 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
                 videoVideolistIndicator.onPageScrollStateChanged(state);
             }
         });
-
+//        videoVideolistIndicator.setOnTouchListener(new onOperationScrollImpl());
     }
+//
+//    private int downXPostion;
+//    private int lastXPostion;
+//    class onOperationScrollImpl implements View.OnTouchListener {
+//        @Override
+//        public boolean onTouch(View v, MotionEvent event) {
+//            if (MotionEvent.ACTION_DOWN == event.getAction())
+//                downXPostion = (int) event.getX();
+//            if (MotionEvent.ACTION_MOVE == event.getAction()) {
+//                lastXPostion = (int) event.getX() - downXPostion;
+//                downXPostion = (int) event.getX();
+//            }
+//            if (MotionEvent.ACTION_UP == event.getAction()) {
+//                if (lastXPostion > 0) {
+//                    //向左滑动
+//                    Log.i("olmpjjaaaaa");
+//                } else {
+//                    //向右滑动
+//                    TrackingDataManger.homeOperateRight(baseActivity);
+//                }
+//            }
+//            return false;
+//        }
+//
+//
+//    }
 
     private boolean isInit;
 

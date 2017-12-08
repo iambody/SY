@@ -394,6 +394,7 @@ public class TrackingDataManger {
      */
     public static void videoDetailCache(Context context) {
         TrackingDataUtils.save(context, "1065001041", "");
+        Log.i("lololololo","缓存龙龙龙龙绿绿绿");
     }
 
     /**
@@ -429,6 +430,7 @@ public class TrackingDataManger {
      */
     public static void videoSchoolIn(Context context) {
         TrackingDataUtils.save(context, "1065002021", "");
+        Log.i("ssssaaaaa","视频进入。。。");
     }
 
     /**
@@ -501,6 +503,6 @@ public class TrackingDataManger {
      * 尊享私行 视频可见
      */
     public static void privateBanckVideoShow(Context context) {
-        TrackingDataUtils.save(context, "1010070011", "");
+        TrackingDataUtils.save(context, "1010070011", "视频");
     }
 }

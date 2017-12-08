@@ -23,7 +23,6 @@ import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.widget.taglayout.FlowTagLayout;
-import com.cgbsoft.lib.widget.taglayout.OnTagClickListener;
 import com.cgbsoft.lib.widget.taglayout.OnTagSelectListener;
 
 import java.util.ArrayList;
@@ -201,20 +200,15 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
 
                     }
                 });
-                flaFloatView.setOnTagClickListener(new OnTagClickListener() {
-                    @Override
-                    public void onItemClick(FlowTagLayout parent, View view, int position) {
-                        TrackingDataUtils.save(pContext, "1010011011", h.getName() + "|" + h.getItems().get(position).getName() + "|" + (filteAdapter.isSelectedPosition(position) ? "选中" : "取消选中"));
-                    }
-                });
+//                flaFloatView.setOnTagClickListener(new OnTagClickListener() {
+//                    @Override
+//                    public void onItemClick(FlowTagLayout parent, View view, int position) {
+//                        TrackingDataUtils.save(pContext, "1010011011", h.getName() + "|" + h.getItems().get(position).getName() + "|" + (filteAdapter.isSelectedPosition(position) ? "选中" : "取消选中"));
+//                    }
+//                });
 
                 filteAdapter.onlyAddAll(h.getItems());
-                flaFloatView.setOnTagClickListener(new OnTagClickListener() {
-                    @Override
-                    public void onItemClick(FlowTagLayout parent, View view, int position) {
 
-                    }
-                });
                 break;
             case EDIT://编辑范围
                 itemView = layoutInflater.inflate(R.layout.view_pop_filter_ed, null);
@@ -224,6 +218,22 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
 
                 BStrUtils.SetTxt1(editTextleft, h.getMinNumber());
                 BStrUtils.SetTxt1(editTextright, h.getMaxNumber());
+                editTextleft.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus){
+                            TrackingDataUtils.save(pContext,"1010011031","");
+                        }
+                    }
+                });
+                editTextright.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus){
+                            TrackingDataUtils.save(pContext,"1010011041","");
+                        }
+                    }
+                });
                 //画标题**************************************
                 BStrUtils.SetTxt(titleView, h.getName());
                 editTextleft.addTextChangedListener(new EditChangeListene(h, 0));
@@ -261,8 +271,17 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
      */
     private void recordClick(FilterItem data, List<Integer> selectedLists) {
         for (int i = 0; i < data.getItems().size(); i++) {
+            String filterName = data.getName();
+            String tagName = data.getItems().get(i).getName();
             if (!data.getItems().get(i).isChecked() && selectedLists.contains(i)) {
-                Log.i("sskskkssksk", "点击了" + data.getItems().get(i).getName());
+
+                TrackingDataUtils.save(pContext, "1010011011", filterName + "|" + tagName + "|选中");
+
+            }
+            if (data.getItems().get(i).isChecked() && !selectedLists.contains(i)) {
+
+                TrackingDataUtils.save(pContext, "1010011011", filterName + "|" + tagName + "|取消选中");
+
             }
         }
     }
@@ -310,11 +329,9 @@ public class FilterPop extends PopupWindow implements View.OnClickListener {
             filterItemList.get(0);
             if (0 == editType) {
                 filterItem.setMinNumber(s.toString());
-                TrackingDataUtils.save(pContext, "1010011031", "");
             }
             if (1 == editType) {
                 filterItem.setMaxNumber(s.toString());
-                TrackingDataUtils.save(pContext, "1010011041", "");
             }
         }
     }
