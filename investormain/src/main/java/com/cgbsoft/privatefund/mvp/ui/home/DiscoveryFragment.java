@@ -162,7 +162,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     @Override
     protected void viewBeShow() {
         super.viewBeShow();
-        TrackingDiscoveryDataStatistics.discoveryClickFlag(getContext(), "");
+        TrackingDiscoveryDataStatistics.discoveryClickFlag(getContext(), "介绍");
         if(null!=disCoveryNavigationAdapter)disCoveryNavigationAdapter.setvisible(false);
     }
 

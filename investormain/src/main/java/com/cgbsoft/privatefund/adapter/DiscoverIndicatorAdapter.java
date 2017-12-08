@@ -80,7 +80,6 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
             public void onSelected(int i, int i1) {//被选中
                 Imageload.display(adapterContext, discoverCategory.prelog, imageView);
                 textViewdd.setTextColor(adapterContext.getResources().getColor(app.privatefund.com.vido.R.color.app_golden));
-                if(isVisble) TrackingDiscoveryDataStatistics.discoveryLeftScroll(context);
 
             }
 
@@ -88,7 +87,6 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
             public void onDeselected(int i, int i1) {//取消被选中状态
                 Imageload.display(adapterContext, discoverCategory.norlog, imageView);
                 textViewdd.setTextColor(adapterContext.getResources().getColor(app.privatefund.com.vido.R.color.black));
-                if(isVisble)   TrackingDiscoveryDataStatistics.discoveryRightScroll(context);
             }
 
             @Override
