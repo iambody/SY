@@ -185,7 +185,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
-            valueAnimator.setDuration(3 * 1000);
+            valueAnimator.setDuration(2 * 1000);
             valueAnimator.setTarget(rectangle_in_lay);
             valueAnimator.start();
         } else {
@@ -216,7 +216,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
-            valueAnimator.setDuration(3 * 1000);
+            valueAnimator.setDuration(2 * 1000);
 //            valueAnimator.setTarget(rectangle_in_lay,rectangle_out_lay);
             valueAnimator.start();
 
@@ -250,7 +250,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
-            valueAnimator.setDuration(3 * 1000);
+            valueAnimator.setDuration(2 * 1000);
             valueAnimator.setTarget(rectangle_in_lay);
             valueAnimator.start();
         } else {
@@ -280,7 +280,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
-            valueAnimator.setDuration(3 * 1000);
+            valueAnimator.setDuration(2 * 1000);
 //            valueAnimator.setTarget(rectangle_in_lay,rectangle_out_lay);
             valueAnimator.start();
         }
