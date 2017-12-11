@@ -16,6 +16,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
+import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.RoundImageView;
@@ -132,7 +133,6 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         this.serveCode = AppManager.getUserInfo(floatContext).bandingAdviserUniqueCode;
         this.headerurl = AppManager.getUserInfo(floatContext).bandingAdviserHeadImageUrl;
         this.userName = AppManager.getUserInfo(floatContext).realName;
-        ;
         inflateView();
     }
 
@@ -181,6 +181,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 40) + (int) (surplusWidth * fraction);
                     rectangle_in_lay.requestLayout();
                     rectangle_in_text_lay.setVisibility(100 == animatorValue ? VISIBLE : GONE);
+                    if (100 == animatorValue) timeCount(true);
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
@@ -210,6 +211,8 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     cardnumber_lay.setVisibility(65 < animatorValue ? VISIBLE : GONE);//(1==animatorValue);
                     rectangle_in_user_text_lay.setVisibility(80 < animatorValue ? VISIBLE : GONE);
                     rectangle_in_user_text.setVisibility(100 <= animatorValue ? VISIBLE : INVISIBLE);
+
+                    if (100 == animatorValue) timeCount(true);
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
@@ -225,6 +228,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
      * 关闭
      **/
     public void closeFloat() {
+        timeCount(false);
         if (!isOpen) return;
         isOpen = false;
         int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 160);
@@ -242,6 +246,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     rectangle_in_lay.requestLayout();
 
                     rectangle_in_text_lay.setVisibility(animatorValue > 10 ? GONE : VISIBLE);
+
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
@@ -301,4 +306,49 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         void imClick();
     }
 
+
+    private final int TIMECOUNTDOWN = 8;
+
+    private void timeCount(boolean isClos) {
+        if (isClos) {
+
+            RxCountDown.countTimeDown(TIMECOUNTDOWN, new RxCountDown.ICountTime() {
+                @Override
+                public void onCompleted() {
+                    closeFloat();
+                }
+
+                @Override
+                public void onNext(int timer) {
+
+                }
+            });
+        } else {
+            RxCountDown.stopCountTime();
+        }
+
+//        RxCountDown.countdown(TIMECOUNTDOWN).doOnSubscribe(new Action0() {
+//            @Override
+//            public void call() {
+//
+//            }
+//        }).subscribe(new Subscriber<Integer>() {
+//            @Override
+//            public void onCompleted() {
+//
+//                closeFloat();
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(Integer integer) {
+//
+//
+//            }
+//        });
+    }
 }

@@ -360,7 +360,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         }
                     });
                 }
-
+                home_floatstewardview.closeFloat();
+                home_floatstewardview.refreshData(AppManager.isVisitor(baseActivity) || !AppManager.isBindAdviser(baseActivity));
                 mainhomeWebview.loadUrl("javascript:refresh()");
                 mainhomeWebview.reload();
                 initshowlay();
@@ -546,6 +547,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void getUseriInfsucc(int type) {
         switch (type) {
             case 1:
+                home_floatstewardview.closeFloat();
                 home_floatstewardview.refreshData(AppManager.isVisitor(baseActivity) || !AppManager.isBindAdviser(baseActivity));
                 break;
         }
