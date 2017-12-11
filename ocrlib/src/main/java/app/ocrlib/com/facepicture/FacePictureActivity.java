@@ -80,7 +80,6 @@ public class FacePictureActivity extends AppCompatActivity implements SurfaceHol
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (null != getIntent().getExtras() && getIntent().getExtras().containsKey(PAGE_TAG)) {
             currentPageTag = getIntent().getStringExtra(PAGE_TAG);
         } else {

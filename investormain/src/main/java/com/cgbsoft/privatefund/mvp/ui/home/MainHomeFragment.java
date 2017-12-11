@@ -1,12 +1,8 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,8 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.HomeEntity;
@@ -47,7 +41,6 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
-import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.SmartScrollView;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
@@ -55,6 +48,7 @@ import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
+import com.cgbsoft.privatefund.widget.FloatStewardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,83 +77,32 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public final int ADVISERLOADTIME = 3;
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
-
     @BindView(R.id.main_home_horizontalscrollview_lay)
     LinearLayout mainHomeHorizontalscrollviewLay;
     @BindView(R.id.main_home_horizontalscrollview)
     HorizontalScrollView mainHomeHorizontalscrollview;
-    @BindView(R.id.main_home_adviser_inf_lay)
-    LinearLayout mainHomeAdviserInfLay;
-    //登录模式下
-    @BindView(R.id.main_home_adviser_inf_iv)
-    RoundImageView mainHomeAdviserInfIv;
-    @BindView(R.id.main_home_adviser_layyy)
-    LinearLayout mainHomeAdviserLayyy;
     @BindView(R.id.view_home_level_str)
     TextView viewHomeLevelStr;
     @BindView(R.id.main_home_swiperefreshlayout)
     MySwipeRefreshLayout mainHomeSwiperefreshlayout;
     @BindView(R.id.main_home_smartscrollview)
     SmartScrollView mainHomeSmartscrollview;
-    //邀请码
-    @BindView(R.id.main_home_cardnumber_txt)
-    TextView mainHomeCardnumberTxt;
-    //邀请码的布局
-    @BindView(R.id.main_home_card_lay)
-    LinearLayout mainHomeCardLay;
     @BindView(R.id.main_home_new_iv)
     ImageView mainHomeNewIv;
-
     @BindView(R.id.view_live_title)
     TextView viewLiveTitle;
-    //直播预告
     View main_home_live_lay;
     @BindView(R.id.view_live_iv_lay)
     RelativeLayout viewLiveIvLay;
-    @BindView(R.id.main_home_adviser_title)
-    TextView mainHomeAdviserTitle;
-    @BindView(R.id.main_home_adviser_phone)
-    TextView mainHomeAdviserPhone;
-    @BindView(R.id.main_home_adviser_note)
-    TextView mainHomeAdviserNote;
-    @BindView(R.id.main_home_adviser_im)
-    TextView mainHomeAdviserIm;
-    @BindView(R.id.main_home_adviser_relation_lay)
-    LinearLayout mainHomeAdviserRelationLay;
-    //登录模式下的视图布局
-    @BindView(R.id.main_home_login_lay)
-    RelativeLayout mainHomeLoginLay;
-    @BindView(R.id.main_home_vister_adviser_layyy)
-    LinearLayout mainHomeVisterAdviserLayyy;
-    @BindView(R.id.main_home_vister_adviser_inf_lay)
-    LinearLayout mainHomeVisterAdviserInfLay;
-    //游客模式的头像
-    @BindView(R.id.main_home_vister_adviser_inf_iv)
-    RoundImageView mainHomeVisterAdviserInfIv;
-    @BindView(R.id.main_home_vister_adviser_layy)
-    LinearLayout mainHomeVisterAdviserLayy;
-    //游客模式下的布局
-    @BindView(R.id.main_home_vister_lay)
-    RelativeLayout mainHomeVisterLay;
-    @BindView(R.id.main_home_invisiter_txt_lay)
-    LinearLayout mainHomeInvisiterTxtLay;
     @BindView(R.id.home_bannerview)
     BannerView homeBannerview;
-    //直播
+    @BindView(R.id.home_floatstewardview)
+    FloatStewardView home_floatstewardview;
     TextView view_live_title_tag;
-    //图片,小图标
     ImageView view_live_iv_bg, view_live_title_tag_iv;
-    //标题和内容
     TextView view_live_title, view_live_content;
-    //会员布局
     View main_home_level_lay;
-    //是否已经展示出来名片
-    private boolean isShowAdviserCard;
-    //游客模式下是否已经展示出来
-    private boolean isVisiterShow;
-    // Fragment当前状态是否可见
-    protected boolean isVisible;
-    //是否绑定理财师
+
     private Observable<LiveInfBean> liveObservable;
     private Observable<Integer> userLayObservable, bindAdviserObservable;
     private UnreadInfoNumber unreadInfoNumber;
@@ -169,7 +112,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private boolean bannerIsLeft;
     private boolean bannerIsRight;
     private boolean isRolling;
-
+    // Fragment当前状态是否可见
+    protected boolean isVisible;
 
     @Override
 
@@ -188,6 +132,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv, false);
         DataStatistApiParam.gohome();
 
+    }
+
+    @Override
+    protected void viewBeShow() {
+        super.viewBeShow();
+    }
+
+    @Override
+    protected void viewBeHide() {
+        super.viewBeHide();
     }
 
     @Override
@@ -221,11 +175,55 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      * 游客模式游客布局显示 费游客模式非游客布局显示
      */
     private void initshowlay() {
-        if (AppManager.isVisitor(baseActivity) || !AppManager.isBindAdviser(baseActivity)) {
-            onViewvisterivClicked();
-        } else {
-            onViewivClicked();
-        }
+        home_floatstewardview.initFloat(AppManager.isVisitor(baseActivity) || !AppManager.isBindAdviser(baseActivity), new FloatStewardView.FloatStewardListener() {
+            @Override
+            public void roundImageViewClick() {
+                if (AppManager.isBindAdviser(baseActivity)) {
+                    VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), 200);
+                } else {
+                    VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
+                }
+            }
+
+            @Override
+            public void visitorTxtClick() {//游客模式下点击跳转理财师
+                if (AppManager.isVisitor(baseActivity)) {
+                    VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
+
+                } else if (AppManager.isBindAdviser(baseActivity)) {
+                    VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), 200);
+                } else {
+                    VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
+                }
+                TrackingDataManger.homeGreetings(baseActivity);
+            }
+
+            @Override
+            public void phoneClick() {
+                if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
+                    PromptManager.ShowCustomToast(baseActivity, "请到设置允许拨打电话权限");
+                    return;
+                }
+                getPresenter().gotoConnectAdviser();
+                DataStatistApiParam.homeClickDuiHua();
+                TrackingDataManger.homePhone(baseActivity);
+            }
+
+            @Override
+            public void noteClick() {
+                Utils.sendSmsWithNumber(baseActivity, AppManager.getUserInfo(baseActivity).adviserPhone);
+                DataStatistApiParam.homeClickNote();
+                TrackingDataManger.homeNote(baseActivity);
+            }
+
+            @Override
+            public void imClick() {
+                RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(baseActivity).toC.bandingAdviserId,
+                        getString(R.string.private_bank_personal).concat(AppManager.getUserInfo(baseActivity).adviserRealName));
+
+            }
+        });
+        home_floatstewardview.openFloat();
     }
 
 
@@ -237,97 +235,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (null != data)
             initResultData(data);
     }
-
-    /**
-     * 登录模式点击短信
-     */
-    @OnClick(R.id.main_home_adviser_note)
-    public void onMainHomeAdviserNoteClicked() {
-        Utils.sendSmsWithNumber(baseActivity, AppManager.getUserInfo(baseActivity).adviserPhone);
-        DataStatistApiParam.homeClickNote();
-    }
-
-    /**
-     * 登录模式点击聊天
-     */
-    @OnClick(R.id.main_home_adviser_im)
-    public void onMainHomeAdviserImClicked() {
-        RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(baseActivity).toC.bandingAdviserId,
-                getString(R.string.private_bank_personal).concat(AppManager.getUserInfo(baseActivity).adviserRealName));
-    }
-
-    /**
-     * 非游客模式头像的点击事件
-     */
-    @OnClick(R.id.main_home_adviser_inf_iv)
-    public void onViewivClicked() {
-        if (isShowAdviserCard) {
-            if (AppManager.isBindAdviser(baseActivity)) {
-                VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), 200);
-            } else {
-                VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
-            }
-            return;
-        }
-        mainHomeAdviserLayyy.setVisibility(View.VISIBLE);
-        isShowAdviserCard = true;
-        initShowCardAnimator(mainHomeAdviserLayyy, false);
-    }
-
-    /**
-     * 游客模式点击头像
-     */
-    @OnClick(R.id.main_home_vister_adviser_inf_iv)
-    public void onViewvisterivClicked() {
-        if (isVisiterShow) {
-            VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
-            return;
-        }
-        mainHomeVisterAdviserLayyy.setVisibility(View.VISIBLE);
-        isVisiterShow = true;
-        initShowCardAnimator(mainHomeVisterAdviserLayyy, true);
-
-//        homePersonOpen
-    }
-
-    /**
-     * 登录模式的点击跳转理财师
-     */
-    @OnClick(R.id.main_home_adviser_title)
-    public void adviserTextClick() {
-
-        if (AppManager.isBindAdviser(baseActivity)) {
-            VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), 200);
-        } else {
-            VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
-        }
-        TrackingDataManger.homeGreetings(baseActivity);
-
-    }
-
-    /**
-     * 游客模式的点击跳转理财师
-     */
-    @OnClick(R.id.main_home_invisiter_txt_lay)
-    public void onViewinvisitertxtlayClicked() {
-        VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
-        TrackingDataManger.homeGreetings(baseActivity);
-    }
-
-    /**
-     * 登录模式点击电话
-     */
-    @OnClick(R.id.main_home_adviser_phone)
-    public void onMainHomeAdviserPhoneClicked() {
-        if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
-            PromptManager.ShowCustomToast(baseActivity, "请到设置允许拨打电话权限");
-            return;
-        }
-        getPresenter().gotoConnectAdviser();
-        DataStatistApiParam.homeClickDuiHua();
-        TrackingDataManger.homePhone(baseActivity);
-    }
-
 
     /**
      * 点击消息
@@ -357,10 +264,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 bannerIsRight = right;
                 isRolling = true;
                 if (bannerIsLeft) {
-                    Log.i("setChangeViewCallback", "左边");
                 }
                 if (bannerIsRight) {
-                    Log.i("setChangeViewCallback", "右边");
                 }
             }
 
@@ -369,11 +274,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 if (null == homeData) return;
                 try {
                     if (bannerIsLeft && isRolling) {
-                        Log.i("setChangeViewCallback", " 边" + index);
                         TrackingDataManger.homeBannerleft(baseActivity, homeData.banner.get(index).title);
                     }
                     if (bannerIsRight && isRolling) {
-                        Log.i("setChangeViewCallback", " 边" + index);
                         TrackingDataManger.homeBannerRight(baseActivity, homeData.banner.get(index).title);
                     }
                 } catch (Exception e) {
@@ -382,6 +285,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 }
             }
         });
+
         RelativeLayout.LayoutParams bannerParames = new RelativeLayout.LayoutParams(screenWidth, (int) ((screenWidth * 61) / 75));
         homeBannerview.setLayoutParams(bannerParames);
         /* 直播 */
@@ -405,38 +309,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
         main_home_live_lay.setOnClickListener(this);
         //游客模式下或者没有绑定过理财师需要
-        initDataInf();
         initRxEvent();
-        mainHomeAdviserTitle.setText(String.format("尊敬的%s，我是您的专属私人银行家，很高兴为您服务", AppManager.getUserInfo(baseActivity).realName));
-    }
-
-    void initDataInf() {
-        if (AppManager.isVisitor(baseActivity) || !AppManager.isBindAdviser(baseActivity)) {
-            //登录模式
-            mainHomeLoginLay.setVisibility(View.GONE);
-            //游客模式
-            mainHomeVisterLay.setVisibility(View.VISIBLE);
-        } else {//登录模式下并且已经绑定过理财师
-            //登录模式
-            mainHomeLoginLay.setVisibility(View.VISIBLE);
-            //游客模式
-            mainHomeVisterLay.setVisibility(View.GONE);
-            //开始填充登录模式下理财师数据
-            Imageload.displayListener(baseActivity, AppManager.getUserInfo(baseActivity).bandingAdviserHeadImageUrl, mainHomeAdviserInfIv, new RequestListener() {
-                @Override
-                public boolean onException(Exception e, Object model, Target target, boolean isFirstResource) {
-                    return false;
-                }
-
-                @Override
-                public boolean onResourceReady(Object resource, Object model, Target target, boolean isFromMemoryCache, boolean isFirstResource) {
-
-                    mainHomeAdviserInfLay.setVisibility(View.VISIBLE);
-                    return false;
-                }
-            });
-            BStrUtils.SetTxt1(mainHomeCardnumberTxt, AppManager.getUserInfo(baseActivity).bandingAdviserUniqueCode);
-        }
     }
 
 
@@ -490,17 +363,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                 mainhomeWebview.loadUrl("javascript:refresh()");
                 mainhomeWebview.reload();
-                //开始刷新ui
-                mainHomeAdviserInfLay.setVisibility(View.VISIBLE);
-                //登录模式
-                mainHomeLoginLay.setVisibility(View.VISIBLE);
-                //游客模式
-                mainHomeVisterLay.setVisibility(View.GONE);
-
-                mainHomeAdviserTitle.setText(String.format("尊敬的%s，我是您的专属私人银行家，很高兴为您服务", AppManager.getUserInfo(baseActivity).realName));
-                hindCard(200);
                 initshowlay();
-                initDataInf();
             }
 
             @Override
@@ -574,17 +437,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-    /**
-     * 显示直播的布局
-     */
-    private void showLiveView() {
-        main_home_live_lay.setVisibility(View.VISIBLE);
-        int ivWidth = (int) (screenWidth * 2.6 / 5);
-        int ivHeight = (int) (ivWidth * 2.6 / 5);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ivWidth, ivHeight);
-        viewLiveIvLay.setLayoutParams(layoutParams);
-        //下边需要填充
-    }
+//    /**
+//     * 显示直播的布局
+//     */
+//    private void showLiveView() {
+//        main_home_live_lay.setVisibility(View.VISIBLE);
+//        int ivWidth = (int) (screenWidth * 2.6 / 5);
+//        int ivHeight = (int) (ivWidth * 2.6 / 5);
+//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ivWidth, ivHeight);
+//        viewLiveIvLay.setLayoutParams(layoutParams);
+//        //下边需要填充
+//    }
 
     /**
      * 初始化banner
@@ -683,7 +546,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void getUseriInfsucc(int type) {
         switch (type) {
             case 1:
-                initDataInf();
+                home_floatstewardview.refreshData(AppManager.isVisitor(baseActivity) || !AppManager.isBindAdviser(baseActivity));
                 break;
         }
     }
@@ -719,56 +582,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-    /**
-     * 开始展示下边大布局的animator
-     */
-
-    public void initShowCardAnimator(View V, boolean isVisiter) {
-        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(V, "alpha", 0f, 0f, 1f);
-        ObjectAnimator transAnimator = ObjectAnimator.ofFloat(V, "translationX", -600f, 0f);
-        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(V, "scaleY", 0.5f, 1f);
-        AnimatorSet animationSet = new AnimatorSet();
-
-        animationSet.play(alphaAnimator).with(transAnimator).with(scalexAnimator);
-        animationSet.setDuration(1 * 1000);
-
-
-        animationSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                if (isVisiter) {//游客模式下
-                    mainHomeInvisiterTxtLay.setVisibility(View.VISIBLE);
-                    getPresenter().showCardLayAnimation(mainHomeInvisiterTxtLay);
-                } else {//非游客模式下
-                    //动画结束开始
-                    mainHomeCardLay.setVisibility(View.VISIBLE);
-                    getPresenter().showCardLayAnimation(mainHomeCardLay);
-                    //开始展示私人管家的信息
-                    mainHomeAdviserRelationLay.setVisibility(View.VISIBLE);
-                    getPresenter().showCardLayAnimation(mainHomeAdviserRelationLay);
-
-                }
-                timeCountDown();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
-        animationSet.start();
-        TrackingDataManger.homePersonOpen(baseActivity);
-    }
-
 
     /**
      * 下拉刷新展示
@@ -790,11 +603,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void onSmartScrollListener(boolean isTop, boolean isBottom, int scrollX, int scrollY, int scrolloldX, int scrolloldY) {
         LogUtils.Log("scrolllll", "新Y" + scrollY + "原来的Y" + scrolloldY);
         if ((scrollY > scrolloldY) && scrollY >= 200) {
-
-            hindCard(  scrollY);
+            hindCard(scrollY);
         } else if ((scrolloldY > scrollY) && scrollY <= 200) {
-            if (mainHomeAdviserLayyy.getVisibility() == View.GONE) {
-            }
         }
     }
 
@@ -879,27 +689,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
 
     private void hindCard(int Y) {
-        if (null == mainHomeAdviserLayyy) return;
-
-        if (mainHomeAdviserLayyy.getVisibility() == View.VISIBLE) {
-            //隐藏下边的布局文件
-            mainHomeAdviserLayyy.setVisibility(View.GONE);
-            isShowAdviserCard = false;
-            //隐藏悬浮的服务码布局
-            mainHomeCardLay.setVisibility(View.GONE);
-            //todo 隐藏悬浮的理财师信息
-            mainHomeAdviserRelationLay.setVisibility(View.GONE);
-            //隐藏游客模式的右侧文字布局
-        }
-
-        if (mainHomeVisterAdviserLayyy.getVisibility() == View.VISIBLE) {
-            mainHomeVisterAdviserLayyy.setVisibility(View.GONE);
-            mainHomeInvisiterTxtLay.setVisibility(View.GONE);
-            isVisiterShow = false;
-        }
-        if ( 200==Y) {
+        if (200 == Y) {
             TrackingDataManger.homePersonClose(baseActivity);
         }
+        home_floatstewardview.closeFloat();
     }
 
     /**
@@ -915,6 +708,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             @Override
             public void onCompleted() {
                 hindCard(200);
+
             }
 
             @Override

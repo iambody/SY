@@ -12,9 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.privatefund.R;
@@ -26,18 +28,18 @@ import com.cgbsoft.privatefund.R;
  * 日期 2017/11/29-15:06
  */
 public class FloatStewardView extends RelativeLayout implements View.OnClickListener {
-    private boolean isVisitor = true;
-    private String serveCode, headerurl, userName;
+    private boolean isVisitor;
+    private boolean isOpen;
+    private View baseView;
+
     private Context floatContext;
     private SemicircleView semicircleview;
-
+    private RelativeLayout rectangle_out_lay;
     private RoundImageView steward_round_iv;
+    private String serveCode, headerurl, userName;
     private LinearLayout rectangle_in_lay, cardnumber_lay, rectangle_in_text_lay, rectangle_in_user_text_lay;
     private TextView cardnumber_txt, rectangle_in_user_text, steward_phone_bt, steward_note_bt, steward_im_bt;
-    private RelativeLayout rectangle_out_lay;
-    private View baseView;
     private AnimatorSet openVisitorAnmatorSet, openUserAnmatorSet, closeVisitorAnmatorSet, closeUserAnmatorSet;
-
     private FloatStewardListener floatStewardListener;
 
     public FloatStewardView(Context context) {
@@ -94,14 +96,14 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.steward_round_iv://头像点击
-                if (null != floatStewardListener) floatStewardListener.roundImageViewClick();
+//                if (null != floatStewardListener) floatStewardListener.roundImageViewClick();
                 openFloat();
                 break;
             case R.id.cardnumber_lay://绑定理财师的邀请码布局点击
                 closeFloat();
                 break;
             case R.id.rectangle_in_lay://绑定和未绑定公用的外层布局
-                closeFloat();
+//                closeFloat();
                 break;
             case R.id.steward_phone_bt://电话点击
                 if (null != floatStewardListener) floatStewardListener.phoneClick();
@@ -113,7 +115,8 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 if (null != floatStewardListener) floatStewardListener.imClick();
                 break;
             case R.id.rectangle_in_text_lay://未绑定理财师或者游客模式的文字点击
-                closeFloat();
+                if (null != floatStewardListener) floatStewardListener.visitorTxtClick();
+//                closeFloat();
                 break;
 
 
@@ -123,23 +126,24 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
     /**
      * 初始化
      **/
-    public void initFloat(boolean isvisitor, String code, String headerurl, String username, FloatStewardListener stewardListener) {
+    public void initFloat(boolean isvisitor, FloatStewardListener stewardListener) {
         this.isVisitor = isvisitor;
         this.floatStewardListener = stewardListener;
-        this.serveCode = code;
-        this.headerurl = headerurl;
-        this.userName = username;
+        this.serveCode = AppManager.getUserInfo(floatContext).bandingAdviserUniqueCode;
+        this.headerurl = AppManager.getUserInfo(floatContext).bandingAdviserHeadImageUrl;
+        this.userName = AppManager.getUserInfo(floatContext).realName;
+        ;
         inflateView();
     }
 
     /**
      * 刷新
      */
-    public void refreshData(boolean isvisitor, String code, String headerurl, String username) {
+    public void refreshData(boolean isvisitor) {
         this.isVisitor = isvisitor;
-        this.serveCode = code;
-        this.headerurl = headerurl;
-        this.userName = username;
+        this.serveCode = AppManager.getUserInfo(floatContext).bandingAdviserUniqueCode;
+        this.headerurl = AppManager.getUserInfo(floatContext).bandingAdviserHeadImageUrl;
+        this.userName = AppManager.getUserInfo(floatContext).realName;
         inflateView();
     }
 
@@ -159,6 +163,11 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
      * 张开
      **/
     public void openFloat() {
+        if (isOpen) {
+            if (null != floatStewardListener) floatStewardListener.roundImageViewClick();
+            return;
+        }
+        isOpen = true;
         int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 160);
         if (isVisitor) {
             //游客
@@ -171,7 +180,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     float fraction = animatorValue / 100f;
                     rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 40) + (int) (surplusWidth * fraction);
                     rectangle_in_lay.requestLayout();
-                    rectangle_in_text_lay.setVisibility(95<= animatorValue ? VISIBLE : GONE);
+                    rectangle_in_text_lay.setVisibility(100 == animatorValue ? VISIBLE : GONE);
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
@@ -198,9 +207,9 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     semicircleview.getLayoutParams().height = rectangle_out_lay.getLayoutParams().height;
                     semicircleview.getLayoutParams().width = rectangle_out_lay.getLayoutParams().height;
                     semicircleview.requestLayout();
-                    cardnumber_lay.setVisibility(60 < animatorValue ? VISIBLE : GONE);//(1==animatorValue);
+                    cardnumber_lay.setVisibility(65 < animatorValue ? VISIBLE : GONE);//(1==animatorValue);
                     rectangle_in_user_text_lay.setVisibility(80 < animatorValue ? VISIBLE : GONE);
-                    rectangle_in_user_text.setVisibility(100 == animatorValue ? VISIBLE : INVISIBLE);
+                    rectangle_in_user_text.setVisibility(100 <= animatorValue ? VISIBLE : INVISIBLE);
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
@@ -209,12 +218,15 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
             valueAnimator.start();
 
         }
+        TrackingDataManger.homePersonOpen(floatContext);
     }
 
     /**
      * 关闭
      **/
     public void closeFloat() {
+        if (!isOpen) return;
+        isOpen = false;
         int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 160);
         if (isVisitor) {
             //游客
@@ -267,12 +279,17 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
 //            valueAnimator.setTarget(rectangle_in_lay,rectangle_out_lay);
             valueAnimator.start();
         }
+
+        TrackingDataManger.homePersonClose(floatContext);
     }
 
 
     public interface FloatStewardListener {
         //头像点击
         void roundImageViewClick();
+
+        //游客模式下点击文字
+        void visitorTxtClick();
 
         //电话点击
         void phoneClick();
