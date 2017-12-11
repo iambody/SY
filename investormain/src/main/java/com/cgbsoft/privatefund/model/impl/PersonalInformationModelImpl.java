@@ -4,8 +4,7 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.LogUtils;
-import com.cgbsoft.privatefund.model.CredentialStateMedel;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.PersonalInformationModel;
 import com.cgbsoft.privatefund.model.PersonalInformationModelListener;
 import com.google.gson.Gson;

@@ -1,6 +1,9 @@
 package com.cgbsoft.privatefund.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
+import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.privatefund.R;
 
@@ -21,6 +25,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
+
 import java.util.List;
 
 /**
@@ -32,6 +37,7 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
     LayoutInflater layoutInflater;
     private ViewPager viewPager;
     private int screenWidth;
+    private float currentX;
 
     public DiscoverIndicatorAdapter(Context adaptercontext, ViewPager viewPager) {
         super();
@@ -53,12 +59,12 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
         return null == categoryList ? 0 : categoryList.size();
     }
 
+
     @Override
     public IPagerTitleView getTitleView(Context context, int i) {
         DiscoverModel.DiscoverCategory discoverCategory = categoryList.get(i);
         CommonPagerTitleView commonPagerTitleView = new CommonPagerTitleView(context);
         View view = layoutInflater.inflate(R.layout.view_discovery_item_navigation, null);
-
         ImageView imageView = (ImageView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_iv);
         TextView textViewdd = (TextView) view.findViewById(app.privatefund.com.vido.R.id.view_item_navigation_txt);
 
@@ -80,12 +86,12 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
 
             @Override
             public void onLeave(int i, int i1, float v, boolean b) {
-
+                System.out.println("-----i--onLeave=" + i + "----il=" + i1);
             }
 
             @Override
             public void onEnter(int i, int i1, float v, boolean b) {
-
+                System.out.println("-----i--onLeave=" + i + "----il=" + i1);
             }
         });
         commonPagerTitleView.setContentPositionDataProvider(new CommonPagerTitleView.ContentPositionDataProvider() {
@@ -109,7 +115,36 @@ public class DiscoverIndicatorAdapter extends CommonNavigatorAdapter {
                 return 0;
             }
         });
-        commonPagerTitleView.setOnClickListener(v -> viewPager.setCurrentItem(i));
+        commonPagerTitleView.setOnClickListener(v -> {
+            viewPager.setCurrentItem(i);
+            TrackingDiscoveryDataStatistics.goDiscoveryDetailPage(context, categoryList.get(i).text);
+        });
+
+//        commonPagerTitleView.setOnTouchListener((View v, MotionEvent event) -> {
+//            switch (event.getAction()) {
+//                case MotionEvent.ACTION_DOWN:
+//                    System.out.println("-----cha-downs");
+//                    currentX = event.getX();
+//                    return true;
+//                case MotionEvent.ACTION_MOVE:
+//                    float postion = event.getX();
+//                    float cha = currentX - postion;
+//                    if (Math.abs(cha) > 5) {
+//                        if (cha > 0) {
+//                            System.out.println("-----cha-left");
+//                            TrackingHealthDataStatistics.introduceLeftScroll(context);
+//                        } else {
+//                            System.out.println("-----cha--right");
+//                            TrackingHealthDataStatistics.introduceRightScroll(context);
+//                        }
+//                    }
+//                    currentX = event.getX();
+//                    break;
+//                case MotionEvent.ACTION_UP:
+//                    break;
+//            }
+//            return false;
+//        });
         return commonPagerTitleView;
     }
 

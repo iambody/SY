@@ -14,7 +14,10 @@ import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DaoUtils;
+import com.cgbsoft.lib.utils.exception.ApiException;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.net.NetConfig;
+import com.cgbsoft.lib.utils.net.OKHTTP;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
@@ -27,9 +30,19 @@ import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
 import com.lzy.okserver.listener.DownloadListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import app.privatefund.com.vido.mvp.contract.video.VideoDetailContract;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by xiaoyu.zhang on 2016/12/7 18:09
@@ -274,7 +287,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     //获取更多评论接口
     @Override
     public void getMoreCommont(String voideoId, String CommontId) {
-
+        //1tetetettetettetetetettetttee
         addSubscription(ApiClient.videoCommentLs(voideoId, CommontId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -288,6 +301,26 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         }));
     }
 
+    @Override
+    public void addressValidateResult(boolean refreshPage) {
+        OkHttpClient okHttpClient = OKHTTP.getInstance().getOkClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(5, TimeUnit.SECONDS).build();
+        Request request = new Request.Builder().url(NetConfig.TENCENT_VIDEO_URL).build();
+        okHttpClient.newCall(request).enqueue(new Callback(){
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String contentLenght = response.header("Content-Length");
+                if (!TextUtils.isEmpty(contentLenght) || !TextUtils.equals("0", contentLenght)) {
+                    getView().setAddressValidateResult("0", refreshPage);
+                }
+            }
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if (NetUtils.isNetworkAvailable(getContext())) {
+                    getView().setAddressValidateResult(TextUtils.equals(((ApiException)e).getCode(), "404") ? "1" : "0", refreshPage);
+                }
+            }
+        });
+    }
 
     /**
      * 获取本地数据
@@ -391,7 +424,6 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         public void onFinish(DownloadInfo downloadInfo) {
             viModel.status = VideoStatus.FINISH;
             viModel.localVideoPath = downloadInfo.getTargetPath();
-
             updataLocalVideoInfo();
             if (null != getView())
                 getView().onDownloadFinish(viModel);

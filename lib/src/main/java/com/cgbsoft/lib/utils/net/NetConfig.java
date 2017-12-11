@@ -3,19 +3,22 @@ package com.cgbsoft.lib.utils.net;
 import android.text.TextUtils;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 
 public class NetConfig {
     public static boolean isLocal = true;
     public static String UPLOAD_FILE = "https://upload.simuyun.com/";
-    public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
+    //    public static String UPLOAD_SECRET_FILE = "https://upload.simuyun.com/";
+    public static String UPLOAD_SECRET_FILE = "https://secret.simuyun.com/";
     public static String START_APPEND = "https://";
 
-    //    private static String START_APP = "https://app";
-    public static String START_APP = "https://t6-app";//sim
-    //    public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+    //        private static String START_APP = "https://app";
+//    public static String START_APP = "https://t3-app";//sim
+    public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
@@ -24,12 +27,14 @@ public class NetConfig {
     public static String SERVER_DS = START_DS + BASE;
     public static String SERVER_WWW = START_WWW + BASE;
 
+    public static String T_SERVER_DS = "http://d6-muninubc.simuyun.com";
+
     public static String SERVER_IP = "http://pv.sohu.com";
 
     public final static String API_URL = "api/v2";
     public final static String LIVE_URL = "zhibo/v2";
-            public final static String AUTH_URL = "auth/v2";
-            public final static String PROMOTION_URL = "promotion/v2";
+    public final static String AUTH_URL = "auth/v2";
+    public final static String PROMOTION_URL = "promotion/v2";
 
     public final static String API_URL_V2 = "api/v2";
     public final static String API_URL_V3 = "api/v3";
@@ -37,6 +42,7 @@ public class NetConfig {
     public final static String AUTH_URL_V2 = "auth/v2";
     public final static String AUTH_URL_V3 = "auth/v3";
     public final static String API_NOV2_URL = "api/";
+    public final static String TRACKING_V2 = "ubc/v2";
 
     static {
         if (!TextUtils.isEmpty(AppManager.getSelectAddress(InvestorAppli.getContext()))) {
@@ -141,7 +147,7 @@ public class NetConfig {
         //自定义的ocr
         final static String COMPLIANCE_OCR = API_URL + compliance + "/ocr";
         //人脸照片对比person照片库compare
-        final static String COMPLIANCE_PERSON_COMPARE = AUTH_URL_V3+"/credential/comparepersonimage";///auth/v3/credential/comparepersonimage
+        final static String COMPLIANCE_PERSON_COMPARE = AUTH_URL_V3 + "/credential/comparepersonimage";///auth/v3/credential/comparepersonimage
     }
 
     static class MALL {
@@ -292,6 +298,13 @@ public class NetConfig {
 
     // 获取资源文件的相关信息
     public final static String RESOURCE_FILE_INFO = "http://upload.simuyun.com/app/h5-storage/healthZipConfig.json";
+    // 腾讯视频内容校验文件
+    public final static String TENCENT_VIDEO_URL = "http://1251892263.vod2.myqcloud.com/9dbfd9a6vodgzp1251892263/14f16f914564972818450529832/wW2YHIkwbNoA.mp4";
+
+    static class TRACKDATA {
+        final static String TRACKING = TRACKING_V2 + "/track/app";
+        final static String CONFIG = TRACKING_V2 + "/track/config";
+    }
 
     //视频相关模块
     static class VIDEO {
@@ -405,7 +418,7 @@ public class NetConfig {
         static final String VERIFY_INDENTITY = AUTH_URL_V2 + "/credential/info";
         //新版获取证件信息
         static final String VERIFY_INDENTITY_V3 = AUTH_URL_V3 + "/credential/baseinfo";
-        static final String CREDENTIALS_DETILS  = AUTH_URL_V3+"/credential/detail";
+        static final String CREDENTIALS_DETILS = AUTH_URL_V3 + "/credential/detail";
         static final String GET_INDENTITY_LIST = AUTH_URL_V2 + "/credentials";
         static final String UPLOAD_REMOTE_PATHS = AUTH_URL_V2 + "/credential/detail";
         static final String UPLOAD_OTHER_CREDENTIALS = AUTH_URL_V3 + "/credential/upload";

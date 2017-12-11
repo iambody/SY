@@ -159,8 +159,8 @@
             <meta-data
                 android:name="isadviser"
                 android:value="0"></meta-data>
-        </activity>
-        <activity android:name=".mvp.ui.Load.LoadCustomerActivity"></activity>
+        </activity><!--
+        <activity android:name=".mvp.ui.Load.LoadCustomerActivity"></activity>-->
         <activity
             android:name=".mvp.ui.start.WelcomeActivity"
             android:screenOrientation="portrait"
@@ -193,7 +193,7 @@
         <activity
             android:name=".mvp.ui.RegisterActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".test.TestWebview" />
+
         <activity
             android:name=".mvp.ui.ResetPasswordActivity"
             android:screenOrientation="portrait" />

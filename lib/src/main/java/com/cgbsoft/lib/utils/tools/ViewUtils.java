@@ -112,6 +112,12 @@ public class ViewUtils {
         textView.setText(textSize);
     }
 
+    public static void scaleUserAchievment(TextView textView, String achievment, int start, int end, float relativeValue) {
+        SpannableString textSize = new SpannableString(achievment);
+        textSize.setSpan(new RelativeSizeSpan(relativeValue), start, end, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        textView.setText(textSize);
+    }
+
     public static void formatColorUserAchievment(TextView textView, String value, String... target) {
         SpannableString textSize = new SpannableString(value);
         for (String str : target) {

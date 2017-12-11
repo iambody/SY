@@ -29,9 +29,10 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.shake.ShakeListener;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.chenenyu.router.annotation.Route;
@@ -120,7 +121,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void before() {
-
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         hasEmailShare = getIntent().getBooleanExtra(WebViewConstant.PAGE_SHARE_WITH_EMAIL, false);
@@ -148,7 +148,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         return false;
     }
 
-    @Override
     protected void data() {
         mWebview.setDownloadListener((s, s1, s2, s3, l) -> {
             Uri uri = Uri.parse(url);
@@ -251,6 +250,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected void pageShare() {
         String javascript = "javascript:shareClick()";
         mWebview.loadUrl(javascript);
+        if (!TextUtils.isEmpty(url) && url.contains("&goCustomFeedBack=0")){ // 健康项目详情页面埋点
+            TrackingHealthDataStatistics.projectDetailRightShare(this);
+        } else if (!TextUtils.isEmpty(url) && url.contains("information/details.html")) {
+            TrackingDiscoveryDataStatistics.rightShare(this,title);
+        }
     }
 
     /**
@@ -275,8 +279,20 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         titleMid.setText(title);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(this);
-        toolbar.setNavigationIcon(R.drawable.ic_back_white_dp);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
+        toolbar.setNavigationOnClickListener((View v) -> {
+            mWebview.loadUrl("javascript:WebView.back(0)");
+            finish();
+            if (!TextUtils.isEmpty(url) && url.contains("&goCustomFeedBack=0")) { // 健康项目详情页面埋点
+                TrackingHealthDataStatistics.projectDetailLeftBack(this);
+            } else if (!TextUtils.isEmpty(url) && url.contains("information/details.html")) {
+                TrackingDiscoveryDataStatistics.leftBack(this, title);
+            } else if (!TextUtils.isEmpty(url) && url.contains("health/free_consult.html")){ // 免费咨询页面返回
+                 TrackingHealthDataStatistics.freeConsultLeftBack(this);
+            } else {
+
+            }
+        });
         mWebview.setClick(result -> executeOverideUrlCallBack(result));
 
         // 装配url数据
@@ -398,6 +414,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (url.contains("rankList_share")) {
             mWebview.loadUrl("javascript:delectChart()");
         }
+        mWebview.loadUrl("javascript:WebView.back(1)");
         if ("风险评测".equals(title)) {
             backEvent();
             return;
@@ -431,6 +448,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     @Override
     protected void onPause() {
         super.onPause();
+        mWebview.loadUrl("javascript:WebView.willDisappear()");
         MobclickAgent.onPause(this);
         if (!TextUtils.isEmpty(url) && url.endsWith("mine_active_list.html")) {
             MobclickAgent.onPageEnd(Constant.SXY_HDZX);
@@ -459,6 +477,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (CwebNetConfig.investeCarlendar.equals(url)) {
             MobclickAgent.onPageEnd(Constant.SXY_TZRL);
         }
+
+        mWebview.loadUrl("javascript:WebView.didDisappear()");
         try {
             mWebview.getClass().getMethod("onPause").invoke(mWebview, (Object[]) null);
         } catch (IllegalAccessException e) {
@@ -504,12 +524,14 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        mWebview.loadUrl(url);
+        mWebview.loadUrl("javascript:WebView.willAppear()");
+
         if (url.contains("life/order_detail.html")) {
             return;
         }
-        LogUtils.Log("JavaScriptObjectToc", "ss");
+
         mWebview.loadUrl("javascript:refresh()");
+        mWebview.loadUrl("javascript:WebView.didAppear()");
     }
 
     private void initShakeInSetPage() {
@@ -565,6 +587,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @Override
     protected void onDestroy() {
+//
         mWebview.clearAnimation();
         mWebview.removeAllViews();
         mWebview.destroy();
@@ -637,7 +660,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 mWebview.loadUrl("javascript:titltRightClick()");
             } else {
                 pageShare();
-
             }
         }
 

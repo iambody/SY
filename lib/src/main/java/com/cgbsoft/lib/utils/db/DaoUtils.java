@@ -6,12 +6,14 @@ import android.support.annotation.NonNull;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.bean.DataStatisticsBean;
 import com.cgbsoft.lib.base.model.bean.OtherInfo;
+import com.cgbsoft.lib.base.model.bean.TrackingDataBean;
 import com.cgbsoft.lib.base.model.bean.VideoInfo;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.dao.DataStatisticsBeanDao;
 import com.cgbsoft.lib.utils.db.dao.HistorySearchBeanDao;
 import com.cgbsoft.lib.utils.db.dao.OtherInfoDao;
+import com.cgbsoft.lib.utils.db.dao.TrackingDataBeanDao;
 import com.cgbsoft.lib.utils.db.dao.UserInfoDao;
 import com.cgbsoft.lib.utils.db.dao.VideoInfoDao;
 import com.cgbsoft.privatefund.bean.product.HistorySearchBean;
@@ -32,6 +34,7 @@ public class DaoUtils {
     private VideoInfoDao videoInfoDao;
     private HistorySearchBeanDao historySearchBeanDao;
     private DataStatisticsBeanDao dataStatisticsBeanDao;
+    private TrackingDataBeanDao trackingDataBeanDao;
 
     public static final int W_OTHER = 1;
     public static final int W_USER = 2;
@@ -41,6 +44,7 @@ public class DaoUtils {
 
     public static final int W_TASK = 4;
     public static final int W_DATASTISTICS = 5;
+    public static final int W_TRACKINGDATA = 6;
 
     public DaoUtils(Context context, int which) {
         switch (which) {
@@ -58,6 +62,10 @@ public class DaoUtils {
                 break;
             case W_DATASTISTICS:
                 dataStatisticsBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getDataStatisticsBeanDao();
+                break;
+            case W_TRACKINGDATA:
+                trackingDataBeanDao = ((BaseApplication) context.getApplicationContext()).getDaoSession().getTrackingDataBeanDao();
+                break;
         }
     }
 
@@ -121,6 +129,7 @@ public class DaoUtils {
 
     /**
      * 获取在欢迎页保存的首页背景图片应用升级信息
+     *
      * @param title
      * @return
      */
@@ -137,6 +146,7 @@ public class DaoUtils {
 
     /**
      * 在欢迎页获取首页背景图片，应用升级信息，然后保存
+     *
      * @param title
      * @param value
      */
@@ -279,7 +289,7 @@ public class DaoUtils {
      * 视频下载完成
      */
 
-    public void videoDoneLoad(String videoId,String path) {
+    public void videoDoneLoad(String videoId, String path) {
         VideoInfo videoInfo = videoInfoDao.queryBuilder().where(VideoInfoDao.Properties.VideoId.eq(videoId)).build().unique();
         videoInfo.setStatus(VideoStatus.FINISH);
         videoInfo.setLocalVideoPath(path);
@@ -400,11 +410,38 @@ public class DaoUtils {
         dataStatisticsBeanDao.save(dataStatisticsBean);
     }
 
+
+    public int getTrackingDataListSize() {
+        try {
+            List<TrackingDataBean> list = trackingDataBeanDao.queryBuilder().list();
+            if (list == null) {
+                return 0;
+            } else {
+                return list.size();
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public List<TrackingDataBean> getTrackingData() {
+        return trackingDataBeanDao.queryBuilder().list();
+    }
+
+    public void saveTrackingData(TrackingDataBean trackingDataBean) {
+        trackingDataBeanDao.save(trackingDataBean);
+    }
+
+    public void deleteTrackData() {
+        trackingDataBeanDao.deleteAll();
+    }
+
     public void destory() {
         otherInfoDao = null;
         userInfoDao = null;
         videoInfoDao = null;
         dataStatisticsBeanDao = null;
+        trackingDataBeanDao = null;
     }
 
 }

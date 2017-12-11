@@ -752,33 +752,33 @@ public class Utils {
             return false;
         }
     }
+//
+//    /**
+//     * 通过域名查找Ip
+//     * @param domainUrl
+//     * @return
+//     */
+//    public static String getIpByDomain(String domainUrl) {
+//       return MSDKDnsResolver.getInstance().getAddrByName(domainUrl);
+//    }
 
-    /**
-     * 通过域名查找Ip
-     * @param domainUrl
-     * @return
-     */
-    public static String getIpByDomain(String domainUrl) {
-       return MSDKDnsResolver.getInstance().getAddrByName(domainUrl);
-    }
-
-    public static String replaceDomainByIp(String url){
-        System.out.println("------url= " + url);
-        if (!TextUtils.isEmpty(url) && StringUtils.startsWithIgnoreCase(url, "http")) {
-            URI uri = null;
-           try {
-                uri = new URI(url);
-                String host = uri.getHost();
-                System.out.println("------returnVal= " + host);
-                String ip = getIpByDomain(host);
-                System.out.println("------ip= " + ip);
-               if (!TextUtils.isEmpty(ip)) {
-                   return uri.toString().replace(host, ip);
-               }
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-        }
-        return url;
-    }
+//    public static String replaceDomainByIp(String url){
+//        System.out.println("------url= " + url);
+//        if (!TextUtils.isEmpty(url) && StringUtils.startsWithIgnoreCase(url, "http")) {
+//            URI uri = null;
+//           try {
+//                uri = new URI(url);
+//                String host = uri.getHost();
+//                System.out.println("------returnVal= " + host);
+//                String ip = getIpByDomain(host);
+//                System.out.println("------ip= " + ip);
+//               if (!TextUtils.isEmpty(ip)) {
+//                   return uri.toString().replace(host, ip);
+//               }
+//            } catch (URISyntaxException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return url;
+//    }
 }

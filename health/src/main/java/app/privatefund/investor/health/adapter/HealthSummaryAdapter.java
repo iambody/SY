@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +17,7 @@ import com.cgbsoft.lib.listener.listener.ListItemClickListener;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.RoundImageView;
 
@@ -32,7 +34,7 @@ import butterknife.ButterKnife;
 /**
  * @author chenlong
  */
-public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.OnClickListener {
+public class HealthSummaryAdapter extends RecyclerView.Adapter implements OnClickListener {
 
     private List<HealthProjectListEntity.HealthProjectItemEntity> listModelListdata = new ArrayList<>();
     private Context ApContext;
@@ -64,6 +66,12 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
         View view = layoutInflater.inflate(R.layout.list_item_health_project, parent, false);
         LsViewHolder lsViewHolder = new LsViewHolder(view);
         view.setOnClickListener(this);
+        lsViewHolder.projectImage.setOnClickListener(this);
+//        lsViewHolder.projectTitle.setOnClickListener(this);
+//        lsViewHolder.projectSubTitle.setOnClickListener(this);
+        lsViewHolder.customTextLayout.setOnClickListener(this);
+        lsViewHolder.customCommenMore.setOnClickListener(this);
+        lsViewHolder.customCommentView.setOnClickListener(this);
         return lsViewHolder;
     }
 
@@ -71,6 +79,12 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         LsViewHolder lsViewHolder = (LsViewHolder) holder;
         lsViewHolder.itemView.setTag(position);
+        lsViewHolder.projectImage.setTag(R.id.bind_summary_image, position);
+//        lsViewHolder.projectTitle.setTag(R.id.bind_summary_title, position);
+//        lsViewHolder.projectSubTitle.setTag(R.id.bind_summary_subtitle, position);
+        lsViewHolder.customTextLayout.setTag(R.id.bind_summary_title, position);
+        lsViewHolder.customCommenMore.setTag(R.id.bind_summary_more, position);
+        lsViewHolder.customCommentView.setTag(R.id.bind_summary_evluate, position);
         HealthProjectListEntity.HealthProjectItemEntity healthListModel = listModelListdata.get(position);
         Imageload.display(ApContext, healthListModel.getImageUrl(), 0, 0, 1, lsViewHolder.projectImage, null, null);
         BStrUtils.SetTxt1(lsViewHolder.projectTitle, healthListModel.getTitle());
@@ -88,14 +102,6 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
         lsViewHolder.effectPositionLayout.setVisibility(TextUtils.isEmpty(healthListModel.getEffectPosition()) ? View.GONE : View.VISIBLE);
         lsViewHolder.fitSymptomLayout.setVisibility(TextUtils.isEmpty(healthListModel.getFitSymptom()) ? View.GONE : View.VISIBLE);
         lsViewHolder.fitCrowdLayout.setVisibility(TextUtils.isEmpty(healthListModel.getFitCrowd()) ? View.GONE : View.VISIBLE);
-        lsViewHolder.customCommentll.setOnClickListener(v -> {
-            HashMap<String ,Object> hashMap = new HashMap<>();
-            hashMap.put(WebViewConstant.RIGHT_SHARE, true);
-            hashMap.put(WebViewConstant.push_message_title, healthListModel.getTitle());
-            hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(healthListModel.getUrl()).concat("?healthId=").concat(healthListModel.getId()).concat("&healthImg=")
-                    .concat(healthListModel.getImageUrl()).concat("&healthTitle=").concat(healthListModel.getTitle()).concat("&goCustomFeedBack=1"));
-            NavigationUtils.startActivityByRouter(ApContext, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
-        });
     }
 
     @Override
@@ -105,7 +111,40 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
 
     @Override
     public void onClick(View v) {
-        listModelListItemClickListener.onItemClick((int) v.getTag(), listModelListdata.get((int) v.getTag()));
+        int index;
+        HealthProjectListEntity.HealthProjectItemEntity healthProjectItemEntity;
+        if (v.getId() == R.id.item_project_image_id) {
+            index = (int)v.getTag(R.id.bind_summary_image);
+            healthProjectItemEntity = listModelListdata.get(index);
+            TrackingHealthDataStatistics.projectListItemImage(ApContext, healthProjectItemEntity.getTitle());
+        } else if (v.getId() == R.id.custom_item_text_ll) {
+            index = (int)v.getTag(R.id.bind_summary_title);
+            healthProjectItemEntity = listModelListdata.get(index);
+            TrackingHealthDataStatistics.projectListItemText(ApContext, healthProjectItemEntity.getTitle());
+//        } else if (v.getId() == R.id.health_subTitle_id) {
+//            index = (int)v.getTag(R.id.bind_summary_subtitle);
+//            healthProjectItemEntity = listModelListdata.get(index);
+//            TrackingHealthDataStatistics.projectListItemText(ApContext, healthProjectItemEntity.getSubtitle());
+        } else if (v.getId() == R.id.customComment_more) {
+            index = (int)v.getTag(R.id.bind_summary_more);
+            healthProjectItemEntity = listModelListdata.get(index);
+            HashMap<String ,Object> hashMap = new HashMap<>();
+            hashMap.put(WebViewConstant.RIGHT_SHARE, true);
+            hashMap.put(WebViewConstant.push_message_title, healthProjectItemEntity.getTitle());
+            hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(healthProjectItemEntity.getUrl()).concat("?healthId=").concat(healthProjectItemEntity.getId()).concat("&healthImg=")
+                    .concat(healthProjectItemEntity.getImageUrl()).concat("&healthTitle=").concat(healthProjectItemEntity.getTitle()).concat("&goCustomFeedBack=1"));
+            NavigationUtils.startActivityByRouter(ApContext, RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+            TrackingHealthDataStatistics.projectListItemEvaluateMore(ApContext, healthProjectItemEntity.getTitle());
+            return;
+        } else if (v.getId() == R.id.customComment) {
+            index = (int)v.getTag(R.id.bind_summary_evluate);
+            healthProjectItemEntity = listModelListdata.get(index);
+            TrackingHealthDataStatistics.projectListItemEvaluate(ApContext, healthProjectItemEntity.getTitle());
+        } else {
+            index = (int)v.getTag();
+            healthProjectItemEntity = listModelListdata.get(index);
+        }
+        listModelListItemClickListener.onItemClick(index, healthProjectItemEntity);
     }
 
     static class LsViewHolder extends RecyclerView.ViewHolder {
@@ -131,6 +170,9 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
         @BindView(R2.id.custom_comment_ll)
         public LinearLayout customCommentll;
 
+        @BindView(R2.id.customComment_more)
+        public LinearLayout customCommenMore;
+
         @BindView(R2.id.custom_image_id)
         public RoundImageView customImage;
 
@@ -142,6 +184,9 @@ public class HealthSummaryAdapter extends RecyclerView.Adapter implements View.O
 
         @BindView(R2.id.effectPosition_ll)
         public LinearLayout effectPositionLayout;
+
+        @BindView(R2.id.custom_item_text_ll)
+        public LinearLayout customTextLayout;
 
         @BindView(R2.id.fitSymptom_ll)
         public LinearLayout fitSymptomLayout;

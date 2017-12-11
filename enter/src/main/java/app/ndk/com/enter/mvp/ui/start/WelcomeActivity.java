@@ -7,20 +7,22 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.CacheManager;
-import com.cgbsoft.lib.utils.cache.OtherDataProvider;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -37,7 +39,6 @@ import java.util.HashMap;
 import app.ndk.com.enter.R;
 import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
 import app.ndk.com.enter.mvp.presenter.start.WelcomePersenter;
-import app.ndk.com.enter.mvp.ui.ChoiceIdentityActivity;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
 import io.rong.push.notification.PushNotificationMessage;
 import rx.Observable;
@@ -45,12 +46,7 @@ import rx.schedulers.Schedulers;
 
 import static android.Manifest.permission.INSTALL_SHORTCUT;
 
-/**
- * 欢迎页
- * Created by xiaoyu.zhang on 2016/11/16 09:01
- * Email:zhangxyfs@126.com
- *  
- */
+
 @Route(RouteConfig.GOTO_WELCOME_ACTIVITY)
 public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements WelcomeContract.View {
     //glide
@@ -59,12 +55,11 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     private String[] PERMISSIONS = new String[]{PERMISSION_LOCATION, PERMISSION_CALL_PHONE, PERMISSION_READ_STORAGE, PERMISSION_WRITE_STORAGE, INSTALL_SHORTCUT};
     //PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE, PERMISSION_CAMERA};//, PERMISSION_VIBRATE, PERMISSION_LOCATION_COARSE, PERMISSION_FINE_COARSE};
     //一大坨runnable，作用：英文直译就好
-    private WelcomeRunnable mBtnRunnable, mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
+    private WelcomeRunnable mBtnRunnable,mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
     private WeakHandler weakHandler;
 
-
     private boolean isStop = false;
-    private final int defaultTime = 4000;
+    private final int defaultTime = 5000;
     private final int visableBtnTime = 2000;
     private final int waitTime = 5000;
     private final int noNetTime = 3000;
@@ -75,14 +70,8 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     private final int WAIT = 2;
     private final int NO_NET = 3;
     private final int OUT_TIME = 4;
-
-    //背景图片
-    private ImageView iv_wel_background;
-    //背景底部图片
-    private ImageView iv_wel_bottom;
-    //跳过按钮
-    private Button btn_wel_cancle;
-    private boolean isLoad;
+    private ImageView iv_wel_background, iv_wel_bottom;
+    private TextView btn_wel_cancle;
 
     @Override
     protected boolean getIsNightTheme() {
@@ -90,23 +79,12 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void before() {
         super.before();
+        setContentView(R.layout.activity_welcome);
         setIsNeedGoneNavigationBar(true);//不显示导航条
         weakHandler = new WeakHandler();
         SPreference.saveThisRunOpenDownload(this, false);
-
-        if (!OtherDataProvider.isFirstOpenApp(getApplicationContext())) {
-            //TODO 不是第一次打开做一些事
-        } else {
-
-        }
-
         // 缺少权限时, 进入权限配置页面
         if (needPermissions(PERMISSIONS)) {
             PermissionsActivity.startActivityForResult(this, REQUEST_CODE_ASK_PERMISSIONS, PERMISSIONS);
@@ -115,10 +93,8 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         }
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-//            透明状态栏
+            //透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            透明导航栏
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
     }
 
@@ -129,10 +105,10 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        isLoad = getIntent().getBooleanExtra("isloade", false);
         getPresenter().getNavigation();
         SPreference.putString(this, "JavascriptInterfaceSP", "");
     }
+
 
     @Override
     protected WelcomePersenter createPresenter() {
@@ -140,16 +116,16 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     }
 
     private void beforeInit() {
+        SPreference.putString(this, Contant.CUR_LIVE_ROOM_NUM, "");
+        AppInfStore.saveAdvise(baseContext, false);
         requestManager = Glide.with(this);
-
         if (getPresenter() == null) {
             setPresenter();
         }
+//        welecomePage();
+        getPresenter().initTrackingConfig();
         getPresenter().requestResourceInfo();
-        getPresenter().createFinishObservable();
         getPresenter().toInitInfo();
-        getPresenter().getMyLocation();
-
         //解压一些资源
         Observable.just(R.raw.ress).subscribeOn(Schedulers.io()).subscribe(new RxSubscriber<Integer>() {
             @Override
@@ -230,18 +206,16 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         }
     }
 
-    //不论是否下载或显示都不能超过7秒
     private void welecomePage() {
-        setContentView(R.layout.activity_welcome);
-
         mBtnRunnable = new WelcomeRunnable(BUTTON_WAIT);
         mDefaultRunnable = new WelcomeRunnable(DEFAULT_WAIT);
         mWaitRunnable = new WelcomeRunnable(WAIT);
         mNoNetRunnable = new WelcomeRunnable(NO_NET);
         mTimeOutRunnable = new WelcomeRunnable(OUT_TIME);
-
         iv_wel_background = (ImageView) findViewById(R.id.iv_wel_background);
-        btn_wel_cancle = (Button) findViewById(R.id.btn_wel_cancle);
+        btn_wel_cancle = (TextView) findViewById(R.id.btn_wel_cancle);
+        iv_wel_bottom = (ImageView) findViewById(R.id.iv_wel_bottom);
+        enactSize(iv_wel_bottom);
 
         btn_wel_cancle.setOnClickListener(v -> nextPage());
         if (weakHandler != null)
@@ -253,44 +227,37 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             }
     }
 
+
+    private void enactSize(ImageView imagview) {
+        int screenHeight = Utils.getScreenHeight(baseContext);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, screenHeight / 5);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        imagview.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imagview.setLayoutParams(layoutParams);
+    }
+
     //跳到home页
     private void nextPage() {
         isStop = true;
         if (weakHandler != null)
             weakHandler.removeCallbacksAndMessages(null);
-
         iv_wel_background = null;
         btn_wel_cancle = null;
         weakHandler = null;
-        //把初始化移动到mainpageActivity页面@陈龙
-//        RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
-
-        if (isLoad) {
+        if (AppManager.getIsLogin(getApplicationContext())) {
             if (isNoticePush()) {
                 return;
             }
             Router.build(RouteConfig.GOTOCMAINHONE).go(WelcomeActivity.this);
-            WelcomeActivity.this.finish();
+            baseContext.finish();
             return;
         }
         if ((!AppManager.getIsLogin(this) || SPreference.getUserInfoData(this) == null)) {
-            if (AppManager.isAdViser(this)) {
-                openActivity(ChoiceIdentityActivity.class);
-            } else {
-                if (null == SPreference.getString(this, "splash")) {
-                    NavigationUtils.startActivityByRouter(this, RouteConfig.SPLASH_MOVIE);
-                } else {
-                    openActivity(LoginActivity.class);
-                }
-            }
-        } else {
-            if (null == SPreference.getString(this, "splash")) {
-                NavigationUtils.startActivityByRouter(this, RouteConfig.SPLASH_MOVIE);
-            } else {
-                openActivity(LoginActivity.class);
-            }
+            openActivity(LoginActivity.class);
+            baseContext.finish();
+            return;
         }
-        finish();
+        baseContext.finish();
     }
 
     private boolean isNoticePush() {
@@ -301,9 +268,20 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             hashMap.put(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME, pushMessage);
             hashMap.put(WebViewConstant.PUSH_MESSAGE_RONGYUN_URL_NAME, uri);
             NavigationUtils.startActivityByRouter(WelcomeActivity.this, RouteConfig.GOTOCMAINHONE, hashMap);
+            clearnRes();
             return true;
         }
         return false;
+    }
+
+    private void clearnRes() {
+        isStop = true;
+        if (weakHandler != null)
+            weakHandler.removeCallbacksAndMessages(null);
+        iv_wel_background = null;
+        btn_wel_cancle = null;
+        weakHandler = null;
+        baseContext.finish();
     }
 
     class WelcomeRunnable implements Runnable {

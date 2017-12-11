@@ -81,6 +81,11 @@ public interface VideoDetailContract {
          * 获取更多评论
          */
         void getMoreCommont(String voideoId,String CommontId );
+
+        /**
+         * 判断视频校验结果
+         */
+        void addressValidateResult(boolean refreshPage);
     }
 
     interface View extends BaseView {
@@ -99,5 +104,6 @@ public interface VideoDetailContract {
 
         void getMoreCommontSucc(String moreCommontStr);
 
+        void setAddressValidateResult(String result, boolean refreshPage);
     }
 }

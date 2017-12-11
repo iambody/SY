@@ -50,14 +50,7 @@ public class InitApplication extends InvestorAppli {
     @Override
     public void onCreate() {
         super.onCreate();
-        // Set up Crashlytics, disabled for debug builds
-//        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-//                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-//                .build();
-        // Initialize Fabric with the debug-disabled crashlytics.
-//        Fabric.with(this, crashlyticsKit);
         Fabric.with(this, new Crashlytics());
-
         //初始化直播
         initLive();
         MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity
@@ -72,7 +65,6 @@ public class InitApplication extends InvestorAppli {
         // "io.rong.push".equals(DeviceUtils.getCurProcessName(getApplicationContext()))
         if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext()))) {
             Log.i("InitApplication", "----initRongConnect");
-
             /**
              * IMKit SDK调用第一步 初始化
              */

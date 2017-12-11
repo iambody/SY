@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/iv_wel_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:scaleType="centerCrop" />
 
     <ImageView
         android:id="@+id/iv_wel_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_alignParentBottom="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_bottom_welcomenew" />
+        android:src="@drawable/bg_bottom_welcomenew"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
-    <Button
+    <TextView
         android:id="@+id/btn_wel_cancle"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:layout_gravity="top|right"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/selector_wel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="@dimen/dimens_sp_10"
+        android:background="@drawable/shape_welecom_bt"
+        android:clickable="true"
+        android:paddingBottom="@dimen/ui_4_dip"
+        android:paddingLeft="@dimen/ui_16_dip"
+        android:paddingRight="@dimen/ui_16_dip"
+        android:paddingTop="@dimen/ui_4_dip"
         android:text="@string/wel_cancelbtn_str"
-        android:textColor="#333333"
-        android:textSize="18sp"
-          />
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        android:textSize="14sp"
+        android:layout_above="@+id/iv_wel_bottom"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="11dp" />
 </RelativeLayout>

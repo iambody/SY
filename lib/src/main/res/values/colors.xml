@@ -134,6 +134,8 @@
     <color name = "bottomdialog_text_blue">#007aff</color>
     <!-- 黑色30%透明度 -->
     <color name="line_30">#4c000000</color>
+    <!-- 黑色50%透明度 -->
+    <color name="line_50">#8e000000</color>
     <color name="apply_zx_serv_bankgroud">#efeff4</color>
     <color name = "wheel_text_blue">#007aff</color>
     <color name = "color_a6a6a6">#a6a6a6</color>

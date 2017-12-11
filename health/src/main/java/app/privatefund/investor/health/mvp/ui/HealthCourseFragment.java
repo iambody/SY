@@ -23,6 +23,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
@@ -150,6 +151,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
 
     @Override
     protected void onUserVisible() {
+        TrackingHealthDataStatistics.gotoHealthCouresePage(getContext());
     }
 
     @Override
@@ -201,6 +203,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
             Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
             clodLsAnim(swipeToLoadLayout);
         }
+        TrackingHealthDataStatistics.healthCoureseUploadMore(getContext());
     }
 
     @Override
@@ -216,6 +219,7 @@ public class HealthCourseFragment extends BaseLazyFragment<HealthCoursePresenter
         CurrentPostion = 0;
         isLoadMore = false;
         getPresenter().getHealthCourseList(String.valueOf(CurrentPostion * LIMIT_PAGE));
+        TrackingHealthDataStatistics.healthCoureseDownRefrush(getContext());
     }
 
     @Override

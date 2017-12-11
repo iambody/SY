@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -22,7 +20,6 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -30,9 +27,9 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
-import com.cgbsoft.lib.utils.tools.ImageUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.SpannableUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.widget.MToast;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
@@ -56,7 +53,6 @@ import app.mall.com.model.RechargeConfigBean;
 import app.mall.com.mvp.contract.PayContract;
 import app.mall.com.mvp.presenter.PayPresenter;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import qcloud.mall.R;
 import qcloud.mall.R2;
@@ -154,6 +150,7 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
             return R.layout.activity_pay;
         }
 //        return R.layout.activity_pay;
+
     }
 
     @Override
@@ -252,9 +249,14 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
                     comment_leftright_lay_right.setText("¥ " + 0 + "元");
                     pay_yundou_queding.setBackgroundColor(0xffbebebe);
                 }
+
+                try {
+                    TrackingDataManger.rechargeNumberEd(baseContext);
+                } catch (Exception e) {
+                }
             }
         });
-
+        TrackingDataManger.rechargeIn(baseContext);
     }
 
     @Override
@@ -313,9 +315,11 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
                     hashMap1.put(WebViewConstant.push_message_url, data.getTitleRightUrl());
                     hashMap1.put(WebViewConstant.push_message_title, getResources().getString(R.string.vipCardExchange));
                     NavigationUtils.startActivityByRouter(PayActivity.this, RouteConfig.GOTO_BASE_WEBVIEW, hashMap1);
+                    TrackingDataManger.rechargeGuest(baseContext);
                 }
             });
             Imageload.display(this, data.getTitleRightImg(), titleRight);
+
         }
     }
 
@@ -433,42 +437,50 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         Intent i = new Intent(context, PayMethodActivity.class);
         i.putExtra("payList", (Serializable) rechargeConfigBean.getPayMethodList());
         startActivityForResult(i, 101);
+
+        TrackingDataManger.rechargeCard(baseContext);
     }
 
     @OnClick(R2.id.chongzhi_down_lay_bt3)
     public void selRechargeCount3() {
         btnKuaisuDatasite("+1000");
         addYDCount(1000);
+        TrackingDataManger.rechargeAddThousand(baseContext);
     }
 
     @OnClick(R2.id.chongzhi_down_lay_bt2)
     public void selRechargeCount2() {
         btnKuaisuDatasite("+100");
         addYDCount(100);
+        TrackingDataManger.rechargeAddHundred(baseContext);
     }
 
     @OnClick(R2.id.chongzhi_down_lay_bt1)
     public void selRechargeCount1() {
         btnKuaisuDatasite("+10");
         addYDCount(10);
+        TrackingDataManger.rechargeAddTen(baseContext);
     }
 
     @OnClick(R2.id.recharge_up_bt3)
     public void selRechargeCountUp3() {
         btnKuaisuDatasite(String.format("%d", rechargeConfigBean.getLevels().get(2).getYdAmount()));
         CLickSelectbt(2);
+        TrackingDataManger.rechargeTenThousand(baseContext);
     }
 
     @OnClick(R2.id.recharge_up_bt2)
     public void selRechargeCountUp2() {
         btnKuaisuDatasite(String.format("%d", rechargeConfigBean.getLevels().get(1).getYdAmount()));
         CLickSelectbt(1);
+        TrackingDataManger.rechargeFiveThousand(baseContext);
     }
 
     @OnClick(R2.id.recharge_up_bt1)
     public void selRechargeCountUp1() {
         btnKuaisuDatasite(String.format("%d", rechargeConfigBean.getLevels().get(0).getYdAmount()));
         CLickSelectbt(0);
+        TrackingDataManger.rechargeThousand(baseContext);
     }
 
     @OnClick(R2.id.pay_yd)
@@ -480,6 +492,9 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         } else {
             new MToast(this).show("获取支付配置失败", Toast.LENGTH_LONG);
         }
+
+        TrackingDataManger.rechargePay(baseContext);
+
     }
 
 
@@ -606,4 +621,9 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayContra
         payPaynumber.setText(SpannableUtils.setTextForeground(changeNumber, numberFront.length(), changeNumber.length() - 1, R.color.app_golden));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TrackingDataManger.rechargeBack(baseContext);
+    }
 }

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/app_bg">
+    android:background="@color/app_bg"
+    android:orientation="vertical">
 
     <com.cgbsoft.lib.widget.MySwipeRefreshLayout
         android:id="@+id/main_home_swiperefreshlayout"
@@ -36,17 +36,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                      <!--  <com.jude.rollviewpager.RollPagerView
-                            android:id="@+id/main_home_bannerview"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/activity_main_banner"
-                            android:visibility="gone"/>
--->
+                        <!--  <com.jude.rollviewpager.RollPagerView
+                              android:id="@+id/main_home_bannerview"
+                              android:layout_width="match_parent"
+                              android:layout_height="@dimen/activity_main_banner"
+                              android:visibility="gone"/>
+  -->
                         <com.cgbsoft.lib.widget.BannerView
                             android:id="@+id/home_bannerview"
                             android:layout_width="match_parent"
                             android:layout_height="260dp"
-                            app:layout_scrollFlags="scroll|enterAlways"/>
+                            app:layout_scrollFlags="scroll|enterAlways" />
                     </RelativeLayout>
                     <!-- Banner*** -->
                     <!-- 直播预报的布局 -->
@@ -77,6 +77,7 @@
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal" />
                     </HorizontalScrollView>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ui_13_dip"
@@ -110,8 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/ui_13_dip"
             android:layout_marginBottom="14dp"
+            android:layout_marginRight="@dimen/ui_13_dip"
             android:clickable="true"
             android:src="@drawable/main_home_new_iv" />
 
@@ -391,6 +392,10 @@
         <!-- 游客模式下的右侧点击去理财师认证的按钮***************** -->
     </RelativeLayout>
     <!-- 游客模式下的布局文件******************** -->
-
+   <!-- <com.cgbsoft.privatefund.widget.FloatStewardView
+        android:id="@+id/home_floatstewardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ui_400_dip"/>-->
     <!--上边图************************** -->
 </RelativeLayout>

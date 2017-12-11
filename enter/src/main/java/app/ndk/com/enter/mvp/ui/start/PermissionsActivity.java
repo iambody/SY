@@ -174,7 +174,7 @@ public class PermissionsActivity extends BaseActivity<PermissionPersenter> imple
             }
         }
 
-        final Dialog defaultDialog = new DefaultDialog(this, String.format(getString(R.string.permission_help_text), insertStr), "取消", "确定") {
+        final Dialog defaultDialog = new DefaultDialog(this, String.format(getString(R.string.permission_help_text), insertStr), "取消", "我知道了",true) {
 
             @Override
             public void left() {
@@ -190,6 +190,7 @@ public class PermissionsActivity extends BaseActivity<PermissionPersenter> imple
                 startAppSettings();
             }
         };
+
         defaultDialog.setCancelable(false);
         defaultDialog.show();
         isAlertDialogShow = true;

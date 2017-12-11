@@ -14,7 +14,6 @@ import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.db.DBConstant;
 import com.cgbsoft.lib.utils.db.DaoUtils;
 import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.google.gson.Gson;
 import com.lzy.okserver.download.DownloadManager;
@@ -28,7 +27,6 @@ import java.util.List;
 
 import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * 欢迎页功能实现，数据调用
@@ -98,7 +96,32 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
             }
         }));
 
+        /*addSubscription(ApiClient.getAppResources().subscribe(new RxSubscriber<AppResourcesEntity.Result>() {
+            @Override
+            protected void onEvent(AppResourcesEntity.Result appResources) {
+                if (appResources != null) {
+                    daoUtils.saveOrUpdataOther(DBConstant.APP_UPDATE_INFO, new Gson().toJson(appResources));
+                    OtherDataProvider.saveWelcomeImgUrl(getContext().getApplicationContext(), appResources.img916);
+                    if (getView() != null)
+                        getView().getDataSucc(appResources.img916);
+                } else {
+                    if (getView() != null)
+                        getView().getDataSucc("");
+                }
+            }
 
+            @Override
+            protected void onRxError(Throwable error) {
+                String url = OtherDataProvider.getWelcomeImgUrl(getContext().getApplicationContext());
+                if (!TextUtils.isEmpty(url)) {
+                    if (getView() != null)
+                        getView().getDataSucc(url);
+                } else {
+                    if (getView() != null)
+                        getView().getDataError(error);
+                }
+            }
+        }));*/
     }
 
     /**
@@ -106,20 +129,20 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
      */
     @Override
     public void createFinishObservable() {
-        welcomeFinishObservable = RxBus.get().register(WELCOME_FINISH_OBSERVABLE, Boolean.class);
-        welcomeFinishObservable.observeOn(AndroidSchedulers.mainThread())
-                .filter(b -> b).subscribe(new RxSubscriber<Boolean>() {
-            @Override
-            protected void onEvent(Boolean aBoolean) {
-                RxBus.get().unregister(WELCOME_FINISH_OBSERVABLE, welcomeFinishObservable);
-                getView().finishThis();
-            }
-
-            @Override
-            protected void onRxError(Throwable e) {
-
-            }
-        });
+//        welcomeFinishObservable = RxBus.get().register(WELCOME_FINISH_OBSERVABLE, Boolean.class);
+//        welcomeFinishObservable.observeOn(AndroidSchedulers.mainThread())
+//                .filter(b -> b).subscribe(new RxSubscriber<Boolean>() {
+//            @Override
+//            protected void onEvent(Boolean aBoolean) {
+//                RxBus.get().unregister(WELCOME_FINISH_OBSERVABLE, welcomeFinishObservable);
+//                getView().finishThis();
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable e) {
+//
+//            }
+//        });
     }
 
     /**
@@ -153,7 +176,48 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
 
     @Override
     public void getMyLocation() {
-
+//        LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+////        if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+////            return;
+////        }
+//        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            return;
+//        }
+//        Location curLoc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//        if (null == curLoc) {
+//            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 0, new LocationListener() {
+//                @Override
+//                public void onLocationChanged(Location location) {
+////                    String strAddr = getAddressFromLocation(location);
+//                    //todo
+////                    if (TextUtils.isEmpty(strAddr)) {
+//////                        view.onLocationChanged(-1, 0, 0, strAddr);
+////                    } else {
+//////                        view.onLocationChanged(0, location.getLatitude(), location.getLongitude(), strAddr);
+////                    }
+//                }
+//
+//                @Override
+//                public void onStatusChanged(String provider, int status, Bundle extras) {
+//                }
+//
+//                @Override
+//                public void onProviderEnabled(String provider) {
+//                }
+//
+//                @Override
+//                public void onProviderDisabled(String provider) {
+//                }
+//            });
+//        } else {
+////            String strAddr = getAddressFromLocation(curLoc);
+//            //todo
+////            if (TextUtils.isEmpty(strAddr)) {
+//////                view.onLocationChanged(-1, 0, 0, strAddr);
+////            } else {
+//////                view.onLocationChanged(0, curLoc.getLatitude(), curLoc.getLongitude(), strAddr);
+////            }
+//        }
     }
 
     /**
@@ -209,6 +273,53 @@ public class WelcomePersenter extends BasePresenterImpl<WelcomeContract.View> im
 
     }
 
+    /**
+     * 初始化埋点配置
+     */
+    @Override
+    public void initTrackingConfig() {
+        addSubscription(ApiClient.getTrackingConfig().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String json) {
+                try {
+                    System.out.println("------initTrackingConfig--reulst=" + json);
+                    JSONObject jsonObject = new JSONObject(json);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    int maxUpdateCount = result.getInt("maxUpdateCount");
+                    long serverTime = result.getLong("serverTime");
+                    long timeOffset = serverTime - System.currentTimeMillis();
+                    int maxUpdateInterval = result.getInt("maxUpdateInterval");
+                    SPreference.putString(getContext(),"maxUpdateCount",maxUpdateCount+"");
+                    SPreference.putString(getContext(),"timeOffset",timeOffset+"");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                error.toString();
+                System.out.println("------initTrackingConfig--reulst=" + error.toString());
+            }
+        }));
+    }
+
+//    private String getAddressFromLocation(Location location) {
+//        Geocoder geocoder = new Geocoder(getContext());
+//
+//        try {
+//            double latitude = location.getLatitude();
+//            double longitude = location.getLongitude();
+//            List<Address> list = geocoder.getFromLocation(latitude, longitude, 1);
+//            if (list.size() > 0) {
+//                Address address = list.get(0);
+//                return address.getAddressLine(0);
+//            }
+//        } catch (IOException e) {
+//        }
+//
+//        return "";
+//    }
 
     @Override
     public void detachView() {

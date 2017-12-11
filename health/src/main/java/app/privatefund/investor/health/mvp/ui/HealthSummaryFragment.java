@@ -27,6 +27,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 
@@ -111,7 +112,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         swipeToLoadLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(fBaseActivity);
         swipeTarget.setLayoutManager(linearLayoutManager);
-        swipeTarget.addItemDecoration(new HealthItemDecoration(fBaseActivity, R.color.app_split_line, R.dimen.ui_1_dip));
+        swipeTarget.addItemDecoration(new HealthItemDecoration(fBaseActivity, R.color.app_split_line, R.dimen.ui_z_dip));
         checkHealthAdapter.setOnItemClickListener((position, discoveryListModel) -> {
             HashMap<String ,Object> hashMap = new HashMap<>();
             hashMap.put(WebViewConstant.RIGHT_SHARE, true);
@@ -119,6 +120,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             hashMap.put(WebViewConstant.push_message_url, Utils.appendWebViewUrl(discoveryListModel.getUrl()).concat("?healthId=").concat(discoveryListModel.getId()).concat("&healthImg=")
                     .concat(discoveryListModel.getImageUrl()).concat("&healthTitle=").concat(discoveryListModel.getTitle()).concat("&goCustomFeedBack=0"));
             NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+            TrackingHealthDataStatistics.gotoProjectDetailPage(getContext());
             DataStatistApiParam.operateHealthIntroduceClick(discoveryListModel.getTitle());
         });
         swipeTarget.setAdapter(checkHealthAdapter);
@@ -160,7 +162,9 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
     }
 
     @Override
-    protected void onUserVisible() {}
+    protected void onUserVisible() {
+        TrackingHealthDataStatistics.gotoProjectTagPage(getContext());
+    }
 
     @Override
     protected void onUserInvisible() {}
@@ -243,6 +247,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
             Toast.makeText(getContext(), "已经加载全部数据", Toast.LENGTH_SHORT).show();
             clodLsAnim(swipeToLoadLayout);
         }
+        TrackingHealthDataStatistics.projectUpload(getContext());
     }
 
     @Override
@@ -251,6 +256,7 @@ public class HealthSummaryFragment extends BaseLazyFragment<HealthSummparyPresen
         isLoadMore = false;
         getPresenter().getHealthList(String.valueOf(CurrentPostion * LIMIT_PAGE));
         DataStatistApiParam.operatePrivateBankDiscoverUpRefrushClick();
+        TrackingHealthDataStatistics.projectDownRefresh(getContext());
     }
 
     @Override

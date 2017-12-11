@@ -36,6 +36,7 @@ public class ProductContract {
          * @param series         系列 字符串数组
          */
         void getProductData(LoadingDialog loadingDialog,int offset, String series, String  orderBy, List<FilterItem> datas);
+        void getProductDataOffset(LoadingDialog loadingDialog,int offset, String series, String  orderBy, List<FilterItem> datas);
 
 
         void getProductFilterData(   );

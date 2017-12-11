@@ -14,9 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
@@ -34,6 +32,7 @@ import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.utils.PackageIconUtils;
 import com.cgbsoft.lib.utils.SkineColorManager;
 import com.cgbsoft.lib.utils.StatusBarUtil;
+import com.cgbsoft.lib.utils.ZipResourceDownload;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -45,6 +44,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LocationManger;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.InitApplication;
@@ -55,7 +55,6 @@ import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.utils.PageJumpMananger;
-import com.cgbsoft.privatefund.utils.ZipResourceDownload;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
 import com.chenenyu.router.annotation.Route;
 import com.cn.hugo.android.scanner.QrCodeBean;
@@ -84,7 +83,6 @@ import app.privatefund.com.im.utils.RongCouldUtil;
 import app.privatefund.com.vido.service.FloatVideoService;
 import app.privatefund.investor.health.mvp.ui.HealthCourseFragment;
 import butterknife.BindView;
-import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -130,12 +128,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private boolean hasLive = false;
     private int code;
     private InvestorAppli initApplication;
-    @BindView(R.id.iv_guide)
-    ImageView guide;
-    @BindView(R.id.iv_guide_mine)
-    ImageView guideMine;
-    private int[] guideIds = new int[]{R.drawable.guide_one, R.drawable.guide_two, R.drawable.guide_three, R.drawable.guide_four, R.drawable.guide_five};
-    private int[] guideIdsH = new int[]{R.drawable.guide_one_h, R.drawable.guide_two_h, R.drawable.guide_three_h, R.drawable.guide_four_h, R.drawable.guide_five_h};
+//    private int[] guideIds = new int[]{R.drawable.guide_one, R.drawable.guide_two, R.drawable.guide_three, R.drawable.guide_four, R.drawable.guide_five};
+//    private int[] guideIdsH = new int[]{R.drawable.guide_one_h, R.drawable.guide_two_h, R.drawable.guide_three_h, R.drawable.guide_four_h, R.drawable.guide_five_h};
     private int guideindex = 0;
     private static final String FRAGMENTS_TAG = "android:support:fragments";
     private PackageIconUtils packageIconUtils;
@@ -151,28 +145,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         super.onCreate(savedInstanceState);
     }
 
-    @OnClick(R.id.iv_guide)
-    public void guideClick() {
-        guideindex++;
-        guideindex = guideindex % guideIds.length;
-        if (guideindex == 4) {
-            guide.setVisibility(View.GONE);
-            AppInfStore.saveGuideTag(MainPageActivity.this);
-            return;
-        }
-        if (getRatio() >= 1.9f) {
-            guide.setImageDrawable(getResources().getDrawable(guideIdsH[guideindex]));
-        } else {
-            guide.setImageDrawable(getResources().getDrawable(guideIds[guideindex]));
-        }
-
-    }
-
-    @OnClick(R.id.iv_guide_mine)
-    public void guideMine() {
-        guideMine.setVisibility(View.GONE);
-        AppInfStore.saveGuideTagOfMine(MainPageActivity.this);
-    }
 
     /**
      * 定位管理器
@@ -209,30 +181,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             switchID = R.id.nav_right_second;
             switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
         }
-        if (switchID == R.id.nav_right_second) {
-            boolean mineGuideShowTag = AppManager.getGuideShowTagOfMine(MainPageActivity.this);
-            if (!mineGuideShowTag) {
-                guideMine.setVisibility(View.VISIBLE);
-            } else {
-                guideMine.setVisibility(View.GONE);
-            }
-        }
+//
         getPresenter().loadRedPacket();
 
     }
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        boolean guideShowTag = AppManager.getGuideShowTag(MainPageActivity.this);
-        if (!guideShowTag) {
-            guide.setVisibility(View.VISIBLE);
-        } else {
-            guide.setVisibility(View.GONE);
-        }
-        if (getRatio() >= 1.9f) {
-            guide.setImageDrawable(getResources().getDrawable(guideIdsH[0]));
-            guideMine.setImageDrawable(getResources().getDrawable(guideIdsH[4]));
-        }
+//
         if (null != savedInstanceState) {
 
         }
@@ -270,6 +226,8 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         initUserInfo();
 
+        RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
+
 //        initPlatformCustomer();
 
         showInfoDialog();
@@ -288,6 +246,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         RxBus.get().post(RxConstant.LOGIN_KILL, 1);
         // 推送过来的跳转
         jumpPushMessage();
+
+//        initLogo();
+        zipResourceDownload.initZipResource();
+        TrackingDataManger.gohome(baseContext);
+    }
+
+    private void initLogo() {
         //初始化log
         packageIconUtils = new PackageIconUtils(baseContext, baseContext.getPackageManager(), "com.cgbsoft.privatefund.MainActivity0", "com.cgbsoft.privatefund.MainActivity1");
 
@@ -319,7 +284,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 }
             }
         }
-        zipResourceDownload.initZipResource();
     }
 
     private void jumpPushMessage() {
@@ -470,6 +434,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 StatusBarUtil.translucentStatusBar(this);
                 switchID = R.id.nav_left_first;
                 currentPostion = 0;
+                TrackingDataManger.gohome(baseContext);
                 break;
             case 1://左2
                 switchID = R.id.nav_left_second;
@@ -490,12 +455,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                     UiSkipUtils.toNextActivityWithIntent(this, intent);
                     return;
                 }
-                boolean mineGuideShowTag = AppManager.getGuideShowTagOfMine(MainPageActivity.this);
-                if (!mineGuideShowTag) {
-                    guideMine.setVisibility(View.VISIBLE);
-                } else {
-                    guideMine.setVisibility(View.GONE);
-                }
+
                 switchID = R.id.nav_right_second;
                 break;
             case 2://中间
@@ -515,18 +475,23 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         switch (postion) {
             case 0:
                 DataStatistApiParam.onStatisToCTabMine();
+                TrackingDataManger.tabHome(baseContext);
                 break;
             case 1:
                 DataStatistApiParam.onStatisToCTabProduct();
+                TrackingDataManger.tabPrivateBanck(baseContext);
                 break;
             case 2:
                 DataStatistApiParam.onStatisToCTabDiscover();
+                TrackingDataManger.tabLife(baseContext);
                 break;
             case 3:
                 DataStatistApiParam.onStatisToCTabClub();
+                TrackingDataManger.tabHealth(baseContext);
                 break;
             case 4:
                 DataStatistApiParam.onStatisToCTabCloudKey();
+                TrackingDataManger.tabCenter(baseContext);
                 break;
         }
     }
@@ -882,6 +847,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
+        zipResourceDownload.closeDilaog();
         if (isOnlyClose) {
             return;
         }

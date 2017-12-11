@@ -5,10 +5,9 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.privatefund.model.CardCollectModelListener;
 import com.cgbsoft.privatefund.model.CredentialModel;
-import com.cgbsoft.privatefund.model.CredentialStateMedel;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.DatumManageModel;
 import com.cgbsoft.privatefund.model.DatumManageModelListener;
-import com.cgbsoft.privatefund.model.UploadIndentityModelListener;
 import com.google.gson.Gson;
 
 import org.json.JSONException;

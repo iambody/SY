@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
-import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -18,6 +17,8 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.RxCountDown;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import com.google.gson.Gson;
@@ -80,6 +81,8 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         MobclickAgent.onPageEnd(Constant.SXY_SIHANG_SP);
     }
 
+    private int currentPosition = -1;
+
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         commonNavigator = new CommonNavigator(baseActivity);
@@ -98,8 +101,59 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         initCache();
         getPresenter().getVideoSchoolAllInf();
 
+        videoVideolistPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                videoVideolistIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
 
+            public void onPageSelected(int position) {
+                videoVideolistIndicator.onPageSelected(position);
+                System.out.println("-------postion=" + position);
+                if (currentPosition == position) {
+                    return;
+                }
+                if (currentPosition > position) {
+                    TrackingDataManger.videoSchoolLeftScroll(baseActivity);
+                } else {
+                    TrackingDataManger.videoSchoolRightScroll(baseActivity);
+                }
+                currentPosition = position;
+            }
+
+            public void onPageScrollStateChanged(int state) {
+                videoVideolistIndicator.onPageScrollStateChanged(state);
+            }
+        });
+//        videoVideolistIndicator.setOnTouchListener(new onOperationScrollImpl());
     }
+//
+//    private int downXPostion;
+//    private int lastXPostion;
+//    class onOperationScrollImpl implements View.OnTouchListener {
+//        @Override
+//        public boolean onTouch(View v, MotionEvent event) {
+//            if (MotionEvent.ACTION_DOWN == event.getAction())
+//                downXPostion = (int) event.getX();
+//            if (MotionEvent.ACTION_MOVE == event.getAction()) {
+//                lastXPostion = (int) event.getX() - downXPostion;
+//                downXPostion = (int) event.getX();
+//            }
+//            if (MotionEvent.ACTION_UP == event.getAction()) {
+//                if (lastXPostion > 0) {
+//                    //向左滑动
+//                    Log.i("olmpjjaaaaa");
+//                } else {
+//                    //向右滑动
+//                    TrackingDataManger.homeOperateRight(baseActivity);
+//                }
+//            }
+//            return false;
+//        }
+//
+//
+//    }
+
+    private boolean isInit;
 
     /*设置缓存*/
     private void initCache() {
@@ -124,6 +178,18 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         }
         videoNavigationAdapter.FreashAp(videoAllModel.category);
         fragmentAdapter.freshAp(lazyFragments);
+
+        RxCountDown.countTimeDown(3, new RxCountDown.ICountTime() {
+            @Override
+            public void onCompleted() {
+                isInit = true;
+            }
+
+            @Override
+            public void onNext(int timer) {
+
+            }
+        });
     }
 
     @Override
@@ -167,6 +233,8 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
             this.notifyDataSetChanged();
         }
 
+        private int currentPage = 0;
+
         @Override
         public int getCount() {
             return null == categoryList ? 0 : categoryList.size();
@@ -191,12 +259,15 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
                 public void onSelected(int i, int i1) {//被选中
                     Imageload.display(adapterContext, videoCategory.prelog, imageView);
                     textViewdd.setTextColor(adapterContext.getResources().getColor(R.color.app_golden));
+
                 }
 
                 @Override
                 public void onDeselected(int i, int i1) {//取消被选中状态
                     Imageload.display(adapterContext, videoCategory.norlog, imageView);
                     textViewdd.setTextColor(adapterContext.getResources().getColor(R.color.black));
+
+
                 }
 
                 @Override
@@ -226,5 +297,19 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
         }
     }
 
+    private boolean isvisible;
 
+    @Override
+    protected void viewBeShow() {
+        super.viewBeShow();
+//        TrackingDataManger.videoSchoolIn(baseActivity);
+        TrackingDataManger.privateBanckVideoShow(baseActivity);
+        isvisible = true;
+    }
+
+    @Override
+    protected void viewBeHide() {
+        super.viewBeHide();
+        isvisible = false;
+    }
 }

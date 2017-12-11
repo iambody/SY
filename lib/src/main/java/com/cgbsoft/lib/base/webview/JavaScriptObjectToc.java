@@ -2,6 +2,8 @@ package com.cgbsoft.lib.base.webview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
@@ -9,6 +11,7 @@ import android.webkit.JavascriptInterface;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.webview.bean.JsCall;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -23,6 +26,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.google.gson.Gson;
@@ -117,6 +121,76 @@ public class JavaScriptObjectToc {
         });
     }
 
+    /**
+     * H5调用埋点
+     *
+     * @param param
+     */
+    @JavascriptInterface
+    public void postEventTrackingData(String param) {
+        try {
+            JSONObject ja = new JSONObject(param);
+            JSONObject data = ja.getJSONObject("data");
+            String callback = ja.getString("callback");
+            String d = data.getString("d");
+            String e = data.optString("e");
+            this.webView.loadUrl("javascript:" + callback + "()");
+            TrackingDataUtils.save(context, e, d);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @JavascriptInterface
+    public void openCredentialsFolder(String param){
+        try {
+            JSONObject ja = new JSONObject(param);
+            JSONObject data = ja.getJSONObject("data");
+            String callback = ja.getString("callback");
+            this.webView.loadUrl("javascript:" + callback + "()");
+            CredentialStateMedel credentialStateMedel = new Gson().fromJson(data.toString(), CredentialStateMedel.class);
+            if (!TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
+                if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {  //身份证
+                    if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("credentialStateMedel", credentialStateMedel);
+                        NavigationUtils.startActivityByRouter(context,RouteConfig.CrenditralGuideActivity,bundle);
+//                        Intent intent = new Intent(context, CrenditralGuideActivity.class);
+//                        intent.putExtra("credentialStateMedel", credentialStateMedel);
+//                        startActivity(intent);
+                    } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("credentialStateMedel", credentialStateMedel);
+                        NavigationUtils.startActivityByRouter(context,RouteConfig.UploadIndentityCradActivity,bundle);
+
+//                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
+//                        intent.putExtra("credentialStateMedel", credentialStateMedel);
+//                        startActivity(intent);
+                    } else {  //已通过 核身成功
+
+//                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+//                        intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+//                        startActivity(intent);
+                    }
+                } else {//  非大陆去证件列表
+                    Bundle bundle = new Bundle();
+                    bundle.putString("indentityCode", credentialStateMedel.getCustomerIdentity());
+                    NavigationUtils.startActivityByRouter(context,RouteConfig.CardCollectActivity,bundle);
+//                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+//                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+//                    startActivity(intent);
+                }
+            } else {//无身份
+                NavigationUtils.startActivityByRouter(context,RouteConfig.SelectIndentityActivity);
+//                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
+//                startActivity(intent);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     //生成海报的监听
     @JavascriptInterface
     public void shareCustomizedImage(String datas) {
@@ -127,13 +201,13 @@ public class JavaScriptObjectToc {
         CommonSharePosterDialog commonSharePosterDialog = new CommonSharePosterDialog(context, CommonSharePosterDialog.Tag_Style_WxPyq, picPath, new CommonSharePosterDialog.CommentShareListener() {
             @Override
             public void completShare(int shareType) {
-                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
                     webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
             }
 
             @Override
             public void cancleShare() {
-                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
                     webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
             }
         });
@@ -150,13 +224,13 @@ public class JavaScriptObjectToc {
         CommonScreenDialog commonScreenDialog = new CommonScreenDialog(context, paths, new CommonScreenDialog.CommentScreenListener() {
             @Override
             public void completShare() {
-                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
                     webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
             }
 
             @Override
             public void cancleShare() {
-                if (null!=jscall&&!BStrUtils.isEmpty(jscall.getCallback()))
+                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
                     webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
             }
         });
@@ -180,7 +254,9 @@ public class JavaScriptObjectToc {
             return hasVas;
         }
         return "";
-    };
+    }
+
+    ;
 
     private void requestGetMethodCallBack(String url, String params, String javascirptCallMethod) {
         System.out.println("---javascirptCallMethod=" + javascirptCallMethod);

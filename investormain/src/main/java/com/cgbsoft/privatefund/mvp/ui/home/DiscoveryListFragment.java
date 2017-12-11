@@ -21,6 +21,7 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView;
 import com.cgbsoft.lib.widget.swipefresh.CustomRefreshHeadView;
@@ -110,6 +111,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
             hashMap1.put(WebViewConstant.push_message_title, discoveryListModel.getLabel());
             NavigationUtils.startActivity(getActivity(), RightShareWebViewActivity.class, hashMap1);
             DataStatistApiParam.operatePrivateBankDiscoverDetailClick(discoveryListModel.getTitle(), discoveryListModel.getLabel());
+            TrackingDiscoveryDataStatistics.gotoDiscoveryDetail(getContext(), discoveryListModel.getTitle());
         });
         swipeTarget.setAdapter(discoveryListAdapter);
         if (null == list) {
@@ -147,6 +149,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
         isLoadMore = true;
         getPresenter().getDiscoveryListData(String.valueOf(CurrentPostion * LIMIT_PAGE), CatoryValue);
         DataStatistApiParam.operatePrivateBankDiscoverDownLoadClick();
+        TrackingDiscoveryDataStatistics.discoveryUpload(getContext());
     }
 
     @Override
@@ -158,6 +161,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
             discoveryFragment.refrushListData();
         }
         DataStatistApiParam.operatePrivateBankDiscoverUpRefrushClick();
+        TrackingDiscoveryDataStatistics.discoveryDownRefresh(getContext());
     }
 
     @Override

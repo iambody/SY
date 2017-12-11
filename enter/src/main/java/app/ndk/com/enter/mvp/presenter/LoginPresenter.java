@@ -98,7 +98,6 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 if (loginBean.userInfo != null) {
                     SPreference.saveUserInfoData(getContext(), new Gson().toJson(loginBean.userInfo));
                 }
-                //移动到mainpage页面里面@陈龙
 //                RongConnect.initRongTokenConnect(loginBean.userId);
                 loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
                 MobclickAgent.onProfileSignIn(loginBean.userId);
@@ -108,10 +107,8 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             protected void onRxError(Throwable error) {
 
                 LogUtils.Log("LoginPresenter", "----error=" + error.toString());
-                loadingDialog.dismiss();
-                PromptManager.ShowCustomToast(getContext(), error.getMessage());
-//                loadingDialog
-//                loadingDialog.setResult(false, error.getMessage(), 1000, () -> getView().loginFail());
+//                loadingDialog.dismiss();
+                loadingDialog.setResult(false, error.getMessage(), 1000, () -> getView().loginFail());
             }
         }));
 
@@ -133,6 +130,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
             }
         }));*/
     }
+
     /**
      * 获取全局导航
      */
@@ -192,16 +190,16 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                     AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(result.token));
                     AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
                     SPreference.putBoolean(getContext(), Constant.weixin_login, true);
-                    AppInfStore.saveIsVisitor(getContext(),false);
+                    AppInfStore.saveIsVisitor(getContext(), false);
                     AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
                     if (result.userInfo != null)
                         SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
                     if (TextUtils.equals(result.isBind, "2")) {//1:已绑定，2：未绑定，3：绑定中
-//                        loadingDialog.dismiss();
+                        loadingDialog.dismiss();
                         loadingDialog.setResult(true, getContext().getString(R.string.al_need_bind_phone_str), 1000, () -> getView().toBindActivity());
                     } else
                         loadingDialog.setResult(true, getContext().getString(R.string.la_login_succ_str), 1000, () -> getView().loginSuccess());
-                    MobclickAgent.onProfileSignIn("WX",result.userId);
+                    MobclickAgent.onProfileSignIn("WX", result.userId);
                 }
             }
 
@@ -233,8 +231,8 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 AppInfStore.saveUserToken(getContext().getApplicationContext(), BStrUtils.decodeSimpleEncrypt(result.token));
                 AppInfStore.saveIsLogin(getContext().getApplicationContext(), true);
                 AppInfStore.saveUserId(getContext().getApplicationContext(), result.userId);
-                AppInfStore.saveIsVisitor(getContext(),false);
-                RxBus.get().post(RxConstant.MAIN_FRESH_LAY,  5  );
+                AppInfStore.saveIsVisitor(getContext(), false);
+                RxBus.get().post(RxConstant.MAIN_FRESH_LAY, 5);
                 if (result.userInfo != null) {
                     SPreference.saveUserInfoData(getContext().getApplicationContext(), new Gson().toJson(result.userInfo));
                 }
@@ -307,7 +305,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
     public void setAnimation(View VV) {
         AnimatorSet animationSet = new AnimatorSet();
 //        ObjectAnimator Translate = ObjectAnimator.ofFloat(VV, "translationY", 1000f, 0f);
-        ObjectAnimator Alpha = ObjectAnimator.ofFloat(VV, "alpha",   1.0f,0f,0f,0f,0f,0f,0f,10f ,   1f);
+        ObjectAnimator Alpha = ObjectAnimator.ofFloat(VV, "alpha", 1.0f, 0f, 0f, 0f, 0f, 0f, 0f, 10f, 1f);
         Alpha.setDuration(1000);
         animationSet.playSequentially(Alpha);
         animationSet.setDuration(1000);

@@ -46,7 +46,7 @@ public class RouteConfig {
     public static final String GOTO_WELCOME_ACTIVITY = "jumpmodule://welcomeactivity";
 
     // 跳转到首页
-    public static final String GOTO_FIRST_ACTIVITY = "jumpmodule://firstpagectivity";
+//    public static final String GOTO_FIRST_ACTIVITY = "jumpmodule://firstpagectivity";
 
     // 右边带分享页面
     public static final String GOTO_RIGHT_SHARE_ACTIVITY = "investornmain_right_share_activity";
@@ -108,4 +108,10 @@ public class RouteConfig {
     public static final String GOTO_LOGIN ="enter_loginactivity";
     public static final String GOTO_PDF_ACTIVITY = "gotosharepdf";
     public static final String SPLASH_MOVIE = "splash_movie";
+
+    public static final String SelectIndentityActivity = "SelectIndentityActivity";
+    public static final String CardCollectActivity = "CardCollectActivity";
+    public static final String UploadIndentityCradActivity = "UploadIndentityCradActivity";
+    public static final String CrenditralGuideActivity = "CrenditralGuideActivity";
+
 }

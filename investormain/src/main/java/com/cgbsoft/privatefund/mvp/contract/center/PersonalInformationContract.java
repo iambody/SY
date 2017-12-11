@@ -2,7 +2,7 @@ package com.cgbsoft.privatefund.mvp.contract.center;
 
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
-import com.cgbsoft.privatefund.model.CredentialStateMedel;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 
 /**
  * Created by feigecal on 2017/7/8 0008.

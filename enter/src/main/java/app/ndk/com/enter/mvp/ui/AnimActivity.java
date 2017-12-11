@@ -53,8 +53,8 @@ public class AnimActivity extends BaseActivity<AnimPresenter> implements AnimCon
     @Override
     protected void init(Bundle savedInstanceState) {
         int identity = getIntent().getIntExtra(IDS_KEY, -1);
-        int resID = identity == IDS_INVERSTOR ? R.raw.movie_toc : R.raw.movie_tob;
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), resID);
+        int resID ;//= identity == IDS_INVERSTOR ? R.raw.movie_toc : R.raw.movie_tob;
+//        mediaPlayer = MediaPlayer.create(getApplicationContext(), resID);
 
         SurfaceHolder surfaceHolder = sv_aa.getHolder();
         surfaceHolder.addCallback(this);

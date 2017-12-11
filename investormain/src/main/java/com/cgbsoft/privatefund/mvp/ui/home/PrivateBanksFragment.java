@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
@@ -28,6 +30,7 @@ import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvc.ui.SearchBaseActivity;
+import app.product.com.mvp.ui.OnLineProductListFragment;
 import app.product.com.mvp.ui.ProductFragment;
 
 /**
@@ -125,7 +128,7 @@ public class PrivateBanksFragment extends BasePageFragment {
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
                 case PRODUCT_CODE:
-                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new ProductFragment(), Integer.parseInt(secondNavigation.getCode()));
+                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new OnLineProductListFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen1);
                     break;
                 case INFOMATION_CODE:

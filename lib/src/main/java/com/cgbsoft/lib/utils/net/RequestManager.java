@@ -232,6 +232,9 @@ interface RequestManager {
     @POST(NetConfig.USER.RESETPWD_URL)
     Observable<ResponseBody> resetV2Pwd(@Body RequestBody paramsMap);
 
+    @POST(NetConfig.TRACKDATA.TRACKING)
+    Observable<BaseResult<CommonEntity.Result>> pushTrackingData(@Body RequestBody paramsMap);
+
     /**
      * 修改密码
      *
@@ -944,5 +947,8 @@ interface RequestManager {
      */
     @GET(NetConfig.RESOURCE_FILE_INFO)
     Observable<ResponseBody> requestResourceInfo();
+
+    @GET(NetConfig.TRACKDATA.CONFIG)
+    Observable<ResponseBody> getTrackingConfig();
 //sss
 }

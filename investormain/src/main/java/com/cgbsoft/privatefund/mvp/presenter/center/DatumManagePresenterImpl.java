@@ -6,12 +6,11 @@ import android.text.TextUtils;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.privatefund.model.CredentialModel;
-import com.cgbsoft.privatefund.model.CredentialStateMedel;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.privatefund.model.DatumManageModelListener;
 import com.cgbsoft.privatefund.model.impl.DatumManageModelImpl;
 import com.cgbsoft.privatefund.mvp.contract.center.DatumManageContract;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

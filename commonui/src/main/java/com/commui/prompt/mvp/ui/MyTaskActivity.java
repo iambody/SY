@@ -20,6 +20,7 @@ import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.privatefund.bean.commui.DayTaskBean;
@@ -85,6 +86,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         rcv_commui_task.addItemDecoration(new SimpleItemDecoration(baseContext,R.color.app_split_line, R.dimen.ui_l_dip,20));
         rcv_commui_task.setAdapter(adapter);
         rcv_commui_task.setHasFixedSize(true);
+        TrackingDataManger.taskIn(this);
     }
 
     @Override
@@ -100,6 +102,12 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         super.onPause();
         MobclickAgent.onPause(this);
         MobclickAgent.onPageEnd(Constant.SXY_RENWU);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TrackingDataManger.taskBack(this);
     }
 
     @Override
@@ -199,27 +207,37 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         if (model.getStatus().equals("1")) {
             return;
         }
+
         switch (model.getTaskType()) {
             case MyTaskBean.ITEM_INFO_STR://查看资讯  增加需要跳转到C的页面
                 infoTaskClick();
+                TrackingDataManger.taskItem(MyTaskActivity.this,"查看资讯");
                 break;
             case MyTaskBean.ITEM_PROD_STR:// 查看产品   增加需要跳转到C的页面
                 productTaskClick();
+                TrackingDataManger.taskItem(MyTaskActivity.this,"查看产品");
                 break;
             case MyTaskBean.ITEM_SHARE_INFO_STR://分享资讯   增加需要跳转到C的页面
                 infoTaskClick();
+                TrackingDataManger.taskItem(MyTaskActivity.this,"分享资讯");
                 break;
             case MyTaskBean.ITEM_SHARE_PROD_STR:// 分享产品   增加需要跳转到C的页面
                 productTaskClick();
+                TrackingDataManger.taskItem(MyTaskActivity.this,"分享产品");
                 break;
             case MyTaskBean.ITEM_VIDEO_STR://跳转到学习视频    增加需要跳转到C的页面
                 videoTaskClick();
+                TrackingDataManger.taskItem(MyTaskActivity.this,"学习视频");
                 break;
             case MyTaskBean.ITEM_SIGN_STR://每日签到
                 signTask();
                 DataStatistApiParam.signInEveryDay();
+                TrackingDataManger.taskItem(MyTaskActivity.this,"每日签到");
                 break;
+
         }
+
+
     }
 
     private void signTask() {

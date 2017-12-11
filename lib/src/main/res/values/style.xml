@@ -133,7 +133,7 @@
     <style name="normal_diveline">
         <item name="android:src">@color/app_split_line</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_height">0.5dp</item>
     </style>
 
     <style name="confirm_dialog" parent="android:style/Theme.Dialog">
@@ -212,7 +212,6 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
-
 
     <style name="base_dialog_style">
         <item name="android:windowNoTitle">true</item>

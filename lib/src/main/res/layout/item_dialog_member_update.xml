@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+     <TextView
+         android:layout_width="3dp"
+         android:layout_height="16dp"
+         android:layout_marginRight="6dp"
+         android:layout_gravity="center_vertical"
+         android:background="@color/app_golden"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="师傅的撒的发"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/name"
+        android:textSize="16sp"
+        android:textColor="@color/black"/>
+    </LinearLayout>
+    
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:id="@+id/content_ll"-->
+        <!--android:gravity="center_vertical|left"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:paddingLeft="15dp"-->
+        <!--android:paddingRight="15dp"-->
+        <!--android:paddingBottom="15dp">-->
+
+        <com.cgbsoft.lib.widget.FlowLayoutView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/content_ll"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="15dp"
+            android:gravity="center_vertical|left"/>
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.cgbsoft.lib.AppInfStore;
@@ -18,6 +19,8 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
+import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.R;
@@ -57,11 +60,13 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @BindView(R.id.discover_list_pager)
     ViewPager viewPager;
+    private int currentPosition = -1;
 
     CommonNavigator commonNavigator;
     FragmentAdapter fragmentAdapter;
     List<BaseLazyFragment> lazyFragments = new ArrayList<>();
     DiscoverIndicatorAdapter disCoveryNavigationAdapter;
+    private float currentX;
 
     @Override
     protected int layoutID() {
@@ -106,7 +111,30 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
         viewPager.setOffscreenPageLimit(8);
         viewPager.setAdapter(fragmentAdapter);
-        ViewPagerHelper.bind(magicIndicator, viewPager);
+//        ViewPagerHelper.bind(magicIndicator, viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                magicIndicator.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            public void onPageSelected(int position) {
+                magicIndicator.onPageSelected(position);
+                System.out.println("-------postion=" + position);
+                if (currentPosition == position) {
+                    return;
+                }
+                if (currentPosition > position){
+                    TrackingDiscoveryDataStatistics.discoveryLeftScroll(getContext());
+                } else {
+                    TrackingDiscoveryDataStatistics.discoveryRightScroll(getContext());
+                }
+                currentPosition = position;
+            }
+
+            public void onPageScrollStateChanged(int state) {
+                magicIndicator.onPageScrollStateChanged(state);
+            }
+        });
     }
 
     @Override
@@ -132,6 +160,12 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         if (CollectionUtils.isEmpty(lazyFragments)) {
             initIndicatorList(discoverModel);
         }
+    }
+
+    @Override
+    protected void viewBeShow() {
+        super.viewBeShow();
+        TrackingDiscoveryDataStatistics.discoveryClickFlag(getContext(), "资讯");
     }
 
     @Override
@@ -177,5 +211,10 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         if (discoveryBannerView != null) {
             discoveryBannerView.endBanner();
         }
+    }
+
+    @Override
+    protected void viewBeHide() {
+        super.viewBeHide();
     }
 }

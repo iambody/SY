@@ -156,6 +156,13 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_ADD, false).getTestAppResource(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
+
+    /**
+     * 新数据统计
+     */
+    public static Observable<CommonEntity.Result> pushTrackingData(JSONObject json){
+        return OKHTTP.getInstance().getRequestManager().pushTrackingData(formatRequestBody(json)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
     /**
      * 数据统计
      *
@@ -166,6 +173,16 @@ public class ApiClient {
         Map<String, String> map = new HashMap<>();
         map.put("contents", json);
         return OKHTTP.getInstance().getRequestManager(NetConfig.SERVER_DS).pushDataStatistics(checkNull(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+    }
+
+    /**
+     * 测试环境埋点统计
+     */
+    public static Observable<String> testPushDataStatistics(String json){
+        Map<String, String> map = new HashMap<>();
+        map.put("contents", json);
+        return OKHTTP.getInstance().getRequestManager(NetConfig.T_SERVER_DS).pushDataStatistics(checkNull(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+
     }
 
     /**
@@ -1475,6 +1492,14 @@ public class ApiClient {
      */
     public static Observable<String> getH5ResourceFileInfo() {
         return OKHTTP.getInstance().getRequestManager().requestResourceInfo().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取埋点配置文件
+     * @return
+     */
+    public static Observable<String> getTrackingConfig(){
+        return OKHTTP.getInstance().getRequestManager().getTrackingConfig().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

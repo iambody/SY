@@ -72,15 +72,12 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.baseContext = BaseActivity.this;
+
         AppInfStore.saveDialogTag(BaseActivity.this, false);
 
 //        StatusBarUtil.setTranslucent(this,128);
         if (getIsNightTheme() && savedInstanceState == null) {
-            if (AppManager.isAdViser(this)) {
-                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             recreate();
         } else {
             before();
@@ -91,6 +88,8 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
             data();
         }
     }
+
+
 
     /**
      * 监听用户被踢出的广播
@@ -112,7 +111,6 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
         }
     }
 
-    private DefaultDialog dialog;
 
     class LogoutReceiver extends BroadcastReceiver {
 
