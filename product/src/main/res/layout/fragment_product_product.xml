@@ -122,6 +122,7 @@
                 android:layout_marginRight="@dimen/ui_12_dip"
                 android:clipChildren="false"
                 android:clipToPadding="false"
+                android:scrollbars="none"
                 />
 
             <com.cgbsoft.lib.widget.swipefresh.CustomRefreshFootView

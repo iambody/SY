@@ -2,7 +2,6 @@ package com.cgbsoft.privatefund;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.util.Log;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.InvestorAppli;
@@ -11,28 +10,10 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.DeviceUtils;
-import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
-import com.crashlytics.android.Crashlytics;
-import com.tencent.msdk.dns.MSDKDnsResolver;
-import com.umeng.analytics.MobclickAgent;
+import com.cgbsoft.privatefund.utils.service.InitializeService;
 
 import java.util.List;
 
-import app.privatefund.com.im.bean.NewsMessage;
-import app.privatefund.com.im.bean.PdfMessage;
-import app.privatefund.com.im.bean.ProductMessage;
-import app.privatefund.com.im.listener.MyConnectionStatusListener;
-import app.privatefund.com.im.listener.MyConversationBehaviorListener;
-import app.privatefund.com.im.listener.MyConversationListBehaviorListener;
-import app.privatefund.com.im.listener.MyReceiveMessageListener;
-import app.privatefund.com.im.listener.MySendMessageListener;
-import app.privatefund.com.im.listener.NewMessageItemProvider;
-import app.privatefund.com.im.listener.PdfMessageItemProvider;
-import app.privatefund.com.im.listener.ProductInputModule;
-import app.privatefund.com.im.listener.ProductMessageItemProvider;
-import io.fabric.sdk.android.Fabric;
-import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import qcloud.liveold.mvp.presenters.InitBusinessHelper;
@@ -50,45 +31,46 @@ public class InitApplication extends InvestorAppli {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
-        //初始化直播
-        initLive();
-        MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity
-        MobclickAgent.setDebugMode(true);
-        Thread.setDefaultUncaughtExceptionHandler(new SimuyunUncaughtExceptionHandler(this));
-        MSDKDnsResolver.getInstance().init(getApplicationContext());
+        InitializeService.startService(this);
+//        Fabric.with(this, new Crashlytics());
+//        //初始化直播
+//        initLive();
+//        MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity
+//        MobclickAgent.setDebugMode(true);
+//        Thread.setDefaultUncaughtExceptionHandler(new SimuyunUncaughtExceptionHandler(this));
+//        MSDKDnsResolver.getInstance().init(getApplicationContext());
 
         /**
          * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIM 的进程和 Push 进程执行了 init。
          * io.rong.push 为融云 push 进程名称，不可修改。
          */
-        // "io.rong.push".equals(DeviceUtils.getCurProcessName(getApplicationContext()))
-        if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext()))) {
-            Log.i("InitApplication", "----initRongConnect");
-            /**
-             * IMKit SDK调用第一步 初始化
-             */
-            if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext()))) {
-                RongIM.init(this);
-            }
-            RongIM.registerMessageType(ProductMessage.class);
-            RongIM.registerMessageType(PdfMessage.class);
-            RongIM.registerMessageType(NewsMessage.class);
-            RongIM.registerMessageTemplate(new ProductMessageItemProvider());
-            RongIM.registerMessageTemplate(new PdfMessageItemProvider());
-            RongIM.registerMessageTemplate(new NewMessageItemProvider());
-            RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
-            RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
-            RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener()); //会话界面监听
-            RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
-            RongExtensionManager.getInstance().registerExtensionModule(new ProductInputModule(this));
-            RongIM.getInstance().setSendMessageListener(new MySendMessageListener());
-            RongIM.getInstance().setMessageAttachedUserInfo(true);
-            registerLogoutObservable();
-        }
+//        // "io.rong.push".equals(DeviceUtils.getCurProcessName(getApplicationContext()))
+//        if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext()))) {
+//            Log.i("InitApplication", "----initRongConnect");
+//            /**
+//             * IMKit SDK调用第一步 初始化
+//             */
+//            if (getApplicationInfo().packageName.equals(DeviceUtils.getCurProcessName(getApplicationContext()))) {
+//                RongIM.init(this);
+//            }
+//            RongIM.registerMessageType(ProductMessage.class);
+//            RongIM.registerMessageType(PdfMessage.class);
+//            RongIM.registerMessageType(NewsMessage.class);
+//            RongIM.registerMessageTemplate(new ProductMessageItemProvider());
+//            RongIM.registerMessageTemplate(new PdfMessageItemProvider());
+//            RongIM.registerMessageTemplate(new NewMessageItemProvider());
+//            RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
+//            RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
+//            RongIM.setConversationBehaviorListener(new MyConversationBehaviorListener()); //会话界面监听
+//            RongIM.setConversationListBehaviorListener(new MyConversationListBehaviorListener());//会话列表操作监听
+//            RongExtensionManager.getInstance().registerExtensionModule(new ProductInputModule(this));
+//            RongIM.getInstance().setSendMessageListener(new MySendMessageListener());
+//            RongIM.getInstance().setMessageAttachedUserInfo(true);
+//            registerLogoutObservable();
+//        }
     }
 
-    private void registerLogoutObservable() {
+    public void registerLogoutObservable() {
         logoutObservable = RxBus.get().register(RxConstant.LOGIN_STATUS_DISABLE_OBSERVABLE, Integer.class);
         logoutObservable.subscribe(new RxSubscriber<Integer>() {
             @Override

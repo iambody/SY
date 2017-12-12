@@ -98,22 +98,26 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     BannerView homeBannerview;
     @BindView(R.id.home_floatstewardview)
     FloatStewardView home_floatstewardview;
+    View main_home_level_lay;
     TextView view_live_title_tag;
     ImageView view_live_iv_bg, view_live_title_tag_iv;
     TextView view_live_title, view_live_content;
-    View main_home_level_lay;
 
+    UnreadInfoNumber unreadInfoNumber;
     private Observable<LiveInfBean> liveObservable;
     private Observable<Integer> userLayObservable, bindAdviserObservable;
-    private UnreadInfoNumber unreadInfoNumber;
-    private boolean isLoading;
-    private HomeEntity.Result homeData;
 
+
+    private HomeEntity.Result homeData;
+    private LiveInfBean homeliveInfBean;
+
+    private boolean isLoading;
     private boolean bannerIsLeft;
     private boolean bannerIsRight;
     private boolean isRolling;
-    // Fragment当前状态是否可见
     protected boolean isVisible;
+    private int downXPostion;
+    private int lastXPostion;
 
     @Override
 
@@ -166,7 +170,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             homeBannerview.endBanner();
         } else {
             isVisible = false;
-            LogUtils.Log("onHiddenChanged", "首页可见");
+            LogUtils.Log("onHiddenChanged", "isVisible");
             homeBannerview.startBanner();
         }
     }
@@ -417,8 +421,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         });
     }
 
-
-    LiveInfBean homeliveInfBean;
 
     @Override
     public void onDestroy() {
@@ -726,8 +728,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         });
     }
 
-    private int downXPostion;
-    private int lastXPostion;
 
     class onOperationScrollImpl implements View.OnTouchListener {
         @Override

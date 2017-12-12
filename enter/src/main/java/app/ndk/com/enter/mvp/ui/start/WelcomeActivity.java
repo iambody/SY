@@ -2,11 +2,10 @@ package app.ndk.com.enter.mvp.ui.start;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -55,7 +54,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     private String[] PERMISSIONS = new String[]{PERMISSION_LOCATION, PERMISSION_CALL_PHONE, PERMISSION_READ_STORAGE, PERMISSION_WRITE_STORAGE, INSTALL_SHORTCUT};
     //PERMISSION_READ_STORAGE, PERMISSION_LOCATION, PERMISSION_READ_PHONE_STATE, PERMISSION_CAMERA};//, PERMISSION_VIBRATE, PERMISSION_LOCATION_COARSE, PERMISSION_FINE_COARSE};
     //一大坨runnable，作用：英文直译就好
-    private WelcomeRunnable mBtnRunnable,mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
+    private WelcomeRunnable mBtnRunnable, mDefaultRunnable, mWaitRunnable, mNoNetRunnable, mTimeOutRunnable;
     private WeakHandler weakHandler;
 
     private boolean isStop = false;
@@ -80,9 +79,11 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
     @Override
     public void before() {
-        super.before();
         setContentView(R.layout.activity_welcome);
-        setIsNeedGoneNavigationBar(true);//不显示导航条
+        super.before();
+
+        Log.i("llooollloo","开始显示闪屏");
+//        setIsNeedGoneNavigationBar(true);//不显示导航条
         weakHandler = new WeakHandler();
         SPreference.saveThisRunOpenDownload(this, false);
         // 缺少权限时, 进入权限配置页面
@@ -92,10 +93,10 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             beforeInit();
         }
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+//        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//            //透明状态栏
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        }
     }
 
     @Override

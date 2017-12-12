@@ -446,6 +446,7 @@
             </intent-filter>
         </receiver>
         -->
+        <service android:name="com.cgbsoft.privatefund.utils.service.InitializeService" />
 
         <service android:name="app.privatefund.com.vido.service.FloatVideoService">
             <intent-filter>

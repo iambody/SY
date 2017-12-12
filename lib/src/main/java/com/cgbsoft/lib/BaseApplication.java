@@ -5,9 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.multidex.MultiDexApplication;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
-import com.bumptech.glide.load.model.GlideUrl;
 import com.cgbsoft.lib.utils.db.dao.DaoMaster;
 import com.cgbsoft.lib.utils.db.dao.DaoSession;
 import com.cgbsoft.lib.utils.net.OKHTTP;
@@ -21,7 +18,6 @@ import com.tencent.smtt.sdk.QbSdk;
 
 import org.greenrobot.greendao.database.Database;
 
-import java.io.InputStream;
 import java.util.logging.Level;
 
 /**
@@ -60,9 +56,24 @@ public class BaseApplication extends MultiDexApplication {
 //        Config.IsToastTip = false;//关闭umeng toast
 //        Config.dialogSwitch = false;//不使用默认的dialog
 
-        initLearCanary();
-        initX5Webview();
-        //初始化 okGo 用于下载
+//        initLearCanary();
+//        initX5Webview();
+//        //初始化 okGo 用于下载
+//        OkGo.init(this);
+//        try {
+//            OkGo.getInstance().debug("OKGO", Level.ALL, true)
+//                    .setConnectTimeout(OKHTTP.HTTP_CONNECTION_TIMEOUT)  //全局的连接超时时间
+//                    .setReadTimeOut(OKHTTP.HTTP_CONNECTION_TIMEOUT)     //全局的读取超时时间
+//                    .setWriteTimeOut(OKHTTP.HTTP_CONNECTION_TIMEOUT)    //全局的写入超时时间
+//                    .setRetryCount(3);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        backgroundManager = new BackgroundManager(this);
+    }
+
+    public void initOkGo() {
         OkGo.init(this);
         try {
             OkGo.getInstance().debug("OKGO", Level.ALL, true)
@@ -73,14 +84,12 @@ public class BaseApplication extends MultiDexApplication {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        backgroundManager = new BackgroundManager(this);
     }
 
     /**
      * 初始化内存检测LeakCanary
      */
-    private void initLearCanary() {
+    public void initLearCanary() {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
@@ -92,7 +101,7 @@ public class BaseApplication extends MultiDexApplication {
      *
      * @return
      */
-    private void initX5Webview() {
+    public void initX5Webview() {
         //x5内核初始化接口
         try {
             QbSdk.initX5Environment(getContext(), new QbSdk.PreInitCallback() {
@@ -111,6 +120,7 @@ public class BaseApplication extends MultiDexApplication {
             e.printStackTrace();
         }
     }
+
     /**
      * 获取App安装包信
      */
@@ -125,6 +135,7 @@ public class BaseApplication extends MultiDexApplication {
             info = new PackageInfo();
         return info;
     }
+
     /**
      * 供埋点使用
      *

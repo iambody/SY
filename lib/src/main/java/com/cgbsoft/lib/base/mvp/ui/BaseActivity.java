@@ -75,7 +75,7 @@ public abstract class BaseActivity<P extends BasePresenterImpl> extends RxAppCom
 
         AppInfStore.saveDialogTag(BaseActivity.this, false);
 
-//        StatusBarUtil.setTranslucent(this,128);
+////        StatusBarUtil.setTranslucent(this,128);
         if (getIsNightTheme() && savedInstanceState == null) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             recreate();
