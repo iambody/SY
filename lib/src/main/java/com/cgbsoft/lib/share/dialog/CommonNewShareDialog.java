@@ -56,22 +56,6 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
      * 控制window层
      */
     private Window dwindows;
-    /**
-     * 该种模式是消息资讯 up:联系人 微信 朋友圈 down：邮件 短信 复制链接
-     */
-    public static final int Tag_Style_Inf_ZiXun = 1;
-    /**
-     * 该种模式是 up:联系人 微信  邮件 短信 复制链接
-     */
-    public static final int Tag_Style_FundDetail = 2;
-    /**
-     * 该种模式是 up:  微信
-     */
-    public static final int Tag_Style_WeiXin = 3;
-    /**
-     * 是微信朋友圈
-     */
-    public static final int Tag_Style_WxPyq = 4;
 
 
     /**

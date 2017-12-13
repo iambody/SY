@@ -22,7 +22,6 @@ import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
-import com.cgbsoft.lib.share.dialog.CommonNewShareDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -55,6 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
+import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -244,17 +244,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-        CommonNewShareDialog h=new CommonNewShareDialog(baseActivity,CommonNewShareDialog.SHARE_WX,null,null);
-        h.show();
-//        if (AppManager.isVisitor(baseActivity)) {
-//            Intent intent = new Intent(baseActivity, LoginActivity.class);
-//            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-//        } else {
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-//        }
-//        DataStatistApiParam.homeClickNew();
-//        TrackingDataManger.homeNew(baseActivity);
+//        CommonNewShareDialog h=new CommonNewShareDialog(baseActivity,CommonNewShareDialog.SHARE_WX,null,null);
+//        h.show();
+        if (AppManager.isVisitor(baseActivity)) {
+            Intent intent = new Intent(baseActivity, LoginActivity.class);
+            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+        } else {
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+        }
+        DataStatistApiParam.homeClickNew();
+        TrackingDataManger.homeNew(baseActivity);
 
     }
 
