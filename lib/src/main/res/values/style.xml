@@ -361,6 +361,19 @@
         <item name="android:backgroundDimEnabled">false</item>
 
     </style>
+    <style name="share_new_comment_style" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+
+        <item name="android:windowBackground">@color/line_20</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:inAnimation">@anim/push_bottom_in</item>
+        <item name="android:outAnimation">@anim/push_bottom_out</item>
+
+    </style>
     <!-- 公用分享的dialog的动画style-->
     <style name="share_comment_anims_style" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/share_comment_animes_enter</item>
