@@ -256,9 +256,9 @@ public class FileUtils {
         return file;
     }
 
-    public static File createResourceLocalTempFile(String dir, String fileName) {
+        public static File createResourceLocalTempFile(String dir, String fileName) {
         File file = null;
-        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+        if ((Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) && BaseApplication.getContext().getExternalCacheDir() != null) {
             file = new File(BaseApplication.getContext().getExternalCacheDir().getPath() + File.separator + dir, fileName);
         } else {
             file = new File(BaseApplication.getContext().getCacheDir().getPath() +  File.separator + dir, fileName);
