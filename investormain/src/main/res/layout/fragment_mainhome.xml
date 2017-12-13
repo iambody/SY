@@ -36,12 +36,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <!--  <com.jude.rollviewpager.RollPagerView
-                              android:id="@+id/main_home_bannerview"
-                              android:layout_width="match_parent"
-                              android:layout_height="@dimen/activity_main_banner"
-                              android:visibility="gone"/>
-  -->
                         <com.cgbsoft.lib.widget.BannerView
                             android:id="@+id/home_bannerview"
                             android:layout_width="match_parent"
@@ -53,14 +47,12 @@
                     <include
                         android:id="@+id/main_home_live_lay"
                         layout="@layout/view_home_live_lay"
-
                         android:visibility="gone" />
                     <!-- 直播预报的布局************ -->
                     <!-- 会员等级的布局 -->
                     <include
                         android:id="@+id/main_home_level_lay"
                         layout="@layout/view_home_level_lay" />
-
                     <!-- 横向滑动的布局 -->
                     <HorizontalScrollView
                         android:id="@+id/main_home_horizontalscrollview"

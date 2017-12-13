@@ -368,4 +368,9 @@
         <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
         <item name="android:progressDrawable">@drawable/shape_progressbar_mini</item>
     </style>
+    <style name="WelcomeStyle" parent="Theme.AppCompat.DayNight.Fullscreen">
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>

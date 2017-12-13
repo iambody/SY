@@ -205,7 +205,8 @@
         <activity
             android:name="app.ndk.com.enter.mvp.ui.start.WelcomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.DayNight.Fullscreen"
+
+            android:theme="@style/WelcomeStyle"
             tools:replace="android:theme">
             <!--  要是需要loge切换的话需要把下边的filter屏蔽掉 然后把下边的两个组件打开-->
 

@@ -29,6 +29,8 @@ import com.cgbsoft.privatefund.R;
  * 日期 2017/11/29-15:06
  */
 public class FloatStewardView extends RelativeLayout implements View.OnClickListener {
+    private final int ANIMATOR_TIME = 2 * 1000;
+    private final int TIMECOUNTDOWN = 6;
     private boolean isVisitor;
     private boolean isOpen;
     private View baseView;
@@ -185,7 +187,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
-            valueAnimator.setDuration(2 * 1000);
+            valueAnimator.setDuration(ANIMATOR_TIME);
             valueAnimator.setTarget(rectangle_in_lay);
             valueAnimator.start();
         } else {
@@ -216,7 +218,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
-            valueAnimator.setDuration(2 * 1000);
+            valueAnimator.setDuration(ANIMATOR_TIME);
 //            valueAnimator.setTarget(rectangle_in_lay,rectangle_out_lay);
             valueAnimator.start();
 
@@ -250,7 +252,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
-            valueAnimator.setDuration(2 * 1000);
+            valueAnimator.setDuration(ANIMATOR_TIME);
             valueAnimator.setTarget(rectangle_in_lay);
             valueAnimator.start();
         } else {
@@ -280,7 +282,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
-            valueAnimator.setDuration(2 * 1000);
+            valueAnimator.setDuration(ANIMATOR_TIME);
 //            valueAnimator.setTarget(rectangle_in_lay,rectangle_out_lay);
             valueAnimator.start();
         }
@@ -307,7 +309,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
     }
 
 
-    private final int TIMECOUNTDOWN = 8;
+
 
     private void timeCount(boolean isClos) {
         if (isClos) {
@@ -327,28 +329,5 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
             RxCountDown.stopCountTime();
         }
 
-//        RxCountDown.countdown(TIMECOUNTDOWN).doOnSubscribe(new Action0() {
-//            @Override
-//            public void call() {
-//
-//            }
-//        }).subscribe(new Subscriber<Integer>() {
-//            @Override
-//            public void onCompleted() {
-//
-//                closeFloat();
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(Integer integer) {
-//
-//
-//            }
-//        });
     }
 }

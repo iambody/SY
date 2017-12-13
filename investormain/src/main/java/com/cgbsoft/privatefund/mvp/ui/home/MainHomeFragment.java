@@ -72,7 +72,6 @@ import rx.functions.Action0;
  */
 public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener, View.OnClickListener {
     public static final String LIVERXOBSERBER_TAG = "rxobserlivetag";
-    public final int PLAYDELAYTIME = 6;
     public final int ADVISERSHOWTIME = 5;
     public final int ADVISERLOADTIME = 3;
     @BindView(R.id.mainhome_webview)
@@ -103,7 +102,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     ImageView view_live_iv_bg, view_live_title_tag_iv;
     TextView view_live_title, view_live_content;
 
-    UnreadInfoNumber unreadInfoNumber;
+    private UnreadInfoNumber unreadInfoNumber;
     private Observable<LiveInfBean> liveObservable;
     private Observable<Integer> userLayObservable, bindAdviserObservable;
 
