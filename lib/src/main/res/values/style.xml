@@ -87,6 +87,7 @@
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
     </style>
+
     <style name="normal_edit2">
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
@@ -97,6 +98,7 @@
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
     </style>
+
     <style name="normal_edit1">
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
@@ -326,13 +328,16 @@
         <item name="android:textColor">@color/hintcolor</item>
         <item name="android:textColorHint">@color/hintcolor</item>
     </style>
+
     <style name="textinput_style1">
         <item name="android:textSize">12sp</item>
 
         <item name="android:textColor">@color/hintcolor</item>
         <item name="android:textColorHint">@color/hintcolor</item>
     </style>
+
     <style name="button_style" parent="@style/Widget.AppCompat.Button.Borderless" />
+
     <style name="IndentityCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/indentity_select</item>
     </style>
@@ -361,15 +366,18 @@
         <item name="android:windowEnterAnimation">@anim/share_comment_animes_enter</item>
         <item name="android:windowExitAnimation">@anim/share_comment_animes_exit</item>
     </style>
+
     <style name="StyleProgressBarMini" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:maxHeight">2dip</item>
         <item name="android:minHeight">2dip</item>
         <item name="android:indeterminateOnly">false</item>
-        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
         <item name="android:progressDrawable">@drawable/shape_progressbar_mini</item>
     </style>
-    <style name="WelcomeStyle" parent="Theme.AppCompat.DayNight.Fullscreen">
 
+    <style name="WelcomeStyle" parent="Theme.AppCompat.DayNight.Fullscreen">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
