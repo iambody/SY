@@ -105,4 +105,6 @@
     <string name="now_look_new_member">立即查看新的权益</string>
     <string name="know_more">了解更多</string>
     <string name="get_caifu">您可以通过以下方式提升财富值，获得更多权益及服务：</string>
+    <string name="share_to">分享到:</string>
+    <string name="data_error">数据异常</string>
 </resources>

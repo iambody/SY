@@ -244,6 +244,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
+//        CommonNewShareDialog h=new CommonNewShareDialog(baseActivity,CommonNewShareDialog.SHARE_WX,null,null);
+//        h.show();
         if (AppManager.isVisitor(baseActivity)) {
             Intent intent = new Intent(baseActivity, LoginActivity.class);
             intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);

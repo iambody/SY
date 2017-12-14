@@ -155,6 +155,7 @@ public class IdentityCardActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void picResult(String ivPath) {
                 Log.i("OCR回调", "活体回调结果成功" + ivPath);
+
                 analyzeCard(ivPath);
             }
 

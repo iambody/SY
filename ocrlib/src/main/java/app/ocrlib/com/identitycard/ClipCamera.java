@@ -273,7 +273,8 @@ public class ClipCamera extends SurfaceView implements SurfaceHolder.Callback, C
                         file.createNewFile();
                     }
                     bos = new BufferedOutputStream(new FileOutputStream(file));
-                    bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);//将图片压缩到流中
+//                    bm.compress(Bitmap.CompressFormat.JPEG, 100, bos); 12.13 因为照片太大问题 会造成api返回识别失败 所以降低压缩率 原来是100改成60
+                    bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);//将图片压缩到流中  需要改成60或者70 降低图片大小
                     if (null != cameraResult) {
                         cameraResult.picResult(savePath);
                     }
