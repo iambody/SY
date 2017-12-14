@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,9 +40,10 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
     private SemicircleView semicircleview;
     private RelativeLayout rectangle_out_lay;
     private RoundImageView steward_round_iv;
+    private ImageView steward_arrow_iv;
     private String serveCode, headerurl, userName;
     private LinearLayout rectangle_in_lay, cardnumber_lay, rectangle_in_text_lay, rectangle_in_user_text_lay;
-    private TextView cardnumber_txt, rectangle_in_user_text, steward_phone_bt, steward_note_bt, steward_im_bt;
+    private TextView cardnumber_txt, rectangle_in_user_text, steward_phone_bt, steward_note_bt, steward_im_bt, steward_inf_bt;
     private AnimatorSet openVisitorAnmatorSet, openUserAnmatorSet, closeVisitorAnmatorSet, closeUserAnmatorSet;
     private FloatStewardListener floatStewardListener;
 
@@ -70,8 +72,10 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         steward_phone_bt = (TextView) findViewById(R.id.steward_phone_bt);
         steward_note_bt = (TextView) findViewById(R.id.steward_note_bt);
         steward_im_bt = (TextView) findViewById(R.id.steward_im_bt);
+        steward_inf_bt = (TextView) findViewById(R.id.steward_inf_bt);
         cardnumber_txt = (TextView) findViewById(R.id.cardnumber_txt);
         cardnumber_lay = (LinearLayout) findViewById(R.id.cardnumber_lay);
+        steward_arrow_iv= (ImageView) findViewById(R.id.steward_arrow_iv);
         semicircleview = (SemicircleView) baseView.findViewById(R.id.semicircleview);
         steward_round_iv = (RoundImageView) baseView.findViewById(R.id.steward_round_iv);
         rectangle_out_lay = (RelativeLayout) baseView.findViewById(R.id.rectangle_out_lay);
@@ -80,6 +84,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         rectangle_in_user_text = (TextView) findViewById(R.id.rectangle_in_user_text);
         rectangle_in_user_text_lay = (LinearLayout) findViewById(R.id.rectangle_in_user_text_lay);
 
+        semicircleview.setOnClickListener(this);
         steward_round_iv.setOnClickListener(this);
         cardnumber_lay.setOnClickListener(this);
         rectangle_in_text_lay.setOnClickListener(this);
@@ -87,7 +92,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         steward_phone_bt.setOnClickListener(this);
         steward_note_bt.setOnClickListener(this);
         steward_im_bt.setOnClickListener(this);
-
+        steward_inf_bt.setOnClickListener(this);
     }
 
     @Override
@@ -121,6 +126,12 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 if (null != floatStewardListener) floatStewardListener.visitorTxtClick();
 //                closeFloat();
                 break;
+            case R.id.steward_inf_bt://档案
+
+                break;
+            case R.id.semicircleview:
+                closeFloat();
+                break;
 
 
         }
@@ -134,7 +145,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         this.floatStewardListener = stewardListener;
         this.serveCode = AppManager.getUserInfo(floatContext).bandingAdviserUniqueCode;
         this.headerurl = AppManager.getUserInfo(floatContext).bandingAdviserHeadImageUrl;
-        this.userName = AppManager.getUserInfo(floatContext).realName;
+        this.userName = AppManager.getUserInfo(floatContext).nickName;
         inflateView();
     }
 
@@ -145,7 +156,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         this.isVisitor = isvisitor;
         this.serveCode = AppManager.getUserInfo(floatContext).bandingAdviserUniqueCode;
         this.headerurl = AppManager.getUserInfo(floatContext).bandingAdviserHeadImageUrl;
-        this.userName = AppManager.getUserInfo(floatContext).realName;
+        this.userName = AppManager.getUserInfo(floatContext).nickName;
         inflateView();
     }
 
@@ -156,6 +167,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         if (!isVisitor) {
             BStrUtils.SetTxt(cardnumber_txt, serveCode);
             Imageload.display(floatContext, headerurl, steward_round_iv);
+            rectangle_in_user_text.setText(String.format("尊敬的%s我是您的私人银行家,很高兴为您服务",BStrUtils.NullToStr1(userName)));
         }
 
     }
@@ -183,7 +195,9 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 40) + (int) (surplusWidth * fraction);
                     rectangle_in_lay.requestLayout();
                     rectangle_in_text_lay.setVisibility(100 == animatorValue ? VISIBLE : GONE);
+                    steward_arrow_iv.setVisibility(100 == animatorValue ? VISIBLE : GONE);
                     if (100 == animatorValue) timeCount(true);
+
                 }
             });
             valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
@@ -213,7 +227,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     cardnumber_lay.setVisibility(65 < animatorValue ? VISIBLE : GONE);//(1==animatorValue);
                     rectangle_in_user_text_lay.setVisibility(80 < animatorValue ? VISIBLE : GONE);
                     rectangle_in_user_text.setVisibility(100 <= animatorValue ? VISIBLE : INVISIBLE);
-
+                    steward_arrow_iv.setVisibility(100 == animatorValue ? VISIBLE : GONE);
                     if (100 == animatorValue) timeCount(true);
                 }
             });
@@ -234,6 +248,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         if (!isOpen) return;
         isOpen = false;
         int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 160);
+        steward_arrow_iv.setVisibility(GONE);
         if (isVisitor) {
             //游客
             ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
@@ -307,8 +322,6 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         //im点击
         void imClick();
     }
-
-
 
 
     private void timeCount(boolean isClos) {

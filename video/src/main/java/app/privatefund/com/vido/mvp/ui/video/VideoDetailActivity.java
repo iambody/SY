@@ -304,7 +304,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         tv_avd_cache_num.setText(String.valueOf(getsize()));
 
         FloatVideoService.stopService();
-        UserAction.initUserAction(this. getApplicationContext());
+        UserAction.initUserAction(this.getApplicationContext());
         TrackingDataManger.videoDetailEnter(this);
     }
 
@@ -439,7 +439,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
             if (videoInfoModel != null) {
                 TrackingDiscoveryDataStatistics.videoUrlIntercept(VideoDetailActivity.this, videoInfoModel.videoName);
             }
-        } else if (refreshPage){
+        } else if (refreshPage) {
             ThreadUtils.runOnMainThread(() -> {
                 playChangeNetwork();
             });
@@ -767,7 +767,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     private void playNetData() {
         if (NetUtils.getNetState() != NetUtils.NetState.NET_WIFI) {
-            ll_mvv_nowifi.setVisibility(View.VISIBLE);
+            if (null != ll_mvv_nowifi) {
+                ll_mvv_nowifi.setVisibility(View.VISIBLE);
+            }
             tv_mvv_no_wifi.setText(R.string.avd_no_wifi_str);
             tv_mvv_rich_go.setText(R.string.avd_rich_go_str);
             return;
@@ -851,7 +853,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         if (isCouldLocalPlay) {
             if (isLocalType == 0) {//高清
-                v2.url =  videoInfoModel.localVideoPath;
+                v2.url = videoInfoModel.localVideoPath;
                 videos.add(v2);
             } else if (isLocalType == 1) {//标清
                 v1.url = videoInfoModel.localVideoPath;
@@ -1271,8 +1273,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         commonShareDialog.show();
 
         DataStatistApiParam.onStatisToCVideoDetailShareClick(videoInfoModel.videoName, videoInfoModel.categoryName);
-        TrackingDataManger.videoDetailRightShare(baseContext,videoInfoModel.videoName);
+        TrackingDataManger.videoDetailRightShare(baseContext, videoInfoModel.videoName);
     }
+
     class AnimListener implements Animation.AnimationListener {
         int which;
 
@@ -1337,7 +1340,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         @Override
         public void onReceive(Context context, Intent intent) {
             NetUtils.NetState netStatus = NetUtils.getNetState();
-            System.out.println("---------NEW="+netStatus);
+            System.out.println("---------NEW=" + netStatus);
             if (netStatus == NetUtils.NetState.NET_NO) {   //无网络
 
                 if (!isVideoDownload()) {
@@ -1366,7 +1369,9 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
     private void playChangeNetwork() {
         if (videoInfoModel != null && isSetDataSource) {
-            ll_mvv_nowifi.setVisibility(View.GONE);
+            if (null != ll_mvv_nowifi) {
+                ll_mvv_nowifi.setVisibility(View.GONE);
+            }
             if (vrf_avd.getCurrentStatus() != 5) {
                 vrf_avd.seekTo(videoInfoModel.currentTime);
                 vrf_avd.play();

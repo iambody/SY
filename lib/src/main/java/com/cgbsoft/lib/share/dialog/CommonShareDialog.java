@@ -212,7 +212,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
         userInfo = AppManager.getUserInfo(dcontext);
 //     根据需求分享理财是名片
         isCanShare = !BStrUtils.isEmpty(userInfo.realName) && userInfo.isAdvisers.endsWith("y") && AppManager.isAdViser(dcontext);
-        IUrl(commonShareBean);
+        iUrl(commonShareBean);
         try {
             TrackingDataManger.shareIn(dcontext, commonShareBean.getShareTitle());
         } catch (Exception e) {
@@ -220,7 +220,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
     }
 
     //配置url 进行选中未选择的替换
-    private void IUrl(ShareCommonBean BBshare) {
+    private void iUrl(ShareCommonBean BBshare) {
         //分享微信
         UrlNoCode = BBshare.getShareUrl();
 //      根据需求进行判断  UrlCode = BBshare.getUrl() + UserInfManger.GetCardUrlParms(true);
@@ -235,14 +235,14 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
 //            EmailCode = BBshare.getYoujianText().replace(UrlNoCode, UrlCode);
 //        }
         if (isCanShare) //如果有真实姓名&&是理财师 直接所有url设置为 带card url的
-            SetBeanCardUrl(true);
+            setBeanCardUrl(true);
 
     }
 
     /**
      * 根据选择状态进行处理 分享bean的url或者短信url的配置
      */
-    public void SetBeanCardUrl(boolean IsAddCard) {
+    public void setBeanCardUrl(boolean IsAddCard) {
         commonShareBean.setShareUrl(IsAddCard ? UrlCode : UrlNoCode);
 //        commonShareBean.setDuanxinText(IsAddCard ? SMSCode : SMSNoCode);
 //        commonShareBean.setYoujianText(IsAddCard ? EmailCode : EmailNoCode);
@@ -264,11 +264,11 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
 
     private void initConfigView() {
         for (ShareViewBean h : viewLs) {
-            SetAnimation(h.getShareView());
+            setAnimation(h.getShareView());
             comment_share_flowlayout.addView(h.getShareView());
             h.getShareView().setOnClickListener(new MyShareClick(h.getPostion()));
         }
-        SetAnimation(comment_share_dismiss_bt);
+        setAnimation(comment_share_dismiss_bt);
         SetDownToUpAnimation(comment_share_up_lay);
     }
 
@@ -297,7 +297,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
 //            UiHelper.SetTxt(comment_share_card_name, String.format("%s经理", UserInfManger.GetRealName().charAt(0)));
 
 
-        SetViews(tag_Style);
+        setViews(tag_Style);
     }
 
     private void initBase() {
@@ -318,34 +318,34 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      * @param TypeNumbs
      */
 
-    private void SetViews(int TypeNumbs) {
+    private void setViews(int TypeNumbs) {
         viewLs = new ArrayList<>();
         switch (TypeNumbs) {
             case Tag_Style_Inf_ZiXun://联系人 微信 朋友圈 down：邮件 短信 复制链接
-                viewLs.add(new ShareViewBean(0, GetViewApPotion(0)));
-                viewLs.add(new ShareViewBean(1, GetViewApPotion(1)));
-                viewLs.add(new ShareViewBean(2, GetViewApPotion(2)));
-                viewLs.add(new ShareViewBean(3, GetViewApPotion(3)));
-                viewLs.add(new ShareViewBean(4, GetViewApPotion(4)));
-                viewLs.add(new ShareViewBean(5, GetViewApPotion(5)));
+                viewLs.add(new ShareViewBean(0, getViewApPotion(0)));
+                viewLs.add(new ShareViewBean(1, getViewApPotion(1)));
+                viewLs.add(new ShareViewBean(2, getViewApPotion(2)));
+                viewLs.add(new ShareViewBean(3, getViewApPotion(3)));
+                viewLs.add(new ShareViewBean(4, getViewApPotion(4)));
+                viewLs.add(new ShareViewBean(5, getViewApPotion(5)));
                 break;
 
             case Tag_Style_FundDetail://联系人 微信  邮件 短信 复制链接
-                viewLs.add(new ShareViewBean(0, GetViewApPotion(0)));
-                viewLs.add(new ShareViewBean(1, GetViewApPotion(1)));
+                viewLs.add(new ShareViewBean(0, getViewApPotion(0)));
+                viewLs.add(new ShareViewBean(1, getViewApPotion(1)));
 
 
-                viewLs.add(new ShareViewBean(4, GetViewApPotion(4)));
-                viewLs.add(new ShareViewBean(5, GetViewApPotion(5)));
-                viewLs.add(new ShareViewBean(3, GetViewApPotion(3)));
+                viewLs.add(new ShareViewBean(4, getViewApPotion(4)));
+                viewLs.add(new ShareViewBean(5, getViewApPotion(5)));
+                viewLs.add(new ShareViewBean(3, getViewApPotion(3)));
                 break;
 
             case Tag_Style_WeiXin://微信
-                viewLs.add(new ShareViewBean(1, GetViewApPotion(1)));
+                viewLs.add(new ShareViewBean(1, getViewApPotion(1)));
                 break;
             case Tag_Style_WxPyq://微信 朋友圈
-                viewLs.add(new ShareViewBean(1, GetViewApPotion(1)));
-                viewLs.add(new ShareViewBean(2, GetViewApPotion(2)));
+                viewLs.add(new ShareViewBean(1, getViewApPotion(1)));
+                viewLs.add(new ShareViewBean(2, getViewApPotion(2)));
                 break;
 
         }
@@ -378,12 +378,12 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
                     break;
                 case 1://微信
                     share_Type = SHARE_WX;
-                    WeChatShare(commonShareBean);
+                    weChatShare(commonShareBean);
 
                     break;
                 case 2://朋友圈
                     share_Type = SHARE_WXCIRCLE;
-                    WxCircleShare(commonShareBean);
+                    wxCircleShare(commonShareBean);
 //                    WxCircrImg(commonShareBean);
                     try {
                         TrackingDataManger.shareClickCricle(dcontext);
@@ -408,7 +408,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
 
 
     //只需要出入第几个 就直接初始化一个view
-    private View GetViewApPotion(int Postion) {
+    private View getViewApPotion(int Postion) {
         int Wdith = ShareUtils.GetWidhAndHeight(dcontext, 1);
         int NeedWdith = Wdith / 3;
         ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(
@@ -428,14 +428,14 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
     /**
      * 当关闭时候要关闭分享资源
      */
-    private void CloseShareSdk() {
+    private void closeShareSdk() {
         ShareSDK.stopSDK(dcontext);
     }
 
     /**
      * 微信分享的初始化
      */
-    private void WeChatShare(ShareCommonBean WxShareData) {
+    private void weChatShare(ShareCommonBean WxShareData) {
         if (!Utils.isWeixinAvilible(dcontext)) {//没有安装微信
             PromptManager.ShowCustomToast(dcontext, dcontext.getResources().getString(R.string.pleaseinstanllweixin));
             return;
@@ -459,7 +459,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
     /**
      * 朋友圈分享
      */
-    private void WxCircleShare(ShareCommonBean WxShareData) {
+    private void wxCircleShare(ShareCommonBean WxShareData) {
         if (!Utils.isWeixinAvilible(dcontext)) {//没有安装微信
             PromptManager.ShowCustomToast(dcontext, dcontext.getResources().getString(R.string.pleaseinstanllweixin));
             return;
@@ -483,7 +483,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      *
      * @param WxShareData
      */
-    private void WxCircrImg(ShareCommonBean WxShareData) {
+    private void wxCircrImg(ShareCommonBean WxShareData) {
         platform_circle = ShareSDK.getPlatform(WechatMoments.NAME);
         WechatMoments.ShareParams sp = new WechatMoments.ShareParams();
         sp.setShareType(Platform.SHARE_IMAGE);
@@ -552,7 +552,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      *
      * @param VV
      */
-    private void SetAnimation(View VV) {
+    private void setAnimation(View VV) {
         AnimatorSet animationSet = new AnimatorSet();
         ObjectAnimator Translate = ObjectAnimator.ofFloat(VV, "translationY", 1000f, 0f);
         ObjectAnimator Alpha = ObjectAnimator.ofFloat(VV, "alpha", 0f, 0.4f, 06f, 0.7f, 0.9f, 1f);
@@ -568,7 +568,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
      *
      * @param VV
      */
-    private void SetDisissAnimation(View VV) {
+    private void setDisissAnimation(View VV) {
         AnimatorSet animationSet = new AnimatorSet();
         ObjectAnimator Translate = ObjectAnimator.ofFloat(VV, "translationY", 1000f, 0f);
         ObjectAnimator Alpha = ObjectAnimator.ofFloat(VV, "alpha", 0f, 0.4f, 06f, 0.7f, 0.9f, 1f);
@@ -598,7 +598,7 @@ public class CommonShareDialog extends Dialog implements PlatformActionListener,
 //            commentShareListener.cancleShare();
         }
         try {
-            CloseShareSdk();
+            closeShareSdk();
         } catch (Exception e) {
         }
         TrackingDataManger.shareClose(dcontext);

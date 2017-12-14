@@ -57,8 +57,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="80dp"
-                android:orientation="vertical"
                 android:clickable="true"
+                android:orientation="vertical"
                 android:visibility="gone">
 
                 <TextView
@@ -66,12 +66,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal|center"
                     android:layout_weight="2"
+                    android:gravity="center_horizontal|center"
                     android:textColor="@color/app_golden"
                     android:textSize="@dimen/ui_13_dip"
-                    android:visibility="gone"
-                    android:text="尊敬的王永奎我是您的私人银行家,很高兴为您服务"/>
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -83,10 +82,8 @@
                     <TextView
                         android:id="@+id/steward_phone_bt"
                         style="@style/home_banker_bt_style1"
-                        android:layout_marginLeft="@dimen/ui_2_dip"
-                        android:layout_marginRight="@dimen/ui_2_dip"
                         android:text="@string/phone"
-                        android:textSize="@dimen/ui_12_dip" />
+                        android:textSize="@dimen/ui_10_dip" />
 
                     <TextView
                         android:id="@+id/steward_note_bt"
@@ -94,7 +91,7 @@
                         android:layout_marginLeft="@dimen/ui_2_dip"
                         android:layout_marginRight="@dimen/ui_2_dip"
                         android:text="@string/mms"
-                        android:textSize="@dimen/ui_12_dip" />
+                        android:textSize="@dimen/ui_10_dip" />
 
                     <TextView
                         android:id="@+id/steward_im_bt"
@@ -102,7 +99,13 @@
                         android:layout_marginLeft="@dimen/ui_2_dip"
                         android:layout_marginRight="@dimen/ui_2_dip"
                         android:text="@string/conversation"
-                        android:textSize="@dimen/ui_12_dip" />
+                        android:textSize="@dimen/ui_10_dip" />
+
+                    <TextView
+                        android:id="@+id/steward_inf_bt"
+                        style="@style/home_banker_bt_style1"
+                        android:text="@string/dangan"
+                        android:textSize="@dimen/ui_10_dip" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -111,9 +114,20 @@
             android:id="@+id/semicircleview"
             android:layout_width="@dimen/ui_80_dip"
             android:layout_height="@dimen/ui_80_dip"
-            android:layout_toRightOf="@+id/rectangle_in_lay" />
+            android:layout_toRightOf="@+id/rectangle_in_lay"
+            android:clickable="true"/>
 
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/steward_arrow_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/float_steward_back"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/ui_52_dip"
+        android:visibility="gone"/>
 
     <com.cgbsoft.lib.widget.RoundImageView
         android:id="@+id/steward_round_iv"

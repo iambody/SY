@@ -303,4 +303,5 @@
         <item>已驳回</item>
     </string-array>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"http://app.simuyun.com\",\n  }\n}]</string>
+    <string name="dangan">档案</string>
 </resources>
