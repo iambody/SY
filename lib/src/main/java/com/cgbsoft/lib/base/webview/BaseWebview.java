@@ -95,6 +95,7 @@ public class BaseWebview extends WebView {
         getSettings().setLoadWithOverviewMode(true);
 //        getSettings().setSupportZoom(true);
         getSettings().setBuiltInZoomControls(true);
+        getSettings().setAllowFileAccess(true); // 允许访问文件
 //        getSettings().setDisplayZoomControls(false);
         getSettings().setSavePassword(true);
         getSettings().setSaveFormData(true);

@@ -106,7 +106,7 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
                     TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), introduceHealthFragment,Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen1);
 //                    IntroduceHealthFragmentTest testIntroduceFragment = new IntroduceHealthFragmentTest();
-//                    currentFragment=testIntroduceFragment;
+//                    currentFragment = testIntroduceFragment;
 //                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), testIntroduceFragment,Integer.parseInt(secondNavigation.getCode()));
 //                    tabBeens.add(tabBeen1);
                     break;
