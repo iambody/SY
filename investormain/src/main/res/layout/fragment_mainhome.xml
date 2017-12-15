@@ -74,13 +74,14 @@
                         android:id="@+id/main_home_gvw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        />
+                        android:visibility="gone" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ui_13_dip"
                         android:background="@color/white" />
+
+                    <include layout="@layout/view_home_product" />
 
                     <com.cgbsoft.lib.base.webview.BaseWebview
                         android:id="@+id/mainhome_webview"
