@@ -40,9 +40,11 @@ import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.widget.BannerView;
+import com.cgbsoft.lib.widget.MyGridView;
 import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.SmartScrollView;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.adapter.OperationAdapter;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
@@ -102,6 +104,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     ImageView view_live_iv_bg, view_live_title_tag_iv;
     TextView view_live_title, view_live_content;
 
+    MyGridView main_home_gvw;
+    OperationAdapter operationAdapter;
     private UnreadInfoNumber unreadInfoNumber;
     private Observable<LiveInfBean> liveObservable;
     private Observable<Integer> userLayObservable, bindAdviserObservable;
@@ -313,6 +317,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeSmartscrollview.setScrollChangedListener(this);
         main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
         main_home_live_lay.setOnClickListener(this);
+
+        main_home_gvw = (MyGridView) mFragmentView.findViewById(R.id.main_home_gvw);
+        operationAdapter = new OperationAdapter(baseActivity, R.layout.item_operation);
+        main_home_gvw.setAdapter(operationAdapter);
         //游客模式下或者没有绑定过理财师需要
         initRxEvent();
     }
@@ -514,8 +522,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initHorizontalScroll(data.module);
         //banner
         initViewPage(data.banner);
+        initOperation(data.module);
         //用户等级信息
         initLevel(data.myInfo);
+
+    }
+
+    private void initOperation(List<HomeEntity.Operate> module) {
+        if (null != module) {
+            main_home_gvw.setNumColumns(4);
+            operationAdapter.refreshData(module, 4);
+        }
     }
 
     /**
