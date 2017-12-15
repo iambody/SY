@@ -39,5 +39,6 @@ public class HomeEntity extends BaseResult<HomeEntity.Result> {
         public String level;//":"1",
         public String levelName;//":"LV1盈卡",
         public String url;//":"http://www.baidu.com"
+
     }
 }

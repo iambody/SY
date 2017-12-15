@@ -75,7 +75,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         steward_inf_bt = (TextView) findViewById(R.id.steward_inf_bt);
         cardnumber_txt = (TextView) findViewById(R.id.cardnumber_txt);
         cardnumber_lay = (LinearLayout) findViewById(R.id.cardnumber_lay);
-        steward_arrow_iv= (ImageView) findViewById(R.id.steward_arrow_iv);
+        steward_arrow_iv = (ImageView) findViewById(R.id.steward_arrow_iv);
         semicircleview = (SemicircleView) baseView.findViewById(R.id.semicircleview);
         steward_round_iv = (RoundImageView) baseView.findViewById(R.id.steward_round_iv);
         rectangle_out_lay = (RelativeLayout) baseView.findViewById(R.id.rectangle_out_lay);
@@ -105,10 +105,12 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         switch (v.getId()) {
             case R.id.steward_round_iv://头像点击
 //                if (null != floatStewardListener) floatStewardListener.roundImageViewClick();
-                openFloat();
+                if (isOpen) closeFloat();
+                else
+                    openFloat();
                 break;
             case R.id.cardnumber_lay://绑定理财师的邀请码布局点击
-                closeFloat();
+//                closeFloat();
                 break;
             case R.id.rectangle_in_lay://绑定和未绑定公用的外层布局
 //                closeFloat();
@@ -127,7 +129,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
 //                closeFloat();
                 break;
             case R.id.steward_inf_bt://档案
-
+                if (null != floatStewardListener) floatStewardListener.record();
                 break;
             case R.id.semicircleview:
                 closeFloat();
@@ -167,7 +169,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         if (!isVisitor) {
             BStrUtils.SetTxt(cardnumber_txt, serveCode);
             Imageload.display(floatContext, headerurl, steward_round_iv);
-            rectangle_in_user_text.setText(String.format("尊敬的%s我是您的私人银行家,很高兴为您服务",BStrUtils.NullToStr1(userName)));
+            rectangle_in_user_text.setText(String.format("尊敬的%s我是您的私人银行家,很高兴为您服务", BStrUtils.NullToStr1(userName)));
         }
 
     }
@@ -177,10 +179,9 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
      * 张开
      **/
     public void openFloat() {
-        if (isOpen) {
-            if (null != floatStewardListener) floatStewardListener.roundImageViewClick();
+        if (isOpen)
             return;
-        }
+
         isOpen = true;
         int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 160);
         if (isVisitor) {
@@ -308,7 +309,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
 
     public interface FloatStewardListener {
         //头像点击
-        void roundImageViewClick();
+        void record();
 
         //游客模式下点击文字
         void visitorTxtClick();

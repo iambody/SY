@@ -180,7 +180,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private void initshowlay() {
         home_floatstewardview.initFloat(AppManager.isVisitor(baseActivity) || !AppManager.isBindAdviser(baseActivity), new FloatStewardView.FloatStewardListener() {
             @Override
-            public void roundImageViewClick() {
+            public void record() {
                 if (AppManager.isBindAdviser(baseActivity)) {
                     VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.BindchiceAdiser, getResources().getString(R.string.my_adviser), 200);
                 } else {
