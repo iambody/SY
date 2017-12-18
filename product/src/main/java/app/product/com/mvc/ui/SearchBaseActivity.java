@@ -132,6 +132,8 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         textEdit = (ClearEditText) findViewById(R.id.search_title_ed);
         listAdapter = new HotSearchAdapter(this, currentType);
         listView.setAdapter(listAdapter);
+//        GrowingIO.getInstance().trackEditText(textEdit);
+
 //        header = LayoutInflater.from(this).inflate(R.layout.hot_search_head, null);
 //        ((ImageView) header.findViewById(R.id.hot_search_title_img)).setImageResource(AppManager.isInvestor(this) ? R.drawable.hot_c : R.drawable.hot_b);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
