@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/ui_10_dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/ui_5_dip"
+                android:text="尊享私行"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimens_sp_18" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="尊享私行恒宇天泽基金恒宇天泽基金基金"
+                android:textColor="@color/font_grey_up"
+                android:textSize="@dimen/dimens_sp_12" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/ui_15_dip"
+            android:src="@drawable/icon_right_arrow" />
+    </LinearLayout>
+    <!-- 产品的详细信息-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/ui_10_dip"
+        android:layout_marginRight="@dimen/ui_10_dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="精选产品"
+            android:textColor="@color/app_golden"
+            android:textSize="@dimen/dimens_sp_14" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ui_120_dip"
+            android:layout_marginTop="@dimen/ui_10_dip">
+
+            <ImageView
+                android:id="@+id/view_home_product_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/moren_list_background" />
+
+            <TextView
+                android:id="@+id/view_home_product_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/view_home_product_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/ui_5_dip"
+                android:background="@drawable/shape_home_product_tag"
+                android:paddingBottom="@dimen/ui_3_dip"
+                android:paddingLeft="@dimen/ui_8_dip"
+                android:paddingRight="@dimen/ui_8_dip"
+                android:paddingTop="@dimen/ui_3_dip"
+                android:text="认证可见"
+                android:textColor="@color/white_light" />
+
+            <TextView
+                android:id="@+id/view_home_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="恒宇天泽黄山三十四号"
+                android:textColor="@color/white_light"
+                android:textSize="@dimen/dimens_sp_20" />
+
+            <TextView
+                android:id="@+id/view_home_product_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_home_product_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ui_5_dip"
+                android:text="腾邦集团,占全资产优质 前景广阔"
+                android:textColor="@color/white_light" />
+
+        </RelativeLayout>
+    </LinearLayout>
+    <!--产品详情 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ui_10_dip"
+        android:layout_marginRight="@dimen/ui_10_dip"
+        android:background="@color/local_video_gray"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/ui_10_dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="基准业绩" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="100%" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/ui_10_dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="基准业绩" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="100%" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/ui_10_dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="基准业绩" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="100%" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <!-- 产品详情！！！！！！！！！！！！！！！！！-->
+    <!-- 产品的详细信息!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+
+</LinearLayout>
