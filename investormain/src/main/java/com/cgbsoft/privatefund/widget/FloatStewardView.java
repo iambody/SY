@@ -30,7 +30,7 @@ import com.cgbsoft.privatefund.R;
  * 日期 2017/11/29-15:06
  */
 public class FloatStewardView extends RelativeLayout implements View.OnClickListener {
-    private final int ANIMATOR_TIME = 2 * 1000;
+    private final int ANIMATOR_TIME = 1 * 1000;
     private final int TIMECOUNTDOWN = 6;
     private boolean isVisitor;
     private boolean isOpen;
@@ -201,7 +201,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
 
                 }
             });
-            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
+            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator  BounceInterpolator
             valueAnimator.setDuration(ANIMATOR_TIME);
             valueAnimator.setTarget(rectangle_in_lay);
             valueAnimator.start();
@@ -232,7 +232,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     if (100 == animatorValue) timeCount(true);
                 }
             });
-            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
+            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator  BounceInterpolator
             valueAnimator.setDuration(ANIMATOR_TIME);
 //            valueAnimator.setTarget(rectangle_in_lay,rectangle_out_lay);
             valueAnimator.start();
@@ -267,7 +267,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
 
                 }
             });
-            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
+            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator  BounceInterpolator
             valueAnimator.setDuration(ANIMATOR_TIME);
             valueAnimator.setTarget(rectangle_in_lay);
             valueAnimator.start();
@@ -297,7 +297,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     rectangle_in_user_text.setVisibility(20 < animatorValue ? GONE : VISIBLE);
                 }
             });
-            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator
+            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator  BounceInterpolator
             valueAnimator.setDuration(ANIMATOR_TIME);
 //            valueAnimator.setTarget(rectangle_in_lay,rectangle_out_lay);
             valueAnimator.start();

@@ -44,8 +44,18 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
             }
         }));
 
-
-
+//        addSubscription(ApiClient.getSxyHomeDataTest().subscribe(new RxSubscriber<String>() {
+//            @Override
+//            protected void onEvent(String result) {
+////                getView().getResultSucc(result);
+//                LogUtils.Log("HomeEntityResult", "s");
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {
+//                getView().getResultError(error.getMessage());
+//            }
+//        }));
 
 
     }
@@ -78,7 +88,6 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
             }
         }));
     }
-
 
 
     /**

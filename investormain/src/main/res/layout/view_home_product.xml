@@ -31,7 +31,6 @@
                 android:id="@+id/home_peoduct_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="尊享私行恒宇天泽基金恒宇天泽基金基金"
                 android:textColor="@color/font_grey_up"
                 android:textSize="@dimen/dimens_sp_12" />
 
@@ -87,7 +86,7 @@
                 android:paddingLeft="@dimen/ui_8_dip"
                 android:paddingRight="@dimen/ui_8_dip"
                 android:paddingTop="@dimen/ui_3_dip"
-                android:text="认证可见"
+
                 android:textColor="@color/white_light" />
 
             <TextView
@@ -95,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="恒宇天泽黄山三十四号"
+
                 android:textColor="@color/white_light"
                 android:textSize="@dimen/dimens_sp_20" />
 
@@ -106,7 +105,7 @@
                 android:layout_below="@+id/view_home_product_name"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ui_5_dip"
-                android:text="腾邦集团,占全资产优质 前景广阔"
+
                 android:textColor="@color/white_light" />
 
         </RelativeLayout>
@@ -140,7 +139,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="100%" />
+                android:textColor="@color/app_golden"
+                 />
         </LinearLayout>
 
 
@@ -156,14 +156,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="基准业绩" />
+                android:text="产品期限" />
 
             <TextView
                 android:id="@+id/home_product_second_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="100%" />
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
 
@@ -179,14 +178,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="基准业绩" />
+                android:text="剩余额度" />
 
             <TextView
                 android:id="@+id/home_product_three_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="100%" />
+                android:textColor="@color/app_golden"
+                 />
         </LinearLayout>
 
     </LinearLayout>

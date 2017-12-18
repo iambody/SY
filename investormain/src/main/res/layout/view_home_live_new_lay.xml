@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="140dp"
+    android:layout_height="150dp"
     android:background="@color/white"
     android:clickable="true"
     android:orientation="vertical"
-    android:padding="@dimen/ui_10_dip">
+    android:padding="@dimen/ui_10_dip"
+    android:layout_marginLeft="@dimen/ui_3_dip"
+    android:layout_marginRight="@dimen/ui_3_dip">
 
     <ImageView
         android:id="@+id/view_newlive_iv_bg"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         android:scaleType="centerCrop" />
 
 
@@ -19,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="新时代A股大有可为"
+
         android:textColor="@color/white"
         android:textSize="@dimen/dimens_sp_20" />
 
@@ -54,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="十四安徽四hi撒hi"
+
             android:textColor="@color/white"
             android:textSize="@dimen/dimens_sp_16" />
     </RelativeLayout>
@@ -78,15 +80,25 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ui_10_dip"
-            android:text="39918"
+
             android:textColor="@color/white"
             android:textSize="@dimen/dimens_sp_16" />
+
+        <ImageView
+            android:id="@+id/home_live_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/home_live_play" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="点击观看" />
+            android:layout_toRightOf="@+id/home_live_play"
+            android:text="点击观看"
+            android:textColor="@color/black" />
     </RelativeLayout>
 
 

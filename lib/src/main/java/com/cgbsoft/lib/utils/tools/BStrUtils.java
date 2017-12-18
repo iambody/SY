@@ -132,6 +132,12 @@ public class BStrUtils {
     /**
      * Textview放置文本
      */
+    public static void setTv1(TextView T, String Str) {
+        T.setText(NullToStr1(Str));
+    }
+    /**
+     * Textview放置文本
+     */
     public static void SetTxt(TextView T, String Str) {
         T.setText(NullToStr(Str));
     }
