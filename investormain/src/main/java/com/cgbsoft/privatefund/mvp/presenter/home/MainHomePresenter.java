@@ -35,7 +35,7 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
             @Override
             protected void onEvent(HomeEntity.Result result) {
                 getView().getResultSucc(result);
-                LogUtils.Log("s", "s");
+                LogUtils.Log("HomeEntityResult", "s");
             }
 
             @Override
@@ -43,6 +43,10 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
                 getView().getResultError(error.getMessage());
             }
         }));
+
+
+
+
 
     }
 
@@ -74,6 +78,8 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
             }
         }));
     }
+
+
 
     /**
      * 开始展示登录模式下的服务码的布局

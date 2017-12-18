@@ -340,7 +340,7 @@ public class NetConfig {
     static class SXY {
         private final static String sxy = "/enjoycloud";
         //首页
-        final static String GETHOME = API_URL + sxy + "/apphome";
+        final static String GETHOME = API_URL_V3 + sxy + "/apphome";
 
         //通过手机硬件地址兑换相应的userid和tOKEN
         final static String VISITOR_GET_USERID = API_URL + "/visitorAuth";

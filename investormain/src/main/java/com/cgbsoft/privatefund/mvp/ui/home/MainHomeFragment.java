@@ -78,31 +78,58 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public final int ADVISERLOADTIME = 3;
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
-    @BindView(R.id.main_home_horizontalscrollview_lay)
-    LinearLayout mainHomeHorizontalscrollviewLay;
-    @BindView(R.id.main_home_horizontalscrollview)
-    HorizontalScrollView mainHomeHorizontalscrollview;
-    @BindView(R.id.view_home_level_str)
-    TextView viewHomeLevelStr;
-    @BindView(R.id.main_home_swiperefreshlayout)
-    MySwipeRefreshLayout mainHomeSwiperefreshlayout;
-    @BindView(R.id.main_home_smartscrollview)
-    SmartScrollView mainHomeSmartscrollview;
     @BindView(R.id.main_home_new_iv)
     ImageView mainHomeNewIv;
     @BindView(R.id.view_live_title)
     TextView viewLiveTitle;
-    View main_home_live_lay;
+
     @BindView(R.id.view_live_iv_lay)
     RelativeLayout viewLiveIvLay;
     @BindView(R.id.home_bannerview)
     BannerView homeBannerview;
     @BindView(R.id.home_floatstewardview)
     FloatStewardView home_floatstewardview;
+    @BindView(R.id.view_home_level_str)
+    TextView viewHomeLevelStr;
+    @BindView(R.id.main_home_swiperefreshlayout)
+    MySwipeRefreshLayout mainHomeSwiperefreshlayout;
+    @BindView(R.id.main_home_smartscrollview)
+    SmartScrollView mainHomeSmartscrollview;
+    @BindView(R.id.main_home_horizontalscrollview_lay)
+    LinearLayout mainHomeHorizontalscrollviewLay;
+    @BindView(R.id.main_home_horizontalscrollview)
+    HorizontalScrollView mainHomeHorizontalscrollview;
+
+    View home_product_view;
     View main_home_level_lay;
+    View main_home_live_lay;
+    View main_home_newlive_lay;
+    //老的直播
     TextView view_live_title_tag;
     ImageView view_live_iv_bg, view_live_title_tag_iv;
     TextView view_live_title, view_live_content;
+    //新的直播
+
+    ImageView view_newlive_iv_bg;
+    TextView view_newlive_content, view_newlive_tag;
+    RelativeLayout home_newlive_foreshow_lay, home_newlive_now_lay;
+    TextView view_newlive_title_tag, view_newlive_number;
+
+
+    TextView home_product_title;
+    TextView home_peoduct_subtitle;
+
+    ImageView view_home_product_bg;
+
+    TextView view_home_product_tag;
+    TextView view_home_product_name;
+    TextView view_home_product_des;
+
+    LinearLayout home_product_down_lay;
+    TextView home_product_frist_up, home_product_frist_down;
+    TextView home_product_second_up, home_product_second_down;
+    TextView home_product_three_up, home_product_three_down;
+
 
     MyGridView main_home_gvw;
     OperationAdapter operationAdapter;
@@ -114,13 +141,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private HomeEntity.Result homeData;
     private LiveInfBean homeliveInfBean;
 
+    private int downXPostion;
+    private int lastXPostion;
     private boolean isLoading;
     private boolean bannerIsLeft;
     private boolean bannerIsRight;
     private boolean isRolling;
     protected boolean isVisible;
-    private int downXPostion;
-    private int lastXPostion;
+
 
     @Override
 
@@ -301,6 +329,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         view_live_title_tag = ViewHolders.get(mFragmentView, R.id.view_live_title_tag);
         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
         view_live_title_tag_iv = ViewHolders.get(mFragmentView, R.id.view_live_title_tag_iv);
+        //新直播
+        main_home_newlive_lay = mFragmentView.findViewById(R.id.main_home_newlive_lay);
+        view_newlive_iv_bg = ViewHolders.get(mFragmentView, R.id.view_newlive_iv_bg);
+        view_newlive_content = ViewHolders.get(mFragmentView, R.id.view_newlive_content);
+        view_newlive_tag = ViewHolders.get(mFragmentView, R.id.view_newlive_tag);
+        home_newlive_foreshow_lay = ViewHolders.get(mFragmentView, R.id.home_newlive_foreshow_lay);
+        home_newlive_now_lay = ViewHolders.get(mFragmentView, R.id.home_newlive_now_lay);
+        view_newlive_title_tag = ViewHolders.get(mFragmentView, R.id.view_newlive_title_tag);
+        view_newlive_number = ViewHolders.get(mFragmentView, R.id.view_newlive_number);
+        main_home_newlive_lay.setOnClickListener(this);
         //标题和内容
         view_live_title = ViewHolders.get(mFragmentView, R.id.view_live_title);
         view_live_content = ViewHolders.get(mFragmentView, R.id.view_live_content);
@@ -321,8 +359,34 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         main_home_gvw = (MyGridView) mFragmentView.findViewById(R.id.main_home_gvw);
         operationAdapter = new OperationAdapter(baseActivity, R.layout.item_operation);
         main_home_gvw.setAdapter(operationAdapter);
+        home_product_view = baseActivity.findViewById(R.id.home_product_view);
+        initProduct(mFragmentView);
         //游客模式下或者没有绑定过理财师需要
         initRxEvent();
+    }
+
+
+    private void initProduct(View mFragmentView) {
+        home_product_title = ViewHolders.get(mFragmentView, R.id.home_product_title);
+        home_peoduct_subtitle = ViewHolders.get(mFragmentView, R.id.home_peoduct_subtitle);
+        view_home_product_bg = ViewHolders.get(mFragmentView, R.id.view_home_product_bg);
+        view_home_product_tag = ViewHolders.get(mFragmentView, R.id.view_home_product_tag);
+
+        view_home_product_name = ViewHolders.get(mFragmentView, R.id.view_home_product_name);
+        view_home_product_des = ViewHolders.get(mFragmentView, R.id.view_home_product_des);
+
+        home_product_down_lay = ViewHolders.get(mFragmentView, R.id.home_product_down_lay);
+
+        home_product_frist_up = ViewHolders.get(mFragmentView, R.id.home_product_frist_up);
+        home_product_frist_down = ViewHolders.get(mFragmentView, R.id.home_product_frist_down);
+
+        home_product_second_up = ViewHolders.get(mFragmentView, R.id.home_product_second_up);
+        home_product_second_down = ViewHolders.get(mFragmentView, R.id.home_product_second_down);
+
+        home_product_three_up = ViewHolders.get(mFragmentView, R.id.home_product_three_up);
+        home_product_three_down = ViewHolders.get(mFragmentView, R.id.home_product_three_down);
+
+
     }
 
 
@@ -404,10 +468,19 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         BStrUtils.SetTxt(view_live_title_tag, liveInfBean.create_time + "开播");
 
                         view_live_title_tag_iv.setVisibility(View.INVISIBLE);
+                        //新版直播
+                        main_home_newlive_lay.setVisibility(View.VISIBLE);
+                        home_newlive_foreshow_lay.setVisibility(View.VISIBLE);
+                        home_newlive_now_lay.setVisibility(View.GONE);
+                        Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
+                        BStrUtils.setTv(view_newlive_title_tag, liveInfBean.create_time + "开播");
+                        view_newlive_tag.setText("直播预告");
+                        BStrUtils.setTv(view_newlive_title_tag, liveInfBean.title);
                         break;
                     case 1://直播中
                         main_home_live_lay.setVisibility(View.VISIBLE);
                         main_home_live_lay.setClickable(true);
+
 
                         view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
                         Imageload.displayroud(baseActivity, liveInfBean.image, 2, view_live_iv_bg);
@@ -416,9 +489,19 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         BStrUtils.SetTxt(view_live_title, "正在直播:");
                         BStrUtils.SetTxt(view_live_title_tag, "正在直播");
                         view_live_title_tag_iv.setVisibility(View.VISIBLE);
+                        //新版直播
+                        main_home_newlive_lay.setVisibility(View.VISIBLE);
+                        home_newlive_foreshow_lay.setVisibility(View.GONE);
+                        home_newlive_now_lay.setVisibility(View.VISIBLE);
+                        Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
+                        view_newlive_tag.setText("正在直播");
+                        BStrUtils.setTv(view_newlive_title_tag, liveInfBean.title);
+
                         break;
                     case 2://无直播
                         main_home_live_lay.setVisibility(View.GONE);
+
+                        main_home_newlive_lay.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -525,6 +608,42 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initOperation(data.module);
         //用户等级信息
         initLevel(data.myInfo);
+        initProduct(data.bank);
+
+    }
+
+//    TextView home_product_title;
+//    TextView home_peoduct_subtitle;
+//
+//    ImageView view_home_product_bg;
+//
+//    TextView view_home_product_tag;
+//    TextView view_home_product_name;
+//    TextView view_home_product_des;
+//
+//    LinearLayout home_product_down_lay;
+//    TextView home_product_frist_up, home_product_frist_down;
+//    TextView home_product_second_up, home_product_second_down;
+//    TextView home_product_three_up, home_product_three_down;
+
+    private void initProduct(HomeEntity.bankInf bank) {
+        if (null == bank) {
+            home_product_view.setVisibility(View.GONE);
+            return;
+        }
+        BStrUtils.setTv(home_product_title, bank.title);
+        BStrUtils.setTv(home_peoduct_subtitle, bank.subtitle);
+        home_product_view.setVisibility(View.VISIBLE);
+        if (null == bank.product || null == bank.product.content) {
+            baseActivity.findViewById(R.id.home_product_view).setVisibility(View.GONE);
+            return;
+        }
+        Imageload.display(baseActivity, bank.product.content, view_home_product_bg);
+        BStrUtils.setTv(view_home_product_tag, bank.product.title);
+        BStrUtils.setTv(view_home_product_name, bank.product.content.shortName);
+        BStrUtils.setTv(view_home_product_des, bank.product.content.productName);
+        //显示下边具体数据的逻辑
+
 
     }
 
@@ -639,6 +758,25 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 UiSkipUtils.toNextActivity(baseActivity, MembersAreaActivity.class);
                 TrackingDataManger.homeMember(baseActivity);
                 break;
+//            case R.id.main_home_newlive_lay:
+//                if (null == homeliveInfBean) return;
+//                switch (homeliveInfBean.type) {
+//                    case 0://预告
+//                        PromptManager.ShowCustomToast(baseActivity, "直播暂未开始");
+//                        break;
+//                    case 1://直播
+//
+//                        Intent intent = new Intent(baseActivity, LiveActivity.class);
+//                        intent.putExtra("liveJson", homeliveInfBean.jsonstr);
+//                        startActivity(intent);
+//
+//                        SPreference.putString(baseActivity, Contant.CUR_LIVE_ROOM_NUM, homeliveInfBean.id);
+//                        DataStatistApiParam.homeliveclick();
+//                        break;
+//                    case 2://无直播
+//                        break;
+//                }
+//                break;
             case R.id.main_home_live_lay://直播
                 if (null == homeliveInfBean) return;
 

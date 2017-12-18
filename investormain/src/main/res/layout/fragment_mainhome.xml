@@ -48,6 +48,11 @@
                         android:id="@+id/main_home_live_lay"
                         layout="@layout/view_home_live_lay"
                         android:visibility="gone" />
+
+                    <include
+                        android:id="@+id/main_home_newlive_lay"
+                        layout="@layout/view_home_live_new_lay"
+                        android:visibility="gone"/>
                     <!-- 直播预报的布局************ -->
                     <!-- 会员等级的布局 -->
                     <include
@@ -60,7 +65,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/ui_13_dip"
                         android:layout_marginRight="@dimen/ui_13_dip"
-                        android:scrollbars="none">
+                        android:scrollbars="none"
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:id="@+id/main_home_horizontalscrollview_lay"
@@ -74,14 +80,17 @@
                         android:id="@+id/main_home_gvw"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone" />
+                        android:background="@color/white"
+                        android:paddingTop="@dimen/ui_10_dip" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ui_13_dip"
                         android:background="@color/white" />
 
-                    <include layout="@layout/view_home_product" />
+                    <include
+                        android:id="@+id/home_product_view"
+                        layout="@layout/view_home_product" />
 
                     <com.cgbsoft.lib.base.webview.BaseWebview
                         android:id="@+id/mainhome_webview"

@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
             android:padding="@dimen/ui_10_dip">
 
             <TextView
+                android:id="@+id/home_product_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/ui_5_dip"
@@ -27,6 +28,7 @@
                 android:textSize="@dimen/dimens_sp_18" />
 
             <TextView
+                android:id="@+id/home_peoduct_subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="尊享私行恒宇天泽基金恒宇天泽基金基金"
@@ -47,11 +49,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginLeft="@dimen/ui_10_dip"
-        android:layout_marginRight="@dimen/ui_10_dip">
+        android:layout_marginRight="@dimen/ui_10_dip"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/home_peoduct_up_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="精选产品"
@@ -110,6 +113,7 @@
     </LinearLayout>
     <!--产品详情 -->
     <LinearLayout
+        android:id="@+id/home_product_down_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ui_10_dip"
@@ -125,12 +129,14 @@
             android:padding="@dimen/ui_10_dip">
 
             <TextView
+                android:id="@+id/home_product_frist_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="基准业绩" />
 
             <TextView
+                android:id="@+id/home_product_frist_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -146,12 +152,14 @@
             android:padding="@dimen/ui_10_dip">
 
             <TextView
+                android:id="@+id/home_product_second_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="基准业绩" />
 
             <TextView
+                android:id="@+id/home_product_second_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -167,12 +175,14 @@
             android:padding="@dimen/ui_10_dip">
 
             <TextView
+                android:id="@+id/home_product_three_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="基准业绩" />
 
             <TextView
+                android:id="@+id/home_product_three_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
