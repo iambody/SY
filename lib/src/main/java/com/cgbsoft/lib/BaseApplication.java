@@ -57,7 +57,7 @@ public class BaseApplication extends MultiDexApplication {
 //        Config.dialogSwitch = false;//不使用默认的dialog
 
 //        initLearCanary();
-//        initX5Webview();
+        initX5Webview();
 //        //初始化 okGo 用于下载
 //        OkGo.init(this);
 //        try {
@@ -69,7 +69,7 @@ public class BaseApplication extends MultiDexApplication {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-
+        initOkGo();
         backgroundManager = new BackgroundManager(this);
     }
 
@@ -104,7 +104,7 @@ public class BaseApplication extends MultiDexApplication {
     public void initX5Webview() {
         //x5内核初始化接口
         try {
-            QbSdk.initX5Environment(getContext(), new QbSdk.PreInitCallback() {
+            QbSdk.initX5Environment(context, new QbSdk.PreInitCallback() {
                 @Override
                 public void onCoreInitFinished() {
 

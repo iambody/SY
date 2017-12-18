@@ -77,12 +77,12 @@ public class InitializeService extends IntentService {
 
     private void performInit(String action) {
         Log.i(TAG, "开始performInit");
-        initOkGo();//初始化okgo
+//        initOkGo();//初始化okgo
         initImageLoader();//初始化图片加载
         initLive();//初始化直播
         initIm();//初始化融云
         initGreenDao();//初始化数据库
-        initX5();//初始化x5内核
+//        initX5();//初始化x5内核
         initMob();//初始化友盟统计
         initFabric();//初始化fabric
         initLearCanary();//初始化内检测

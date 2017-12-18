@@ -1,7 +1,5 @@
 package com.cgbsoft.lib.utils.tools;
-/**
- * Created by datutu on 17/3/20.
- */
+
 
 import android.content.Context;
 import android.widget.TextView;
@@ -125,7 +123,12 @@ public class BStrUtils {
         stringList.add(strings);
         return LsToJsonArray(stringList);
     }
-
+    /**
+     * Textview放置文本
+     */
+    public static void setTv(TextView T, String Str) {
+        T.setText(NullToStr(Str));
+    }
     /**
      * Textview放置文本
      */

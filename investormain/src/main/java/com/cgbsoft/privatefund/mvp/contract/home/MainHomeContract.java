@@ -29,5 +29,7 @@ public class MainHomeContract {
         public void getUserInf(int type);
 
 
+
+
     }
 }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:background="@color/white"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="@dimen/ui_10_dip">
+
+    <ImageView
+        android:id="@+id/view_newlive_iv_bg"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop" />
+
+
+    <TextView
+        android:id="@+id/view_newlive_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="新时代A股大有可为"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimens_sp_20" />
+
+    <TextView
+        android:id="@+id/view_newlive_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:background="@color/app_golden"
+        android:paddingBottom="@dimen/ui_2_dip"
+        android:paddingLeft="@dimen/ui_10_dip"
+        android:paddingRight="@dimen/ui_10_dip"
+        android:paddingTop="@dimen/ui_2_dip"
+        android:text="直播预告"
+        android:textColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/home_newlive_foreshow_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ui_30_dip"
+            android:src="#55ffffff" />
+
+        <TextView
+            android:id="@+id/view_newlive_title_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="十四安徽四hi撒hi"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimens_sp_16" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/home_newlive_now_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ui_30_dip"
+            android:src="#55ffffff" />
+
+        <TextView
+            android:id="@+id/view_newlive_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:text="39918"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimens_sp_16" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="点击观看" />
+    </RelativeLayout>
+
+
+</RelativeLayout>
