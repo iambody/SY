@@ -322,7 +322,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
         });
 
-        RelativeLayout.LayoutParams bannerParames = new RelativeLayout.LayoutParams(screenWidth, (int) ((screenWidth * 61) / 75));
+        RelativeLayout.LayoutParams bannerParames = new RelativeLayout.LayoutParams(screenWidth, (int) ((screenWidth * 120) / 188));
         homeBannerview.setLayoutParams(bannerParames);
         /* 直播 */
 //        view_live_title_tag = ViewHolders.get(mFragmentView, R.id.view_live_title_tag);
@@ -529,7 +529,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
                         view_newlive_tag.setText("正在直播");
                         BStrUtils.setTv(view_newlive_content, liveInfBean.title);
-                        BStrUtils.setTv(view_newlive_number, BStrUtils.NullToStr(liveInfBean.lookNumber)+"人");
+                        BStrUtils.setTv(view_newlive_number, BStrUtils.NullToStr(liveInfBean.lookNumber)+"人正在观看");
 
                         break;
                     case 2://无直播
