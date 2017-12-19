@@ -12,16 +12,16 @@ public class SkineColorManager {
     //中秋节*******
     //结束时间
     private static final int END_YEAR = 2017;
-    private static final int END_MONTH = 9;
-    private static final int END_DAY = 5;
+    private static final int END_MONTH = 11;
+    private static final int END_DAY = 25;
     private static final int END_HOUR = 23;
     private static final int END_MINITE = 59;
     private static final int END_SECOND = 59;
 
     //开始时间 be
     private static final int BEGIN_YEAR = 2017;
-    private static final int BEGIN_MONTH = 8;
-    private static final int BEGIN_DAY = 24;
+    private static final int BEGIN_MONTH = 11;
+    private static final int BEGIN_DAY = 18;
     private static final int BEGIN_HOUR = 23;
     private static final int BEGIN_MINITE = 59;
     private static final int BEGIN_SECOND = 59;
