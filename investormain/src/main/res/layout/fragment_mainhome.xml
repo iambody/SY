@@ -82,12 +82,13 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:verticalSpacing="@dimen/ui_10_dip"
+                        android:paddingBottom="@dimen/ui_10_dip"
                         android:paddingTop="@dimen/ui_10_dip" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ui_13_dip"
-                        android:background="@color/white" />
+                        android:background="@color/app_bg" />
 
                     <include
                         android:id="@+id/home_product_view"

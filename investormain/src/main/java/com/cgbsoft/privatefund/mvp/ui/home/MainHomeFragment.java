@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -40,6 +42,7 @@ import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.MyGridView;
 import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.SmartScrollView;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.OperationAdapter;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
@@ -48,8 +51,11 @@ import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.FloatStewardView;
+import com.chenenyu.router.Router;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
@@ -529,7 +535,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
                         view_newlive_tag.setText("正在直播");
                         BStrUtils.setTv(view_newlive_content, liveInfBean.title);
-                        BStrUtils.setTv(view_newlive_number, BStrUtils.NullToStr(liveInfBean.visitors)+"人正在观看");
+                        BStrUtils.setTv(view_newlive_number, BStrUtils.NullToStr(liveInfBean.visitors) + "人正在观看");
 
                         break;
                     case 2://无直播
@@ -673,7 +679,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             return;
         }
         Imageload.display(baseActivity, bank.product.content.marketingImageUrl, view_home_product_bg);
-        BStrUtils.setTv1(view_home_product_tag, bank.product.title);
+
         BStrUtils.setTv1(view_home_product_name, bank.product.content.productName);
         BStrUtils.setTv1(view_home_product_des, bank.product.content.hotName);
 
@@ -706,6 +712,61 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%+浮动");
                 break;
         }
+
+
+
+
+        ///
+
+
+        if (!AppManager.getIsLogin(baseActivity)) {
+            BStrUtils.setTv1(view_home_product_tag, "请登录");
+
+        } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {//需要风险测评
+            BStrUtils.setTv1(view_home_product_tag, "认证可见");
+
+        }else{//显示截至打款时间
+
+            try {
+                HomeEntity.bankData productlsBean = bank.product.content;
+                // 服务器返回的时间格式，需要转换为毫秒值，与当前时间相减得到时间差，显示到list里
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+                if ( productlsBean.raiseEndTime != null&&!"".equals( productlsBean.raiseEndTime)) {
+                    java.util.Date end_time = dateFormat.parse(productlsBean.raiseEndTime);
+                    long l = end_time.getTime() - System.currentTimeMillis();
+                    String dateString = null;
+                    int day = (int) (l / 1000 / 60 / 60 / 24);
+                    int hour = (int) (l / 1000 / 60 / 60);
+                    int min = (int) (l / 1000 / 60);
+
+                    if (hour >= 72) {
+                        dateString = day + "天";
+                    } else if (hour > 0 && hour < 72) {
+                        dateString = hour + "小时";
+                    } else {
+                        if (min == 0) {
+                            dateString = 1 + "分钟";
+                        } else {
+                            dateString = min + "分钟";
+                        }
+                    }
+                    if (l <= 0) {
+                        BStrUtils.setTv(view_home_product_tag, "已截止");
+                    } else {
+                        BStrUtils.setTv(view_home_product_tag, "截止打款" + dateString);
+                    }
+                }else{
+                    view_home_product_tag.setVisibility(View.GONE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                view_home_product_tag.setVisibility(View.GONE);
+            }
+
+
+
+        }
     }
 
     private void initOperation(List<HomeEntity.Operate> module) {
@@ -716,9 +777,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 number = sizeNumber;
             } else if (6 == sizeNumber) {
                 number = 3;
-            } else if (sizeNumber == 7||sizeNumber == 8) {
+            } else if (sizeNumber == 7 || sizeNumber == 8) {
                 number = 4;
-            }else if(sizeNumber>8){
+            } else if (sizeNumber > 8) {
                 number = 5;
             }
             main_home_gvw.setNumColumns(number);
@@ -857,7 +918,18 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 }
                 DataStatistApiParam.homeliveclick();
                 break;
-            case R.id.view_home_product_focus:
+            case R.id.view_home_product_focus://点击产品 先判断是否登录 和是否做过风险测评
+
+                if (!AppManager.getIsLogin(baseActivity)) {
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("insidegotologin", true);
+                    map.put("backgohome", true);
+                    NavigationUtils.startActivityByRouter(baseActivity, RouteConfig.GOTO_LOGIN, map);
+                    return;
+                } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {//需要风险测评
+                    gotoRiskevalust();
+                    return;
+                }
 
                 if (null != homeData && null != homeData.bank && null != homeData.bank.product && null != homeData.bank.product.content) {
                     HomeEntity.bankData productlsBean = homeData.bank.product.content;
@@ -893,9 +965,27 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
+    private void gotoRiskevalust() {
+        DefaultDialog dialog = new DefaultDialog(baseActivity, "请先填写调查问卷", "取消", "确定") {
+            @Override
+            public void left() {
+                dismiss();
+            }
+
+            @Override
+            public void right() {
+                Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
+                dismiss();
+
+            }
+        };
+        dialog.show();
+    }
+
     /**
-//     * 横向滑动的点击事件处理
-//     */
+     * //     * 横向滑动的点击事件处理
+     * //
+     */
 //    private class HorizontalItemClickListener implements View.OnClickListener {
 //        private HomeEntity.Operate data;
 //        private int postion;
@@ -929,8 +1019,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //            TrackingDataManger.homeOperateItemClick(baseActivity, data.title);
 //        }
 //    }
-
-
     @Override
     public void onPause() {
         super.onPause();

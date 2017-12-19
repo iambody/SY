@@ -21,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-
+        android:lines="1"
+        android:ellipsize="end"
         android:textColor="@color/white"
         android:textSize="@dimen/dimens_sp_20" />
 
@@ -90,8 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/home_live_play"
-            android:layout_marginLeft="@dimen/ui_5_dip"/>
+            android:layout_marginLeft="@dimen/ui_5_dip"
+            android:src="@drawable/home_live_play" />
 
         <TextView
             android:layout_width="wrap_content"
