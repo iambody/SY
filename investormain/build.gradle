@@ -196,7 +196,6 @@ dependencies {
     compile 'me.grantland:autofittextview:0.2.+'
     compile 'com.takwolf.android:lock9view:0.0.11'
     compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.growingio.android:vds-android-agent:1.1.2@aar'
     //圆形浮动按钮
     compile "com.oguzdev:CircularFloatingActionMenu:${floatbar_need_version}"
     compile project(':order')

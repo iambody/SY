@@ -38,6 +38,7 @@ import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.growingio.android.sdk.collection.GrowingIO;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -132,7 +133,6 @@ public class SearchBaseActivity extends BaseMvcActivity implements View.OnClickL
         textEdit = (ClearEditText) findViewById(R.id.search_title_ed);
         listAdapter = new HotSearchAdapter(this, currentType);
         listView.setAdapter(listAdapter);
-//        GrowingIO.getInstance().trackEditText(textEdit);
 
 //        header = LayoutInflater.from(this).inflate(R.layout.hot_search_head, null);
 //        ((ImageView) header.findViewById(R.id.hot_search_title_img)).setImageResource(AppManager.isInvestor(this) ? R.drawable.hot_c : R.drawable.hot_b);

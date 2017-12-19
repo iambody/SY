@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.listener.listener.SimpleTextWatcher;
+import com.growingio.android.sdk.collection.GrowingIO;
 
 
 /**
@@ -97,4 +98,9 @@ public class ClearEditText extends EditText {
                 getCompoundDrawables()[3]);
     }
 
+    @Override
+    protected void onFinishInflate() {//
+        super.onFinishInflate();
+        GrowingIO.getInstance().trackEditText(this);
+    }
 }
