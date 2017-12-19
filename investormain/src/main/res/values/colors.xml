@@ -7,4 +7,7 @@
     <color name="text_input_layout">#666666</color>
     <color name="text_input_layout_err">#FF0000</color>
 
+    <color name="home_level_golde">#816340</color>
+    <color name="home_level_gray">#828282</color>
+    <color name="home_level_white">#FFEFD4</color>
 </resources>

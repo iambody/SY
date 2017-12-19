@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,7 +28,6 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
-import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
@@ -59,6 +55,7 @@ import java.util.List;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
+import app.product.com.utils.ProductNavigationUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
@@ -96,10 +93,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     MySwipeRefreshLayout mainHomeSwiperefreshlayout;
     @BindView(R.id.main_home_smartscrollview)
     SmartScrollView mainHomeSmartscrollview;
-    @BindView(R.id.main_home_horizontalscrollview_lay)
-    LinearLayout mainHomeHorizontalscrollviewLay;
-    @BindView(R.id.main_home_horizontalscrollview)
-    HorizontalScrollView mainHomeHorizontalscrollview;
+//    @BindView(R.id.main_home_horizontalscrollview_lay)
+//    LinearLayout mainHomeHorizontalscrollviewLay;
+//    @BindView(R.id.main_home_horizontalscrollview)
+//    HorizontalScrollView mainHomeHorizontalscrollview;
 
     View home_product_view;
     View main_home_level_lay;
@@ -116,6 +113,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     TextView view_newlive_title_tag, view_newlive_number;
     ImageView view_home_level_bg;
 
+
     TextView home_product_title;
     TextView home_peoduct_subtitle;
 
@@ -125,12 +123,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     TextView view_home_product_name;
     TextView view_home_product_des;
 
-    LinearLayout home_product_down_lay;
+    LinearLayout home_product_skip_bank, view_home_product_focus, home_product_down_lay;
     TextView home_product_frist_up, home_product_frist_down;
     TextView home_product_second_up, home_product_second_down;
     TextView home_product_three_up, home_product_three_down;
 
-
+    TextView view_home_member;
+    ImageView view_home_level_arrow;
     MyGridView main_home_gvw;
     OperationAdapter operationAdapter;
     private UnreadInfoNumber unreadInfoNumber;
@@ -340,6 +339,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         view_newlive_number = ViewHolders.get(mFragmentView, R.id.view_newlive_number);
         main_home_newlive_lay.setOnClickListener(this);
         home_product_view = ViewHolders.get(mFragmentView, R.id.home_product_view);
+        view_home_level_arrow = ViewHolders.get(mFragmentView, R.id.view_home_level_arrow);
         //标题和内容
 //        view_live_title = ViewHolders.get(mFragmentView, R.id.view_live_title);
 //        view_live_content = ViewHolders.get(mFragmentView, R.id.view_live_content);
@@ -358,7 +358,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainHomeSmartscrollview.setScrollChangedListener(this);
 //        main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
 //        main_home_live_lay.setOnClickListener(this);
-
+        view_home_member = ViewHolders.get(mFragmentView, R.id.view_home_member);
         main_home_gvw = (MyGridView) mFragmentView.findViewById(R.id.main_home_gvw);
         operationAdapter = new OperationAdapter(baseActivity, R.layout.item_operation);
         main_home_gvw.setAdapter(operationAdapter);
@@ -369,7 +369,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         main_home_gvw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HomeEntity.Operate   data = (HomeEntity.Operate) parent.getItemAtPosition(position);
+                HomeEntity.Operate data = (HomeEntity.Operate) parent.getItemAtPosition(position);
                 if ("0".equals(data.isVisitorVisible) && AppManager.isVisitor(baseActivity)) {//需要跳转到登录页面
                     Intent toHomeIntent = new Intent(baseActivity, LoginActivity.class);
                     toHomeIntent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
@@ -396,6 +396,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
 
     private void initProduct(View mFragmentView) {
+        view_home_product_focus = ViewHolders.get(mFragmentView, R.id.view_home_product_focus);
+        home_product_skip_bank = ViewHolders.get(mFragmentView, R.id.home_product_skip_bank);
         home_product_title = ViewHolders.get(mFragmentView, R.id.home_product_title);
         home_peoduct_subtitle = ViewHolders.get(mFragmentView, R.id.home_peoduct_subtitle);
         view_home_product_bg = ViewHolders.get(mFragmentView, R.id.view_home_product_bg);
@@ -416,6 +418,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         home_product_three_down = ViewHolders.get(mFragmentView, R.id.home_product_three_down);
 
 
+        view_home_product_focus.setOnClickListener(this);
+        home_product_skip_bank.setOnClickListener(this);
     }
 
 
@@ -525,6 +529,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
                         view_newlive_tag.setText("正在直播");
                         BStrUtils.setTv(view_newlive_content, liveInfBean.title);
+                        BStrUtils.setTv(view_newlive_number, BStrUtils.NullToStr(liveInfBean.lookNumber)+"人");
 
                         break;
                     case 2://无直播
@@ -631,7 +636,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private void initResultData(HomeEntity.Result data) {
         homeData = data;
         //横向轮播
-        initHorizontalScroll(data.module);
+//        initHorizontalScroll(data.module);
         //banner
         initViewPage(data.banner);
         initOperation(data.module);
@@ -667,13 +672,25 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             baseActivity.findViewById(R.id.home_product_view).setVisibility(View.GONE);
             return;
         }
-        Imageload.display(baseActivity, bank.product.content, view_home_product_bg);
+        Imageload.display(baseActivity, bank.product.content.marketingImageUrl, view_home_product_bg);
         BStrUtils.setTv1(view_home_product_tag, bank.product.title);
         BStrUtils.setTv1(view_home_product_name, bank.product.content.productName);
         BStrUtils.setTv1(view_home_product_des, bank.product.content.hotName);
 
         BStrUtils.setTv(home_product_second_down, bank.product.content.term);
-        BStrUtils.setTv(home_product_three_down, bank.product.content.remainingAmount);
+
+
+        String raised_amt = BStrUtils.getYi(bank.product.content.remainingAmount);
+        String mony;
+        if (raised_amt.contains("亿")) {
+            raised_amt = raised_amt.replace("亿", "");
+            mony = raised_amt + "亿";
+
+        } else {
+            mony = raised_amt + "万";
+
+        }
+        BStrUtils.setTv(home_product_three_down, mony);
         //显示下边具体数据的 一大坨的逻辑判断
         switch (bank.product.content.productType) {
             case "1":
@@ -712,7 +729,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     private void initLevel(HomeEntity.Level level) {
         BStrUtils.setTv1(viewHomeLevelStr, level.memberLevel);
+        view_home_member.setTextColor(getResources().getColor("0".equals(level.level) ? R.color.home_level_gray : R.color.home_level_golde));
+        viewHomeLevelStr.setTextColor(getResources().getColor("0".equals(level.level) ? R.color.home_level_gray : R.color.home_level_white));
         view_home_level_bg.setImageResource("0".equals(level.level) ? R.drawable.home_level_normal_bg : R.drawable.home_level_level_bg);
+
+        view_home_level_arrow.setImageResource("0".equals(level.level) ? R.drawable.home_level_gray_arrow : R.drawable.home_level_arrow);
     }
 
     @Override
@@ -729,7 +750,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void getCacheResult(HomeEntity.Result cachesData) {
         if (null == cachesData) return;
         //横向轮播
-        initHorizontalScroll(cachesData.module);
+//        initHorizontalScroll(cachesData.module);
         //banner
         initViewPage(cachesData.banner);
         //用户等级信息
@@ -753,31 +774,31 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      * 横向滑动时候的数据填充
      */
 
-    public void initHorizontalScroll(List<HomeEntity.Operate> data) {
-        mainHomeHorizontalscrollviewLay.removeAllViews();
-        mainHomeHorizontalscrollviewLay.setOnHoverListener(new View.OnHoverListener() {
-            @Override
-            public boolean onHover(View v, MotionEvent event) {
-                return false;
-            }
-        });
-        mainHomeHorizontalscrollview.setOnTouchListener(new onOperationScrollImpl());
-
-        int ivWidth = (int) (screenWidth / 4);
-
-        for (int i = 0; i < data.size(); i++) {
-            View view = LayoutInflater.from(baseActivity).inflate(R.layout.item_horizontal_lay, null);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ivWidth, ivWidth);
-
-            params.setMargins(0 == i ? 0 : DimensionPixelUtil.dip2px(baseActivity, 6), 0, DimensionPixelUtil.dip2px(baseActivity, 6), 0);
-            view.setLayoutParams(params);
-            ImageView imageView = (ImageView) view.findViewById(R.id.item_horizontal_img);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            Imageload.display(baseActivity, data.get(i).imageUrl, imageView);
-            view.setOnClickListener(new HorizontalItemClickListener(data.get(i), i));
-            mainHomeHorizontalscrollviewLay.addView(view);
-        }
-    }
+//    public void initHorizontalScroll(List<HomeEntity.Operate> data) {
+//        mainHomeHorizontalscrollviewLay.removeAllViews();
+//        mainHomeHorizontalscrollviewLay.setOnHoverListener(new View.OnHoverListener() {
+//            @Override
+//            public boolean onHover(View v, MotionEvent event) {
+//                return false;
+//            }
+//        });
+//        mainHomeHorizontalscrollview.setOnTouchListener(new onOperationScrollImpl());
+//
+//        int ivWidth = (int) (screenWidth / 4);
+//
+//        for (int i = 0; i < data.size(); i++) {
+//            View view = LayoutInflater.from(baseActivity).inflate(R.layout.item_horizontal_lay, null);
+//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ivWidth, ivWidth);
+//
+//            params.setMargins(0 == i ? 0 : DimensionPixelUtil.dip2px(baseActivity, 6), 0, DimensionPixelUtil.dip2px(baseActivity, 6), 0);
+//            view.setLayoutParams(params);
+//            ImageView imageView = (ImageView) view.findViewById(R.id.item_horizontal_img);
+//            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//            Imageload.display(baseActivity, data.get(i).imageUrl, imageView);
+//            view.setOnClickListener(new HorizontalItemClickListener(data.get(i), i));
+//            mainHomeHorizontalscrollviewLay.addView(view);
+//        }
+//    }
 
 
     /**
@@ -833,6 +854,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         break;
                 }
                 DataStatistApiParam.homeliveclick();
+                break;
+            case R.id.view_home_product_focus:
+
+                if (null != homeData && null != homeData.bank && null != homeData.bank.product && null != homeData.bank.product.content) {
+                    HomeEntity.bankData productlsBean = homeData.bank.product.content;
+                    ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
+                    DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.shortName, "1".equals(productlsBean.isHotProduct));
+                }
+                break;
+            case R.id.home_product_skip_bank:
+                NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
                 break;
 //            case R.id.main_home_live_lay://直播
 //                if (null == homeliveInfBean) return;
@@ -941,30 +973,30 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         });
     }
 
-
-    class onOperationScrollImpl implements View.OnTouchListener {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (MotionEvent.ACTION_DOWN == event.getAction())
-                downXPostion = (int) event.getX();
-            if (MotionEvent.ACTION_MOVE == event.getAction()) {
-                lastXPostion = (int) event.getX() - downXPostion;
-                downXPostion = (int) event.getX();
-            }
-            if (MotionEvent.ACTION_UP == event.getAction()) {
-                if (lastXPostion > 0) {
-                    //向左滑动
-                    TrackingDataManger.homeOperateLeft(baseActivity);
-                } else {
-                    //向右滑动
-                    TrackingDataManger.homeOperateRight(baseActivity);
-                }
-            }
-            return false;
-        }
-
-
-    }
+//
+//    class onOperationScrollImpl implements View.OnTouchListener {
+//        @Override
+//        public boolean onTouch(View v, MotionEvent event) {
+//            if (MotionEvent.ACTION_DOWN == event.getAction())
+//                downXPostion = (int) event.getX();
+//            if (MotionEvent.ACTION_MOVE == event.getAction()) {
+//                lastXPostion = (int) event.getX() - downXPostion;
+//                downXPostion = (int) event.getX();
+//            }
+//            if (MotionEvent.ACTION_UP == event.getAction()) {
+//                if (lastXPostion > 0) {
+//                    //向左滑动
+//                    TrackingDataManger.homeOperateLeft(baseActivity);
+//                } else {
+//                    //向右滑动
+//                    TrackingDataManger.homeOperateRight(baseActivity);
+//                }
+//            }
+//            return false;
+//        }
+//
+//
+//    }
 
 
 }

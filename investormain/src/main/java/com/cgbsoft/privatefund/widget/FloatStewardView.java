@@ -169,7 +169,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         if (!isVisitor) {
             BStrUtils.SetTxt(cardnumber_txt, serveCode);
             Imageload.display(floatContext, headerurl, steward_round_iv);
-            rectangle_in_user_text.setText(String.format("尊敬的%s我是您的私人银行家,很高兴为您服务", BStrUtils.NullToStr1(userName)));
+            rectangle_in_user_text.setText(String.format("尊敬的%s，我是您的私人银行家,很高兴为您服务!", BStrUtils.NullToStr1(userName)));
         }
 
     }
@@ -181,7 +181,6 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
     public void openFloat() {
         if (isOpen)
             return;
-
         isOpen = true;
         int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 160);
         if (isVisitor) {

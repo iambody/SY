@@ -135,6 +135,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         int leftFirstStr, leftSecStr, centerStr, rightFirstStr, rightSecStr;
 
         boolean isAutumn = SkineColorManager.isautumnHoliay();
+        isAutumn=true;
         if (isAutumn) {
             leftFirstRes = R.drawable.autumn_one;
             leftSecRes = R.drawable.autumn_two;
