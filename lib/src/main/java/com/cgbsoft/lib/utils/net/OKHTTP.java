@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.mvp.model.BaseResult;
+import com.cgbsoft.lib.utils.AntiBrushUtils;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.exception.ApiException;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
@@ -104,6 +105,7 @@ public class OKHTTP {
             builder.addHeader("Accept", "application/json");
             builder.addHeader("latitude", String.valueOf(AppManager.getLocation(BaseApplication.getContext()).getLocationlatitude()));
             builder.addHeader("longitude", String.valueOf(AppManager.getLocation(BaseApplication.getContext()).getLocationlontitude()));
+            builder.addHeader("sso", AntiBrushUtils.getAntiBrushValue());
             okhttp3.Request authorised = builder.build();
             Utils.log("okHttp", "uid:" + uid + "\n" +
                     "token:" + token + "\n" +
