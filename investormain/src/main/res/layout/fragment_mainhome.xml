@@ -59,7 +59,7 @@
                         android:id="@+id/main_home_level_lay"
                         layout="@layout/view_home_level_lay" />
                     <!-- 横向滑动的布局 -->
-                    <HorizontalScrollView
+                   <!-- <HorizontalScrollView
                         android:id="@+id/main_home_horizontalscrollview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal" />
-                    </HorizontalScrollView>
+                    </HorizontalScrollView>-->
 
                     <com.cgbsoft.lib.widget.MyGridView
                         android:id="@+id/main_home_gvw"

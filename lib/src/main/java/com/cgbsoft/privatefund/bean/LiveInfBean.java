@@ -16,4 +16,6 @@ public class LiveInfBean {
     public int type;
     //预告时候需要
     public String create_time;
+
+    public String lookNumber;
 }
