@@ -34,10 +34,10 @@ public class AntiBrushUtils {
     }
 
     private static int getRondomEnd() {
-        Random random = new Random(10);
-        int end = random.nextInt();
+        Random random = new Random();
+        int end = random.nextInt(10);
         while (end == 0 || end%2 == 0) {
-            end = random.nextInt();
+            end = random.nextInt(10);
         }
         return end;
     }
