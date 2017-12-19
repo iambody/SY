@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -80,11 +81,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     BaseWebview mainhomeWebview;
     @BindView(R.id.main_home_new_iv)
     ImageView mainHomeNewIv;
-    @BindView(R.id.view_live_title)
-    TextView viewLiveTitle;
+//    @BindView(R.id.view_live_title)
+//    TextView viewLiveTitle;
 
-    @BindView(R.id.view_live_iv_lay)
-    RelativeLayout viewLiveIvLay;
+    //    @BindView(R.id.view_live_iv_lay)
+//    RelativeLayout viewLiveIvLay;
     @BindView(R.id.home_bannerview)
     BannerView homeBannerview;
     @BindView(R.id.home_floatstewardview)
@@ -102,19 +103,18 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     View home_product_view;
     View main_home_level_lay;
-    View main_home_live_lay;
+    //    View main_home_live_lay;
     View main_home_newlive_lay;
     //老的直播
-    TextView view_live_title_tag;
-    ImageView view_live_iv_bg, view_live_title_tag_iv;
-    TextView view_live_title, view_live_content;
+//    TextView view_live_title_tag;
+//    ImageView view_live_iv_bg, view_live_title_tag_iv;
+//    TextView view_live_title, view_live_content;
     //新的直播
-
     ImageView view_newlive_iv_bg;
     TextView view_newlive_content, view_newlive_tag;
     RelativeLayout home_newlive_foreshow_lay, home_newlive_now_lay;
     TextView view_newlive_title_tag, view_newlive_number;
-
+    ImageView view_home_level_bg;
 
     TextView home_product_title;
     TextView home_peoduct_subtitle;
@@ -326,9 +326,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         RelativeLayout.LayoutParams bannerParames = new RelativeLayout.LayoutParams(screenWidth, (int) ((screenWidth * 61) / 75));
         homeBannerview.setLayoutParams(bannerParames);
         /* 直播 */
-        view_live_title_tag = ViewHolders.get(mFragmentView, R.id.view_live_title_tag);
-        view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
-        view_live_title_tag_iv = ViewHolders.get(mFragmentView, R.id.view_live_title_tag_iv);
+//        view_live_title_tag = ViewHolders.get(mFragmentView, R.id.view_live_title_tag);
+//        view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
+//        view_live_title_tag_iv = ViewHolders.get(mFragmentView, R.id.view_live_title_tag_iv);
         //新直播
         main_home_newlive_lay = mFragmentView.findViewById(R.id.main_home_newlive_lay);
         view_newlive_iv_bg = ViewHolders.get(mFragmentView, R.id.view_newlive_iv_bg);
@@ -339,12 +339,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         view_newlive_title_tag = ViewHolders.get(mFragmentView, R.id.view_newlive_title_tag);
         view_newlive_number = ViewHolders.get(mFragmentView, R.id.view_newlive_number);
         main_home_newlive_lay.setOnClickListener(this);
+        home_product_view = ViewHolders.get(mFragmentView, R.id.home_product_view);
         //标题和内容
-        view_live_title = ViewHolders.get(mFragmentView, R.id.view_live_title);
-        view_live_content = ViewHolders.get(mFragmentView, R.id.view_live_content);
+//        view_live_title = ViewHolders.get(mFragmentView, R.id.view_live_title);
+//        view_live_content = ViewHolders.get(mFragmentView, R.id.view_live_content);
         /* 直播*/
         main_home_level_lay = mFragmentView.findViewById(R.id.main_home_level_lay);
         main_home_level_lay.setOnClickListener(this);
+        //等级
+        view_home_level_bg = ViewHolders.get(mFragmentView, R.id.view_home_level_bg);
         mainHomeSwiperefreshlayout.setProgressBackgroundColorSchemeResource(R.color.white);
         // 设置下拉进度的主题颜色
         mainHomeSwiperefreshlayout.setColorSchemeResources(R.color.app_golden_disable, R.color.app_golden, R.color.app_golden_click, R.color.app_golden_click);
@@ -353,16 +356,42 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         .getDisplayMetrics()));
         mainHomeSwiperefreshlayout.setOnRefreshListener(this);
         mainHomeSmartscrollview.setScrollChangedListener(this);
-        main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
-        main_home_live_lay.setOnClickListener(this);
+//        main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
+//        main_home_live_lay.setOnClickListener(this);
 
         main_home_gvw = (MyGridView) mFragmentView.findViewById(R.id.main_home_gvw);
         operationAdapter = new OperationAdapter(baseActivity, R.layout.item_operation);
         main_home_gvw.setAdapter(operationAdapter);
-        home_product_view = baseActivity.findViewById(R.id.home_product_view);
+
         initProduct(mFragmentView);
         //游客模式下或者没有绑定过理财师需要
         initRxEvent();
+        main_home_gvw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                HomeEntity.Operate   data = (HomeEntity.Operate) parent.getItemAtPosition(position);
+                if ("0".equals(data.isVisitorVisible) && AppManager.isVisitor(baseActivity)) {//需要跳转到登录页面
+                    Intent toHomeIntent = new Intent(baseActivity, LoginActivity.class);
+                    toHomeIntent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+                    UiSkipUtils.toNextActivityWithIntent(baseActivity, toHomeIntent);
+                    return;
+                }
+                if ("h5".equals(data.jumpType)) {//跳转h5
+                    if ("1004".equals(data.jumpId)) {// 云豆乐园 需要显示充值按钮
+                        NavigationUtils.gotoWebActivityWithPay(baseActivity, data.url, data.title);
+                    } else {
+                        NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
+                    }
+
+                } else if ("app".equals(data.jumpType)) {
+                    NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
+                    if (null != Integer.decode(data.jumpId) && Integer.decode(data.jumpId) == WebViewConstant.Navigation.TASK_PAGE)
+                        TrackingDataManger.homeTask(baseActivity);
+                }
+                DataStatistApiParam.operateBannerClick(null == data || BStrUtils.isEmpty(data.title) ? "" : data.title);
+                TrackingDataManger.homeOperateItemClick(baseActivity, data.title);
+            }
+        });
     }
 
 
@@ -459,47 +488,47 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 switch (liveInfBean.type) {
 
                     case 0://预告
-                        main_home_live_lay.setVisibility(View.VISIBLE);
-                        view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
-                        Imageload.displayroud(baseActivity, liveInfBean.image, 2, view_live_iv_bg);
-                        //标题和内容view_live_title
-                        BStrUtils.SetTxt(view_live_title, "直播预告:");
-                        BStrUtils.SetTxt(view_live_content, liveInfBean.title);
-                        BStrUtils.SetTxt(view_live_title_tag, liveInfBean.create_time + "开播");
-
-                        view_live_title_tag_iv.setVisibility(View.INVISIBLE);
-                        //新版直播
+//                        main_home_live_lay.setVisibility(View.VISIBLE);
+//                        view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
+//                        Imageload.displayroud(baseActivity, liveInfBean.image, 2, view_live_iv_bg);
+//                        //标题和内容view_live_title
+//                        BStrUtils.SetTxt(view_live_title, "直播预告:");
+//                        BStrUtils.SetTxt(view_live_content, liveInfBean.title);
+//                        BStrUtils.SetTxt(view_live_title_tag, liveInfBean.create_time + "开播");
+//
+//                        view_live_title_tag_iv.setVisibility(View.INVISIBLE);
+//                        //新版直播
                         main_home_newlive_lay.setVisibility(View.VISIBLE);
                         home_newlive_foreshow_lay.setVisibility(View.VISIBLE);
                         home_newlive_now_lay.setVisibility(View.GONE);
                         Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
                         BStrUtils.setTv(view_newlive_title_tag, liveInfBean.create_time + "开播");
                         view_newlive_tag.setText("直播预告");
-                        BStrUtils.setTv(view_newlive_title_tag, liveInfBean.title);
+                        BStrUtils.setTv(view_newlive_content, liveInfBean.title);
                         break;
                     case 1://直播中
-                        main_home_live_lay.setVisibility(View.VISIBLE);
-                        main_home_live_lay.setClickable(true);
-
-
-                        view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
-                        Imageload.displayroud(baseActivity, liveInfBean.image, 2, view_live_iv_bg);
-                        //标题和内容
-                        BStrUtils.SetTxt(view_live_content, liveInfBean.title);
-                        BStrUtils.SetTxt(view_live_title, "正在直播:");
-                        BStrUtils.SetTxt(view_live_title_tag, "正在直播");
-                        view_live_title_tag_iv.setVisibility(View.VISIBLE);
+//                        main_home_live_lay.setVisibility(View.VISIBLE);
+//                        main_home_live_lay.setClickable(true);
+//
+//
+//                        view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
+//                        Imageload.displayroud(baseActivity, liveInfBean.image, 2, view_live_iv_bg);
+//                        //标题和内容
+//                        BStrUtils.SetTxt(view_live_content, liveInfBean.title);
+//                        BStrUtils.SetTxt(view_live_title, "正在直播:");
+//                        BStrUtils.SetTxt(view_live_title_tag, "正在直播");
+//                        view_live_title_tag_iv.setVisibility(View.VISIBLE);
                         //新版直播
                         main_home_newlive_lay.setVisibility(View.VISIBLE);
                         home_newlive_foreshow_lay.setVisibility(View.GONE);
                         home_newlive_now_lay.setVisibility(View.VISIBLE);
                         Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
                         view_newlive_tag.setText("正在直播");
-                        BStrUtils.setTv(view_newlive_title_tag, liveInfBean.title);
+                        BStrUtils.setTv(view_newlive_content, liveInfBean.title);
 
                         break;
                     case 2://无直播
-                        main_home_live_lay.setVisibility(View.GONE);
+//                        main_home_live_lay.setVisibility(View.GONE);
 
                         main_home_newlive_lay.setVisibility(View.GONE);
                         break;
@@ -639,18 +668,42 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             return;
         }
         Imageload.display(baseActivity, bank.product.content, view_home_product_bg);
-        BStrUtils.setTv(view_home_product_tag, bank.product.title);
-        BStrUtils.setTv(view_home_product_name, bank.product.content.shortName);
-        BStrUtils.setTv(view_home_product_des, bank.product.content.productName);
-        //显示下边具体数据的逻辑
+        BStrUtils.setTv1(view_home_product_tag, bank.product.title);
+        BStrUtils.setTv1(view_home_product_name, bank.product.content.productName);
+        BStrUtils.setTv1(view_home_product_des, bank.product.content.hotName);
 
-
+        BStrUtils.setTv(home_product_second_down, bank.product.content.term);
+        BStrUtils.setTv(home_product_three_down, bank.product.content.remainingAmount);
+        //显示下边具体数据的 一大坨的逻辑判断
+        switch (bank.product.content.productType) {
+            case "1":
+                BStrUtils.setTv1(home_product_frist_up, "业绩基准");
+                BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%");
+                break;
+            case "2":
+                BStrUtils.setTv1(home_product_frist_up, "累计净值");
+                BStrUtils.setTv1(home_product_frist_down, bank.product.content.cumulativeNet);
+                break;
+            case "3":
+                BStrUtils.setTv1(home_product_frist_up, "剩余额度");
+                BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%+浮动");
+                break;
+        }
     }
 
     private void initOperation(List<HomeEntity.Operate> module) {
-        if (null != module) {
-            main_home_gvw.setNumColumns(4);
-            operationAdapter.refreshData(module, 4);
+        if (null != module && 0 != module.size()) {
+            int sizeNumber = module.size();
+            int number = module.size();
+            if (sizeNumber <= 5) {
+                number = sizeNumber;
+            } else if (6 == sizeNumber) {
+                number = 3;
+            } else if (sizeNumber >= 7) {
+                number = 4;
+            }
+            main_home_gvw.setNumColumns(number);
+            operationAdapter.refreshData(module, number);
         }
     }
 
@@ -658,7 +711,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      * 用户等级的数据填充
      */
     private void initLevel(HomeEntity.Level level) {
-        BStrUtils.SetTxt1(viewHomeLevelStr, level.memberLevel);
+        BStrUtils.setTv1(viewHomeLevelStr, level.memberLevel);
+        view_home_level_bg.setImageResource("0".equals(level.level) ? R.drawable.home_level_normal_bg : R.drawable.home_level_level_bg);
     }
 
     @Override
@@ -680,6 +734,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initViewPage(cachesData.banner);
         //用户等级信息
         initLevel(cachesData.myInfo);
+        //产品
+        initProduct(cachesData.bank);
     }
 
     @Override
@@ -758,28 +814,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 UiSkipUtils.toNextActivity(baseActivity, MembersAreaActivity.class);
                 TrackingDataManger.homeMember(baseActivity);
                 break;
-//            case R.id.main_home_newlive_lay:
-//                if (null == homeliveInfBean) return;
-//                switch (homeliveInfBean.type) {
-//                    case 0://预告
-//                        PromptManager.ShowCustomToast(baseActivity, "直播暂未开始");
-//                        break;
-//                    case 1://直播
-//
-//                        Intent intent = new Intent(baseActivity, LiveActivity.class);
-//                        intent.putExtra("liveJson", homeliveInfBean.jsonstr);
-//                        startActivity(intent);
-//
-//                        SPreference.putString(baseActivity, Contant.CUR_LIVE_ROOM_NUM, homeliveInfBean.id);
-//                        DataStatistApiParam.homeliveclick();
-//                        break;
-//                    case 2://无直播
-//                        break;
-//                }
-//                break;
-            case R.id.main_home_live_lay://直播
+            case R.id.main_home_newlive_lay:
                 if (null == homeliveInfBean) return;
-
                 switch (homeliveInfBean.type) {
                     case 0://预告
                         PromptManager.ShowCustomToast(baseActivity, "直播暂未开始");
@@ -797,8 +833,29 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         break;
                 }
                 DataStatistApiParam.homeliveclick();
-
                 break;
+//            case R.id.main_home_live_lay://直播
+//                if (null == homeliveInfBean) return;
+//
+//                switch (homeliveInfBean.type) {
+//                    case 0://预告
+//                        PromptManager.ShowCustomToast(baseActivity, "直播暂未开始");
+//                        break;
+//                    case 1://直播
+//
+//                        Intent intent = new Intent(baseActivity, LiveActivity.class);
+//                        intent.putExtra("liveJson", homeliveInfBean.jsonstr);
+//                        startActivity(intent);
+//
+//                        SPreference.putString(baseActivity, Contant.CUR_LIVE_ROOM_NUM, homeliveInfBean.id);
+//                        DataStatistApiParam.homeliveclick();
+//                        break;
+//                    case 2://无直播
+//                        break;
+//                }
+//                DataStatistApiParam.homeliveclick();
+//
+//                break;
         }
     }
 

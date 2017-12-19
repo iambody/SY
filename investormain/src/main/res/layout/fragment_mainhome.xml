@@ -44,10 +44,10 @@
                     </RelativeLayout>
                     <!-- Banner*** -->
                     <!-- 直播预报的布局 -->
-                    <include
+                   <!-- <include
                         android:id="@+id/main_home_live_lay"
                         layout="@layout/view_home_live_lay"
-                        android:visibility="gone" />
+                        android:visibility="gone" />-->
 
                     <include
                         android:id="@+id/main_home_newlive_lay"
