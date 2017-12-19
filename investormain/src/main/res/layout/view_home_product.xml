@@ -6,17 +6,19 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/home_product_skip_bank"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/home_product_skip_bank"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:clickable="true"
+
             android:orientation="vertical"
             android:padding="@dimen/ui_10_dip">
 
@@ -43,7 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/ui_15_dip"
-            android:src="@drawable/icon_right_arrow" />
+            android:src="@drawable/icon_right_arrow"
+            />
     </LinearLayout>
     <!-- 产品的详细信息-->
 <ImageView

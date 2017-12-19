@@ -169,7 +169,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         if (!isVisitor) {
             BStrUtils.SetTxt(cardnumber_txt, serveCode);
             Imageload.display(floatContext, headerurl, steward_round_iv);
-            rectangle_in_user_text.setText(String.format("尊敬的%s，我是您的私人银行家,很高兴为您服务!", BStrUtils.NullToStr1(userName)));
+            rectangle_in_user_text.setText(String.format("尊敬的%s，我是您的私人银行家，很高兴为您服务！", BStrUtils.NullToStr1(userName)));
         }
 
     }
@@ -182,8 +182,9 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         if (isOpen)
             return;
         isOpen = true;
-        int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 160);
+
         if (isVisitor) {
+            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 200);
             //游客
             ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -205,6 +206,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
             valueAnimator.setTarget(rectangle_in_lay);
             valueAnimator.start();
         } else {
+            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 160);
             //用户
             ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -227,7 +229,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     cardnumber_lay.setVisibility(65 < animatorValue ? VISIBLE : GONE);//(1==animatorValue);
                     rectangle_in_user_text_lay.setVisibility(80 < animatorValue ? VISIBLE : GONE);
                     rectangle_in_user_text.setVisibility(100 <= animatorValue ? VISIBLE : INVISIBLE);
-                    steward_arrow_iv.setVisibility(100 == animatorValue ? VISIBLE : GONE);
+//                    steward_arrow_iv.setVisibility(100 == animatorValue ? VISIBLE : GONE);
                     if (100 == animatorValue) timeCount(true);
                 }
             });
@@ -247,9 +249,10 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         timeCount(false);
         if (!isOpen) return;
         isOpen = false;
-        int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 160);
+
         steward_arrow_iv.setVisibility(GONE);
         if (isVisitor) {
+            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 200);
             //游客
             ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -271,6 +274,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
             valueAnimator.setTarget(rectangle_in_lay);
             valueAnimator.start();
         } else {
+            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 160);
             //用户
             ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

@@ -529,7 +529,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
                         view_newlive_tag.setText("正在直播");
                         BStrUtils.setTv(view_newlive_content, liveInfBean.title);
-                        BStrUtils.setTv(view_newlive_number, BStrUtils.NullToStr(liveInfBean.lookNumber)+"人正在观看");
+                        BStrUtils.setTv(view_newlive_number, BStrUtils.NullToStr(liveInfBean.visitors)+"人正在观看");
 
                         break;
                     case 2://无直播
@@ -716,8 +716,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 number = sizeNumber;
             } else if (6 == sizeNumber) {
                 number = 3;
-            } else if (sizeNumber >= 7) {
+            } else if (sizeNumber == 7||sizeNumber == 8) {
                 number = 4;
+            }else if(sizeNumber>8){
+                number = 5;
             }
             main_home_gvw.setNumColumns(number);
             operationAdapter.refreshData(module, number);
@@ -892,41 +894,41 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     /**
-     * 横向滑动的点击事件处理
-     */
-    private class HorizontalItemClickListener implements View.OnClickListener {
-        private HomeEntity.Operate data;
-        private int postion;
-
-        public HorizontalItemClickListener(HomeEntity.Operate data, int postion) {
-            this.data = data;
-            this.postion = postion;
-        }
-
-        @Override
-        public void onClick(View v) {
-            if ("0".equals(data.isVisitorVisible) && AppManager.isVisitor(baseActivity)) {//需要跳转到登录页面
-                Intent toHomeIntent = new Intent(baseActivity, LoginActivity.class);
-                toHomeIntent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-                UiSkipUtils.toNextActivityWithIntent(baseActivity, toHomeIntent);
-                return;
-            }
-            if ("h5".equals(data.jumpType)) {//跳转h5
-                if ("1004".equals(data.jumpId)) {// 云豆乐园 需要显示充值按钮
-                    NavigationUtils.gotoWebActivityWithPay(baseActivity, data.url, data.title);
-                } else {
-                    NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
-                }
-
-            } else if ("app".equals(data.jumpType)) {
-                NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
-                if (null != Integer.decode(data.jumpId) && Integer.decode(data.jumpId) == WebViewConstant.Navigation.TASK_PAGE)
-                    TrackingDataManger.homeTask(baseActivity);
-            }
-            DataStatistApiParam.operateBannerClick(null == data || BStrUtils.isEmpty(data.title) ? "" : data.title);
-            TrackingDataManger.homeOperateItemClick(baseActivity, data.title);
-        }
-    }
+//     * 横向滑动的点击事件处理
+//     */
+//    private class HorizontalItemClickListener implements View.OnClickListener {
+//        private HomeEntity.Operate data;
+//        private int postion;
+//
+//        public HorizontalItemClickListener(HomeEntity.Operate data, int postion) {
+//            this.data = data;
+//            this.postion = postion;
+//        }
+//
+//        @Override
+//        public void onClick(View v) {
+//            if ("0".equals(data.isVisitorVisible) && AppManager.isVisitor(baseActivity)) {//需要跳转到登录页面
+//                Intent toHomeIntent = new Intent(baseActivity, LoginActivity.class);
+//                toHomeIntent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+//                UiSkipUtils.toNextActivityWithIntent(baseActivity, toHomeIntent);
+//                return;
+//            }
+//            if ("h5".equals(data.jumpType)) {//跳转h5
+//                if ("1004".equals(data.jumpId)) {// 云豆乐园 需要显示充值按钮
+//                    NavigationUtils.gotoWebActivityWithPay(baseActivity, data.url, data.title);
+//                } else {
+//                    NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
+//                }
+//
+//            } else if ("app".equals(data.jumpType)) {
+//                NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
+//                if (null != Integer.decode(data.jumpId) && Integer.decode(data.jumpId) == WebViewConstant.Navigation.TASK_PAGE)
+//                    TrackingDataManger.homeTask(baseActivity);
+//            }
+//            DataStatistApiParam.operateBannerClick(null == data || BStrUtils.isEmpty(data.title) ? "" : data.title);
+//            TrackingDataManger.homeOperateItemClick(baseActivity, data.title);
+//        }
+//    }
 
 
     @Override
