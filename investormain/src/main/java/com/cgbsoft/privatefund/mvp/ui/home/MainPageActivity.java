@@ -973,6 +973,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             liveInfBean.jsonstr = jsonObject.toString();
             liveInfBean.type = liveState;
             liveInfBean.create_time = jsonObject.getString("createTime");
+            liveInfBean.visitors = jsonObject.getString("visitors");
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -17,5 +17,6 @@ public class LiveInfBean {
     //预告时候需要
     public String create_time;
 
-    public String lookNumber;
+    //观看人数
+    public String visitors;
 }
