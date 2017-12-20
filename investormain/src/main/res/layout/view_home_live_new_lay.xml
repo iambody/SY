@@ -2,12 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:layout_marginLeft="@dimen/ui_3_dip"
-    android:layout_marginRight="@dimen/ui_3_dip"
+
     android:background="@color/white"
     android:clickable="true"
     android:orientation="vertical"
-    android:padding="@dimen/ui_10_dip">
+    android:padding="@dimen/ui_14_dip">
 
     <ImageView
         android:id="@+id/view_newlive_iv_bg"
@@ -15,14 +14,20 @@
         android:layout_height="150dp"
         android:scaleType="centerCrop" />
 
+    <ImageView
+        android:id="@+id/view_newlive_meng_bg"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@color/line_40"/>
 
     <TextView
         android:id="@+id/view_newlive_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:lines="1"
         android:ellipsize="end"
+        android:lines="1"
+        android:paddingBottom="@dimen/ui_6_dip"
         android:textColor="@color/white"
         android:textSize="@dimen/dimens_sp_22" />
 
@@ -31,15 +36,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/ui_10_dip"
+        android:layout_marginTop="@dimen/ui_15_dip"
         android:background="@color/app_golden"
         android:paddingBottom="@dimen/ui_2_dip"
         android:paddingLeft="@dimen/ui_10_dip"
         android:paddingRight="@dimen/ui_10_dip"
         android:paddingTop="@dimen/ui_2_dip"
         android:text="直播预告"
-        android:textStyle="bold"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimens_sp_12"
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:id="@+id/home_newlive_foreshow_lay"
@@ -72,7 +78,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ui_44_dip"
+            android:layout_height="@dimen/ui_34_dip"
             android:src="#55ffffff" />
 
         <TextView
@@ -88,8 +94,8 @@
 
         <ImageView
             android:id="@+id/home_live_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/ui_7_dip"
@@ -101,8 +107,9 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/home_live_play"
             android:text="点击观看"
-            android:textStyle="bold"
-            android:textColor="@color/white" />
+            android:layout_marginLeft="@dimen/ui_3_dip"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
     </RelativeLayout>
 
 

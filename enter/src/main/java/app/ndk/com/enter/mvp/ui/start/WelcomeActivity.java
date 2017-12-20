@@ -72,6 +72,8 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     private ImageView iv_wel_background, iv_wel_bottom;
     private TextView btn_wel_cancle;
 
+
+
     @Override
     protected boolean getIsNightTheme() {
         return true;
@@ -242,6 +244,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
     //跳到home页
     private void nextPage() {
+
         isStop = true;
         if (weakHandler != null)
             weakHandler.removeCallbacksAndMessages(null);
@@ -253,15 +256,15 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
                 return;
             }
             Router.build(RouteConfig.GOTOCMAINHONE).go(WelcomeActivity.this);
-            baseContext.finish();
+            WelcomeActivity.this.finish();
             return;
         }
         if ((!AppManager.getIsLogin(this) || SPreference.getUserInfoData(this) == null)) {
             openActivity(LoginActivity.class);
-            baseContext.finish();
+            WelcomeActivity.this.finish();
             return;
         }
-        baseContext.finish();
+        WelcomeActivity.this.finish();
         Log.i("homecliclclclcl", " 跳过执行完毕");
     }
 

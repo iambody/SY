@@ -43,6 +43,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
+        //版本名后面添加一句话，意思就是flavor dimension 它的维度就是该版本号，这样维度就是都是统一的了
+//        flavorDimensions "versionCode"
         multiDexEnabled true
         manifestPlaceholders = [VERSION_CODE : rootProject.ext.versionCode,
                                 VERSION_NAME : rootProject.ext.versionName,
@@ -97,14 +99,14 @@ android {
     }
     productFlavors{
         guanwang{}
-        huawei{}
-        qihu360{}
-        tengxun{}
-        xiaomi{}
-        baidu{}
-        yingyonghui{}
-        wandoujia{}
-        mumayi{}
+//        huawei{}
+//        qihu360{}
+//        tengxun{}
+//        xiaomi{}
+//        baidu{}
+//        yingyonghui{}
+//        wandoujia{}
+//        mumayi{}
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE : name]

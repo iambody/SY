@@ -5,8 +5,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:paddingLeft="@dimen/ui_5_dip"
-    android:paddingRight="@dimen/ui_5_dip"
-     >
+    android:paddingRight="@dimen/ui_5_dip">
 
     <LinearLayout
         android:id="@+id/home_product_skip_bank"
@@ -54,7 +53,7 @@
     <!-- 产品的详细信息-->
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ui_1_dip"
+        android:layout_height="@dimen/ui_z_dip"
         android:layout_marginLeft="@dimen/ui_10_dip"
         android:layout_marginRight="@dimen/ui_10_dip"
         android:src="#ffe2e1e6" />
@@ -65,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ui_10_dip"
         android:layout_marginRight="@dimen/ui_10_dip"
-        android:layout_marginTop="@dimen/ui_10_dip"
+        android:layout_marginTop="@dimen/ui_13_dip"
         android:clickable="true"
         android:orientation="vertical">
 
@@ -73,7 +72,7 @@
             android:id="@+id/home_peoduct_up_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:text="精选产品"
             android:textColor="@color/app_golden"
             android:textSize="@dimen/dimens_sp_14"
             android:textStyle="bold" />
@@ -122,8 +121,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view_home_product_name"
                 android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/ui_5_dip"
+                android:layout_marginRight="@dimen/ui_5_dip"
                 android:layout_marginTop="@dimen/ui_5_dip"
-
+                android:ellipsize="end"
+                android:lines="1"
                 android:textColor="#ffffff" />
 
         </RelativeLayout>
@@ -140,7 +142,7 @@
         android:visibility="gone">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
@@ -151,8 +153,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textStyle="bold"
-                android:text="基准业绩" />
+                android:text="基准业绩"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/home_product_frist_down"
@@ -161,8 +163,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/ui_5_dip"
                 android:textColor="@color/app_golden"
-                android:textStyle="bold"
-                android:textSize="@dimen/dimens_sp_15" />
+                android:textSize="@dimen/dimens_sp_11"
+                android:gravity="center"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <ImageView
@@ -172,7 +175,7 @@
             android:src="#ffececec" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
@@ -183,8 +186,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textStyle="bold"
-                android:text="产品期限" />
+                android:text="产品期限"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/home_product_second_down"
@@ -193,8 +196,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/ui_5_dip"
                 android:textColor="@color/app_golden"
-                android:textStyle="bold"
-                android:textSize="@dimen/dimens_sp_15" />
+                android:textSize="@dimen/dimens_sp_11"
+                android:gravity="center"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <ImageView
@@ -204,7 +208,7 @@
             android:src="#ffececec" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
@@ -215,8 +219,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textStyle="bold"
-                android:text="剩余额度" />
+                android:text="剩余额度"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/home_product_three_down"
@@ -224,9 +228,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/ui_5_dip"
+                android:gravity="center"
                 android:textColor="@color/app_golden"
-                android:textStyle="bold"
-                android:textSize="@dimen/dimens_sp_15" />
+                android:textSize="@dimen/dimens_sp_11"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>

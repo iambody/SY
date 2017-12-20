@@ -120,7 +120,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     TextView view_newlive_content, view_newlive_tag;
     RelativeLayout home_newlive_foreshow_lay, home_newlive_now_lay;
     TextView view_newlive_title_tag, view_newlive_number;
-    ImageView view_home_level_bg;
+    ImageView view_home_level_bg,view_newlive_meng_bg;
 
 
     TextView home_product_title;
@@ -258,12 +258,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 Utils.sendSmsWithNumber(baseActivity, AppManager.getUserInfo(baseActivity).adviserPhone);
                 DataStatistApiParam.homeClickNote();
                 TrackingDataManger.homeNote(baseActivity);
+
             }
 
             @Override
             public void imClick() {
                 RongIM.getInstance().startConversation(baseActivity, Conversation.ConversationType.PRIVATE, AppManager.getUserInfo(baseActivity).toC.bandingAdviserId,
                         getString(R.string.private_bank_personal).concat(AppManager.getUserInfo(baseActivity).adviserRealName));
+                TrackingDataManger.homedialogue(baseActivity);
 
             }
         });
@@ -350,6 +352,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         main_home_newlive_lay.setOnClickListener(this);
         home_product_view = ViewHolders.get(mFragmentView, R.id.home_product_view);
         view_home_level_arrow = ViewHolders.get(mFragmentView, R.id.view_home_level_arrow);
+        view_newlive_meng_bg= ViewHolders.get(mFragmentView, R.id.view_newlive_meng_bg);
         //标题和内容
 //        view_live_title = ViewHolders.get(mFragmentView, R.id.view_live_title);
 //        view_live_content = ViewHolders.get(mFragmentView, R.id.view_live_content);
@@ -514,6 +517,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //                        //新版直播
                         main_home_newlive_lay.setVisibility(View.VISIBLE);
                         home_newlive_foreshow_lay.setVisibility(View.VISIBLE);
+                        view_newlive_meng_bg.setVisibility(View.VISIBLE);
                         home_newlive_now_lay.setVisibility(View.GONE);
                         Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
                         BStrUtils.setTv(view_newlive_title_tag, liveInfBean.create_time + "开播");
@@ -536,6 +540,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         main_home_newlive_lay.setVisibility(View.VISIBLE);
                         home_newlive_foreshow_lay.setVisibility(View.GONE);
                         home_newlive_now_lay.setVisibility(View.VISIBLE);
+                        view_newlive_meng_bg.setVisibility(View.GONE);
                         Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
                         view_newlive_tag.setText("正在直播");
                         BStrUtils.setTv(view_newlive_content, liveInfBean.title);
@@ -696,11 +701,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         // BStrUtils.setTv(home_product_second_down, bank.product.content.term);
         String term = bank.product.content.term;
         if (BStrUtils.isChineseStr(term) && 0 != BStrUtils.postionChineseStr(term)) {
-            home_product_second_down.setTextSize(15);
-            SpannableString spannableStrings = SpannableUtils.setTextSize(term, 0, BStrUtils.postionChineseStr(term), DimensionPixelUtil.dip2px(baseActivity, 19));
+            home_product_second_down.setTextSize(11);
+            SpannableString spannableStrings = SpannableUtils.setTextSize(term, 0, BStrUtils.postionChineseStr(term), DimensionPixelUtil.dip2px(baseActivity, 15));
             BStrUtils.setSp(home_product_second_down, spannableStrings);
         } else {
-            home_product_second_down.setTextSize(19);
+            home_product_second_down.setTextSize(15);
             BStrUtils.setTv(home_product_second_down, term);
 
 
@@ -716,7 +721,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         }
 
-        SpannableString spannableStringmony = SpannableUtils.setTextSize(mony, 0, raised_amt.length(), DimensionPixelUtil.dip2px(baseActivity, 19));
+        SpannableString spannableStringmony = SpannableUtils.setTextSize(mony, 0, raised_amt.length(), DimensionPixelUtil.dip2px(baseActivity, 11));
         BStrUtils.setSp(home_product_three_down, spannableStringmony);
         //第一个**********************拷贝过来的产品的一坨逻辑*************************************
         //显示下边具体数据的 一大坨的逻辑判断
@@ -724,7 +729,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             case "1":
                 BStrUtils.setTv1(home_product_frist_up, "业绩基准");
                 String yield = bank.product.content.expectedYield + "%";
-                SpannableString spannableString = SpannableUtils.setTextSize(yield, 0, bank.product.content.expectedYield.length() - 1, DimensionPixelUtil.dip2px(baseActivity, 19));
+                SpannableString spannableString = SpannableUtils.setTextSize(yield, 0, bank.product.content.expectedYield.length() - 1, DimensionPixelUtil.dip2px(baseActivity, 15));
                 BStrUtils.setSp(home_product_frist_down, spannableString);
 //                BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%");
 
@@ -732,15 +737,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             case "2":
                 BStrUtils.setTv1(home_product_frist_up, "累计净值");
                 String cumulativeNet = bank.product.content.cumulativeNet;
-                home_product_frist_down.setTextSize(15);
+                home_product_frist_down.setTextSize(11);
                 if (BStrUtils.isChineseStr(cumulativeNet)) {
-                    SpannableString spannableStrings = SpannableUtils.setTextSize(cumulativeNet, 0, BStrUtils.postionChineseStr(cumulativeNet), DimensionPixelUtil.dip2px(baseActivity, 19));
+                    SpannableString spannableStrings = SpannableUtils.setTextSize(cumulativeNet, 0, BStrUtils.postionChineseStr(cumulativeNet), DimensionPixelUtil.dip2px(baseActivity, 15));
                     BStrUtils.setSp(home_product_frist_down, spannableStrings);
                 } else if (cumulativeNet.contains("%")) {
-                    SpannableString spannableStrings = SpannableUtils.setTextSize(cumulativeNet, 0, cumulativeNet.length() - 2, DimensionPixelUtil.dip2px(baseActivity, 19));
+                    SpannableString spannableStrings = SpannableUtils.setTextSize(cumulativeNet, 0, cumulativeNet.length() - 2, DimensionPixelUtil.dip2px(baseActivity, 15));
                     BStrUtils.setSp(home_product_frist_down, spannableStrings);
                 } else {
-                    home_product_frist_down.setTextSize(19);
+                    home_product_frist_down.setTextSize(15);
                     BStrUtils.setTv1(home_product_frist_down, bank.product.content.cumulativeNet);
                 }
 
@@ -749,7 +754,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 BStrUtils.setTv1(home_product_frist_up, "剩余额度");
                 String fudong = bank.product.content.expectedYield + "%+浮动";
 
-                SpannableString spannableString2 = SpannableUtils.setTextSize(fudong, 0, bank.product.content.expectedYield.length(), DimensionPixelUtil.dip2px(baseActivity, 19));
+                SpannableString spannableString2 = SpannableUtils.setTextSize(fudong, 0, bank.product.content.expectedYield.length(), DimensionPixelUtil.dip2px(baseActivity, 15));
                 BStrUtils.setSp(home_product_frist_down, spannableString2);
 
 //                BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%+浮动");
