@@ -21,7 +21,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-
+        android:lines="1"
+        android:ellipsize="end"
         android:textColor="@color/white"
         android:textSize="@dimen/dimens_sp_20" />
 
@@ -70,7 +71,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ui_30_dip"
+            android:layout_height="@dimen/ui_44_dip"
             android:src="#55ffffff" />
 
         <TextView
@@ -79,10 +80,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/ui_10_dip"
+            android:layout_marginRight="@dimen/ui_12_dip"
 
             android:textColor="@color/white"
-            android:textSize="@dimen/dimens_sp_16" />
+            android:textSize="@dimen/dimens_sp_13" />
 
         <ImageView
             android:id="@+id/home_live_play"
@@ -90,6 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ui_5_dip"
             android:src="@drawable/home_live_play" />
 
         <TextView
