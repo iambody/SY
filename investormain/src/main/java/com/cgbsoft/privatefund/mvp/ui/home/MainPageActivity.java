@@ -247,7 +247,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         // 推送过来的跳转
         jumpPushMessage();
 
-//        initLogo();
+        initLogo();
         zipResourceDownload.initZipResource();
         TrackingDataManger.gohome(baseContext);
     }
@@ -257,7 +257,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         packageIconUtils = new PackageIconUtils(baseContext, baseContext.getPackageManager(), "com.cgbsoft.privatefund.MainActivity0", "com.cgbsoft.privatefund.MainActivity1");
 
         boolean isAutumn = SkineColorManager.isautumnHoliay();
-//        isAutumn=true;
+        isAutumn=true;
         if (isAutumn) {
             packageIconUtils.enableComponentName1();
             //需要重启默认的应用*****************************
