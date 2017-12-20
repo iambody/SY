@@ -139,10 +139,8 @@ public class WxAuthorManger {
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
-
                 Message message = new Message();
                 message.obj = platform;
-
                 message.what =WxAuthorERROR;
                 mHandler.sendMessage(message);
             }

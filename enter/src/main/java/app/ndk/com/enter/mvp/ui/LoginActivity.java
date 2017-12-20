@@ -418,8 +418,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @OnClick(R2.id.enter_login_wx_bt_lay)
     public void onViewClicked() {
-        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
-        mLoadingDialog.show();
+//        mLoadingDialog.setLoading(getString(R.string.la_login_loading_str));
+//        mLoadingDialog.show();
         if (BStrUtils.isEmpty(publicKey)) {
             //开始获取公钥publicKey
             getPresenter().toGetPublicKey();
@@ -430,7 +430,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             return;
         }
         WxAuthorManger wxAuthorManger = WxAuthorManger.getInstance(baseContext, (type, platform) -> {
-            mLoadingDialog.dismiss();
+//            mLoadingDialog.dismiss();
             switch (type) {
                 case WxAuthorManger.WxAuthorOk:
                     String unionid = platform.getDb().get("unionid");

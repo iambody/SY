@@ -416,7 +416,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onRestart() {
         super.onRestart();
         initUserInfo();
-        getPresenter().getProLiveList();
+        if (null != liveTimerObservable) {
+            liveTimerObservable = Observable.interval(0, 10000, TimeUnit.MILLISECONDS)
+                    //延时0 ，每间隔5000，时间单位
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Long>() {
+                        @Override
+                        public void call(Long aLong) {
+                            getPresenter().getProLiveList();
+                        }
+                    });
+        }
+//        getPresenter().getProLiveList();
 //        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, 0);
         RxBus.get().post(RxConstant.RefreshRiskState, true);
 //        int index = getIntent().getIntExtra("index", 0);
@@ -682,7 +693,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         liveRefreshObservable.subscribe(new RxSubscriber<Boolean>() {
             @Override
             protected void onEvent(Boolean aBoolean) {
-                getPresenter().getProLiveList();
+                if (null != liveTimerObservable) {
+                    liveTimerObservable = Observable.interval(0, 10000, TimeUnit.MILLISECONDS)
+                            //延时0 ，每间隔5000，时间单位
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action1<Long>() {
+                                @Override
+                                public void call(Long aLong) {
+                                    getPresenter().getProLiveList();
+                                }
+                            });
+                }
+//                getPresenter().getProLiveList();
             }
 
             @Override
@@ -752,6 +774,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             }
         }
         return result;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (null != liveTimerObservable) {
+            liveTimerObservable.unsubscribe();
+        }
     }
 
     private void toJumpTouziren(QrCodeBean qrCodeBean) {
@@ -912,7 +942,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void loginLiveSucc() {
-        liveTimerObservable = Observable.interval(0, 20000, TimeUnit.MILLISECONDS)
+        liveTimerObservable = Observable.interval(0, 10000, TimeUnit.MILLISECONDS)
                 //延时0 ，每间隔5000，时间单位
                 .compose(this.<Long>bindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())

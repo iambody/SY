@@ -54,7 +54,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
      * 红包雨
      */
     @Override
-    public void loadRedPacket(){
+    public void loadRedPacket() {
 
         ApiClient.loadRedPacket(AppManager.getUserId(getContext())).subscribe(new RxSubscriber<String>() {
             @Override
@@ -63,7 +63,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                     JSONObject jsonObject = new JSONObject(s);
                     JSONObject result = jsonObject.getJSONObject("result");
                     String redpage_url = result.getString("redpage_url");
-                    if (!TextUtils.isEmpty(redpage_url)){
+                    if (!TextUtils.isEmpty(redpage_url)) {
                         Intent intent = new Intent(getContext(), RedPacketActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         intent.putExtra(Contant.red_packet_url, redpage_url);
@@ -80,6 +80,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             }
         });
     }
+
     /**
      * 获取直播列表
      */
@@ -91,6 +92,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                 JSONArray jsonArray = null;
                 try {
                     jsonArray = new JSONObject(s).getJSONArray("result");
+                    System.out.println("-----------live---result---:" + jsonArray.toString());
                 } catch (JSONException e) {
                     getView().hasLive(2, null);
                     e.printStackTrace();
@@ -102,7 +104,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                         try {
                             JSONObject liveJson = (JSONObject) jsonArray.get(i);
                             if (liveJson.getInt("state") == 1) {
-                                System.out.println("-----------live---on");
+                                System.out.println("-----------live---on---:" + liveJson);
                                 getView().hasLive(1, liveJson);
                                 liveState = 1;
                                 break;
@@ -206,7 +208,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
             protected void onEvent(UserInfoDataEntity.UserInfo userInfo) {
                 if (userInfo != null) {
                     AppInfStore.saveUserInfo(getContext(), userInfo);
-                    if("0".equals(userInfo.isSingIn)){
+                    if ("0".equals(userInfo.isSingIn)) {
                         toSignIn();
                     }
 //                    getView().toFreshUserinfHome()
