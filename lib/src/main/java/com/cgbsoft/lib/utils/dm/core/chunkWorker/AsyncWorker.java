@@ -1,6 +1,7 @@
 package com.cgbsoft.lib.utils.dm.core.chunkWorker;
 
 
+import com.cgbsoft.lib.utils.AntiBrushUtils;
 import com.cgbsoft.lib.utils.dm.Utils.helper.FileUtils;
 import com.cgbsoft.lib.utils.dm.database.elements.Chunk;
 import com.cgbsoft.lib.utils.dm.database.elements.Task;
@@ -49,6 +50,7 @@ public class AsyncWorker extends Thread{
             	// Avoid timeout exception which usually occurs in low network
             connection.setConnectTimeout(0);
             connection.setReadTimeout(0);
+            connection.setRequestProperty("oss", AntiBrushUtils.getAntiBrushValue());
             if (chunk.end != 0) // support unresumable links
                 connection.setRequestProperty("Range", "bytes=" + chunk.begin + "-" + chunk.end);
             
