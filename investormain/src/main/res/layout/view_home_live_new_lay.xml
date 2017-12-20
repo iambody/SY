@@ -24,7 +24,7 @@
         android:lines="1"
         android:ellipsize="end"
         android:textColor="@color/white"
-        android:textSize="@dimen/dimens_sp_20" />
+        android:textSize="@dimen/dimens_sp_22" />
 
     <TextView
         android:id="@+id/view_newlive_tag"
@@ -38,6 +38,7 @@
         android:paddingRight="@dimen/ui_10_dip"
         android:paddingTop="@dimen/ui_2_dip"
         android:text="直播预告"
+        android:textStyle="bold"
         android:textColor="@color/white" />
 
     <RelativeLayout
@@ -91,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ui_5_dip"
+            android:layout_marginLeft="@dimen/ui_7_dip"
             android:src="@drawable/home_live_play" />
 
         <TextView
@@ -100,6 +101,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/home_live_play"
             android:text="点击观看"
+            android:textStyle="bold"
             android:textColor="@color/white" />
     </RelativeLayout>
 

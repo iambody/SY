@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
@@ -30,10 +31,12 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.RxCountDown;
+import com.cgbsoft.lib.utils.tools.SpannableUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -223,6 +226,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 } else {
                     VideoNavigationUtils.startInfomationDetailActivity(baseActivity, CwebNetConfig.choiceAdviser, getResources().getString(R.string.select_adviser), 200);
                 }
+                TrackingDataManger.homeDangAn(baseActivity);
             }
 
             @Override
@@ -682,57 +686,94 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         BStrUtils.setTv1(view_home_product_name, bank.product.content.productName);
         BStrUtils.setTv1(view_home_product_des, bank.product.content.hotName);
+        if (AppManager.isVisitor(baseActivity) || TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {
+            home_product_down_lay.setVisibility(View.GONE);
+        } else {
+            home_product_down_lay.setVisibility(View.VISIBLE);
+        }
 
-        BStrUtils.setTv(home_product_second_down, bank.product.content.term);
+        //第三个*******************************************************
+        // BStrUtils.setTv(home_product_second_down, bank.product.content.term);
+        String term = bank.product.content.term;
+        if (BStrUtils.isChineseStr(term) && 0 != BStrUtils.postionChineseStr(term)) {
+            home_product_second_down.setTextSize(15);
+            SpannableString spannableStrings = SpannableUtils.setTextSize(term, 0, BStrUtils.postionChineseStr(term), DimensionPixelUtil.dip2px(baseActivity, 19));
+            BStrUtils.setSp(home_product_second_down, spannableStrings);
+        } else {
+            home_product_second_down.setTextSize(19);
+            BStrUtils.setTv(home_product_second_down, term);
 
 
+        }
+        //第三个*******************拷贝过来的产品的一坨逻辑************************************
         String raised_amt = BStrUtils.getYi(bank.product.content.remainingAmount);
         String mony;
         if (raised_amt.contains("亿")) {
             raised_amt = raised_amt.replace("亿", "");
             mony = raised_amt + "亿";
-
         } else {
             mony = raised_amt + "万";
 
         }
-        BStrUtils.setTv(home_product_three_down, mony);
+
+        SpannableString spannableStringmony = SpannableUtils.setTextSize(mony, 0, raised_amt.length(), DimensionPixelUtil.dip2px(baseActivity, 19));
+        BStrUtils.setSp(home_product_three_down, spannableStringmony);
+        //第一个**********************拷贝过来的产品的一坨逻辑*************************************
         //显示下边具体数据的 一大坨的逻辑判断
         switch (bank.product.content.productType) {
             case "1":
                 BStrUtils.setTv1(home_product_frist_up, "业绩基准");
-                BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%");
+                String yield = bank.product.content.expectedYield + "%";
+                SpannableString spannableString = SpannableUtils.setTextSize(yield, 0, bank.product.content.expectedYield.length() - 1, DimensionPixelUtil.dip2px(baseActivity, 19));
+                BStrUtils.setSp(home_product_frist_down, spannableString);
+//                BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%");
+
                 break;
             case "2":
                 BStrUtils.setTv1(home_product_frist_up, "累计净值");
-                BStrUtils.setTv1(home_product_frist_down, bank.product.content.cumulativeNet);
+                String cumulativeNet = bank.product.content.cumulativeNet;
+                home_product_frist_down.setTextSize(15);
+                if (BStrUtils.isChineseStr(cumulativeNet)) {
+                    SpannableString spannableStrings = SpannableUtils.setTextSize(cumulativeNet, 0, BStrUtils.postionChineseStr(cumulativeNet), DimensionPixelUtil.dip2px(baseActivity, 19));
+                    BStrUtils.setSp(home_product_frist_down, spannableStrings);
+                } else if (cumulativeNet.contains("%")) {
+                    SpannableString spannableStrings = SpannableUtils.setTextSize(cumulativeNet, 0, cumulativeNet.length() - 2, DimensionPixelUtil.dip2px(baseActivity, 19));
+                    BStrUtils.setSp(home_product_frist_down, spannableStrings);
+                } else {
+                    home_product_frist_down.setTextSize(19);
+                    BStrUtils.setTv1(home_product_frist_down, bank.product.content.cumulativeNet);
+                }
+
                 break;
             case "3":
                 BStrUtils.setTv1(home_product_frist_up, "剩余额度");
-                BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%+浮动");
+                String fudong = bank.product.content.expectedYield + "%+浮动";
+
+                SpannableString spannableString2 = SpannableUtils.setTextSize(fudong, 0, bank.product.content.expectedYield.length(), DimensionPixelUtil.dip2px(baseActivity, 19));
+                BStrUtils.setSp(home_product_frist_down, spannableString2);
+
+//                BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%+浮动");
+
                 break;
         }
-
-
 
 
         ///
 
 
         if (!AppManager.getIsLogin(baseActivity)) {
-            BStrUtils.setTv1(view_home_product_tag, "请登录");
+            BStrUtils.setTv1(view_home_product_tag, "风险评测后可见");
 
         } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {//需要风险测评
-            BStrUtils.setTv1(view_home_product_tag, "认证可见");
+            BStrUtils.setTv1(view_home_product_tag, "风险评测后可见");
 
-        }else{//显示截至打款时间
-
+        } else {//显示截至打款时间************拷贝过来的一坨产品逻辑***************
             try {
                 HomeEntity.bankData productlsBean = bank.product.content;
                 // 服务器返回的时间格式，需要转换为毫秒值，与当前时间相减得到时间差，显示到list里
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-                if ( productlsBean.raiseEndTime != null&&!"".equals( productlsBean.raiseEndTime)) {
+                if (productlsBean.raiseEndTime != null && !"".equals(productlsBean.raiseEndTime)) {
                     java.util.Date end_time = dateFormat.parse(productlsBean.raiseEndTime);
                     long l = end_time.getTime() - System.currentTimeMillis();
                     String dateString = null;
@@ -754,16 +795,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     if (l <= 0) {
                         BStrUtils.setTv(view_home_product_tag, "已截止");
                     } else {
-                        BStrUtils.setTv(view_home_product_tag, "截止打款" + dateString);
+                        BStrUtils.setTv(view_home_product_tag, "截止" + dateString + "打款");
                     }
-                }else{
+                } else {
                     view_home_product_tag.setVisibility(View.GONE);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 view_home_product_tag.setVisibility(View.GONE);
             }
-
 
 
         }
@@ -917,10 +957,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         break;
                 }
                 DataStatistApiParam.homeliveclick();
+                TrackingDataManger.homeLiveClick(baseActivity, homeliveInfBean.content, homeliveInfBean.id);
                 break;
             case R.id.view_home_product_focus://点击产品 先判断是否登录 和是否做过风险测评
 
-                if (!AppManager.getIsLogin(baseActivity)) {
+                if (AppManager.isVisitor(baseActivity)) {
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("insidegotologin", true);
                     map.put("backgohome", true);
@@ -930,15 +971,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     gotoRiskevalust();
                     return;
                 }
-
                 if (null != homeData && null != homeData.bank && null != homeData.bank.product && null != homeData.bank.product.content) {
                     HomeEntity.bankData productlsBean = homeData.bank.product.content;
                     ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
-                    DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.shortName, "1".equals(productlsBean.isHotProduct));
+//                    DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.shortName, "1".equals(productlsBean.isHotProduct));
                 }
+                TrackingDataManger.homeProduct(baseActivity);
                 break;
             case R.id.home_product_skip_bank:
                 NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
+                TrackingDataManger.homePrivateMore(baseActivity);
                 break;
 //            case R.id.main_home_live_lay://直播
 //                if (null == homeliveInfBean) return;

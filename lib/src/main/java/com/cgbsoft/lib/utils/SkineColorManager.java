@@ -9,7 +9,7 @@ import java.util.Calendar;
  */
 public class SkineColorManager {
 
-    //中秋节*******
+
     //结束时间
     private static final int END_YEAR = 2017;
     private static final int END_MONTH = 11;

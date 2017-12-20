@@ -40,7 +40,7 @@ public class TrackingDataManger {
      * @param context
      */
     public static void homeNew(Context context) {
-        TrackingDataUtils.save(context, "1001001021", " ");
+        TrackingDataUtils.save(context, "1001003071", " ");
     }
 
     /**
@@ -49,7 +49,7 @@ public class TrackingDataManger {
      * @param context
      */
     public static void homeBannerFocus(Context context, String title) {
-        TrackingDataUtils.save(context, "1001001031", title);
+        TrackingDataUtils.save(context, "1001003061", title);
         Log.i("opopaaaaa","点击banner*******");
     }
 
@@ -59,7 +59,7 @@ public class TrackingDataManger {
      * @param context
      */
     public static void homeBannerleft(Context context, String name) {
-        TrackingDataUtils.save(context, "1001001032", name);
+        TrackingDataUtils.save(context, "1001003062", name);
     }
 
     /**
@@ -68,7 +68,7 @@ public class TrackingDataManger {
      * @param context
      */
     public static void homeBannerRight(Context context, String name) {
-        TrackingDataUtils.save(context, "1001001033", name);
+        TrackingDataUtils.save(context, "1001003063", name);
     }
 
     /**
@@ -77,7 +77,7 @@ public class TrackingDataManger {
      * @param context
      */
     public static void homeMember(Context context) {
-        TrackingDataUtils.save(context, "1001001041", "");
+        TrackingDataUtils.save(context, "1001003081", "");
     }
 
     /**
@@ -86,7 +86,7 @@ public class TrackingDataManger {
      * @param context
      */
     public static void homeTask(Context context) {
-        TrackingDataUtils.save(context, "1001001041", "");
+        TrackingDataUtils.save(context, "1001003091", "");
     }
 
     /**
@@ -506,4 +506,35 @@ public class TrackingDataManger {
     public static void privateBanckVideoShow(Context context) {
         TrackingDataUtils.save(context, "1010070011", "视频");
     }
+
+
+
+    /**
+     * 尊享私行 栏目
+     */
+    public static void homePrivateMore(Context context) {
+        TrackingDataUtils.save(context, "1001003131", "");
+    }
+    /**
+     * 点击大图
+     */
+    public static void homeProduct(Context context) {
+        TrackingDataUtils.save(context, "1001003141", "");
+    }
+
+
+    /**
+     * 档案按钮
+     */
+    public static void homeDangAn(Context context) {
+        TrackingDataUtils.save(context, "1001002061", "");
+    }
+    /**
+     * 直播
+     */
+    public static void homeLiveClick(Context context,String name,String index) {
+        TrackingDataUtils.save(context, "1001003371", name+"|"+index);
+    }
+
+
 }

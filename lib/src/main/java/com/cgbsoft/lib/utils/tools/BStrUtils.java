@@ -2,6 +2,7 @@ package com.cgbsoft.lib.utils.tools;
 
 
 import android.content.Context;
+import android.text.SpannableString;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
@@ -123,18 +124,26 @@ public class BStrUtils {
         stringList.add(strings);
         return LsToJsonArray(stringList);
     }
+
     /**
      * Textview放置文本
      */
     public static void setTv(TextView T, String Str) {
         T.setText(NullToStr(Str));
     }
+
     /**
      * Textview放置文本
      */
     public static void setTv1(TextView T, String Str) {
         T.setText(NullToStr1(Str));
     }
+
+    public static void setSp(TextView T, SpannableString Str) {
+        if (null == Str) T.setText("");
+        T.setText(Str);
+    }
+
     /**
      * Textview放置文本
      */
@@ -288,5 +297,59 @@ public class BStrUtils {
     public static String nullToEmpty(String str) {
         if (null == str) return "";
         return str;
+    }
+
+    public static int postionChineseStr(String str) {
+
+        Pattern pattern = Pattern.compile("[\u4e00-\u9fa5]");
+        char c[] = str.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            Matcher matcher = pattern.matcher(String.valueOf(c[i]));
+            if (matcher.matches()) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    public static boolean isChineseStr(String str) {
+
+        Pattern pattern = Pattern.compile("[\u4e00-\u9fa5]");
+        char c[] = str.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            Matcher matcher = pattern.matcher(String.valueOf(c[i]));
+            if (matcher.matches()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 是否包含
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isSpeialStr(String str) {
+        String regEx = "[~!/@#$%^&*()-_=+\\|[{}];:\'\",<.>/?]+";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        return m.find();
+    }
+
+    public static int postionSpeialStr(String str) {
+        String regEx = "[~!/@#$%^&*()-_=+\\|[{}];:\'\",<.>/?]+";
+        Pattern p = Pattern.compile(regEx);
+        char c[] = str.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            Matcher matcher = p.matcher(String.valueOf(c[i]));
+            if (matcher.matches()) {
+                return i;
+            }
+        }
+        return 0;
+
+
     }
 }

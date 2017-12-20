@@ -7,8 +7,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.BounceInterpolator;
-import android.widget.ImageView;
+import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,7 +29,7 @@ import com.cgbsoft.privatefund.R;
  * 日期 2017/11/29-15:06
  */
 public class FloatStewardView extends RelativeLayout implements View.OnClickListener {
-    private final int ANIMATOR_TIME = 1 * 1000;
+    private final int ANIMATOR_TIME = 1 * 600;
     private final int TIMECOUNTDOWN = 6;
     private boolean isVisitor;
     private boolean isOpen;
@@ -40,7 +39,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
     private SemicircleView semicircleview;
     private RelativeLayout rectangle_out_lay;
     private RoundImageView steward_round_iv;
-    private ImageView steward_arrow_iv;
+    //    private ImageView steward_arrow_iv;
     private String serveCode, headerurl, userName;
     private LinearLayout rectangle_in_lay, cardnumber_lay, rectangle_in_text_lay, rectangle_in_user_text_lay;
     private TextView cardnumber_txt, rectangle_in_user_text, steward_phone_bt, steward_note_bt, steward_im_bt, steward_inf_bt;
@@ -75,7 +74,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         steward_inf_bt = (TextView) findViewById(R.id.steward_inf_bt);
         cardnumber_txt = (TextView) findViewById(R.id.cardnumber_txt);
         cardnumber_lay = (LinearLayout) findViewById(R.id.cardnumber_lay);
-        steward_arrow_iv = (ImageView) findViewById(R.id.steward_arrow_iv);
+//        steward_arrow_iv = (ImageView) findViewById(R.id.steward_arrow_iv);
         semicircleview = (SemicircleView) baseView.findViewById(R.id.semicircleview);
         steward_round_iv = (RoundImageView) baseView.findViewById(R.id.steward_round_iv);
         rectangle_out_lay = (RelativeLayout) baseView.findViewById(R.id.rectangle_out_lay);
@@ -184,7 +183,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         isOpen = true;
 
         if (isVisitor) {
-            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 200);
+            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 220);
             //游客
             ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -196,12 +195,12 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 40) + (int) (surplusWidth * fraction);
                     rectangle_in_lay.requestLayout();
                     rectangle_in_text_lay.setVisibility(100 == animatorValue ? VISIBLE : GONE);
-                    steward_arrow_iv.setVisibility(100 == animatorValue ? VISIBLE : GONE);
+//                    steward_arrow_iv.setVisibility(100 == animatorValue ? VISIBLE : GONE);
                     if (100 == animatorValue) timeCount(true);
 
                 }
             });
-            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator  BounceInterpolator
+            valueAnimator.setInterpolator(new LinearInterpolator());//LinearInterpolator  BounceInterpolator
             valueAnimator.setDuration(ANIMATOR_TIME);
             valueAnimator.setTarget(rectangle_in_lay);
             valueAnimator.start();
@@ -233,7 +232,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     if (100 == animatorValue) timeCount(true);
                 }
             });
-            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator  BounceInterpolator
+            valueAnimator.setInterpolator(new LinearInterpolator());//LinearInterpolator  BounceInterpolator
             valueAnimator.setDuration(ANIMATOR_TIME);
 //            valueAnimator.setTarget(rectangle_in_lay,rectangle_out_lay);
             valueAnimator.start();
@@ -250,9 +249,9 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         if (!isOpen) return;
         isOpen = false;
 
-        steward_arrow_iv.setVisibility(GONE);
+//        steward_arrow_iv.setVisibility(GONE);
         if (isVisitor) {
-            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 200);
+            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 220);
             //游客
             ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -269,7 +268,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
 
                 }
             });
-            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator  BounceInterpolator
+            valueAnimator.setInterpolator(new LinearInterpolator());//LinearInterpolator  BounceInterpolator
             valueAnimator.setDuration(ANIMATOR_TIME);
             valueAnimator.setTarget(rectangle_in_lay);
             valueAnimator.start();
@@ -300,7 +299,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                     rectangle_in_user_text.setVisibility(20 < animatorValue ? GONE : VISIBLE);
                 }
             });
-            valueAnimator.setInterpolator(new BounceInterpolator());//LinearInterpolator  BounceInterpolator
+            valueAnimator.setInterpolator(new LinearInterpolator());//LinearInterpolator  BounceInterpolator
             valueAnimator.setDuration(ANIMATOR_TIME);
 //            valueAnimator.setTarget(rectangle_in_lay,rectangle_out_lay);
             valueAnimator.start();
@@ -330,7 +329,6 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
 
     private void timeCount(boolean isClos) {
         if (isClos) {
-
             RxCountDown.countTimeDown(TIMECOUNTDOWN, new RxCountDown.ICountTime() {
                 @Override
                 public void onCompleted() {

@@ -44,6 +44,7 @@ public class SemicircleView extends View implements View.OnClickListener{
         circlePaint = new Paint();
         circlePaint.setStyle(Paint.Style.FILL);
         circlePaint.setColor(circleColor);
+        circlePaint.setAntiAlias(true);
     }
 
     @Override

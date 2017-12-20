@@ -3,14 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/ui_5_dip"
+    android:paddingRight="@dimen/ui_5_dip"
+     >
 
     <LinearLayout
         android:id="@+id/home_product_skip_bank"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:clickable="true"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -29,7 +32,8 @@
                 android:paddingBottom="@dimen/ui_5_dip"
                 android:text="尊享私行"
                 android:textColor="@color/black"
-                android:textSize="@dimen/dimens_sp_18" />
+                android:textSize="@dimen/dimens_sp_18"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/home_peoduct_subtitle"
@@ -45,33 +49,34 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/ui_15_dip"
-            android:src="@drawable/icon_right_arrow"
-            />
+            android:src="@drawable/icon_right_arrow" />
     </LinearLayout>
     <!-- 产品的详细信息-->
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/ui_1_dip"
-    android:src="#ffe2e1e6"
-    android:layout_marginLeft="@dimen/ui_10_dip"
-    android:layout_marginRight="@dimen/ui_10_dip"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_1_dip"
+        android:layout_marginLeft="@dimen/ui_10_dip"
+        android:layout_marginRight="@dimen/ui_10_dip"
+        android:src="#ffe2e1e6" />
+
     <LinearLayout
         android:id="@+id/view_home_product_focus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ui_10_dip"
         android:layout_marginRight="@dimen/ui_10_dip"
-        android:clickable="true"
         android:layout_marginTop="@dimen/ui_10_dip"
+        android:clickable="true"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/home_peoduct_up_des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="精选产品"
+
             android:textColor="@color/app_golden"
-            android:textSize="@dimen/dimens_sp_14" />
+            android:textSize="@dimen/dimens_sp_14"
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -98,8 +103,9 @@
                 android:paddingLeft="@dimen/ui_8_dip"
                 android:paddingRight="@dimen/ui_8_dip"
                 android:paddingTop="@dimen/ui_3_dip"
-
-                android:textColor="@color/white_light" />
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/dimens_sp_12"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/view_home_product_name"
@@ -107,8 +113,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
 
-                android:textColor="@color/white_light"
-                android:textSize="@dimen/dimens_sp_20" />
+                android:textColor="#ffffff"
+                android:textSize="@dimen/dimens_sp_22" />
 
             <TextView
                 android:id="@+id/view_home_product_des"
@@ -118,7 +124,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ui_5_dip"
 
-                android:textColor="@color/white_light" />
+                android:textColor="#ffffff" />
 
         </RelativeLayout>
     </LinearLayout>
@@ -130,7 +136,8 @@
         android:layout_marginLeft="@dimen/ui_10_dip"
         android:layout_marginRight="@dimen/ui_10_dip"
         android:background="#fff7f7f7"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -144,6 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
                 android:text="基准业绩" />
 
             <TextView
@@ -151,16 +159,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/app_golden"
                 android:layout_marginTop="@dimen/ui_5_dip"
-                android:textSize="@dimen/dimens_sp_17"/>
+                android:textColor="@color/app_golden"
+                android:textStyle="bold"
+                android:textSize="@dimen/dimens_sp_15" />
         </LinearLayout>
 
         <ImageView
             android:layout_width="@dimen/ui_1_dip"
             android:layout_height="@dimen/ui_26_dip"
-            android:src="#ffececec"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:src="#ffececec" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -174,6 +183,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
                 android:text="产品期限" />
 
             <TextView
@@ -181,17 +191,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/app_golden"
                 android:layout_marginTop="@dimen/ui_5_dip"
-                android:textSize="@dimen/dimens_sp_17"
-                 />
+                android:textColor="@color/app_golden"
+                android:textStyle="bold"
+                android:textSize="@dimen/dimens_sp_15" />
         </LinearLayout>
 
         <ImageView
             android:layout_width="@dimen/ui_1_dip"
             android:layout_height="@dimen/ui_26_dip"
-            android:src="#ffececec"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:src="#ffececec" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -204,6 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
                 android:text="剩余额度" />
 
             <TextView
@@ -211,9 +223,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/app_golden"
                 android:layout_marginTop="@dimen/ui_5_dip"
-                android:textSize="@dimen/dimens_sp_17"/>
+                android:textColor="@color/app_golden"
+                android:textStyle="bold"
+                android:textSize="@dimen/dimens_sp_15" />
         </LinearLayout>
 
     </LinearLayout>

@@ -138,7 +138,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                         if (l <= 0) {
                             BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJiezhi, "已截止");
                         } else {
-                            BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJiezhi, "截止打款" + dateString);
+                            BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJiezhi, "截止" + dateString+"打款");
                         }
                     }
                 } catch (ParseException e) {

@@ -82,7 +82,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         setContentView(R.layout.activity_welcome);
         super.before();
 
-        Log.i("llooollloo","开始显示闪屏");
+        Log.i("llooollloo", "开始显示闪屏");
 //        setIsNeedGoneNavigationBar(true);//不显示导航条
         weakHandler = new WeakHandler();
         SPreference.saveThisRunOpenDownload(this, false);
@@ -218,7 +218,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         iv_wel_bottom = (ImageView) findViewById(R.id.iv_wel_bottom);
         enactSize(iv_wel_bottom);
 
-        btn_wel_cancle.setOnClickListener(v -> nextPage());
+        btn_wel_cancle.setOnClickListener(v -> toNext());
         if (weakHandler != null)
             if (Utils.checkNetWork(this)) {
                 weakHandler.postDelayed(mWaitRunnable, waitTime);
@@ -228,6 +228,10 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             }
     }
 
+    private void toNext() {
+Log.i("homecliclclclcl","开始点击跳过");
+        nextPage();
+    }
 
     private void enactSize(ImageView imagview) {
         int screenHeight = Utils.getScreenHeight(baseContext);
@@ -259,6 +263,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             return;
         }
         baseContext.finish();
+        Log.i("homecliclclclcl"," 跳过执行完毕");
     }
 
     private boolean isNoticePush() {

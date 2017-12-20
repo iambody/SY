@@ -2,7 +2,6 @@ package com.cgbsoft.lib.utils.tools;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.InvestorAppli;
@@ -19,7 +18,8 @@ public class LogOutAccount {
 
     private boolean needExitApp;
 
-    public LogOutAccount() {}
+    public LogOutAccount() {
+    }
 
     public LogOutAccount(boolean needExitApp) {
         this.needExitApp = needExitApp;
@@ -36,11 +36,11 @@ public class LogOutAccount {
             ((InvestorAppli) InvestorAppli.getContext()).setRequestCustom(false);
             AppInfStore.saveUserAccount(context, null);
             AppInfStore.saveIsVisitor(context, true);
-            HashMap<String,Object>map=new HashMap<>();
-            map.put("ialoginout",true);
-            map.put("fromValidatePassword",needExitApp);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("ialoginout", true);
+            map.put("fromValidatePassword", needExitApp);
 //            NavigationUtils.startActivityByRouter(context, "enter_loginactivity",map, Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            NavigationUtils.startActivityByRouter(context, "enter_loginactivity",map);
+            NavigationUtils.startActivityByRouter(context, "enter_loginactivity", map);
             ((Activity) context).finish();
 
             //退出时清空融云token en

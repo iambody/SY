@@ -41,13 +41,15 @@ public class SpannableUtils {
         if (TextUtils.isEmpty(content) || fontSize <= 0 || startIndex >= endIndex || startIndex < 0 || endIndex >= content.length()) {
             return null;
         }
-
         SpannableString spannableString = new SpannableString(content);
         spannableString.setSpan(new AbsoluteSizeSpan(fontSize), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return spannableString;
     }
 
+    public static SpannableString setBackSize(String content,int startIndex,int fontSize){
+       return setTextSize(content,startIndex,content.length()-1,fontSize);
+    }
     public static SpannableString setTextSub(String content, int startIndex, int endIndex) {
         if (TextUtils.isEmpty(content) || startIndex < 0 || endIndex >= content.length() || startIndex >= endIndex) {
             return null;

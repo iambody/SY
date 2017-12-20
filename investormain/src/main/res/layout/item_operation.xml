@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_4"
-        android:textColor="@color/black"
-        android:textSize="12sp"/>
+        android:textColor="#3F3B37"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 </LinearLayout>
