@@ -82,8 +82,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         setContentView(R.layout.activity_welcome);
         super.before();
 
-        Log.i("llooollloo", "开始显示闪屏");
-//        setIsNeedGoneNavigationBar(true);//不显示导航条
+        setIsNeedGoneNavigationBar(true);//不显示导航条
         weakHandler = new WeakHandler();
         SPreference.saveThisRunOpenDownload(this, false);
         // 缺少权限时, 进入权限配置页面
@@ -229,7 +228,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     }
 
     private void toNext() {
-Log.i("homecliclclclcl","开始点击跳过");
+        Log.i("homecliclclclcl", "开始点击跳过");
         nextPage();
     }
 
@@ -263,7 +262,7 @@ Log.i("homecliclclclcl","开始点击跳过");
             return;
         }
         baseContext.finish();
-        Log.i("homecliclclclcl"," 跳过执行完毕");
+        Log.i("homecliclclclcl", " 跳过执行完毕");
     }
 
     private boolean isNoticePush() {

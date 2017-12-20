@@ -38,7 +38,7 @@
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:text="请点击选择您的"
-                    android:layout_marginLeft="@dimen/ui_3_dip"
+                    android:layout_marginLeft="@dimen/ui_10_dip"
                     android:textColor="@color/app_golden"
                     android:textSize="@dimen/ui_14_dip" />
 
@@ -48,7 +48,7 @@
                     android:layout_gravity="left"
                     android:layout_weight="1"
                     android:text="专属私人银行家"
-                    android:layout_marginLeft="@dimen/ui_3_dip"
+                    android:layout_marginLeft="@dimen/ui_10_dip"
                     android:textColor="@color/app_golden"
                     android:textSize="@dimen/ui_14_dip" />
             </LinearLayout>

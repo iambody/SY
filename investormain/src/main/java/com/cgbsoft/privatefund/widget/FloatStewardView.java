@@ -183,7 +183,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         isOpen = true;
 
         if (isVisitor) {
-            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 220);
+            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 200);
             //游客
             ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -251,7 +251,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
 
 //        steward_arrow_iv.setVisibility(GONE);
         if (isVisitor) {
-            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 220);
+            int surplusWidth = Utils.getScreenWidth(floatContext) - DimensionPixelUtil.dip2px(floatContext, 200);
             //游客
             ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
