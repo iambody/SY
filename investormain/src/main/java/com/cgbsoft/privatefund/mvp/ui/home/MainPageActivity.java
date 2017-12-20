@@ -957,6 +957,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     public void loginLiveFail() {
 //        getPresenter().getLiveList();
+
     }
 
     @Override
