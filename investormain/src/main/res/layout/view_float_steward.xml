@@ -85,7 +85,9 @@
                         android:id="@+id/steward_phone_bt"
                         style="@style/home_banker_bt_style1"
                         android:text="@string/phone"
-                        android:textSize="@dimen/ui_10_dip" />
+                        android:textSize="@dimen/ui_10_dip"
+                        android:textStyle="bold"
+                        />
 
                     <TextView
                         android:id="@+id/steward_note_bt"
@@ -93,7 +95,8 @@
                         android:layout_marginLeft="@dimen/ui_2_dip"
                         android:layout_marginRight="@dimen/ui_2_dip"
                         android:text="@string/mms"
-                        android:textSize="@dimen/ui_10_dip" />
+                        android:textSize="@dimen/ui_10_dip"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/steward_im_bt"
@@ -101,13 +104,15 @@
                         android:layout_marginLeft="@dimen/ui_2_dip"
                         android:layout_marginRight="@dimen/ui_2_dip"
                         android:text="@string/conversation"
-                        android:textSize="@dimen/ui_10_dip" />
+                        android:textSize="@dimen/ui_10_dip"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/steward_inf_bt"
                         style="@style/home_banker_bt_style1"
                         android:text="@string/dangan"
-                        android:textSize="@dimen/ui_10_dip" />
+                        android:textSize="@dimen/ui_10_dip"
+                        android:textStyle="bold"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -171,7 +176,7 @@
             android:layout_height="0dip"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="8289"
+
             android:textColor="@color/app_golden"
             android:textSize="@dimen/dimens_sp_12" />
     </LinearLayout>

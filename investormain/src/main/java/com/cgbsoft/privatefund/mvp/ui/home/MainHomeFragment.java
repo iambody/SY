@@ -721,7 +721,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         }
 
-        SpannableString spannableStringmony = SpannableUtils.setTextSize(mony, 0, raised_amt.length(), DimensionPixelUtil.dip2px(baseActivity, 11));
+        SpannableString spannableStringmony = SpannableUtils.setTextSize(mony, 0, raised_amt.length(), DimensionPixelUtil.dip2px(baseActivity, 15));
         BStrUtils.setSp(home_product_three_down, spannableStringmony);
         //第一个**********************拷贝过来的产品的一坨逻辑*************************************
         //显示下边具体数据的 一大坨的逻辑判断

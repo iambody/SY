@@ -127,7 +127,7 @@
     <!-- list条目点击色 -->
     <color name="list_item_selector_color">#dfe0e1</color>
     <!-- 黑色40%透明度 -->
-    <color name="line_40">#5E000000</color>
+    <color name="line_40">#66000000</color>
 
     <color name="line_20">#33000000</color>
     <!-- 黑色10%透明度 -->
