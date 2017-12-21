@@ -120,7 +120,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     TextView view_newlive_content, view_newlive_tag;
     RelativeLayout home_newlive_foreshow_lay, home_newlive_now_lay;
     TextView view_newlive_title_tag, view_newlive_number;
-    ImageView view_home_level_bg,view_newlive_meng_bg;
+    ImageView view_home_level_bg, view_newlive_meng_bg;
 
 
     TextView home_product_title;
@@ -352,7 +352,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         main_home_newlive_lay.setOnClickListener(this);
         home_product_view = ViewHolders.get(mFragmentView, R.id.home_product_view);
         view_home_level_arrow = ViewHolders.get(mFragmentView, R.id.view_home_level_arrow);
-        view_newlive_meng_bg= ViewHolders.get(mFragmentView, R.id.view_newlive_meng_bg);
+        view_newlive_meng_bg = ViewHolders.get(mFragmentView, R.id.view_newlive_meng_bg);
         //标题和内容
 //        view_live_title = ViewHolders.get(mFragmentView, R.id.view_live_title);
 //        view_live_content = ViewHolders.get(mFragmentView, R.id.view_live_content);
@@ -704,8 +704,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             home_product_second_down.setTextSize(11);
             SpannableString spannableStrings = SpannableUtils.setTextSize(term, 0, BStrUtils.postionChineseStr(term), DimensionPixelUtil.dip2px(baseActivity, 15));
             BStrUtils.setSp(home_product_second_down, spannableStrings);
+        } else if (0 == BStrUtils.postionChineseStr(term) && BStrUtils.hasDigit(term)) {
+            home_product_second_down.setTextSize(11);
+            SpannableString spannableStrings = SpannableUtils.setTextSize(term, BStrUtils.beginPostionDigit(term), BStrUtils.lastPostionDigit(term)+1, DimensionPixelUtil.dip2px(baseActivity, 15));
+            BStrUtils.setSp(home_product_second_down, spannableStrings);
         } else {
-            home_product_second_down.setTextSize(15);
+            home_product_second_down.setTextSize(11);
             BStrUtils.setTv(home_product_second_down, term);
 
 
@@ -729,7 +733,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             case "1":
                 BStrUtils.setTv1(home_product_frist_up, "业绩基准");
                 String yield = bank.product.content.expectedYield + "%";
-                SpannableString spannableString = SpannableUtils.setTextSize(yield, 0, bank.product.content.expectedYield.length() - 1, DimensionPixelUtil.dip2px(baseActivity, 15));
+                SpannableString spannableString = SpannableUtils.setTextSize(yield, 0, bank.product.content.expectedYield.length(), DimensionPixelUtil.dip2px(baseActivity, 15));
                 BStrUtils.setSp(home_product_frist_down, spannableString);
 //                BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%");
 

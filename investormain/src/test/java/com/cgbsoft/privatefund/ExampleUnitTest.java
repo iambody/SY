@@ -34,11 +34,19 @@ public class ExampleUnitTest {
 //            Log.i("s", "sss");
 //        }
 //        Log.i("s", "sss");
+        String saaaas = "最长3个月";
 
-        boolean a=BStrUtils.isChineseStr("2180129219");
-        boolean b=BStrUtils.isChineseStr("218012个9");
+        boolean aaaa = BStrUtils.hasDigit(saaaas);
+        boolean bbbb = BStrUtils.hasDigit("osossosos");
+        boolean ccc = BStrUtils.hasDigit("最长的月");
+        int postionstart = BStrUtils.beginPostionDigit(saaaas);
+        int postionend = BStrUtils.lastPostionDigit(saaaas);
+        int postionendss = BStrUtils.beginPostionDigit("最长23个月");
+        int postionendsssss = BStrUtils.lastPostionDigit("最长23个月");
 
-     int ssss=   BStrUtils.postionChineseStr("292个月");
+        int postionendssssss = BStrUtils.beginPostionDigit("最长234个月");
+        int postionendsssssssss = BStrUtils.lastPostionDigit("最长234个月");
         Log.i("s", "sss");
+
     }
 }

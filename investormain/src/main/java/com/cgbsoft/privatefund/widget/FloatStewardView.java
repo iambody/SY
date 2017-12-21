@@ -5,7 +5,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
@@ -34,6 +33,9 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
     private boolean isVisitor;
     private boolean isOpen;
     private View baseView;
+
+    private int ivHeight=30;
+    private int layWidth=60;
 
     private Context floatContext;
     private SemicircleView semicircleview;
@@ -72,8 +74,8 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
         steward_note_bt = (TextView) findViewById(R.id.steward_note_bt);
         steward_im_bt = (TextView) findViewById(R.id.steward_im_bt);
         steward_inf_bt = (TextView) findViewById(R.id.steward_inf_bt);
-        cardnumber_txt = (TextView) findViewById(R.id.cardnumber_txt);
-        cardnumber_lay = (LinearLayout) findViewById(R.id.cardnumber_lay);
+//        cardnumber_txt = (TextView) findViewById(R.id.cardnumber_txt);
+//        cardnumber_lay = (LinearLayout) findViewById(R.id.cardnumber_lay);
 //        steward_arrow_iv = (ImageView) findViewById(R.id.steward_arrow_iv);
         semicircleview = (SemicircleView) baseView.findViewById(R.id.semicircleview);
         steward_round_iv = (RoundImageView) baseView.findViewById(R.id.steward_round_iv);
@@ -85,7 +87,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
 
         semicircleview.setOnClickListener(this);
         steward_round_iv.setOnClickListener(this);
-        cardnumber_lay.setOnClickListener(this);
+//        cardnumber_lay.setOnClickListener(this);
         rectangle_in_text_lay.setOnClickListener(this);
         rectangle_in_lay.setOnClickListener(this);
         steward_phone_bt.setOnClickListener(this);
@@ -108,9 +110,9 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 else
                     openFloat();
                 break;
-            case R.id.cardnumber_lay://绑定理财师的邀请码布局点击
-//                closeFloat();
-                break;
+//            case R.id.cardnumber_lay://绑定理财师的邀请码布局点击
+////                closeFloat();
+//                break;
             case R.id.rectangle_in_lay://绑定和未绑定公用的外层布局
 //                closeFloat();
                 break;
@@ -166,7 +168,7 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
      */
     private void inflateView() {
         if (!isVisitor) {
-            BStrUtils.SetTxt(cardnumber_txt, serveCode);
+//            BStrUtils.SetTxt(cardnumber_txt, serveCode);
             Imageload.display(floatContext, headerurl, steward_round_iv);
             rectangle_in_user_text.setText(String.format("尊敬的%s，我是您的私人银行家，很高兴为您服务！", BStrUtils.NullToStr1(userName)));
         }
@@ -190,9 +192,9 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     int animatorValue = (int) animation.getAnimatedValue();
-                    Log.i("sskkk", "位置" + animatorValue);
+//                    Log.i("sskkk", "位置" + animatorValue);
                     float fraction = animatorValue / 100f;
-                    rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 40) + (int) (surplusWidth * fraction);
+                    rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 36) + (int) (surplusWidth * fraction);
                     rectangle_in_lay.requestLayout();
                     rectangle_in_text_lay.setVisibility(100 == animatorValue ? VISIBLE : GONE);
 //                    steward_arrow_iv.setVisibility(100 == animatorValue ? VISIBLE : GONE);
@@ -213,19 +215,19 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 public void onAnimationUpdate(ValueAnimator animation) {
 
                     int animatorValue = (int) animation.getAnimatedValue();
-                    Log.i("sskkk", "位置" + animatorValue);
+//                    Log.i("sskkk", "位置" + animatorValue);
                     float fraction = animatorValue / 100f;
-                    rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 40) + (int) (surplusWidth * fraction);
+                    rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 36) + (int) (surplusWidth * fraction);
 
                     rectangle_in_lay.requestLayout();
 
-                    rectangle_out_lay.getLayoutParams().height = DimensionPixelUtil.dip2px(floatContext, 80) + (int) (fraction * DimensionPixelUtil.dip2px(floatContext, 20));
+                    rectangle_out_lay.getLayoutParams().height = DimensionPixelUtil.dip2px(floatContext, 70) + (int) (fraction * DimensionPixelUtil.dip2px(floatContext, 20));
                     rectangle_out_lay.requestLayout();
 
                     semicircleview.getLayoutParams().height = rectangle_out_lay.getLayoutParams().height;
                     semicircleview.getLayoutParams().width = rectangle_out_lay.getLayoutParams().height;
                     semicircleview.requestLayout();
-                    cardnumber_lay.setVisibility(65 < animatorValue ? VISIBLE : GONE);//(1==animatorValue);
+//                    cardnumber_lay.setVisibility(65 < animatorValue ? VISIBLE : GONE);//(1==animatorValue);
                     rectangle_in_user_text_lay.setVisibility(80 < animatorValue ? VISIBLE : GONE);
                     rectangle_in_user_text.setVisibility(100 <= animatorValue ? VISIBLE : INVISIBLE);
 //                    steward_arrow_iv.setVisibility(100 == animatorValue ? VISIBLE : GONE);
@@ -259,9 +261,9 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 public void onAnimationUpdate(ValueAnimator animation) {
 
                     int animatorValue = (int) animation.getAnimatedValue();
-                    Log.i("sskkk", "位置" + animatorValue);
+//                    Log.i("sskkk", "位置" + animatorValue);
                     float fraction = animatorValue / 100f;
-                    rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 40) + surplusWidth - (int) (surplusWidth * fraction);
+                    rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 36) + surplusWidth - (int) (surplusWidth * fraction);
                     rectangle_in_lay.requestLayout();
 
                     rectangle_in_text_lay.setVisibility(animatorValue > 10 ? GONE : VISIBLE);
@@ -281,20 +283,20 @@ public class FloatStewardView extends RelativeLayout implements View.OnClickList
                 public void onAnimationUpdate(ValueAnimator animation) {
 
                     int animatorValue = (int) animation.getAnimatedValue();
-                    Log.i("sskkk", "位置" + animatorValue);
+//                    Log.i("sskkk", "位置" + animatorValue);
                     float fraction = animatorValue / 100f;
-                    rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 40) + surplusWidth - (int) (surplusWidth * fraction);
+                    rectangle_in_lay.getLayoutParams().width = DimensionPixelUtil.dip2px(floatContext, 36) + surplusWidth - (int) (surplusWidth * fraction);
 
                     rectangle_in_lay.requestLayout();
 
-                    rectangle_out_lay.getLayoutParams().height = DimensionPixelUtil.dip2px(floatContext, 80) + DimensionPixelUtil.dip2px(floatContext, 20) - (int) (fraction * DimensionPixelUtil.dip2px(floatContext, 20));
+                    rectangle_out_lay.getLayoutParams().height = DimensionPixelUtil.dip2px(floatContext, 70) + DimensionPixelUtil.dip2px(floatContext, 20) - (int) (fraction * DimensionPixelUtil.dip2px(floatContext, 20));
                     rectangle_out_lay.requestLayout();
 
                     semicircleview.getLayoutParams().height = rectangle_out_lay.getLayoutParams().height;
                     semicircleview.getLayoutParams().width = rectangle_out_lay.getLayoutParams().height;
 
                     semicircleview.requestLayout();
-                    cardnumber_lay.setVisibility(50 < animatorValue ? GONE : VISIBLE);//(1==animatorValue);
+//                    cardnumber_lay.setVisibility(50 < animatorValue ? GONE : VISIBLE);//(1==animatorValue);
                     rectangle_in_user_text_lay.setVisibility(20 < animatorValue ? GONE : VISIBLE);
                     rectangle_in_user_text.setVisibility(20 < animatorValue ? GONE : VISIBLE);
                 }
