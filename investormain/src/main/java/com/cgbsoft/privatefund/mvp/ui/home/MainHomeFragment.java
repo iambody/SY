@@ -948,6 +948,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 switch (homeliveInfBean.type) {
                     case 0://预告
                         PromptManager.ShowCustomToast(baseActivity, "直播暂未开始");
+                        TrackingDataManger.homeLiveClick(baseActivity, homeliveInfBean.content, homeliveInfBean.id);
+
                         break;
                     case 1://直播
 
@@ -957,12 +959,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                         SPreference.putString(baseActivity, Contant.CUR_LIVE_ROOM_NUM, homeliveInfBean.id);
                         DataStatistApiParam.homeliveclick();
+                        TrackingDataManger.homeLiveClick(baseActivity, homeliveInfBean.content, homeliveInfBean.id);
+
                         break;
                     case 2://无直播
                         break;
                 }
                 DataStatistApiParam.homeliveclick();
-                TrackingDataManger.homeLiveClick(baseActivity, homeliveInfBean.content, homeliveInfBean.id);
                 break;
             case R.id.view_home_product_focus://点击产品 先判断是否登录 和是否做过风险测评
 
