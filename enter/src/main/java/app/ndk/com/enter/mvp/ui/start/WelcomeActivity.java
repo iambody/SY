@@ -25,6 +25,7 @@ import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ZipUtils;
 import com.cgbsoft.lib.widget.WeakHandler;
@@ -229,8 +230,8 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     }
 
     private void toNext() {
-        Log.i("homecliclclclcl", "开始点击跳过");
         nextPage();
+        TrackingDataManger.loadSkip(baseContext);
     }
 
     private void enactSize(ImageView imagview) {

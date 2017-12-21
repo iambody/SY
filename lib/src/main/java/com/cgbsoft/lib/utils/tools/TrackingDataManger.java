@@ -11,7 +11,7 @@ import android.util.Log;
 public class TrackingDataManger {
     public static void gohome(Context context) {
         TrackingDataUtils.save(context, "1001001001", "");
-        Log.i("sooollaa","进入首页*******");
+        Log.i("sooollaa", "进入首页*******");
     }
 
     /**
@@ -21,7 +21,7 @@ public class TrackingDataManger {
      */
     public static void homePersonOpen(Context context) {
         TrackingDataUtils.save(context, "1001001011", "打开");
-        Log.i("sooollaa","打开*******");
+        Log.i("sooollaa", "打开*******");
     }
 
     /**
@@ -31,7 +31,7 @@ public class TrackingDataManger {
      */
     public static void homePersonClose(Context context) {
         TrackingDataUtils.save(context, "1001001011", "关闭");
-        Log.i("sooollaa","关上*******");
+        Log.i("sooollaa", "关上*******");
     }
 
     /**
@@ -50,7 +50,7 @@ public class TrackingDataManger {
      */
     public static void homeBannerFocus(Context context, String title) {
         TrackingDataUtils.save(context, "1001003061", title);
-        Log.i("opopaaaaa","点击banner*******");
+        Log.i("opopaaaaa", "点击banner*******");
     }
 
     /**
@@ -395,7 +395,7 @@ public class TrackingDataManger {
      */
     public static void videoDetailCache(Context context) {
         TrackingDataUtils.save(context, "1065001041", "");
-        Log.i("lololololo","缓存龙龙龙龙绿绿绿");
+        Log.i("lololololo", "缓存龙龙龙龙绿绿绿");
     }
 
     /**
@@ -439,7 +439,7 @@ public class TrackingDataManger {
      */
     public static void videoSchoolLeftScroll(Context context) {
         TrackingDataUtils.save(context, "1010070012", "");
-        Log.i("ssssaaaaa","视频左滑动。。。");
+        Log.i("ssssaaaaa", "视频左滑动。。。");
     }
 
     /**
@@ -448,7 +448,7 @@ public class TrackingDataManger {
     public static void videoSchoolRightScroll(Context context) {
 
         TrackingDataUtils.save(context, "1010070013", "");
-        Log.i("ssssaaaaa","视频滑动。。。");
+        Log.i("ssssaaaaa", "视频滑动。。。");
     }
 
     /**
@@ -508,13 +508,13 @@ public class TrackingDataManger {
     }
 
 
-
     /**
      * 尊享私行 栏目
      */
     public static void homePrivateMore(Context context) {
         TrackingDataUtils.save(context, "1001003131", "");
     }
+
     /**
      * 点击大图
      */
@@ -529,11 +529,19 @@ public class TrackingDataManger {
     public static void homeDangAn(Context context) {
         TrackingDataUtils.save(context, "1001002061", "");
     }
+
     /**
      * 直播
      */
-    public static void homeLiveClick(Context context,String name,String index) {
-        TrackingDataUtils.save(context, "1001003371", name+"|"+index);
+    public static void homeLiveClick(Context context, String name, String index) {
+        TrackingDataUtils.save(context, "1001003371", name + "|" + index);
+    }
+
+    /**
+     * 点击跳过
+     */
+    public static void loadSkip(Context context) {
+        TrackingDataUtils.save(context, "1091000011", "");
     }
 
 

@@ -203,10 +203,10 @@
         <item name="android:clickable">true</item>
        <item name="android:layout_weight">1</item>
         <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:paddingTop">@dimen/ui_6_dip</item>
-        <item name="android:paddingBottom">@dimen/ui_6_dip</item>
-        <item name="android:paddingLeft">@dimen/ui_3_dip</item>
-        <item name="android:paddingRight">@dimen/ui_3_dip</item>
+        <item name="android:paddingTop">@dimen/ui_5_dip</item>
+        <item name="android:paddingBottom">@dimen/ui_5_dip</item>
+        <item name="android:paddingLeft">@dimen/ui_1_dip</item>
+        <item name="android:paddingRight">@dimen/ui_1_dip</item>
     </style>
     <!--<style name="myToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="background" >@color/app_golden</item>

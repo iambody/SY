@@ -352,4 +352,61 @@ public class BStrUtils {
 
 
     }
+
+    /**
+     * 是否包含数字
+     */
+
+    public static boolean hasDigit(String content) {
+        boolean flag = false;
+        Pattern p = Pattern.compile(".*\\d+.*");
+        Matcher m = p.matcher(content);
+        if (m.find()) {
+            flag = true;
+        }
+        return flag;
+    }
+
+    /**
+     * 是否包含数字的位置
+     */
+
+    public static int lastPostionDigit(String str) {
+
+        Pattern p = Pattern.compile(".*\\d+.*");
+
+        char c[] = str.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            Matcher matcher = p.matcher(String.valueOf(c[i]));
+            if (matcher.matches()) {
+                return beginPostionDigit(str) +getNumbers(str).length() - 1;
+            }
+        }
+        return 0;
+    }
+    //截取数字
+    public static String getNumbers(String content) {
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(content);
+        while (matcher.find()) {
+            return matcher.group(0);
+        }
+        return "";
+    }
+    /**
+     * 是否包含数字的位置
+     */
+    public static int beginPostionDigit(String str) {
+        Pattern p = Pattern.compile(".*\\d+.*");
+        char c[] = str.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            Matcher matcher = p.matcher(String.valueOf(c[i]));
+            if (matcher.matches()) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+
 }

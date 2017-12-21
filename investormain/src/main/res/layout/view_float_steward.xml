@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/rectangle_out_lay"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true">
 
@@ -35,10 +35,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
+                    android:layout_marginLeft="@dimen/ui_10_dip"
                     android:layout_weight="1"
                     android:gravity="bottom"
                     android:text="请点击选择您的"
-                    android:layout_marginLeft="@dimen/ui_10_dip"
                     android:textColor="@color/app_golden"
                     android:textSize="@dimen/ui_14_dip" />
 
@@ -46,9 +46,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
+                    android:layout_marginLeft="@dimen/ui_10_dip"
                     android:layout_weight="1"
                     android:text="专属私人银行家"
-                    android:layout_marginLeft="@dimen/ui_10_dip"
                     android:textColor="@color/app_golden"
                     android:textSize="@dimen/ui_14_dip" />
             </LinearLayout>
@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="80dp"
+                android:layout_marginLeft="67dp"
                 android:clickable="true"
                 android:orientation="vertical"
                 android:visibility="gone">
@@ -69,9 +69,11 @@
                     android:layout_height="0dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="2"
-                    android:gravity="center_horizontal|center"
+                    android:gravity="left|center_vertical"
+                    android:paddingTop="@dimen/ui_5_dip"
                     android:textColor="@color/app_golden"
                     android:textSize="@dimen/ui_12_dip"
+
                     android:visibility="gone" />
 
                 <LinearLayout
@@ -79,6 +81,7 @@
                     android:layout_height="0dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:layout_marginBottom="@dimen/ui_3_dip"
                     android:orientation="horizontal">
 
                     <TextView
@@ -86,8 +89,7 @@
                         style="@style/home_banker_bt_style1"
                         android:text="@string/phone"
                         android:textSize="@dimen/ui_10_dip"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/steward_note_bt"
@@ -96,7 +98,7 @@
                         android:layout_marginRight="@dimen/ui_2_dip"
                         android:text="@string/mms"
                         android:textSize="@dimen/ui_10_dip"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/steward_im_bt"
@@ -105,41 +107,40 @@
                         android:layout_marginRight="@dimen/ui_2_dip"
                         android:text="@string/conversation"
                         android:textSize="@dimen/ui_10_dip"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/steward_inf_bt"
                         style="@style/home_banker_bt_style1"
                         android:text="@string/dangan"
                         android:textSize="@dimen/ui_10_dip"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
         <com.cgbsoft.privatefund.widget.SemicircleView
             android:id="@+id/semicircleview"
-            android:layout_width="@dimen/ui_80_dip"
-            android:layout_height="@dimen/ui_80_dip"
+            android:layout_width="@dimen/ui_70_dip"
+            android:layout_height="@dimen/ui_70_dip"
             android:layout_toRightOf="@+id/rectangle_in_lay"
-            android:clickable="true"/>
-     <!--   <ImageView
-            android:id="@+id/steward_arrow_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/float_steward_back"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/ui_90_dip"
-            android:visibility="gone"/>-->
+            android:clickable="true" />
+        <!--   <ImageView
+               android:id="@+id/steward_arrow_iv"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentRight="true"
+               android:src="@drawable/float_steward_back"
+               android:layout_centerVertical="true"
+               android:layout_marginRight="@dimen/ui_90_dip"
+               android:visibility="gone"/>-->
     </RelativeLayout>
-
 
 
     <com.cgbsoft.lib.widget.RoundImageView
         android:id="@+id/steward_round_iv"
-        android:layout_width="@dimen/ui_70_dip"
-        android:layout_height="@dimen/ui_70_dip"
+        android:layout_width="@dimen/ui_60_dip"
+        android:layout_height="@dimen/ui_60_dip"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/ui_5_dip"
@@ -149,36 +150,36 @@
 
         app:border_thickness="0dp" />
 
-    <LinearLayout
-        android:id="@+id/cardnumber_lay"
-        android:layout_width="@dimen/ui_70_dip"
-        android:layout_height="30dp"
-        android:layout_below="@+id/steward_round_iv"
-        android:layout_marginLeft="@dimen/ui_5_dip"
-        android:layout_marginTop="-8dp"
-        android:background="@drawable/main_home_card_bg"
-        android:clickable="true"
-        android:orientation="vertical"
-        android:visibility="gone">
+    <!-- <LinearLayout
+         android:id="@+id/cardnumber_lay"
+         android:layout_width="@dimen/ui_50_dip"
+         android:layout_height="24dp"
+         android:layout_below="@+id/steward_round_iv"
+         android:layout_marginLeft="@dimen/ui_10_dip"
+         android:layout_marginTop="-8dp"
+         android:background="@drawable/main_home_card_bg"
+         android:clickable="true"
+         android:orientation="vertical"
+         android:visibility="gone">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="服 务 码"
-            android:textColor="@color/app_golden"
-            android:textSize="@dimen/dimens_sp_7" />
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="0dip"
+             android:layout_weight="1"
+             android:gravity="center"
+             android:text="服 务 码"
+             android:textColor="@color/app_golden"
+             android:textSize="@dimen/dimens_sp_6" />
 
-        <TextView
-            android:id="@+id/cardnumber_txt"
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:gravity="center"
+         <TextView
+             android:id="@+id/cardnumber_txt"
+             android:layout_width="match_parent"
+             android:layout_height="0dip"
+             android:layout_weight="1"
+             android:gravity="center"
 
-            android:textColor="@color/app_golden"
-            android:textSize="@dimen/dimens_sp_12" />
-    </LinearLayout>
+             android:textColor="@color/app_golden"
+             android:textSize="@dimen/dimens_sp_10" />
+     </LinearLayout>-->
 
 </RelativeLayout>
