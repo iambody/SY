@@ -315,7 +315,11 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                         ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
                         DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.shortName, "1".equals(productlsBean.isHotProduct));
                     }
-                    TrackingDataUtils.save(baseActivity, "1010010101", productlsBeen.get(position).productName +"|"+ productlsBeen.get(position).schemeId);
+                    try {
+                        TrackingDataUtils.save(baseActivity, "1010010101", productlsBeen.get(position).productName +"|"+ productlsBeen.get(position).schemeId);
+                    }catch (Exception e){
+
+                    }
                 }
 
             }

@@ -192,7 +192,7 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
         String liveJsonStr = getIntent().getStringExtra("liveJson");
         JSONObject liveJson = null;
         try {
-            
+
             liveJson = new JSONObject(liveJsonStr);
             MySelfInfo.getInstance().setIdStatus(Constants.MEMBER);
             MySelfInfo.getInstance().setJoinRoomWay(false);
@@ -1349,9 +1349,14 @@ public class LiveActivity extends BaseActivity<LivePresenter> implements EnterQu
                         mMemberList.remove(i);
                     }
                 }
-                membersAdapter.notifyDataSetChanged();
-                //如果存在视频互动，取消
-                QavsdkControl.getInstance().closeMemberView(id);
+                try {
+
+                    membersAdapter.notifyDataSetChanged();
+                    //如果存在视频互动，取消
+                    QavsdkControl.getInstance().closeMemberView(id);
+                } catch (Exception e) {
+
+                }
             }
 
         }

@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * desc  任务presenter
@@ -61,8 +62,13 @@ public class MyTaskPresenter extends BasePresenterImpl<MyTaskContract.View> impl
 
             @Override
             protected void onRxError(Throwable error) {
-                getView().getTaskListErr(error);
-                getView().hideLoadDialog();
+                try {
+                    getView().getTaskListErr(error);
+                    getView().hideLoadDialog();
+                }catch (Exception e){
+
+                }
+
             }
         });
     }
