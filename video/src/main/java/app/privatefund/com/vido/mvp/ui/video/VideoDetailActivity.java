@@ -1089,8 +1089,11 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     protected void onDestroy() {
         stopCountDown();
         getPresenter().stopDownload(videoId);
-        if (getPresenter().viModel.status != VideoStatus.FINISH) {
-            getPresenter().updataNowStop();
+        try {
+            if (null != getPresenter().viModel && getPresenter().viModel.status != VideoStatus.FINISH) {
+                getPresenter().updataNowStop();
+            }
+        } catch (Exception e) {
         }
         if (vrf_avd != null) {
             getPresenter().updataNowPlayTime(vrf_avd.getCurrentTime());
