@@ -73,7 +73,6 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     private TextView btn_wel_cancle;
 
 
-
     @Override
     protected boolean getIsNightTheme() {
         return true;

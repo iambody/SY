@@ -27,8 +27,8 @@
         android:layout_centerInParent="true"
         android:ellipsize="end"
         android:lines="1"
-        android:layout_marginLeft="@dimen/ui_3_dip"
-        android:layout_marginRight="@dimen/ui_3_dip"
+        android:layout_marginLeft="@dimen/ui_5_dip"
+        android:layout_marginRight="@dimen/ui_5_dip"
         android:paddingBottom="@dimen/ui_6_dip"
         android:textColor="@color/white"
         android:textSize="@dimen/dimens_sp_22" />

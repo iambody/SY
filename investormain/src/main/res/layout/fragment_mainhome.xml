@@ -83,7 +83,7 @@
                         android:background="@color/white"
                         android:paddingBottom="@dimen/ui_15_dip"
                         android:paddingTop="@dimen/ui_10_dip"
-                        android:verticalSpacing="@dimen/ui_10_dip" />
+                        android:verticalSpacing="@dimen/ui_15_dip" />
 
                     <ImageView
                         android:layout_width="match_parent"
