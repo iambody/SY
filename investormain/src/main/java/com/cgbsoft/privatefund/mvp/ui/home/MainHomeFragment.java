@@ -167,7 +167,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         initConfig();
-        mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
         initshowlay();
         timeCountDown();
         initCache();
@@ -405,6 +404,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 TrackingDataManger.homeOperateItemClick(baseActivity, data.title);
             }
         });
+
+
+        mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
     }
 
 
