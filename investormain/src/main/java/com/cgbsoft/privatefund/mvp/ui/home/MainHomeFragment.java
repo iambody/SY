@@ -1,7 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableString;
@@ -24,12 +23,10 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.share.dialog.CommonScreenDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
-import com.cgbsoft.lib.utils.poster.ScreenShot;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -65,6 +62,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
+import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.product.com.utils.ProductNavigationUtils;
 import butterknife.BindView;
@@ -274,31 +272,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
 
-        Bitmap paths = ScreenShot.GetandSaveCurrentImage( baseActivity);
-        CommonScreenDialog commonScreenDialog = new CommonScreenDialog(baseActivity, paths, new CommonScreenDialog.CommentScreenListener() {
-            @Override
-            public void completShare() {
-//                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
-//                    webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
-            }
-
-            @Override
-            public void cancleShare() {
-//                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
-//                    webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
-            }
-        });
-        commonScreenDialog.show();
-
-//        if (AppManager.isVisitor(baseActivity)) {
-//            Intent intent = new Intent(baseActivity, LoginActivity.class);
-//            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-//        } else {
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-//        }
-//        DataStatistApiParam.homeClickNew();
-//        TrackingDataManger.homeNew(baseActivity);
+        if (AppManager.isVisitor(baseActivity)) {
+            Intent intent = new Intent(baseActivity, LoginActivity.class);
+            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+        } else {
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+        }
+        DataStatistApiParam.homeClickNew();
+        TrackingDataManger.homeNew(baseActivity);
 
     }
 

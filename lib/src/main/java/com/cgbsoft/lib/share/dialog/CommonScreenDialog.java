@@ -143,6 +143,12 @@ public class CommonScreenDialog extends Dialog implements PlatformActionListener
         platform_circle.share(sp);
     }
 
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        if (null != imagLocalPath) imagLocalPath.recycle();
+    }
+
     /**
      * 分享到朋友圈
      */
@@ -164,6 +170,8 @@ public class CommonScreenDialog extends Dialog implements PlatformActionListener
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
         if (null != commentScreenListener) commentScreenListener.completShare();
+        CommonScreenDialog.this.dismiss();
+
     }
 
     @Override
