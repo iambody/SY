@@ -1,8 +1,6 @@
 package com.cgbsoft.lib.base.webview;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,12 +13,10 @@ import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.webview.bean.JsCall;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.share.dialog.CommonScreenDialog;
 import com.cgbsoft.lib.share.dialog.CommonSharePosterDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.poster.ElevenPoster;
-import com.cgbsoft.lib.utils.poster.ScreenShot;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
@@ -219,22 +215,22 @@ public class JavaScriptObjectToc {
     @JavascriptInterface
     public void shareScreenshot(String datas) {
 
-        JsCall jscall = new Gson().fromJson(datas, JsCall.class);
-        String paths = ScreenShot.GetandSaveCurrentImage((Activity) context);
-        CommonScreenDialog commonScreenDialog = new CommonScreenDialog(context, paths, new CommonScreenDialog.CommentScreenListener() {
-            @Override
-            public void completShare() {
-                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
-                    webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
-            }
-
-            @Override
-            public void cancleShare() {
-                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
-                    webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
-            }
-        });
-        commonScreenDialog.show();
+//        JsCall jscall = new Gson().fromJson(datas, JsCall.class);
+//        Bitmap paths = ScreenShot.GetandSaveCurrentImage((Activity) context);
+//        CommonScreenDialog commonScreenDialog = new CommonScreenDialog(context, paths, new CommonScreenDialog.CommentScreenListener() {
+//            @Override
+//            public void completShare() {
+//                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
+//                    webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
+//            }
+//
+//            @Override
+//            public void cancleShare() {
+//                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
+//                    webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
+//            }
+//        });
+//        commonScreenDialog.show();
     }
 
     @JavascriptInterface

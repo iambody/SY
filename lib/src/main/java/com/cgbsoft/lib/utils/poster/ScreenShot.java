@@ -7,7 +7,6 @@ import android.os.Environment;
 import android.view.View;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 /**
  * desc  ${DESC}
@@ -18,13 +17,13 @@ public class ScreenShot {
     // 获取内置SD卡路径
     private static String sdCardPath = Environment.getExternalStorageDirectory().getPath();
     // 图片文件路径
-    private static String filePath = sdCardPath + File.separator  +"screenshot.png";
+    private static String filePath = sdCardPath + File.separator + "testt" + File.separator + "screenshot.png";
 
     /**
      * 获取和保存当前屏幕的截图
      * 因为硬件问题可能存在失败概率 失败就返回null 分享时候需要进行判断
      */
-    public static String GetandSaveCurrentImage(Activity activity) {
+    public static Bitmap GetandSaveCurrentImage(Activity activity) {
         //1.构建Bitmap
         View dView = activity.getWindow().getDecorView();
         dView.setDrawingCacheEnabled(true);
@@ -43,29 +42,30 @@ public class ScreenShot {
         // Bitmap b = Bitmap.createBitmap(b1, 0, 25, 320, 455);
         Bitmap b = Bitmap.createBitmap(bitmap, 0, statusBarHeight, width, height
                 - statusBarHeight);
+        return b;
         //********************出去状态栏的代码******************
-        if (bitmap != null) {
-            try {
-                File file = new File(filePath);
-                if (!file.exists()) {
-                    file.mkdirs();
-                }
-                if (!file.exists()) {
-                    file.createNewFile();
-                }
-                FileOutputStream os = new FileOutputStream(file);
-        //  bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
-                b.compress(Bitmap.CompressFormat.PNG, 100, os);
-                os.flush();
-                os.close();
-                return filePath;
-
-            } catch (Exception e) {
-                return null;
-            }
-        } else {
-            return null;
-        }
+//        if (bitmap != null) {
+//            try {
+//                File file = new File(filePath);
+//                if (!file.exists()) {
+//                    file.mkdirs();
+//                }
+//                if (!file.exists()) {
+//                    file.createNewFile();
+//                }
+//                FileOutputStream os = new FileOutputStream(file);
+//        //  bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+//                b.compress(Bitmap.CompressFormat.PNG, 100, os);
+//                os.flush();
+//                os.close();
+//                return filePath;
+//
+//            } catch (Exception e) {
+//                return null;
+//            }
+//        } else {
+//            return null;
+//        }
     }
 //
 //    /**

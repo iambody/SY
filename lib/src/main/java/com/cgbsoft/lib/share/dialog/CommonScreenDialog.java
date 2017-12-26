@@ -56,7 +56,7 @@ public class CommonScreenDialog extends Dialog implements PlatformActionListener
     private Platform platform_wx;
 
     //图片地址
-    private String imagLocalPath;
+    private Bitmap imagLocalPath;
     //展示的截图
     private ImageView dialog_screen_iv;
     //取消的按钮
@@ -72,7 +72,7 @@ public class CommonScreenDialog extends Dialog implements PlatformActionListener
 
     private CommentScreenListener commentScreenListener;
 
-    public CommonScreenDialog(@NonNull Context context, String imagPath, CommentScreenListener screenListener) {
+    public CommonScreenDialog(@NonNull Context context, Bitmap imagPath, CommentScreenListener screenListener) {
         super(context, R.style.share_comment_style);
         this.dcontext = context;
         this.imagLocalPath = imagPath;
@@ -107,8 +107,8 @@ public class CommonScreenDialog extends Dialog implements PlatformActionListener
         dialog_screen_cancle_iv.setOnClickListener(this);
         dialog_screen_wx_iv.setOnClickListener(this);
         dialog_screen_pyq_iv.setOnClickListener(this);
-        dialog_screen_iv.setImageBitmap(getDiskBitmap(imagLocalPath));
-
+//        dialog_screen_iv.setImageBitmap(getDiskBitmap(imagLocalPath));
+        dialog_screen_iv.setImageBitmap(imagLocalPath);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class CommonScreenDialog extends Dialog implements PlatformActionListener
     /**
      * 分享到好友
      */
-    private void wxImg(String WxShareData) {
+    private void wxImg(Bitmap WxShareData) {
         if (!Utils.isWeixinAvilible(dcontext)) {//没有安装微信
             PromptManager.ShowCustomToast(dcontext, dcontext.getResources().getString(R.string.pleaseinstanllweixin));
             return;
@@ -136,7 +136,8 @@ public class CommonScreenDialog extends Dialog implements PlatformActionListener
         platform_circle = ShareSDK.getPlatform(Wechat.NAME);
         WechatMoments.ShareParams sp = new WechatMoments.ShareParams();
         sp.setShareType(Platform.SHARE_IMAGE);
-        sp.setImagePath(WxShareData);
+//        sp.setImagePath(WxShareData);
+        sp.setImageData(WxShareData);
         platform_circle.setPlatformActionListener(this); // 设置分享事件回调
         // 执行分享
         platform_circle.share(sp);
@@ -145,7 +146,7 @@ public class CommonScreenDialog extends Dialog implements PlatformActionListener
     /**
      * 分享到朋友圈
      */
-    private void wxCircrImg(String WxShareData) {
+    private void wxCircrImg(Bitmap WxShareData) {
         if (!Utils.isWeixinAvilible(dcontext)) {//没有安装微信
             PromptManager.ShowCustomToast(dcontext, dcontext.getResources().getString(R.string.pleaseinstanllweixin));
             return;
@@ -153,8 +154,8 @@ public class CommonScreenDialog extends Dialog implements PlatformActionListener
         platform_circle = ShareSDK.getPlatform(WechatMoments.NAME);
         WechatMoments.ShareParams sp = new WechatMoments.ShareParams();
         sp.setShareType(Platform.SHARE_IMAGE);
-        sp.setImagePath(WxShareData);
-
+//        sp.setImagePath(WxShareData);
+        sp.setImageData(WxShareData);
         platform_circle.setPlatformActionListener(this); // 设置分享事件回调
         // 执行分享
         platform_circle.share(sp);
@@ -188,18 +189,14 @@ public class CommonScreenDialog extends Dialog implements PlatformActionListener
     }
 
 
-    private Bitmap getDiskBitmap(String pathString)
-    {
+    private Bitmap getDiskBitmap(String pathString) {
         Bitmap bitmap = null;
-        try
-        {
+        try {
             File file = new File(pathString);
-            if(file.exists())
-            {
+            if (file.exists()) {
                 bitmap = BitmapFactory.decodeFile(pathString);
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             // TODO: handle exception
         }
 

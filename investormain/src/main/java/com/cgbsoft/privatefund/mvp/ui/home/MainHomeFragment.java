@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableString;
@@ -23,10 +24,12 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.share.dialog.CommonScreenDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.poster.ScreenShot;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -62,7 +65,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
-import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.product.com.utils.ProductNavigationUtils;
 import butterknife.BindView;
@@ -87,11 +89,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     BaseWebview mainhomeWebview;
     @BindView(R.id.main_home_new_iv)
     ImageView mainHomeNewIv;
-//    @BindView(R.id.view_live_title)
-//    TextView viewLiveTitle;
-
-    //    @BindView(R.id.view_live_iv_lay)
-//    RelativeLayout viewLiveIvLay;
     @BindView(R.id.home_bannerview)
     BannerView homeBannerview;
     @BindView(R.id.home_floatstewardview)
@@ -102,19 +99,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     MySwipeRefreshLayout mainHomeSwiperefreshlayout;
     @BindView(R.id.main_home_smartscrollview)
     SmartScrollView mainHomeSmartscrollview;
-//    @BindView(R.id.main_home_horizontalscrollview_lay)
-//    LinearLayout mainHomeHorizontalscrollviewLay;
-//    @BindView(R.id.main_home_horizontalscrollview)
-//    HorizontalScrollView mainHomeHorizontalscrollview;
-
     View home_product_view;
     View main_home_level_lay;
-    //    View main_home_live_lay;
     View main_home_newlive_lay;
-    //老的直播
-//    TextView view_live_title_tag;
-//    ImageView view_live_iv_bg, view_live_title_tag_iv;
-//    TextView view_live_title, view_live_content;
     //新的直播
     ImageView view_newlive_iv_bg;
     TextView view_newlive_content, view_newlive_tag;
@@ -286,17 +273,32 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-//        CommonNewShareDialog h=new CommonNewShareDialog(baseActivity,CommonNewShareDialog.SHARE_WX,null,null);
-//        h.show();
-        if (AppManager.isVisitor(baseActivity)) {
-            Intent intent = new Intent(baseActivity, LoginActivity.class);
-            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-        } else {
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-        }
-        DataStatistApiParam.homeClickNew();
-        TrackingDataManger.homeNew(baseActivity);
+
+        Bitmap paths = ScreenShot.GetandSaveCurrentImage( baseActivity);
+        CommonScreenDialog commonScreenDialog = new CommonScreenDialog(baseActivity, paths, new CommonScreenDialog.CommentScreenListener() {
+            @Override
+            public void completShare() {
+//                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
+//                    webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
+            }
+
+            @Override
+            public void cancleShare() {
+//                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
+//                    webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
+            }
+        });
+        commonScreenDialog.show();
+
+//        if (AppManager.isVisitor(baseActivity)) {
+//            Intent intent = new Intent(baseActivity, LoginActivity.class);
+//            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+//        } else {
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+//        }
+//        DataStatistApiParam.homeClickNew();
+//        TrackingDataManger.homeNew(baseActivity);
 
     }
 
@@ -335,10 +337,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         RelativeLayout.LayoutParams bannerParames = new RelativeLayout.LayoutParams(screenWidth, (int) ((screenWidth * 120) / 188));
         homeBannerview.setLayoutParams(bannerParames);
-        /* 直播 */
-//        view_live_title_tag = ViewHolders.get(mFragmentView, R.id.view_live_title_tag);
-//        view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
-//        view_live_title_tag_iv = ViewHolders.get(mFragmentView, R.id.view_live_title_tag_iv);
+
         //新直播
         main_home_newlive_lay = mFragmentView.findViewById(R.id.main_home_newlive_lay);
         view_newlive_iv_bg = ViewHolders.get(mFragmentView, R.id.view_newlive_iv_bg);
@@ -353,8 +352,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         view_home_level_arrow = ViewHolders.get(mFragmentView, R.id.view_home_level_arrow);
         view_newlive_meng_bg = ViewHolders.get(mFragmentView, R.id.view_newlive_meng_bg);
         //标题和内容
-//        view_live_title = ViewHolders.get(mFragmentView, R.id.view_live_title);
-//        view_live_content = ViewHolders.get(mFragmentView, R.id.view_live_content);
         /* 直播*/
         main_home_level_lay = mFragmentView.findViewById(R.id.main_home_level_lay);
         main_home_level_lay.setOnClickListener(this);
@@ -368,8 +365,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         .getDisplayMetrics()));
         mainHomeSwiperefreshlayout.setOnRefreshListener(this);
         mainHomeSmartscrollview.setScrollChangedListener(this);
-//        main_home_live_lay = mFragmentView.findViewById(R.id.main_home_live_lay);
-//        main_home_live_lay.setOnClickListener(this);
         view_home_member = ViewHolders.get(mFragmentView, R.id.view_home_member);
         main_home_gvw = (MyGridView) mFragmentView.findViewById(R.id.main_home_gvw);
         operationAdapter = new OperationAdapter(baseActivity, R.layout.item_operation);
@@ -507,15 +502,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 switch (liveInfBean.type) {
 
                     case 0://预告
-//                        main_home_live_lay.setVisibility(View.VISIBLE);
-//                        view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
-//                        Imageload.displayroud(baseActivity, liveInfBean.image, 2, view_live_iv_bg);
-//                        //标题和内容view_live_title
-//                        BStrUtils.SetTxt(view_live_title, "直播预告:");
-//                        BStrUtils.SetTxt(view_live_content, liveInfBean.title);
-//                        BStrUtils.SetTxt(view_live_title_tag, liveInfBean.create_time + "开播");
-//
-//                        view_live_title_tag_iv.setVisibility(View.INVISIBLE);
 //                        //新版直播
                         main_home_newlive_lay.setVisibility(View.VISIBLE);
                         home_newlive_foreshow_lay.setVisibility(View.VISIBLE);
@@ -527,17 +513,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         BStrUtils.setTv(view_newlive_content, liveInfBean.title);
                         break;
                     case 1://直播中
-//                        main_home_live_lay.setVisibility(View.VISIBLE);
-//                        main_home_live_lay.setClickable(true);
-//
-//
-//                        view_live_iv_bg = ViewHolders.get(mFragmentView, R.id.view_live_iv_bg);
-//                        Imageload.displayroud(baseActivity, liveInfBean.image, 2, view_live_iv_bg);
-//                        //标题和内容
-//                        BStrUtils.SetTxt(view_live_content, liveInfBean.title);
-//                        BStrUtils.SetTxt(view_live_title, "正在直播:");
-//                        BStrUtils.SetTxt(view_live_title_tag, "正在直播");
-//                        view_live_title_tag_iv.setVisibility(View.VISIBLE);
                         //新版直播
                         main_home_newlive_lay.setVisibility(View.VISIBLE);
                         home_newlive_foreshow_lay.setVisibility(View.GONE);
@@ -550,7 +525,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                         break;
                     case 2://无直播
-//                        main_home_live_lay.setVisibility(View.GONE);
 
                         main_home_newlive_lay.setVisibility(View.GONE);
                         break;
@@ -583,17 +557,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
-//    /**
-//     * 显示直播的布局
-//     */
-//    private void showLiveView() {
-//        main_home_live_lay.setVisibility(View.VISIBLE);
-//        int ivWidth = (int) (screenWidth * 2.6 / 5);
-//        int ivHeight = (int) (ivWidth * 2.6 / 5);
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ivWidth, ivHeight);
-//        viewLiveIvLay.setLayoutParams(layoutParams);
-//        //下边需要填充
-//    }
 
     /**
      * 初始化banner
@@ -652,8 +615,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     private void initResultData(HomeEntity.Result data) {
         homeData = data;
-        //横向轮播
-//        initHorizontalScroll(data.module);
         //banner
         initViewPage(data.banner);
         initOperation(data.module);
@@ -662,20 +623,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initProduct(data.bank);
 
     }
-
-//    TextView home_product_title;
-//    TextView home_peoduct_subtitle;
-//
-//    ImageView view_home_product_bg;
-//
-//    TextView view_home_product_tag;
-//    TextView view_home_product_name;
-//    TextView view_home_product_des;
-//
-//    LinearLayout home_product_down_lay;
-//    TextView home_product_frist_up, home_product_frist_down;
-//    TextView home_product_second_up, home_product_second_down;
-//    TextView home_product_three_up, home_product_three_down;
 
     private void initProduct(HomeEntity.bankInf bank) {
         if (null == bank) {
@@ -708,7 +655,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             BStrUtils.setSp(home_product_second_down, spannableStrings);
         } else if (0 == BStrUtils.postionChineseStr(term) && BStrUtils.hasDigit(term)) {
             home_product_second_down.setTextSize(11);
-            SpannableString spannableStrings = SpannableUtils.setTextSize(term, BStrUtils.beginPostionDigit(term), BStrUtils.lastPostionDigit(term)+1, DimensionPixelUtil.dip2px(baseActivity, 15));
+            SpannableString spannableStrings = SpannableUtils.setTextSize(term, BStrUtils.beginPostionDigit(term), BStrUtils.lastPostionDigit(term) + 1, DimensionPixelUtil.dip2px(baseActivity, 15));
             BStrUtils.setSp(home_product_second_down, spannableStrings);
         } else {
             home_product_second_down.setTextSize(11);
@@ -763,13 +710,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 SpannableString spannableString2 = SpannableUtils.setTextSize(fudong, 0, bank.product.content.expectedYield.length(), DimensionPixelUtil.dip2px(baseActivity, 15));
                 BStrUtils.setSp(home_product_frist_down, spannableString2);
 
-//                BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%+浮动");
-
                 break;
         }
-
-
-        ///
 
 
         if (!AppManager.getIsLogin(baseActivity)) {
@@ -885,37 +827,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
 
     /**
-     * 横向滑动时候的数据填充
-     */
-
-//    public void initHorizontalScroll(List<HomeEntity.Operate> data) {
-//        mainHomeHorizontalscrollviewLay.removeAllViews();
-//        mainHomeHorizontalscrollviewLay.setOnHoverListener(new View.OnHoverListener() {
-//            @Override
-//            public boolean onHover(View v, MotionEvent event) {
-//                return false;
-//            }
-//        });
-//        mainHomeHorizontalscrollview.setOnTouchListener(new onOperationScrollImpl());
-//
-//        int ivWidth = (int) (screenWidth / 4);
-//
-//        for (int i = 0; i < data.size(); i++) {
-//            View view = LayoutInflater.from(baseActivity).inflate(R.layout.item_horizontal_lay, null);
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ivWidth, ivWidth);
-//
-//            params.setMargins(0 == i ? 0 : DimensionPixelUtil.dip2px(baseActivity, 6), 0, DimensionPixelUtil.dip2px(baseActivity, 6), 0);
-//            view.setLayoutParams(params);
-//            ImageView imageView = (ImageView) view.findViewById(R.id.item_horizontal_img);
-//            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//            Imageload.display(baseActivity, data.get(i).imageUrl, imageView);
-//            view.setOnClickListener(new HorizontalItemClickListener(data.get(i), i));
-//            mainHomeHorizontalscrollviewLay.addView(view);
-//        }
-//    }
-
-
-    /**
      * 下拉刷新展示
      */
     @Override
@@ -996,28 +907,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
                 TrackingDataManger.homePrivateMore(baseActivity);
                 break;
-//            case R.id.main_home_live_lay://直播
-//                if (null == homeliveInfBean) return;
-//
-//                switch (homeliveInfBean.type) {
-//                    case 0://预告
-//                        PromptManager.ShowCustomToast(baseActivity, "直播暂未开始");
-//                        break;
-//                    case 1://直播
-//
-//                        Intent intent = new Intent(baseActivity, LiveActivity.class);
-//                        intent.putExtra("liveJson", homeliveInfBean.jsonstr);
-//                        startActivity(intent);
-//
-//                        SPreference.putString(baseActivity, Contant.CUR_LIVE_ROOM_NUM, homeliveInfBean.id);
-//                        DataStatistApiParam.homeliveclick();
-//                        break;
-//                    case 2://无直播
-//                        break;
-//                }
-//                DataStatistApiParam.homeliveclick();
-//
-//                break;
         }
     }
 
@@ -1038,43 +927,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         dialog.show();
     }
 
-    /**
-     * //     * 横向滑动的点击事件处理
-     * //
-     */
-//    private class HorizontalItemClickListener implements View.OnClickListener {
-//        private HomeEntity.Operate data;
-//        private int postion;
-//
-//        public HorizontalItemClickListener(HomeEntity.Operate data, int postion) {
-//            this.data = data;
-//            this.postion = postion;
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//            if ("0".equals(data.isVisitorVisible) && AppManager.isVisitor(baseActivity)) {//需要跳转到登录页面
-//                Intent toHomeIntent = new Intent(baseActivity, LoginActivity.class);
-//                toHomeIntent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-//                UiSkipUtils.toNextActivityWithIntent(baseActivity, toHomeIntent);
-//                return;
-//            }
-//            if ("h5".equals(data.jumpType)) {//跳转h5
-//                if ("1004".equals(data.jumpId)) {// 云豆乐园 需要显示充值按钮
-//                    NavigationUtils.gotoWebActivityWithPay(baseActivity, data.url, data.title);
-//                } else {
-//                    NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
-//                }
-//
-//            } else if ("app".equals(data.jumpType)) {
-//                NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
-//                if (null != Integer.decode(data.jumpId) && Integer.decode(data.jumpId) == WebViewConstant.Navigation.TASK_PAGE)
-//                    TrackingDataManger.homeTask(baseActivity);
-//            }
-//            DataStatistApiParam.operateBannerClick(null == data || BStrUtils.isEmpty(data.title) ? "" : data.title);
-//            TrackingDataManger.homeOperateItemClick(baseActivity, data.title);
-//        }
-//    }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -1118,31 +971,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
         });
     }
-
-//
-//    class onOperationScrollImpl implements View.OnTouchListener {
-//        @Override
-//        public boolean onTouch(View v, MotionEvent event) {
-//            if (MotionEvent.ACTION_DOWN == event.getAction())
-//                downXPostion = (int) event.getX();
-//            if (MotionEvent.ACTION_MOVE == event.getAction()) {
-//                lastXPostion = (int) event.getX() - downXPostion;
-//                downXPostion = (int) event.getX();
-//            }
-//            if (MotionEvent.ACTION_UP == event.getAction()) {
-//                if (lastXPostion > 0) {
-//                    //向左滑动
-//                    TrackingDataManger.homeOperateLeft(baseActivity);
-//                } else {
-//                    //向右滑动
-//                    TrackingDataManger.homeOperateRight(baseActivity);
-//                }
-//            }
-//            return false;
-//        }
-//
-//
-//    }
 
 
 }

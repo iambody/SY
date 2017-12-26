@@ -28,6 +28,7 @@ import rx.Observable;
  */
 public class InitApplication extends InvestorAppli {
     private Observable<Integer> logoutObservable;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -78,9 +79,9 @@ public class InitApplication extends InvestorAppli {
                 AppInfStore.saveIsLogin(getApplicationContext(), false);
                 AppInfStore.saveUserAccount(getApplicationContext(), null);
                 AppInfStore.saveRongTokenExpired(getApplicationContext(), 0);
-                ((InvestorAppli)InvestorAppli.getContext()).setRequestCustom(false);
+                ((InvestorAppli) InvestorAppli.getContext()).setRequestCustom(false);
                 SPreference.putBoolean(InvestorAppli.getContext(), Constant.weixin_login, false);
-                if(RongIM.getInstance().getRongIMClient()!=null){
+                if (RongIM.getInstance().getRongIMClient() != null) {
                     RongIM.getInstance().getRongIMClient().clearConversations(Conversation.ConversationType.PRIVATE);
                     RongIM.getInstance().getRongIMClient().clearConversations(Conversation.ConversationType.GROUP);
                 }
@@ -106,7 +107,7 @@ public class InitApplication extends InvestorAppli {
 
     private void unRegisterLogoutObservable() {
         if (logoutObservable != null) {
-            RxBus.get().unregister(RxConstant.LOGIN_STATUS_DISABLE_OBSERVABLE,logoutObservable);
+            RxBus.get().unregister(RxConstant.LOGIN_STATUS_DISABLE_OBSERVABLE, logoutObservable);
         }
     }
 
