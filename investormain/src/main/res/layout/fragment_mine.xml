@@ -79,7 +79,21 @@
 
                 <include layout="@layout/fragment_mine_video" />
 
-                <include layout="@layout/view_footer" />
+                <!--<include layout="@layout/view_footer" />-->
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_footer"/>
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
