@@ -15,10 +15,9 @@ import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 import com.cgbsoft.lib.base.model.OldSalonsEntity;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
-import com.cgbsoft.lib.utils.tools.LogUtils;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
 import com.cgbsoft.privatefund.R;
@@ -26,6 +25,7 @@ import com.cgbsoft.privatefund.adapter.OldSalonsAdapter;
 import com.cgbsoft.privatefund.mvp.contract.home.OldSalonsContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.OldSalonsPresenterImpl;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
+import com.chenenyu.router.annotation.Route;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,7 @@ import butterknife.OnClick;
  * Created by sunfei on 2017/7/13 0013.
  */
 
+@Route(RouteConfig.GOTO_OLDSALONS_ACTIVITY)
 public class OldSalonsActivity extends BaseActivity<OldSalonsPresenterImpl> implements OldSalonsContract.OldSalonsView,OnRefreshListener,OnLoadMoreListener{
     @BindView(R.id.title_left)
     ImageView back;

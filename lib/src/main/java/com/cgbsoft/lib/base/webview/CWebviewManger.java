@@ -119,6 +119,9 @@ public class CWebviewManger {
         } else if (action.contains("jumtoActivitiesSalon")) {//沙龙活动
 //            UiSkipUtils.toNextActivity(context,new Intent(context,));
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_SALONS_ACTIVITY);
+        } else if (action.contains("jumtoOldActivitiesSalon")) {
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_OLDSALONS_ACTIVITY);
+
         } else if (action.contains("filingdata")) { // TOB
 //            toBaobeiWithdata(action);
         } else if (action.contains("filing")) { // TOB
@@ -1100,7 +1103,7 @@ public class CWebviewManger {
         String actionDecode = URLDecoder.decode(action);
         String[] split = actionDecode.split(":");
         int index = Integer.valueOf(split[2]) < 0 ? 0 : Integer.valueOf(split[2]);
-        Intent intent = new  Intent();
+        Intent intent = new Intent();
         intent.putExtra(BaseWebViewActivity.BACK_PARAM, index - 1);
         context.setResult(BaseWebViewActivity.BACK_RESULT_CODE, intent);
         context.finish();

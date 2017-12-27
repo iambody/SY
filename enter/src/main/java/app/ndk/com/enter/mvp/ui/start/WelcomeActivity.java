@@ -59,9 +59,9 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     private WeakHandler weakHandler;
 
     private boolean isStop = false;
-    private final int defaultTime = 5000;
+    private final int defaultTime = 4000;
     private final int visableBtnTime = 2000;
-    private final int waitTime = 5000;
+    private final int waitTime = 4000;
     private final int noNetTime = 3000;
     private final int outOfTime = 2000;
 

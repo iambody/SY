@@ -251,8 +251,14 @@
             android:name=".mvp.ui.home.MainPageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+            <intent-filter>
+            <action android:name="android.andyidea.second"/>
+                <!-- 附加信息 -->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
 
+        </activity>
         <!-- 权限管理 -->
         <!-- <activity -->
         <!-- android:name=".mvp.ui.start.PermissionsActivity" -->
