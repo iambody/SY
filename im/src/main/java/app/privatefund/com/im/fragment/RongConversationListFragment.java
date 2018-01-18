@@ -249,7 +249,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         if (position < 0) {
             conversation.setNotificationStatus(Conversation.ConversationNotificationStatus.NOTIFY);
             uiConversation = UIConversation.obtain(conversation, RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE));
-
             if (!CollectionUtils.isEmpty(cacheConversationList)) {
                 UIConversation conversation1 = cacheConversationList.get(0);
                 long showTime = conversation1.getUIConversationTime();

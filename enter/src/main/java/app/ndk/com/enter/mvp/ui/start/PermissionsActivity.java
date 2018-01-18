@@ -203,10 +203,7 @@ public class PermissionsActivity extends BaseActivity<PermissionPersenter> imple
         startActivity(intent);
     }
 
-
     @Override
     public void onBackPressed() {
     }
-
-
 }
