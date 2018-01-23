@@ -144,7 +144,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
 
     @Override
-
     protected int layoutID() {
         return R.layout.fragment_mainhome;
     }

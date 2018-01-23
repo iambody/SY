@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +94,7 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     protected void viewBeShow() {
 
     }
+
     protected void viewBeHide() {
 
     }
@@ -104,9 +106,11 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
             isLoadData = true;
         }
     }
-    protected void setIsLoad(boolean isLoad){
-        isLoadData=isLoad;
+
+    protected void setIsLoad(boolean isLoad) {
+        isLoadData = isLoad;
     }
+
     protected void loadData() {
 
     }
@@ -245,8 +249,9 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         if (swipeToLoadLayout.isLoadingMore()) swipeToLoadLayout.setLoadingMore(false);
         if (swipeToLoadLayout.isRefreshing()) swipeToLoadLayout.setRefreshing(false);
     }
-    protected void showToast(int strId){
-        Toast.makeText(baseActivity.getApplicationContext(),getResources().getString(strId),Toast.LENGTH_SHORT).show();
+
+    protected void showToast(int strId) {
+        Toast.makeText(baseActivity.getApplicationContext(), getResources().getString(strId), Toast.LENGTH_SHORT).show();
     }
 
     // 判断权限集合
@@ -264,12 +269,24 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         }
         return false;
     }
+
     // 判断是否缺少权限
     protected boolean needsPermission(String permission) {
         return ContextCompat.checkSelfPermission(BaseApplication.getContext(), permission) != PackageManager.PERMISSION_GRANTED;
     }
 
-    public boolean onBackPressed(Context context){
+    public boolean onBackPressed(Context context) {
         return false;
+    }
+
+    private Fragment hindFragment, targetFragment;
+
+    private void recoverView(Bundle bundle) {
+        if (null != bundle) {
+            //内存重启时候调用
+//            targetFragment=getFragmentManager().findFragmentById(targetFragment.getc)
+        } else {
+            //正常模式下
+        }
     }
 }

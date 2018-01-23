@@ -1740,7 +1740,7 @@ public class ApiClient {
      *
      * @return
      */
-    public static Observable<String> getLivingQueryDataResult(  List<String>  imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type, String sex, String birthday) {
+    public static Observable<String> getLivingQueryDataResult(  List<String>  imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type, String sex, String birthday,String errorCode,String faceMsg) {
         Map<String, Object> params = new HashMap<>();
 //        params.put("imageUrl", imageUrl);
         params.put("number", cardNum);
@@ -1754,6 +1754,8 @@ public class ApiClient {
         params.put("type", type);
         params.put("sex", sex);
         params.put("birthday", birthday);
+        params.put("errorCode",errorCode);
+        params.put("faceMsg",faceMsg);
         return OKHTTP.getInstance().getRequestManager().queryDataResult(uploadRemotePathUse(imageUrl,params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
@@ -1761,7 +1763,7 @@ public class ApiClient {
     /**
      * 活体公用检测锁的通知server的接口
      */
-    public static Observable<String> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name, String credentialCode, String customerCode) {
+    public static Observable<String> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name, String credentialCode, String customerCode,String errorCode,String faceMsg) {
         Map<String, String> params = new HashMap<>();
         params.put("orderNo", orderNo);
         params.put("faceCode", faceCode);
@@ -1769,6 +1771,8 @@ public class ApiClient {
         params.put("name", name);
         params.put("credentialCode", credentialCode);
         params.put("customerCode", customerCode);
+        params.put("errorCode",errorCode);
+        params.put("faceMsg",faceMsg);
         return OKHTTP.getInstance().getRequestManager().queryComontDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }

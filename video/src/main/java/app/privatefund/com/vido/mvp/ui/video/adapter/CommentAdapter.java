@@ -77,7 +77,7 @@ public class CommentAdapter extends BaseAdapter {
         holder.time.setText(comments.get(position).commentTime);
 //        BitmapUtils bu = new BitmapUtils(context);
 //        bu.display(holder.avatar,comments.get(position).getSendAvatar());
-        Imageload.display(context, comments.get(position).sendAvatar, holder.avatar);
+        Imageload.display(context, comments.get(position).sendAvatar, holder.avatar,R.drawable.logo,R.drawable.logo);
         return view;
     }
 
