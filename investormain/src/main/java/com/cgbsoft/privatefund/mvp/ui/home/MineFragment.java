@@ -1176,48 +1176,107 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
     }
 
+    private boolean hasHealthData() {
+       return CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) && CollectionUtils.isEmpty(mineModel.getHealthOrder().getContent());
+    }
+
     private void initHealthView(MineModel mineModel) {
-        if (mineModel != null && mineModel.getHealthy() != null) {
-            health_had_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.GONE : View.VISIBLE);
-            health_had_no_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.VISIBLE : View.GONE);
-            if (!CollectionUtils.isEmpty(mineModel.getHealthy().getContent())) {
-                createHealthItem(mineModel.getHealthy().getContent());
+        if ((mineModel != null && mineModel.getHealthy() != null) || (mineModel != null && mineModel.getHealthOrder() != null)) {
+            health_had_data_ll.setVisibility(hasHealthData() ? View.GONE : View.VISIBLE);
+            health_had_no_data_ll.setVisibility(hasHealthData() ? View.VISIBLE : View.GONE);
+            if (!hasHealthData()) {
+                createHealthItem(mineModel.getHealthy());
+                createHealthOrderItem(mineModel.getHealthOrder());
             }
         }
     }
 
-    private void createHealthItem(List<MineModel.HealthItem> list) {
-        if (!CollectionUtils.isEmpty(list)) {
+    private void createHealthItem(MineModel.Health health) {
+        if (!CollectionUtils.isEmpty(health.getContent())) {
+            List<MineModel.HealthItem> healthList = health.getContent();
             health_had_data_ll.removeAllViews();
-            for (int i = 0; i < list.size(); i++) {
-                MineModel.HealthItem healthItem = list.get(i);
-                TextView textView = new TextView(getActivity());
-                textView.setPadding(DimensionPixelUtil.dip2px(getActivity(), 15), 0, 0, 0);
-                textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-                textView.setSingleLine(true);
-                textView.setEllipsize(TextUtils.TruncateAt.END);
-                textView.setBackgroundResource(R.drawable.selector_bg_btn_white);
-                textView.setHeight(DimensionPixelUtil.dip2px(getActivity(), 60));
-                textView.setText(getString(R.string.account_health_zixun_server_title).concat(healthItem.getTitle()));
-                textView.setTextColor(Color.parseColor("#5a5a5a"));
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                textView.setOnClickListener(v -> {
+            MineModel.HealthItem healthItem = healthList.get(0);
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_health, null);
+            TextView titleTextView = (TextView) view.findViewById(R.id.health_title);
+            TextView lookView = (TextView) view.findViewById(R.id.look_more);
+            TextView healthContent = (TextView) view.findViewById(R.id.health_content);
+            TextView healthTime = (TextView) view.findViewById(R.id.health_time);
+            titleTextView.setText(R.string.health_recode_discovery);
+            healthContent.setText(healthItem.getTitle());
+            healthTime.setText(healthItem.getConsultTime());
+            view.setOnClickListener(v -> {
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
+//                    hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
+                hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_zhuanti_detail));
+                NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+            });
+            health_had_data_ll.addView(view);
+
+        }
+    }
+
+    private void createHealthOrderItem(MineModel.HealthOrder healthOrder) {
+        if (!CollectionUtils.isEmpty(healthOrder.getContent())) {
+            List<MineModel.HealthOrder.HealthOrderItem> healthList = healthOrder.getContent();
+                View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+                lineView.setPadding(10,0, 0, 0);
+                lineView.setLayoutParams(layoutParams);
+                health_had_data_ll.addView(lineView);
+
+                MineModel.HealthOrder.HealthOrderItem healthOrderItem = healthList.get(0);
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_health, null);
+                TextView titleTextView = (TextView) view.findViewById(R.id.health_title);
+                TextView lookView = (TextView) view.findViewById(R.id.look_more);
+                TextView healthContent = (TextView) view.findViewById(R.id.health_content);
+                TextView healthTime = (TextView) view.findViewById(R.id.health_time);
+                titleTextView.setText(R.string.health_order_recode);
+                healthContent.setText(healthOrderItem.getHealthItemValues());
+                healthTime.setText(healthOrderItem.getCustReservationDate());
+                view.setOnClickListener(v -> {
                     HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
+                    hashMap.put(WebViewConstant.push_message_url, healthOrderItem.getCustCredentialsNumber());
 //                    hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
                     hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_zhuanti_detail));
                     NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
                 });
-                health_had_data_ll.addView(textView);
-                if (i != list.size() - 1) {
-                    View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
-                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
-                    lineView.setLayoutParams(layoutParams);
-                    health_had_data_ll.addView(lineView);
-                }
+                health_had_data_ll.addView(view);
             }
-        }
     }
+
+//    private void createHealthItem(List<MineModel.HealthItem> list) {
+//        if (!CollectionUtils.isEmpty(list)) {
+//            health_had_data_ll.removeAllViews();
+//            for (int i = 0; i < list.size(); i++) {
+//                MineModel.HealthItem healthItem = list.get(i);
+//                TextView textView = new TextView(getActivity());
+//                textView.setPadding(DimensionPixelUtil.dip2px(getActivity(), 15), 0, 0, 0);
+//                textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+//                textView.setSingleLine(true);
+//                textView.setEllipsize(TextUtils.TruncateAt.END);
+//                textView.setBackgroundResource(R.drawable.selector_bg_btn_white);
+//                textView.setHeight(DimensionPixelUtil.dip2px(getActivity(), 60));
+//                textView.setText(getString(R.string.account_health_zixun_server_title).concat(healthItem.getTitle()));
+//                textView.setTextColor(Color.parseColor("#5a5a5a"));
+//                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+//                textView.setOnClickListener(v -> {
+//                    HashMap<String, Object> hashMap = new HashMap<>();
+//                    hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
+////                    hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
+//                    hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_zhuanti_detail));
+//                    NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+//                });
+//                health_had_data_ll.addView(textView);
+//                if (i != list.size() - 1) {
+//                    View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
+//                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+//                    lineView.setLayoutParams(layoutParams);
+//                    health_had_data_ll.addView(lineView);
+//                }
+//            }
+//        }
+//    }
 
     //*******************************************
     DownloadManager downloadManager;

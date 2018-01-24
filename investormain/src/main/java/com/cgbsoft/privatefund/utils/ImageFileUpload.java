@@ -32,13 +32,13 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ImageFileUpload {
 
-    private static final String[] PERMISSION_ALL = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+    private static final String[] PERMISSION_ALL = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     private static final int PERMISSION_REQUEST_CODE = 2;
 
-    public static void  startPhotoSelect(Activity activity, int requestCode, int maxNum) {
-            if (needPermissions(PERMISSION_ALL)) {
-                ActivityCompat.requestPermissions(activity, PERMISSION_ALL, PERMISSION_REQUEST_CODE);
-            } else {
+    public static void startPhotoSelect(Activity activity, int requestCode, int maxNum) {
+        if (needPermissions(PERMISSION_ALL)) {
+            ActivityCompat.requestPermissions(activity, PERMISSION_ALL, PERMISSION_REQUEST_CODE);
+        } else {
             MultiImageSelector.create(activity).showCamera(false).count(maxNum == 0 ? 9 : maxNum).
                     multi().start(activity, requestCode);
         }
@@ -49,7 +49,7 @@ public class ImageFileUpload {
             if (data == null) {
                 return null;
             }
-           return  data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+            return data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
         }
         return null;
     }
