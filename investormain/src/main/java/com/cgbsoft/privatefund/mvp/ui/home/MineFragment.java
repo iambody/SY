@@ -166,6 +166,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.account_health_had_bug_ll)
     LinearLayout health_had_data_ll;
 
+    @BindView(R.id.health_record_look_all_text)
+    TextView health_title_recodr_all;
+
     @BindView(R.id.account_health_on_bug_ll)
     LinearLayout health_had_no_data_ll;
 
@@ -1085,13 +1088,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.health_all_title_ll)
     void gotoHealthAllctivity() {
-        String url = CwebNetConfig.mineHealthOrder;
-        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-        intent.putExtra(WebViewConstant.push_message_url, url);
-        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
-        intent.putExtra(WebViewConstant.right_message_index, true);
-        startActivity(intent);
-        DataStatistApiParam.operateMineHealthClick();
+        if (mineModel == null && mineModel.getHealthy() == null &&  mineModel.getHealthOrder() == null && isEmptyHealthData()) {
+            String url = CwebNetConfig.mineHealthOrder;
+            Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+            intent.putExtra(WebViewConstant.push_message_url, url);
+            intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
+            intent.putExtra(WebViewConstant.right_message_index, true);
+            startActivity(intent);
+            DataStatistApiParam.operateMineHealthClick();
+        }
     }
 
     private void initMineInfo(MineModel mineModel) {
@@ -1176,15 +1181,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
     }
 
-    private boolean hasHealthData() {
+    private boolean isEmptyHealthData() {
        return CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) && CollectionUtils.isEmpty(mineModel.getHealthOrder().getContent());
     }
 
     private void initHealthView(MineModel mineModel) {
         if ((mineModel != null && mineModel.getHealthy() != null) || (mineModel != null && mineModel.getHealthOrder() != null)) {
-            health_had_data_ll.setVisibility(hasHealthData() ? View.GONE : View.VISIBLE);
-            health_had_no_data_ll.setVisibility(hasHealthData() ? View.VISIBLE : View.GONE);
-            if (!hasHealthData()) {
+            health_had_data_ll.setVisibility(isEmptyHealthData() ? View.GONE : View.VISIBLE);
+            health_had_no_data_ll.setVisibility(isEmptyHealthData() ? View.VISIBLE : View.GONE);
+            health_title_recodr_all.setVisibility(isEmptyHealthData() ? View.VISIBLE : View.GONE);
+            if (!isEmptyHealthData()) {
                 createHealthItem(mineModel.getHealthy());
                 createHealthOrderItem(mineModel.getHealthOrder());
             }
@@ -1192,18 +1198,20 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void createHealthItem(MineModel.Health health) {
+           health_had_data_ll.removeAllViews();
         if (!CollectionUtils.isEmpty(health.getContent())) {
             List<MineModel.HealthItem> healthList = health.getContent();
-            health_had_data_ll.removeAllViews();
-            MineModel.HealthItem healthItem = healthList.get(0);
+            MineModel.HealthItem healthItem = healthList.get(healthList.size() - 1);
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_health, null);
             TextView titleTextView = (TextView) view.findViewById(R.id.health_title);
             TextView lookView = (TextView) view.findViewById(R.id.look_more);
             TextView healthContent = (TextView) view.findViewById(R.id.health_content);
+            lookView.setText(R.string.look_more);
             TextView healthTime = (TextView) view.findViewById(R.id.health_time);
             titleTextView.setText(R.string.health_recode_discovery);
             healthContent.setText(healthItem.getTitle());
-            healthTime.setText(healthItem.getConsultTime());
+            healthTime.setText((!TextUtils.isEmpty(healthItem.getConsultTime()) && healthItem.getConsultTime().length() > 10) ? healthItem.getConsultTime().substring(0, 10) :  healthItem.getConsultTime());
+            lookView.setOnClickListener(v -> gotoHealthAllctivity());
             view.setOnClickListener(v -> {
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
@@ -1212,7 +1220,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
             });
             health_had_data_ll.addView(view);
-
         }
     }
 
@@ -1225,15 +1232,17 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 lineView.setLayoutParams(layoutParams);
                 health_had_data_ll.addView(lineView);
 
-                MineModel.HealthOrder.HealthOrderItem healthOrderItem = healthList.get(0);
+                MineModel.HealthOrder.HealthOrderItem healthOrderItem = healthList.get(healthList.size() - 1);
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_health, null);
                 TextView titleTextView = (TextView) view.findViewById(R.id.health_title);
                 TextView lookView = (TextView) view.findViewById(R.id.look_more);
                 TextView healthContent = (TextView) view.findViewById(R.id.health_content);
                 TextView healthTime = (TextView) view.findViewById(R.id.health_time);
                 titleTextView.setText(R.string.health_order_recode);
+                lookView.setText(R.string.look_more);
                 healthContent.setText(healthOrderItem.getHealthItemValues());
-                healthTime.setText(healthOrderItem.getCustReservationDate());
+                healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCustReservationDate()) && healthOrderItem.getCustReservationDate().length() > 10) ? healthOrderItem.getCustReservationDate().substring(0, 10) :  healthOrderItem.getCustReservationDate());
+                lookView.setOnClickListener(v -> gotoHealthAllctivity());
                 view.setOnClickListener(v -> {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put(WebViewConstant.push_message_url, healthOrderItem.getCustCredentialsNumber());

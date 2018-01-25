@@ -7,14 +7,14 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:paddingBottom="20dp"
-    android:background="#f6f6f6">
+    android:background="@color/white">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/app_golden"
         android:id="@+id/health_title"
-        android:textSize="@dimen/dimens_sp_22"/>
+        android:textSize="@dimen/dimens_sp_16"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
         android:layout_alignParentRight="true"
         android:text="@string/look_more"
         android:id="@+id/look_more"
-        android:textSize="@dimen/dimens_sp_21"/>
+        android:textSize="@dimen/dimens_sp_15"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:id="@+id/health_content"
-        android:textSize="@dimen/dimens_sp_20"/>
+        android:textSize="@dimen/dimens_sp_14"/>
 
 
     <TextView
@@ -45,5 +45,5 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
         android:id="@+id/health_time"
-        android:textSize="@dimen/dimens_sp_20"/>
+        android:textSize="@dimen/dimens_sp_14"/>
 </RelativeLayout>
