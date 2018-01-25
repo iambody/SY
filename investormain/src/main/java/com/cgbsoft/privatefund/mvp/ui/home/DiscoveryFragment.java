@@ -1,17 +1,25 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
-import android.view.MotionEvent;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.DiscoverModel;
 import com.cgbsoft.lib.base.model.DiscoveryListModel;
 import com.cgbsoft.lib.base.model.bean.BannerBean;
+import com.cgbsoft.lib.base.model.bean.StockIndexBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.mvp.ui.BaseLazyFragment;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -20,18 +28,18 @@ import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
-import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.widget.BannerView;
+import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.DiscoverIndicatorAdapter;
 import com.cgbsoft.privatefund.mvp.contract.home.DiscoverContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.DiscoveryPresenter;
+import com.cgbsoft.privatefund.utils.receiver.HoriizontalItemDecoration;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
-import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 
 import java.util.ArrayList;
@@ -48,6 +56,9 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     @BindView(R.id.discover_bannerview)
     BannerView discoveryBannerView;
@@ -66,7 +77,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     FragmentAdapter fragmentAdapter;
     List<BaseLazyFragment> lazyFragments = new ArrayList<>();
     DiscoverIndicatorAdapter disCoveryNavigationAdapter;
-    private float currentX;
+    MyHolderAdapter myHolderAdapter;
 
     @Override
     protected int layoutID() {
@@ -89,8 +100,10 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     protected void init(View view, Bundle savedInstanceState) {
         initIndicatorView();
         initViewPage();
+        initStockIndexView();
         initCache();
         getPresenter().getDiscoveryFirstData();
+        getPresenter().getStockIndex();
     }
 
     private void initCache() {
@@ -105,6 +118,15 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         commonNavigator.setAdapter(disCoveryNavigationAdapter);
         commonNavigator.setSmoothScroll(true);
         magicIndicator.setNavigator(commonNavigator);
+    }
+
+    private void initStockIndexView() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.addItemDecoration(new HoriizontalItemDecoration(getActivity(), R.color.white, R.dimen.ui_40_dip));
+        recyclerView.setLayoutManager(linearLayoutManager);
+        myHolderAdapter = new MyHolderAdapter(getActivity(), new ArrayList<>());
+        recyclerView.setAdapter(myHolderAdapter);
     }
 
     private void initViewPage() {
@@ -170,6 +192,17 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     public void requestFirstDataFailure(String errMsg) {
+
+    }
+
+    @Override
+    public void requestStockIndexSuccess(List<StockIndexBean> dataList) {
+        myHolderAdapter.setDataList(dataList);
+    }
+
+    @Override
+    public void reqeustStockIndexFailure(String message) {
+        MToast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     public void refrushListData() {
@@ -216,5 +249,65 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     @Override
     protected void viewBeHide() {
         super.viewBeHide();
+    }
+
+    public class MyHolderAdapter extends RecyclerView.Adapter<ViewHolder> {
+        private LayoutInflater mInflater;
+        private List<StockIndexBean> mDatas;
+
+        public MyHolderAdapter(Context context, List<StockIndexBean> datatsList) {
+            mInflater = LayoutInflater.from(context);
+            mDatas = datatsList;
+        }
+
+        public void setDataList(List<StockIndexBean> dataList) {
+            if (!CollectionUtils.isEmpty(dataList)) {
+                mDatas.clear();
+                mDatas.addAll(dataList);
+                notifyDataSetChanged();
+            } else {
+                recyclerView.setVisibility(View.GONE);
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            if (mDatas == null) {
+                return 0;
+            }
+            return mDatas.size();
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View view = mInflater.inflate(R.layout.fragment_stock_index_item, viewGroup, false);
+            ViewHolder viewHolder = new ViewHolder(view);
+            viewHolder.name = (TextView) view.findViewById(R.id.name);
+            viewHolder.stockValue = (TextView) view.findViewById(R.id.stockValue);
+            viewHolder.increaseValue = (TextView) view.findViewById(R.id.increase_value);
+            viewHolder.increatePercent = (TextView) view.findViewById(R.id.increase_percent);
+            return viewHolder;
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            StockIndexBean stockIndexBean = mDatas.get(position);
+            holder.name.setText(stockIndexBean.getName());
+            holder.stockValue.setText(stockIndexBean.getIndex());
+            holder.increaseValue.setText(stockIndexBean.getGain());
+            holder.increatePercent.setText(stockIndexBean.getRate());
+        }
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public ViewHolder(View arg0) {
+            super(arg0);
+            this.rootView = arg0;
+        }
+        View rootView;
+        TextView name;
+        TextView stockValue;
+        TextView increaseValue;
+        TextView increatePercent;
     }
 }

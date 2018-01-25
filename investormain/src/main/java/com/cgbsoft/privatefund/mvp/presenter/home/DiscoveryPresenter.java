@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.cgbsoft.lib.base.model.DiscoverModel;
+import com.cgbsoft.lib.base.model.PublicFundListModel;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -42,6 +43,24 @@ public class DiscoveryPresenter extends BasePresenterImpl<DiscoverContract.View>
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                getView().requestFirstDataFailure(error.getMessage());
+            }
+        }));
+    }
+
+    @Override
+    public void getStockIndex() {
+        addSubscription(ApiClient.getDiscoverStockIndex(new HashMap()).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                Log.d("getDiscoverStockIndex", "----"+ s.toString());
+                JSONObject jsonObject = null;
+                PublicFundListModel result = new Gson().fromJson(s, new TypeToken<PublicFundListModel>() {}.getType());
+                getView().requestStockIndexSuccess(result.getList());
             }
 
             @Override

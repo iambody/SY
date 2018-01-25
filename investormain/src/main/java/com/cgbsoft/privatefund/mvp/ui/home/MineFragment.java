@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -13,8 +12,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +42,6 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
-import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.RoundImageView;
@@ -1089,7 +1085,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.health_all_title_ll)
     void gotoHealthAllctivity() {
         if (mineModel == null && mineModel.getHealthy() == null &&  mineModel.getHealthOrder() == null && isEmptyHealthData()) {
-            String url = CwebNetConfig.mineHealthOrder;
+            String url = CwebNetConfig.mineHealthKnow;
             Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
             intent.putExtra(WebViewConstant.push_message_url, url);
             intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
@@ -1206,7 +1202,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             TextView titleTextView = (TextView) view.findViewById(R.id.health_title);
             TextView lookView = (TextView) view.findViewById(R.id.look_more);
             TextView healthContent = (TextView) view.findViewById(R.id.health_content);
-            lookView.setText(R.string.look_more);
+            lookView.setText(R.string.look_more_show);
             TextView healthTime = (TextView) view.findViewById(R.id.health_time);
             titleTextView.setText(R.string.health_recode_discovery);
             healthContent.setText(healthItem.getTitle());
@@ -1239,10 +1235,18 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 TextView healthContent = (TextView) view.findViewById(R.id.health_content);
                 TextView healthTime = (TextView) view.findViewById(R.id.health_time);
                 titleTextView.setText(R.string.health_order_recode);
-                lookView.setText(R.string.look_more);
+                lookView.setText(R.string.look_more_show);
                 healthContent.setText(healthOrderItem.getHealthItemValues());
                 healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCustReservationDate()) && healthOrderItem.getCustReservationDate().length() > 10) ? healthOrderItem.getCustReservationDate().substring(0, 10) :  healthOrderItem.getCustReservationDate());
-                lookView.setOnClickListener(v -> gotoHealthAllctivity());
+                lookView.setOnClickListener(v -> {
+                    String url = CwebNetConfig.mineHealthOrder;
+                    Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                    intent.putExtra(WebViewConstant.push_message_url, url);
+                    intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
+                    intent.putExtra(WebViewConstant.right_message_index, true);
+                    startActivity(intent);
+                    DataStatistApiParam.operateMineHealthClick();
+                });
                 view.setOnClickListener(v -> {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put(WebViewConstant.push_message_url, healthOrderItem.getCustCredentialsNumber());
