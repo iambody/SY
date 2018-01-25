@@ -117,11 +117,14 @@ public class LoadingDialog extends Dialog {
             setLoadText(text);
 
             if (duration > 0)
-                new Handler().postDelayed(() -> {
-                    if (isShowing())
-                        dismiss();
-                    if (onDismissListener != null) {
-                        onDismissListener.dissComplete();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (LoadingDialog.this.isShowing())
+                            LoadingDialog.this.dismiss();
+                        if (onDismissListener != null) {
+                            onDismissListener.dissComplete();
+                        }
                     }
                 }, duration);
         } catch (Exception e) {

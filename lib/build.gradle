@@ -69,7 +69,7 @@ dependencies {
     //谷歌出品的一些库
     compile "com.android.support:appcompat-v7:${android_need_version}"
     compile "com.android.support:design:${android_need_version}"
-    compile "com.android.support:support-v4:${support_v4_version}"
+//    compile "com.android.support:support-v4:${support_v4_version}"
     compile "com.android.support:recyclerview-v7:${android_need_version}"
     compile "jp.wasabeef:recyclerview-animators:${recycleanim_need_version}"
     compile "com.android.support:cardview-v7:${android_need_version}"

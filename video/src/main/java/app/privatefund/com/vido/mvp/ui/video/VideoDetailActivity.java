@@ -1090,7 +1090,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         stopCountDown();
         getPresenter().stopDownload(videoId);
         try {
-            if (null != getPresenter().viModel && getPresenter().viModel.status != VideoStatus.FINISH) {
+            if (null != getPresenter().viModel && getPresenter().viModel != null && getPresenter().viModel.status != VideoStatus.FINISH) {
                 getPresenter().updataNowStop();
             }
         } catch (Exception e) {
