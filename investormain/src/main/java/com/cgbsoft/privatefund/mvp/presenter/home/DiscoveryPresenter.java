@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.cgbsoft.lib.base.model.DiscoverModel;
-import com.cgbsoft.lib.base.model.PublicFundListModel;
+import com.cgbsoft.lib.base.model.bean.StockIndexBean;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -13,10 +13,12 @@ import com.cgbsoft.privatefund.mvp.contract.home.DiscoverContract;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author chenlong
@@ -57,10 +59,13 @@ public class DiscoveryPresenter extends BasePresenterImpl<DiscoverContract.View>
         addSubscription(ApiClient.getDiscoverStockIndex(new HashMap()).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                Log.d("getDiscoverStockIndex", "----"+ s.toString());
-                JSONObject jsonObject = null;
-                PublicFundListModel result = new Gson().fromJson(s, new TypeToken<PublicFundListModel>() {}.getType());
-                getView().requestStockIndexSuccess(result.getList());
+                try {
+                    JSONArray jsonArray = new JSONArray(s);
+                    List<StockIndexBean> dataList = StockIndexBean.fillValueFromJson(jsonArray);
+                    getView().requestStockIndexSuccess(dataList);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

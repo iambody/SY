@@ -162,8 +162,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.account_health_had_bug_ll)
     LinearLayout health_had_data_ll;
 
-    @BindView(R.id.health_record_look_all_text)
-    TextView health_title_recodr_all;
+//    @BindView(R.id.health_record_look_all_text)
+//    TextView health_title_recodr_all;
 
     @BindView(R.id.account_health_on_bug_ll)
     LinearLayout health_had_no_data_ll;
@@ -1082,18 +1082,18 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.HEALTH_CHECK_PAGE);
     }
 
-    @OnClick(R.id.health_all_title_ll)
-    void gotoHealthAllctivity() {
-        if (mineModel == null && mineModel.getHealthy() == null &&  mineModel.getHealthOrder() == null && isEmptyHealthData()) {
-            String url = CwebNetConfig.mineHealthKnow;
-            Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-            intent.putExtra(WebViewConstant.push_message_url, url);
-            intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
-            intent.putExtra(WebViewConstant.right_message_index, true);
-            startActivity(intent);
-            DataStatistApiParam.operateMineHealthClick();
-        }
-    }
+//    @OnClick(R.id.health_all_title_ll)
+//    void gotoHealthAllctivity() {
+//        if (mineModel == null && mineModel.getHealthy() == null &&  mineModel.getHealthOrder() == null && isEmptyHealthData()) {
+//            String url = CwebNetConfig.mineHealthKnow;
+//            Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+//            intent.putExtra(WebViewConstant.push_message_url, url);
+//            intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
+//            intent.putExtra(WebViewConstant.right_message_index, true);
+//            startActivity(intent);
+//            DataStatistApiParam.operateMineHealthClick();
+//        }
+//    }
 
     private void initMineInfo(MineModel mineModel) {
         if (mineModel != null) {
@@ -1172,7 +1172,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         waitReceiver.hide();
                     }
                 }
-
             }
         }
     }
@@ -1185,7 +1184,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if ((mineModel != null && mineModel.getHealthy() != null) || (mineModel != null && mineModel.getHealthOrder() != null)) {
             health_had_data_ll.setVisibility(isEmptyHealthData() ? View.GONE : View.VISIBLE);
             health_had_no_data_ll.setVisibility(isEmptyHealthData() ? View.VISIBLE : View.GONE);
-            health_title_recodr_all.setVisibility(isEmptyHealthData() ? View.VISIBLE : View.GONE);
+//            health_title_recodr_all.setVisibility(isEmptyHealthData() ? View.VISIBLE : View.GONE);
             if (!isEmptyHealthData()) {
                 createHealthItem(mineModel.getHealthy());
                 createHealthOrderItem(mineModel.getHealthOrder());
@@ -1207,7 +1206,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             titleTextView.setText(R.string.health_recode_discovery);
             healthContent.setText(healthItem.getTitle());
             healthTime.setText((!TextUtils.isEmpty(healthItem.getConsultTime()) && healthItem.getConsultTime().length() > 10) ? healthItem.getConsultTime().substring(0, 10) :  healthItem.getConsultTime());
-            lookView.setOnClickListener(v -> gotoHealthAllctivity());
+            lookView.setOnClickListener((View v) -> {
+                String url = CwebNetConfig.mineHealthKnow;
+                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, url);
+                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
+                intent.putExtra(WebViewConstant.right_message_index, true);
+                startActivity(intent);
+                DataStatistApiParam.operateMineHealthClick();
+            });
             view.setOnClickListener(v -> {
                 HashMap<String, Object> hashMap = new HashMap<>();
                 hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
@@ -1236,7 +1243,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 TextView healthTime = (TextView) view.findViewById(R.id.health_time);
                 titleTextView.setText(R.string.health_order_recode);
                 lookView.setText(R.string.look_more_show);
-                healthContent.setText(healthOrderItem.getHealthItemValues());
+                String statusValue = chageStatusValue(healthOrderItem.getState());
+                healthContent.setText((!TextUtils.isEmpty(statusValue) ? "[".concat(statusValue).concat("] ") : "").concat(healthOrderItem.getHealthItemValues()));
                 healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCustReservationDate()) && healthOrderItem.getCustReservationDate().length() > 10) ? healthOrderItem.getCustReservationDate().substring(0, 10) :  healthOrderItem.getCustReservationDate());
                 lookView.setOnClickListener(v -> {
                     String url = CwebNetConfig.mineHealthOrder;
@@ -1248,11 +1256,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     DataStatistApiParam.operateMineHealthClick();
                 });
                 view.setOnClickListener(v -> {
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put(WebViewConstant.push_message_url, healthOrderItem.getCustCredentialsNumber());
-//                    hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
-                    hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_zhuanti_detail));
-                    NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+                    String url = CwebNetConfig.mineHealthOrder;
+                    Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                    intent.putExtra(WebViewConstant.push_message_url, url);
+                    intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
+                    intent.putExtra(WebViewConstant.right_message_index, true);
+                    startActivity(intent);
                 });
                 health_had_data_ll.addView(view);
             }
@@ -1484,5 +1493,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (viewPager != null) {
             viewPager.addHeight(position, height);
         }
+    }
+
+    public String chageStatusValue(String key) {
+        if (!TextUtils.isEmpty(key)) {
+           return Constant.healthOrder.get(key);
+        }
+        return null;
     }
 }

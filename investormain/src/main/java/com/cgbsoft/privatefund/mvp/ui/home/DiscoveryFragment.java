@@ -4,13 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -294,8 +295,11 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
             StockIndexBean stockIndexBean = mDatas.get(position);
             holder.name.setText(stockIndexBean.getName());
             holder.stockValue.setText(stockIndexBean.getIndex());
-            holder.increaseValue.setText(stockIndexBean.getGain());
-            holder.increatePercent.setText(stockIndexBean.getRate());
+            holder.increaseValue.setText((!TextUtils.isEmpty(stockIndexBean.getGain()) && stockIndexBean.getGain().startsWith("-")) ? stockIndexBean.getGain() : "+".concat(stockIndexBean.getGain()));
+            holder.increatePercent.setText((!TextUtils.isEmpty(stockIndexBean.getRate()) && stockIndexBean.getRate().startsWith("-")) ? stockIndexBean.getRate() : "+".concat(stockIndexBean.getRate()));
+            setIndexValueColor(stockIndexBean.getIndex(), holder.stockValue);
+            setIndexValueColor(stockIndexBean.getGain(), holder.increaseValue);
+            setIndexValueColor(stockIndexBean.getRate(), holder.increatePercent);
         }
     }
 
@@ -309,5 +313,11 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         TextView stockValue;
         TextView increaseValue;
         TextView increatePercent;
+    }
+
+    private void setIndexValueColor(String indexValue, TextView textView) {
+        if (!TextUtils.isEmpty(indexValue)) {
+            textView.setTextColor(ContextCompat.getColorStateList(getActivity(), indexValue.startsWith("-") ? R.color.stock_red : R.color.stock_red));
+        }
     }
 }

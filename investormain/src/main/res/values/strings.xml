@@ -192,8 +192,8 @@
     <string name="account_order_all">全部</string>
     <string name="account_order_now_call">立即拨打</string>
     <string name="account_order_server_dialog_prompt">您收到商品后有任何问题都可拨打400-188-8848享受售后服务</string>
-    <string name="account_health_no_bugy">您还没有咨询过健康服务，您可以：</string>
-    <string name="account_health_go_server">去看服务</string>
+    <string name="account_health_no_bugy">您还未使用过健康服务，您可以：</string>
+    <string name="account_health_go_server">看健康项目</string>
     <string name="account_health_zixun_server_title">【咨询服务】</string>
     <string name="custom_server_telephone_number">400-188-8848</string>
     <string name="phone">电话</string>

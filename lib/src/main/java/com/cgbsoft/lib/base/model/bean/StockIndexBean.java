@@ -1,5 +1,11 @@
 package com.cgbsoft.lib.base.model.bean;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author chenlong
  */
@@ -73,5 +79,29 @@ public class StockIndexBean {
 
     public void setVolume(String volume) {
         this.volume = volume;
+    }
+
+
+    public static List<StockIndexBean> fillValueFromJson(JSONArray jsonArray) {
+        List<StockIndexBean> resultList = new ArrayList<>();
+        try {
+            if (jsonArray != null) {
+                for (int i = 0 ; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                    StockIndexBean stockIndexBean = new StockIndexBean();
+                    stockIndexBean.setGain(jsonObject.getString("gain"));
+                    stockIndexBean.setId(jsonObject.getString("id"));
+                    stockIndexBean.setIndex(jsonObject.getString("index"));
+                    stockIndexBean.setName(jsonObject.getString("name"));
+                    stockIndexBean.setRate(jsonObject.getString("rate"));
+                    stockIndexBean.setTurnover(jsonObject.getString("turnover"));
+                    stockIndexBean.setVolume(jsonObject.getString("volume"));
+                    resultList.add(stockIndexBean);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultList;
     }
 }
