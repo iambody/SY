@@ -57,6 +57,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String mineGoodsOrder;
     // 我的资产订单
     public static String mineAssertOrder;
+    // 我的健康咨询
+    public static String mineHealthKnow;
     // 我的健康订单
     public static String mineHealthOrder;
     // 资讯详情
@@ -134,7 +136,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
         elegantGoodsDetail = baseSxyParentUrl + "/biz/life/detail.html?goodsId=";
         mineGoodsOrder = baseSxyParentUrl + "/biz/mine/mine_order.html";
         mineAssertOrder = baseSxyParentUrl + "/biz/mine/balance_order.html";
-        mineHealthOrder = baseSxyParentUrl + "/biz/mine/mine_health.html";
+        mineHealthKnow = baseSxyParentUrl + "/biz/mine/mine_health.html";
+        mineHealthOrder = baseSxyParentUrl + "/biz/mine/health_order.html";
+
 //        msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";// 博伦修改地址
         msgDetal = baseSxyParentUrl + "/biz/product/notice.html?id=";
         msgMoreDetail = baseSxyParentUrl + "/biz/product/notice_detail.html?id=";

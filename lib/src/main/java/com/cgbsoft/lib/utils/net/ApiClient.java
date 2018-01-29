@@ -1447,6 +1447,13 @@ public class ApiClient {
     }
 
     /**
+     * 资讯首页股票指数
+     */
+    public static Observable<String> getDiscoverStockIndex(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getDiscoverStockIndex(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
      * 资讯列表数据
      */
     public static Observable<String> getDiscoverListData(HashMap hashMap) {

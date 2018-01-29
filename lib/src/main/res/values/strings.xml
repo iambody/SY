@@ -107,6 +107,9 @@
     <string name="get_caifu">您可以通过以下方式提升财富值，获得更多权益及服务：</string>
     <string name="share_to">分享到:</string>
     <string name="data_error">数据异常</string>
+    <string name="look_more">查看更多</string>
+    <string name="health_recode_discovery">健康咨询记录</string>
+    <string name="health_order_recode">健康订单记录</string>
 
     <string name="permission_help">帮助</string>
     <string name="permission_help_text">私享云缺少必要权限：\n\n%s\n请点击"设置"-"权限"-打开所需权限。\n最后点击两次后退按钮，即可返回。</string>

@@ -196,6 +196,19 @@ public interface Constant {
         }
     };
 
+    HashMap<String, String> healthOrder = new HashMap<String, String>() {
+        {
+            put("10", "待授权确认");
+            put("20", "预约中");
+            put("40", "预约确认中");
+            put("50", "预约中");
+            put("80", "预约成功");
+            put("90", "已取消");
+            put("85", "服务中");
+            put("100", "服务完成");
+            put("200", "服务完成");
+        }
+    };
     //分享时候的外网log地址
     public static final String SHARE_LOG="https://upload.simuyun.com/live/106985cc-749d-449e-aaf0-2adfef274469.png";//"http://www.simuyun.com/images/simuyunlogo.png";
 
