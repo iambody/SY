@@ -58,8 +58,8 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+//    @BindView(R.id.recycler_view)
+//    RecyclerView recyclerView;
 
     @BindView(R.id.discover_bannerview)
     BannerView discoveryBannerView;
@@ -78,7 +78,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     FragmentAdapter fragmentAdapter;
     List<BaseLazyFragment> lazyFragments = new ArrayList<>();
     DiscoverIndicatorAdapter disCoveryNavigationAdapter;
-    MyHolderAdapter myHolderAdapter;
+//    MyHolderAdapter myHolderAdapter;
 
     @Override
     protected int layoutID() {
@@ -101,10 +101,10 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     protected void init(View view, Bundle savedInstanceState) {
         initIndicatorView();
         initViewPage();
-        initStockIndexView();
+//        initStockIndexView();
         initCache();
         getPresenter().getDiscoveryFirstData();
-        getPresenter().getStockIndex();
+//        getPresenter().getStockIndex();
     }
 
     private void initCache() {
@@ -121,14 +121,14 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         magicIndicator.setNavigator(commonNavigator);
     }
 
-    private void initStockIndexView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.addItemDecoration(new HoriizontalItemDecoration(getActivity(), R.color.white, R.dimen.ui_40_dip));
-        recyclerView.setLayoutManager(linearLayoutManager);
-        myHolderAdapter = new MyHolderAdapter(getActivity(), new ArrayList<>());
-        recyclerView.setAdapter(myHolderAdapter);
-    }
+//    private void initStockIndexView() {
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        recyclerView.addItemDecoration(new HoriizontalItemDecoration(getActivity(), R.color.white, R.dimen.ui_40_dip));
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        myHolderAdapter = new MyHolderAdapter(getActivity(), new ArrayList<>());
+//        recyclerView.setAdapter(myHolderAdapter);
+//    }
 
     private void initViewPage() {
         fragmentAdapter = new FragmentAdapter(getChildFragmentManager(), lazyFragments);
@@ -198,7 +198,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     public void requestStockIndexSuccess(List<StockIndexBean> dataList) {
-        myHolderAdapter.setDataList(dataList);
+       // myHolderAdapter.setDataList(dataList);
     }
 
     @Override
@@ -252,72 +252,72 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         super.viewBeHide();
     }
 
-    public class MyHolderAdapter extends RecyclerView.Adapter<ViewHolder> {
-        private LayoutInflater mInflater;
-        private List<StockIndexBean> mDatas;
-
-        public MyHolderAdapter(Context context, List<StockIndexBean> datatsList) {
-            mInflater = LayoutInflater.from(context);
-            mDatas = datatsList;
-        }
-
-        public void setDataList(List<StockIndexBean> dataList) {
-            if (!CollectionUtils.isEmpty(dataList)) {
-                mDatas.clear();
-                mDatas.addAll(dataList);
-                notifyDataSetChanged();
-            } else {
-                recyclerView.setVisibility(View.GONE);
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            if (mDatas == null) {
-                return 0;
-            }
-            return mDatas.size();
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-            View view = mInflater.inflate(R.layout.fragment_stock_index_item, viewGroup, false);
-            ViewHolder viewHolder = new ViewHolder(view);
-            viewHolder.name = (TextView) view.findViewById(R.id.name);
-            viewHolder.stockValue = (TextView) view.findViewById(R.id.stockValue);
-            viewHolder.increaseValue = (TextView) view.findViewById(R.id.increase_value);
-            viewHolder.increatePercent = (TextView) view.findViewById(R.id.increase_percent);
-            return viewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            StockIndexBean stockIndexBean = mDatas.get(position);
-            holder.name.setText(stockIndexBean.getName());
-            holder.stockValue.setText(stockIndexBean.getIndex());
-            holder.increaseValue.setText((!TextUtils.isEmpty(stockIndexBean.getGain()) && stockIndexBean.getGain().startsWith("-")) ? stockIndexBean.getGain() : "+".concat(stockIndexBean.getGain()));
-            holder.increatePercent.setText((!TextUtils.isEmpty(stockIndexBean.getRate()) && stockIndexBean.getRate().startsWith("-")) ? stockIndexBean.getRate() : "+".concat(stockIndexBean.getRate()));
-            setIndexValueColor(stockIndexBean.getIndex(), holder.stockValue);
-            setIndexValueColor(stockIndexBean.getGain(), holder.increaseValue);
-            setIndexValueColor(stockIndexBean.getRate(), holder.increatePercent);
-        }
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(View arg0) {
-            super(arg0);
-            this.rootView = arg0;
-        }
-        View rootView;
-        TextView name;
-        TextView stockValue;
-        TextView increaseValue;
-        TextView increatePercent;
-    }
-
-    private void setIndexValueColor(String indexValue, TextView textView) {
-        if (!TextUtils.isEmpty(indexValue)) {
-            textView.setTextColor(ContextCompat.getColorStateList(getActivity(), indexValue.startsWith("-") ? R.color.stock_red : R.color.stock_red));
-        }
-    }
+//    public class MyHolderAdapter extends RecyclerView.Adapter<ViewHolder> {
+//        private LayoutInflater mInflater;
+//        private List<StockIndexBean> mDatas;
+//
+//        public MyHolderAdapter(Context context, List<StockIndexBean> datatsList) {
+//            mInflater = LayoutInflater.from(context);
+//            mDatas = datatsList;
+//        }
+//
+//        public void setDataList(List<StockIndexBean> dataList) {
+//            if (!CollectionUtils.isEmpty(dataList)) {
+//                mDatas.clear();
+//                mDatas.addAll(dataList);
+//                notifyDataSetChanged();
+//            } else {
+//                recyclerView.setVisibility(View.GONE);
+//            }
+//        }
+//
+//        @Override
+//        public int getItemCount() {
+//            if (mDatas == null) {
+//                return 0;
+//            }
+//            return mDatas.size();
+//        }
+//
+//        @Override
+//        public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+//            View view = mInflater.inflate(R.layout.fragment_stock_index_item, viewGroup, false);
+//            ViewHolder viewHolder = new ViewHolder(view);
+//            viewHolder.name = (TextView) view.findViewById(R.id.name);
+//            viewHolder.stockValue = (TextView) view.findViewById(R.id.stockValue);
+//            viewHolder.increaseValue = (TextView) view.findViewById(R.id.increase_value);
+//            viewHolder.increatePercent = (TextView) view.findViewById(R.id.increase_percent);
+//            return viewHolder;
+//        }
+//
+//        @Override
+//        public void onBindViewHolder(ViewHolder holder, int position) {
+//            StockIndexBean stockIndexBean = mDatas.get(position);
+//            holder.name.setText(stockIndexBean.getName());
+//            holder.stockValue.setText(stockIndexBean.getIndex());
+//            holder.increaseValue.setText((!TextUtils.isEmpty(stockIndexBean.getGain()) && stockIndexBean.getGain().startsWith("-")) ? stockIndexBean.getGain() : "+".concat(stockIndexBean.getGain()));
+//            holder.increatePercent.setText((!TextUtils.isEmpty(stockIndexBean.getRate()) && stockIndexBean.getRate().startsWith("-")) ? stockIndexBean.getRate() : "+".concat(stockIndexBean.getRate()));
+//            setIndexValueColor(stockIndexBean.getIndex(), holder.stockValue);
+//            setIndexValueColor(stockIndexBean.getGain(), holder.increaseValue);
+//            setIndexValueColor(stockIndexBean.getRate(), holder.increatePercent);
+//        }
+//    }
+//
+//    public class ViewHolder extends RecyclerView.ViewHolder {
+//        public ViewHolder(View arg0) {
+//            super(arg0);
+//            this.rootView = arg0;
+//        }
+//        View rootView;
+//        TextView name;
+//        TextView stockValue;
+//        TextView increaseValue;
+//        TextView increatePercent;
+//    }
+//
+//    private void setIndexValueColor(String indexValue, TextView textView) {
+//        if (!TextUtils.isEmpty(indexValue)) {
+//            textView.setTextColor(ContextCompat.getColorStateList(getActivity(), indexValue.startsWith("-") ? R.color.stock_red : R.color.stock_red));
+//        }
+//    }
 }
