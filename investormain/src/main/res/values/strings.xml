@@ -294,4 +294,6 @@
     </string-array>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"http://app.simuyun.com\",\n  }\n}]</string>
     <string name="dangan">档案</string>
+    <string name="publish_fund">公募基金</string>
+    <string name="public_fund_regist">公募基金开户</string>
 </resources>

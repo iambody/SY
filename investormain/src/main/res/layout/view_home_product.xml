@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:clickable="true"
+
         android:orientation="horizontal">
 
         <LinearLayout
@@ -20,7 +20,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
             android:orientation="vertical"
             android:padding="@dimen/ui_10_dip">
 
@@ -44,12 +43,13 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/ui_15_dip"
-            android:src="@drawable/icon_right_arrow" />
+        <!-- <ImageView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_vertical"
+             android:layout_marginRight="@dimen/ui_15_dip"
+             android:src="@drawable/icon_right_arrow"
+             />-->
     </LinearLayout>
     <!-- 产品的详细信息-->
     <ImageView
@@ -59,29 +59,196 @@
         android:layout_marginRight="@dimen/ui_10_dip"
         android:src="#ffe2e1e6" />
 
+    <!--公募基金的布局开始********* -->
+    <LinearLayout
+        android:id="@+id/view_home_public_fund_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ui_5_dip"
+            android:layout_marginTop="@dimen/ui_5_dip"
+            android:orientation="horizontal"
+            android:padding="@dimen/ui_10_dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="@string/publish_fund"
+                android:textColor="@color/app_golden"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/arrorw_right_glod" />
+        </LinearLayout>
+        <!--公募开户 -->
+        <LinearLayout
+            android:id="@+id/view_public_fund_regist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ui_15_dip"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:background="@drawable/shape_home_public_fund"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/ui_10_dip">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/publish_regist_iv" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/ui_20_dip"
+                android:text="@string/publish_regist"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimens_sp_20"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <!-- 公募开户-->
+        <!-- 公募基金的详情布局 -->
+        <LinearLayout
+            android:id="@+id/view_home_public_fund_detial_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:background="@drawable/shape_home_public_fund"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/ui_10_dip">
+
+                <TextView
+                    android:id="@+id/view_home_public_fund_fundname"
+                    style="@style/style_home_public_fund_fundname" />
+
+                <TextView
+                    android:id="@+id/view_home_public_fund_funddes"
+                    style="@style/style_home_public_fund_funddes" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ui_z_dip"
+                android:src="@color/public_fund_line" />
+            <!-- 详情-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/style_home_public_fund_detail">
+                    <!--左边的******** -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/view_home_public_fund_leftvalues"
+                            style="@style/style_home_public_fund_up" />
+
+                        <TextView
+                            android:id="@+id/view_home_public_fund_leftdes"
+                            style="@style/style_home_public_fund_down" />
+                    </LinearLayout>
+                    <!--左边的******** -->
+                    <!--右边的******** -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/view_home_public_fund_rightvalues"
+                            style="@style/style_home_public_fund_up"
+                            android:layout_gravity="right" />
+
+                        <TextView
+                            android:id="@+id/view_home_public_fund_rightdes"
+                            style="@style/style_home_public_fund_down"
+                            android:layout_gravity="right" />
+                    </LinearLayout>
+                    <!--右边的******** -->
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/view_home_public_fund_shift"
+                    style="@style/style_home_public_fund_shift"
+                    android:text="@string/immediately" />
+
+                <View style="@style/style_height_15" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <!-- 公募基金的详情布局************ -->
+    </LinearLayout>
+    <!--公募基金的布局结束********* -->
+    <!-- 私募基金的布局************-->
     <LinearLayout
         android:id="@+id/view_home_product_focus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ui_10_dip"
         android:layout_marginRight="@dimen/ui_10_dip"
-        android:layout_marginTop="@dimen/ui_13_dip"
         android:clickable="true"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/home_peoduct_up_des"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/view_home_private_fund_skip_lay"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="精选产品"
-            android:textColor="@color/app_golden"
-            android:textSize="@dimen/dimens_sp_16"
-            android:textStyle="bold" />
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/ui_10_dip"
+            android:paddingTop="@dimen/ui_15_dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="@string/private_fund"
+                android:textColor="@color/app_golden"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/arrorw_right_glod" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/ui_120_dip"
-            android:layout_marginTop="@dimen/ui_10_dip">
+            android:layout_marginTop="@dimen/ui_5_dip">
 
             <ImageView
                 android:id="@+id/view_home_product_bg"
@@ -114,8 +281,8 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="@dimen/ui_5_dip"
                 android:layout_marginRight="@dimen/ui_5_dip"
-                android:lines="1"
                 android:ellipsize="end"
+                android:lines="1"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/dimens_sp_22" />
 

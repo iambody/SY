@@ -97,7 +97,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
     //会员
     public static String membercenter;
     public static String qrcoderesult;
-//会员规则
+    //会员规则
     public static String adviserrules;
 
     // 头条号
@@ -105,6 +105,10 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     //贵宾卡兑换
     public static String vipCardExchange;
+    //国内公募基注册的
+    public static String  publicFundRegistUrl;
+    //公募基金详情
+    public static  String publicFundDetailUrl;
 
     static {
         initApi();
@@ -170,11 +174,13 @@ public class CwebNetConfig extends BaseWebNetConfig {
         qrcoderesult = baseSxyParentUrl + "/biz/adviser/assets_report.html?";
 //        touTiaoHao = baseSxyParentUrl + "/biz/product/new_detail_toc.html";
 
-        adviserrules = baseSxyParentUrl +"/biz/members/rules.html";
+        adviserrules = baseSxyParentUrl + "/biz/members/rules.html";
         touTiaoHao = baseSxyParentUrl + "/biz/product/new_detail_toc.html?id=";
         vipCardExchange = baseSxyParentUrl + "/biz/yundous/rechargeCard.html";
 
 
-
+        //公募基金相关******************
+        publicFundRegistUrl=baseSxyParentUrl+"/biz/publicfund/account.html";
+        publicFundDetailUrl=baseSxyParentUrl+"/biz/publicfund/detail.html";
     }
 }
