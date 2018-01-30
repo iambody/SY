@@ -434,6 +434,7 @@ public class NetConfig {
      */
     static class PUBLIC_FUND {
         static final String HOME_RECOMMEND = API_URL_V2 + "/kz/proxy/sixiangbao";
+        static  final  String PRIVATE_FUND_INF=API_URL_V2+"/kz/userinfo";
     }
 
     public static class SoDown {

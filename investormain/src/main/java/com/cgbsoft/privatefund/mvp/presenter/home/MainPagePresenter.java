@@ -3,16 +3,14 @@ package com.cgbsoft.privatefund.mvp.presenter.home;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
-import com.cgbsoft.lib.bodys.FileDownloadCallback;
-import com.cgbsoft.lib.bodys.FileDownloadTask;
 import com.cgbsoft.lib.contant.Contant;
-import com.cgbsoft.lib.listener.listener.SoProgressListener;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
@@ -20,6 +18,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.widget.dialog.HomeSignDialog;
 import com.cgbsoft.privatefund.bean.commui.SignBean;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.ui.home.RedPacketActivity;
 import com.google.gson.Gson;
@@ -28,18 +27,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.HashMap;
 
-import okhttp3.ResponseBody;
 
-/**
- * 首页功能实现，数据调用
- * Created by xiaoyu.zhang on 2016/11/10 16:18
- *  
- */
 public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> implements MainPageContract.Presenter {
 
     public MainPagePresenter(Context context, MainPageContract.View view) {
@@ -79,6 +69,34 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                 String s = error.toString();
             }
         });
+    }
+
+    /**
+     * 公募inf
+     */
+    @Override
+    public void loadPublicFundInf() {
+        addSubscription(ApiClient.getPublicFundInf().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    if (!BStrUtils.isEmpty(s)) {
+                        JSONObject jsonObject = new JSONObject(s);
+                        if (!jsonObject.has("result")) return;
+                        String resultStr = jsonObject.getString("result");
+                        AppInfStore.savePublicFundInf(getContext(), new Gson().fromJson(resultStr, PublicFundInf.class));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                Log.i("s", "sss");
+            }
+        }));
     }
 
     /**

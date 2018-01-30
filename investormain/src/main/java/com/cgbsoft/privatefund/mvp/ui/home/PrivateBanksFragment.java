@@ -28,7 +28,6 @@ import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvc.ui.SearchBaseActivity;
-import app.product.com.mvp.ui.OnLineProductListFragment;
 
 /**
  * desc  ${DESC}
@@ -125,10 +124,10 @@ public class PrivateBanksFragment extends BasePageFragment {
         List<SecondNavigation> secondNavigations = navigationBean.getSecondNavigation();
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
-                case PRODUCT_CODE:
-                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new OnLineProductListFragment(), Integer.parseInt(secondNavigation.getCode()));
-                    tabBeens.add(tabBeen1);
-                    break;
+//                case PRODUCT_CODE:
+//                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new OnLineProductListFragment(), Integer.parseInt(secondNavigation.getCode()));
+//                    tabBeens.add(tabBeen1);
+//                    break;
                 case INFOMATION_CODE:
                     TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new DiscoveryFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen2);
@@ -137,7 +136,8 @@ public class PrivateBanksFragment extends BasePageFragment {
                     TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), new VideoSchoolFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen3);
                     break;
-                case PUBLIC_FUND_CODE:
+//                case PUBLIC_FUND_CODE:
+                case PRODUCT_CODE:
                     TabBean tabBeen4 = new TabBean(secondNavigation.getTitle(), new PublicFundFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen4);
                     break;

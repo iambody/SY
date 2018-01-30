@@ -85,6 +85,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public static final String LIVERXOBSERBER_TAG = "rxobserlivetag";
     public final int ADVISERSHOWTIME = 5;
     public final int ADVISERLOADTIME = 3;
+
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
     @BindView(R.id.main_home_new_iv)
@@ -813,8 +814,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void getCacheResult(HomeEntity.Result cachesData) {
         if (null == cachesData) return;
-        //横向轮播
-//        initHorizontalScroll(cachesData.module);
         //banner
         initViewPage(cachesData.banner);
         //用户等级信息
@@ -989,7 +988,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     /**
-     * 开始倒计时十秒
+     * 手动闭合
      */
     private void timeCountDown() {
         RxCountDown.countdown(ADVISERSHOWTIME).doOnSubscribe(new Action0() {
@@ -1041,7 +1040,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void publicFundShift() {
 
     }
-
 
 
 }

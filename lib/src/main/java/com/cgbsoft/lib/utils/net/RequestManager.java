@@ -955,9 +955,13 @@ interface RequestManager {
     @GET(NetConfig.TRACKDATA.CONFIG)
     Observable<ResponseBody> getTrackingConfig();
     /**
-     * 首页推荐位
+     * 公募首页推荐位
      */
     @POST(NetConfig.PUBLIC_FUND.HOME_RECOMMEND)
     Observable<ResponseBody> getHomeRecommend(@Body RequestBody responseBody);
-
+    /**
+     *  公募信息
+     */
+    @POST(NetConfig.PUBLIC_FUND.PRIVATE_FUND_INF)
+    Observable<ResponseBody> getPublicFudInf(@Body RequestBody responseBody);
 }
