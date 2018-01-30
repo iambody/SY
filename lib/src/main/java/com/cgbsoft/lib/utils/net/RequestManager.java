@@ -767,6 +767,10 @@ interface RequestManager {
     @GET(NetConfig.Mine.GET_MINE)
     Observable<ResponseBody> getMineData(@QueryMap Map<String, String> paramsMap);
 
+    // 我的金融资产
+    @GET(NetConfig.Mine.MINE_FININCIAL_ASSERT)
+    Observable<ResponseBody> getMineFinincailAssert(@QueryMap Map<String, String> paramsMap);
+
     // 我的活动
     @GET(NetConfig.Mine.ACTIVITES)
     Observable<ResponseBody> getMineActivitesList(@QueryMap Map<String, String> paramsMap);

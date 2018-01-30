@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,12 +45,15 @@ import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
+import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.RoundProgressbar;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
+import com.cgbsoft.privatefund.model.FinancialAssertModel;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
@@ -184,7 +188,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     TextView account_order_all_text;
 
     @BindView(R.id.ll_public_fund_create_account)
-    TextView ll_Public_f;
+    TextView ll_public_fund_create_account;
 
     @BindView(R.id.tv_increase_percent)
     TextView tv_increase_percent;
@@ -215,6 +219,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @BindView(R.id.tv_public_fund_yestoday_income)
     TextView tv_public_fund_yestoday_income;
+
+    @BindView(R.id.ll_private_share_bao_empty)
+    RelativeLayout ll_private_share_bao_empty;
+
+    @BindView(R.id.ll_private_share_bao_empty)
+    LinearLayout ll_private_share_bao_fill;
+
+    @BindView(R.id.ll_public_fund_empty)
+    LinearLayout ll_public_fund_empty;
+
+    @BindView(R.id.ll_public_fund_fill)
+    LinearLayout ll_public_fund_fill;
+
 
     @BindView(R.id.tab_layout)
     XTabLayout xTabLayout;
@@ -459,8 +476,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 //                }
 //            }
 //        }
-
-
     }
 
     private void gotoDetial() {
@@ -468,7 +483,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
         startActivity(intent1);
     }
-
 
     private void initObserver() {
         swtichAssetObservable = RxBus.get().register(RxConstant.SWITCH_ASSERT_SHOW, Boolean.class);
@@ -675,6 +689,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         isLoading = true;
         initVideoView();
         getPresenter().getMineData();
+        getPresenter().getMineFinacailAssert();
         getPresenter().verifyIndentityV3();
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
@@ -720,6 +735,53 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     @Override
+    public void requestFinancialAssertSuccess(FinancialAssertModel financialAssertModel) {
+        initPrivateShareMoneyData(financialAssertModel);
+        initPublicFundData(financialAssertModel);
+    }
+
+    @Override
+    public void requestFinancialAssertFailure(String msg) {
+        MToast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean isExistPrivateShareMoney(FinancialAssertModel financialAssertModel) {
+        return financialAssertModel != null && financialAssertModel.getEnjoyMoneyBaby() != null && TextUtils.equals("1", financialAssertModel.getEnjoyMoneyBaby().getIsBuyin());
+    }
+
+    private boolean isExistPublicFundMoney(FinancialAssertModel financialAssertModel) {
+        return financialAssertModel != null && financialAssertModel.getPublicFund() != null && TextUtils.equals("1", financialAssertModel.getPublicFund().getIsBuyin());
+    }
+
+    private void initPrivateShareMoneyData(FinancialAssertModel financialAssertModel) {
+        if (isExistPrivateShareMoney(financialAssertModel)) {
+            ll_private_share_bao_empty.setVisibility(View.GONE);
+            ll_private_share_bao_fill.setVisibility(View.VISIBLE);
+            tv_share_bao_subsist_assert.setText(financialAssertModel.getEnjoyMoneyBaby().getSurvivingAssets());
+            tv_share_bao_continue_income.setText(financialAssertModel.getEnjoyMoneyBaby().getBenefitOfCarry());
+            tv_share_bao_yestoday_income.setText(financialAssertModel.getEnjoyMoneyBaby().getIncomeByYesterday());
+        } else {
+            ll_private_share_bao_empty.setVisibility(View.VISIBLE);
+            ll_private_share_bao_fill.setVisibility(View.GONE);
+            tv_increase_percent.setText(financialAssertModel.getEnjoyMoneyBaby() != null ? financialAssertModel.getEnjoyMoneyBaby().getIncomeByYear() : "");
+            tv_increase_value.setText(financialAssertModel.getEnjoyMoneyBaby() != null ? financialAssertModel.getEnjoyMoneyBaby().getIncomeByTenThousand() : "");
+        }
+    }
+
+    private void initPublicFundData(FinancialAssertModel financialAssertModel) {
+        if (isExistPublicFundMoney(financialAssertModel)) {
+            ll_public_fund_empty.setVisibility(View.GONE);
+            ll_public_fund_fill.setVisibility(View.VISIBLE);
+            tv_public_fund_subsist_assert.setText(financialAssertModel.getPublicFund().getSurvivingAssets());
+            tv_public_fund_continue_income.setText(financialAssertModel.getPublicFund().getBenefitOfCarry());
+            tv_public_fund_yestoday_income.setText(financialAssertModel.getPublicFund().getIncomeByYesterday());
+        } else {
+            ll_public_fund_empty.setVisibility(View.VISIBLE);
+            ll_public_fund_fill.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
     }
@@ -752,6 +814,21 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.user_leaguar_update_desc)
     void gotoLeaguarActivity() {
         gotoMemberArea();
+    }
+
+    @OnClick(R.id.ll_public_fund_create_account)
+    void gotoCreatePublicFundAccount() {
+        String url = CwebNetConfig.memeberArea;
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_members));
+        intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.tv_now_transfer)
+    void gotoNowTransferPrivateShare() {
+
     }
 
     @OnClick(R.id.account_info_caifu_value_ll)

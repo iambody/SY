@@ -1462,10 +1462,17 @@ public class ApiClient {
     }
 
     /**
-     * 资讯列表数据
+     * 我的数据
      */
     public static Observable<String> getMineData(HashMap hashMap) {
         return OKHTTP.getInstance().getRequestManager().getMineData(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 我的金融资产
+     */
+    public static Observable<String> getMineFinincialAssert(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getMineFinincailAssert(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**

@@ -362,6 +362,8 @@ public class NetConfig {
         final static String ACTIVITES = API_URL + "/salons/mine";
         // 提交投资账号
         final static String CommitInvisitAccount = AUTH_URL_V2 + "/user/certSubmit";
+        // 我的金融资产
+        final static String MINE_FININCIAL_ASSERT = AUTH_URL_V2 + "/user/finincialAssert";
     }
 
     /**
