@@ -21,19 +21,14 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.utils.tools.ZipUtils;
 import com.cgbsoft.lib.widget.WeakHandler;
 import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 
 import app.ndk.com.enter.R;
@@ -41,8 +36,6 @@ import app.ndk.com.enter.mvp.contract.start.WelcomeContract;
 import app.ndk.com.enter.mvp.presenter.start.WelcomePersenter;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
 import io.rong.push.notification.PushNotificationMessage;
-import rx.Observable;
-import rx.schedulers.Schedulers;
 
 import static android.Manifest.permission.INSTALL_SHORTCUT;
 
@@ -59,10 +52,10 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     private WeakHandler weakHandler;
 
     private boolean isStop = false;
-    private final int defaultTime = 3000;
-    private final int visableBtnTime = 2000;
-    private final int waitTime = 2000;
-    private final int noNetTime = 3000;
+    private final int defaultTime = 1000;
+    private final int visableBtnTime = 1000;
+    private final int waitTime = 1000;
+    private final int noNetTime = 1000;
     private final int outOfTime = 2000;
 
     private final int BUTTON_WAIT = 0;
@@ -128,23 +121,23 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
         getPresenter().initTrackingConfig();
         getPresenter().requestResourceInfo();
         getPresenter().toInitInfo();
-        //解压一些资源
-        Observable.just(R.raw.ress).subscribeOn(Schedulers.io()).subscribe(new RxSubscriber<Integer>() {
-            @Override
-            protected void onEvent(Integer integer) {
-                String path = CacheManager.getCachePath(getApplicationContext(), CacheManager.RES);
-                InputStream is = getResources().openRawResource(integer);
-                try {
-                    ZipUtils.unZip(is, path, false);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            protected void onRxError(Throwable error) {
-            }
-        });
+//        //解压一些资源
+//        Observable.just(R.raw.ress).subscribeOn(Schedulers.io()).subscribe(new RxSubscriber<Integer>() {
+//            @Override
+//            protected void onEvent(Integer integer) {
+//                String path = CacheManager.getCachePath(getApplicationContext(), CacheManager.RES);
+//                InputStream is = getResources().openRawResource(integer);
+//                try {
+//                    ZipUtils.unZip(is, path, false);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {
+//            }
+//        });
         welecomePage();
     }
 
@@ -230,6 +223,7 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
     }
 
     private void toNext() {
+        Log.i("homecliclclclcl", " 开始完毕");
         nextPage();
         TrackingDataManger.loadSkip(baseContext);
     }
@@ -244,13 +238,14 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
 
     //跳到home页
     private void nextPage() {
-
+        if (isStop) return;
         isStop = true;
         if (weakHandler != null)
             weakHandler.removeCallbacksAndMessages(null);
         iv_wel_background = null;
         btn_wel_cancle = null;
         weakHandler = null;
+//        PromptManager.ShowCustomToast(baseContext,"跳过。。。");
         if (AppManager.getIsLogin(getApplicationContext())) {
             if (isNoticePush()) {
                 return;
@@ -264,8 +259,9 @@ public class WelcomeActivity extends BaseActivity<WelcomePersenter> implements W
             WelcomeActivity.this.finish();
             return;
         }
+
         WelcomeActivity.this.finish();
-        Log.i("homecliclclclcl", " 跳过执行完毕");
+
     }
 
     private boolean isNoticePush() {

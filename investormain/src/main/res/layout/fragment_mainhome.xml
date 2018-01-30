@@ -44,11 +44,6 @@
                     </RelativeLayout>
                     <!-- Banner*** -->
                     <!-- 直播预报的布局 -->
-                    <!-- <include
-                         android:id="@+id/main_home_live_lay"
-                         layout="@layout/view_home_live_lay"
-                         android:visibility="gone" />-->
-
                     <include
                         android:id="@+id/main_home_newlive_lay"
                         layout="@layout/view_home_live_new_lay"
@@ -58,23 +53,7 @@
                     <include
                         android:id="@+id/main_home_level_lay"
                         layout="@layout/view_home_level_lay" />
-                    <!-- 横向滑动的布局 -->
-                    <!-- <HorizontalScrollView
-                         android:id="@+id/main_home_horizontalscrollview"
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:layout_marginLeft="@dimen/ui_13_dip"
-                         android:layout_marginRight="@dimen/ui_13_dip"
-                         android:scrollbars="none"
-                         android:visibility="gone">
-
-                         <LinearLayout
-                             android:id="@+id/main_home_horizontalscrollview_lay"
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:layout_gravity="center_vertical"
-                             android:orientation="horizontal" />
-                     </HorizontalScrollView>-->
+                    <!-- 运营位的布局 -->
 
                     <com.cgbsoft.lib.widget.MyGridView
                         android:id="@+id/main_home_gvw"
@@ -89,7 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ui_15_dip"
                         android:background="@color/app_bg" />
-
+                    <!--产品的 -->
                     <include
                         android:id="@+id/home_product_view"
                         layout="@layout/view_home_product" />

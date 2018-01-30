@@ -145,4 +145,9 @@ public interface AppinfConstant {
 
     // 资讯数据
     String DISCOVERLISTFIRSTDATA = "discoverlistfirstdata";
+
+    //首页公募基金的缓存
+    String PUBIC_FUND_CACAHEA="publicfundcache";
+    //公募基金的信息
+    String PUBLIC_FUND_INF="publicfundinf";
 }

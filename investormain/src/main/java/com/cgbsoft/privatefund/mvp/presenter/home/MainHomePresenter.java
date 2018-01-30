@@ -14,10 +14,16 @@ import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * desc  ${DESC}
@@ -43,20 +49,6 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
                 getView().getResultError(error.getMessage());
             }
         }));
-
-//        addSubscription(ApiClient.getSxyHomeDataTest().subscribe(new RxSubscriber<String>() {
-//            @Override
-//            protected void onEvent(String result) {
-////                getView().getResultSucc(result);
-//                LogUtils.Log("HomeEntityResult", "s");
-//            }
-//
-//            @Override
-//            protected void onRxError(Throwable error) {
-//                getView().getResultError(error.getMessage());
-//            }
-//        }));
-
 
     }
 
@@ -85,6 +77,39 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
             @Override
             protected void onRxError(Throwable error) {
                 error.toString();
+            }
+        }));
+    }
+
+    @Override
+    public void getPublicFundRecommend() {
+        addSubscription(ApiClient.getHomePublicFundRecommend().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String publishFundRecommendBean) {
+
+                if (!BStrUtils.isEmpty(publishFundRecommendBean)) {
+                    try {
+                        JSONObject object = new JSONObject(publishFundRecommendBean);
+                        if (null != object && object.has("result")) {
+                            String result =  object.getString("result");
+                            PublishFundRecommendBean publishFundRecommendBean1 = new Gson().fromJson(result, PublishFundRecommendBean.class);
+                            if (null != publishFundRecommendBean1) {
+                                getView().getPublicFundResult(publishFundRecommendBean1);
+                            } else {
+                                getView().getPublicFundError("公募基金数据格式有误");
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        getView().getPublicFundError("公募基金数据格式有误");
+                    }
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+                getView().getPublicFundError(error.getMessage());
             }
         }));
     }

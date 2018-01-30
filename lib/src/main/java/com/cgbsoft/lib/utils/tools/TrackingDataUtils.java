@@ -36,6 +36,7 @@ import rx.Subscription;
  */
 
 public class TrackingDataUtils {
+
     public static Subscription subscription;
     private static DaoUtils daoUtils;
 
@@ -91,11 +92,11 @@ public class TrackingDataUtils {
             js.put("m", android.os.Build.MANUFACTURER + "--" + android.os.Build.MODEL);//设备品牌
             js.put("mos", "A");
             js.put("mv", android.os.Build.VERSION.RELEASE);//手机系统版本
-            if (AppManager.isInvestor(context)) {
+//            if (AppManager.isInvestor(context)) {
                 js.put("v", "sxy");//应用系统(smy)
-            } else {
-                js.put("v", "smy");
-            }
+//            } else {
+//                js.put("v", "smy");
+//            }
             js.put("vtp", Utils.getVersionCode(context.getApplicationContext()) + "");
             js.put("area", OtherDataProvider.getCity(context.getApplicationContext()));
 //            js.put("mid", getUniqueCode());//机器码

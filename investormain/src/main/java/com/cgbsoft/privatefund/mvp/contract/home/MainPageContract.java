@@ -6,14 +6,13 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
 import org.json.JSONObject;
 
 /**
- * 
- *  Created by xiaoyu.zhang on 2016/11/28 10:27
- *  Email:zhangxyfs@126.com
+ * Created by xiaoyu.zhang on 2016/11/28 10:27
+ * Email:zhangxyfs@126.com
  *  
  */
 public interface MainPageContract {
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenter {
         void getProLiveList();
 
         void initDayTask();
@@ -22,15 +21,16 @@ public interface MainPageContract {
 
         void loadRedPacket();
 
+        void loadPublicFundInf();
+
 
     }
 
-    interface View extends BaseView{
+    interface View extends BaseView {
         //判断是否有直播
 
         /**
-         *
-         * @param liveState 0-->预告  1-->直播中  2-->无直播
+         * @param liveState  0-->预告  1-->直播中  2-->无直播
          * @param jsonObject
          */
         void hasLive(int liveState, JSONObject jsonObject);
@@ -38,8 +38,10 @@ public interface MainPageContract {
         void signInSuc();
 
         void toFreshUserinfHome();
+
         void loadSoSuccess(String filePath);
 
         void loadSoError();
+
     }
 }

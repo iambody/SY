@@ -49,6 +49,7 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.OperationAdapter;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
+import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
@@ -58,6 +59,7 @@ import com.chenenyu.router.Router;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -83,6 +85,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public static final String LIVERXOBSERBER_TAG = "rxobserlivetag";
     public final int ADVISERSHOWTIME = 5;
     public final int ADVISERLOADTIME = 3;
+
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
     @BindView(R.id.main_home_new_iv)
@@ -97,54 +100,104 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     MySwipeRefreshLayout mainHomeSwiperefreshlayout;
     @BindView(R.id.main_home_smartscrollview)
     SmartScrollView mainHomeSmartscrollview;
+    //公募的
+    @BindView(R.id.view_public_fund_regist)
+    LinearLayout viewPublicFundRegist;
+    @BindView(R.id.view_home_public_fund_fundname)
+    TextView viewHomePublicFundFundname;
+    @BindView(R.id.view_home_public_fund_funddes)
+    TextView viewHomePublicFundFunddes;
+    @BindView(R.id.view_home_public_fund_leftvalues)
+    TextView viewHomePublicFundLeftvalues;
+    @BindView(R.id.view_home_public_fund_leftdes)
+    TextView viewHomePublicFundLeftdes;
+    @BindView(R.id.view_home_public_fund_rightvalues)
+    TextView viewHomePublicFundRightvalues;
+    @BindView(R.id.view_home_public_fund_rightdes)
+    TextView viewHomePublicFundRightdes;
+    @BindView(R.id.view_home_public_fund_shift)
+    TextView viewHomePublicFundShift;
+    @BindView(R.id.view_home_public_fund_detial_lay)
+    LinearLayout viewHomePublicFundDetialLay;
+    @BindView(R.id.view_home_public_fund_lay)
+    LinearLayout viewHomePublicFundLay;
+    //私募基金
+    @BindView(R.id.home_product_title)
+    TextView homeProductTitle;
+    @BindView(R.id.home_peoduct_subtitle)
+    TextView homePeoductSubtitle;
+    @BindView(R.id.view_home_product_bg)
+    ImageView viewHomeProductBg;
+    @BindView(R.id.view_home_product_tag)
+    TextView viewHomeProductTag;
+    @BindView(R.id.view_home_product_name)
+    TextView viewHomeProductName;
+    @BindView(R.id.view_home_product_des)
+    TextView viewHomeProductDes;
+    @BindView(R.id.home_product_frist_up)
+    TextView homeProductFristUp;
+    @BindView(R.id.home_product_frist_down)
+    TextView homeProductFristDown;
+    @BindView(R.id.home_product_second_up)
+    TextView homeProductSecondUp;
+    @BindView(R.id.home_product_second_down)
+    TextView homeProductSecondDown;
+    @BindView(R.id.home_product_three_up)
+    TextView homeProductThreeUp;
+    @BindView(R.id.home_product_three_down)
+    TextView homeProductThreeDown;
+
+    //等级
+    @BindView(R.id.view_home_member)
+    TextView viewHomeMember;
+    @BindView(R.id.view_home_level_arrow)
+    ImageView viewHomeLevelArrow;
+    @BindView(R.id.main_home_gvw)
+    MyGridView mainHomeGvw;
+    //新的直播新增
+    @BindView(R.id.view_newlive_iv_bg)
+    ImageView viewNewliveIvBg;
+    @BindView(R.id.view_newlive_meng_bg)
+    ImageView viewNewliveMengBg;
+    @BindView(R.id.view_newlive_content)
+    TextView viewNewliveContent;
+    @BindView(R.id.view_newlive_tag)
+    TextView viewNewliveTag;
+    @BindView(R.id.view_newlive_title_tag)
+    TextView viewNewliveTitleTag;
+    @BindView(R.id.view_newlive_number)
+    TextView viewNewliveNumber;
+    @BindView(R.id.view_home_level_bg)
+    ImageView viewHomeLevelBg;
+    @BindView(R.id.home_newlive_foreshow_lay)
+    RelativeLayout homeNewliveForeshowLay;
+    @BindView(R.id.home_newlive_now_lay)
+    RelativeLayout homeNewliveNowLay;
+    @BindView(R.id.home_product_down_lay)
+    LinearLayout homeProductDownLay;
+
     View home_product_view;
     View main_home_level_lay;
     View main_home_newlive_lay;
-    //新的直播
-    ImageView view_newlive_iv_bg;
-    TextView view_newlive_content, view_newlive_tag;
-    RelativeLayout home_newlive_foreshow_lay, home_newlive_now_lay;
-    TextView view_newlive_title_tag, view_newlive_number;
-    ImageView view_home_level_bg, view_newlive_meng_bg;
+    //私募基金新增
+    LinearLayout view_home_product_focus, view_home_private_fund_skip_lay;
 
-
-    TextView home_product_title;
-    TextView home_peoduct_subtitle;
-
-    ImageView view_home_product_bg;
-
-    TextView view_home_product_tag;
-    TextView view_home_product_name;
-    TextView view_home_product_des;
-
-    LinearLayout home_product_skip_bank, view_home_product_focus, home_product_down_lay;
-    TextView home_product_frist_up, home_product_frist_down;
-    TextView home_product_second_up, home_product_second_down;
-    TextView home_product_three_up, home_product_three_down;
-
-    TextView view_home_member;
-    ImageView view_home_level_arrow;
-    MyGridView main_home_gvw;
     OperationAdapter operationAdapter;
-    private UnreadInfoNumber unreadInfoNumber;
-    private Observable<LiveInfBean> liveObservable;
-    private Observable<Integer> userLayObservable, bindAdviserObservable;
+    UnreadInfoNumber unreadInfoNumber;
+    Observable<LiveInfBean> liveObservable;
+    Observable<Integer> userLayObservable, bindAdviserObservable;
 
+    HomeEntity.Result homeData;
+    LiveInfBean homeliveInfBean;
 
-    private HomeEntity.Result homeData;
-    private LiveInfBean homeliveInfBean;
-
-    private int downXPostion;
-    private int lastXPostion;
-    private boolean isLoading;
-    private boolean bannerIsLeft;
-    private boolean bannerIsRight;
-    private boolean isRolling;
-    protected boolean isVisible;
+    boolean isLoading;
+    boolean bannerIsLeft;
+    boolean bannerIsRight;
+    boolean isRolling;
+    boolean isVisible;
 
 
     @Override
-
     protected int layoutID() {
         return R.layout.fragment_mainhome;
     }
@@ -156,7 +209,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         timeCountDown();
         initCache();
         getPresenter().getHomeData();
-        unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv, false);
+        getPresenter().getPublicFundRecommend();
         DataStatistApiParam.gohome();
 
     }
@@ -254,6 +307,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
         });
         home_floatstewardview.openFloat();
+        unreadInfoNumber = new UnreadInfoNumber(getActivity(), mainHomeNewIv, false);
     }
 
 
@@ -322,23 +376,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         //新直播
         main_home_newlive_lay = mFragmentView.findViewById(R.id.main_home_newlive_lay);
-        view_newlive_iv_bg = ViewHolders.get(mFragmentView, R.id.view_newlive_iv_bg);
-        view_newlive_content = ViewHolders.get(mFragmentView, R.id.view_newlive_content);
-        view_newlive_tag = ViewHolders.get(mFragmentView, R.id.view_newlive_tag);
-        home_newlive_foreshow_lay = ViewHolders.get(mFragmentView, R.id.home_newlive_foreshow_lay);
-        home_newlive_now_lay = ViewHolders.get(mFragmentView, R.id.home_newlive_now_lay);
-        view_newlive_title_tag = ViewHolders.get(mFragmentView, R.id.view_newlive_title_tag);
-        view_newlive_number = ViewHolders.get(mFragmentView, R.id.view_newlive_number);
         main_home_newlive_lay.setOnClickListener(this);
         home_product_view = ViewHolders.get(mFragmentView, R.id.home_product_view);
-        view_home_level_arrow = ViewHolders.get(mFragmentView, R.id.view_home_level_arrow);
-        view_newlive_meng_bg = ViewHolders.get(mFragmentView, R.id.view_newlive_meng_bg);
         //标题和内容
         /* 直播*/
         main_home_level_lay = mFragmentView.findViewById(R.id.main_home_level_lay);
         main_home_level_lay.setOnClickListener(this);
         //等级
-        view_home_level_bg = ViewHolders.get(mFragmentView, R.id.view_home_level_bg);
         mainHomeSwiperefreshlayout.setProgressBackgroundColorSchemeResource(R.color.white);
         // 设置下拉进度的主题颜色
         mainHomeSwiperefreshlayout.setColorSchemeResources(R.color.app_golden_disable, R.color.app_golden, R.color.app_golden_click, R.color.app_golden_click);
@@ -347,15 +391,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         .getDisplayMetrics()));
         mainHomeSwiperefreshlayout.setOnRefreshListener(this);
         mainHomeSmartscrollview.setScrollChangedListener(this);
-        view_home_member = ViewHolders.get(mFragmentView, R.id.view_home_member);
-        main_home_gvw = (MyGridView) mFragmentView.findViewById(R.id.main_home_gvw);
         operationAdapter = new OperationAdapter(baseActivity, R.layout.item_operation);
-        main_home_gvw.setAdapter(operationAdapter);
+        mainHomeGvw.setAdapter(operationAdapter);
 
         initProduct(mFragmentView);
         //游客模式下或者没有绑定过理财师需要
         initRxEvent();
-        main_home_gvw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mainHomeGvw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HomeEntity.Operate data = (HomeEntity.Operate) parent.getItemAtPosition(position);
@@ -388,30 +430,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
 
     private void initProduct(View mFragmentView) {
+        //私募基金
         view_home_product_focus = ViewHolders.get(mFragmentView, R.id.view_home_product_focus);
-        home_product_skip_bank = ViewHolders.get(mFragmentView, R.id.home_product_skip_bank);
-        home_product_title = ViewHolders.get(mFragmentView, R.id.home_product_title);
-        home_peoduct_subtitle = ViewHolders.get(mFragmentView, R.id.home_peoduct_subtitle);
-        view_home_product_bg = ViewHolders.get(mFragmentView, R.id.view_home_product_bg);
-        view_home_product_tag = ViewHolders.get(mFragmentView, R.id.view_home_product_tag);
-
-        view_home_product_name = ViewHolders.get(mFragmentView, R.id.view_home_product_name);
-        view_home_product_des = ViewHolders.get(mFragmentView, R.id.view_home_product_des);
-
-        home_product_down_lay = ViewHolders.get(mFragmentView, R.id.home_product_down_lay);
-
-        home_product_frist_up = ViewHolders.get(mFragmentView, R.id.home_product_frist_up);
-        home_product_frist_down = ViewHolders.get(mFragmentView, R.id.home_product_frist_down);
-
-        home_product_second_up = ViewHolders.get(mFragmentView, R.id.home_product_second_up);
-        home_product_second_down = ViewHolders.get(mFragmentView, R.id.home_product_second_down);
-
-        home_product_three_up = ViewHolders.get(mFragmentView, R.id.home_product_three_up);
-        home_product_three_down = ViewHolders.get(mFragmentView, R.id.home_product_three_down);
+        view_home_private_fund_skip_lay = ViewHolders.get(mFragmentView, R.id.view_home_private_fund_skip_lay);
 
 
         view_home_product_focus.setOnClickListener(this);
-        home_product_skip_bank.setOnClickListener(this);
+        view_home_private_fund_skip_lay.setOnClickListener(this);
+
+
     }
 
 
@@ -486,24 +513,24 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     case 0://预告
 //                        //新版直播
                         main_home_newlive_lay.setVisibility(View.VISIBLE);
-                        home_newlive_foreshow_lay.setVisibility(View.VISIBLE);
-                        view_newlive_meng_bg.setVisibility(View.VISIBLE);
-                        home_newlive_now_lay.setVisibility(View.GONE);
-                        Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
-                        BStrUtils.setTv(view_newlive_title_tag, liveInfBean.create_time + "开播");
-                        view_newlive_tag.setText("直播预告");
-                        BStrUtils.setTv(view_newlive_content, liveInfBean.title);
+                        homeNewliveForeshowLay.setVisibility(View.VISIBLE);
+                        viewNewliveMengBg.setVisibility(View.VISIBLE);
+                        homeNewliveNowLay.setVisibility(View.GONE);
+                        Imageload.display(baseActivity, liveInfBean.image, viewNewliveIvBg);
+                        BStrUtils.setTv(viewNewliveTitleTag, liveInfBean.create_time + "开播");
+                        viewNewliveTag.setText("直播预告");
+                        BStrUtils.setTv(viewNewliveContent, liveInfBean.title);
                         break;
                     case 1://直播中
                         //新版直播
                         main_home_newlive_lay.setVisibility(View.VISIBLE);
-                        home_newlive_foreshow_lay.setVisibility(View.GONE);
-                        home_newlive_now_lay.setVisibility(View.VISIBLE);
-                        view_newlive_meng_bg.setVisibility(View.GONE);
-                        Imageload.display(baseActivity, liveInfBean.image, view_newlive_iv_bg);
-                        view_newlive_tag.setText("正在直播");
-                        BStrUtils.setTv(view_newlive_content, liveInfBean.title);
-                        BStrUtils.setTv(view_newlive_number, BStrUtils.NullToStr(liveInfBean.visitors) + "人正在观看");
+                        homeNewliveForeshowLay.setVisibility(View.GONE);
+                        homeNewliveNowLay.setVisibility(View.VISIBLE);
+                        viewNewliveMengBg.setVisibility(View.GONE);
+                        Imageload.display(baseActivity, liveInfBean.image, viewNewliveIvBg);
+                        viewNewliveTag.setText("正在直播");
+                        BStrUtils.setTv(viewNewliveContent, liveInfBean.title);
+                        BStrUtils.setTv(viewNewliveNumber, BStrUtils.NullToStr(liveInfBean.visitors) + "人正在观看");
 
                         break;
                     case 2://无直播
@@ -611,37 +638,37 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             home_product_view.setVisibility(View.GONE);
             return;
         }
-        BStrUtils.setTv(home_product_title, bank.title);
-        BStrUtils.setTv(home_peoduct_subtitle, bank.subtitle);
+        BStrUtils.setTv(homeProductTitle, bank.title);
+        BStrUtils.setTv(homePeoductSubtitle, bank.subtitle);
         home_product_view.setVisibility(View.VISIBLE);
         if (null == bank.product || null == bank.product.content) {
             baseActivity.findViewById(R.id.home_product_view).setVisibility(View.GONE);
             return;
         }
-        Imageload.display(baseActivity, bank.product.content.marketingImageUrl, view_home_product_bg);
+        Imageload.display(baseActivity, bank.product.content.marketingImageUrl, viewHomeProductBg);
 
-        BStrUtils.setTv1(view_home_product_name, bank.product.content.productName);
-        BStrUtils.setTv1(view_home_product_des, bank.product.content.hotName);
+        BStrUtils.setTv1(viewHomeProductName, bank.product.content.productName);
+        BStrUtils.setTv1(viewHomeProductDes, bank.product.content.hotName);
         if (AppManager.isVisitor(baseActivity) || TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {
-            home_product_down_lay.setVisibility(View.GONE);
+            homeProductDownLay.setVisibility(View.GONE);
         } else {
-            home_product_down_lay.setVisibility(View.VISIBLE);
+            homeProductDownLay.setVisibility(View.VISIBLE);
         }
 
         //第三个*******************************************************
         // BStrUtils.setTv(home_product_second_down, bank.product.content.term);
         String term = bank.product.content.term;
         if (BStrUtils.isChineseStr(term) && 0 != BStrUtils.postionChineseStr(term)) {
-            home_product_second_down.setTextSize(11);
+            homeProductSecondDown.setTextSize(11);
             SpannableString spannableStrings = SpannableUtils.setTextSize(term, 0, BStrUtils.postionChineseStr(term), DimensionPixelUtil.dip2px(baseActivity, 15));
-            BStrUtils.setSp(home_product_second_down, spannableStrings);
+            BStrUtils.setSp(homeProductSecondDown, spannableStrings);
         } else if (0 == BStrUtils.postionChineseStr(term) && BStrUtils.hasDigit(term)) {
-            home_product_second_down.setTextSize(11);
+            homeProductSecondDown.setTextSize(11);
             SpannableString spannableStrings = SpannableUtils.setTextSize(term, BStrUtils.beginPostionDigit(term), BStrUtils.lastPostionDigit(term) + 1, DimensionPixelUtil.dip2px(baseActivity, 15));
-            BStrUtils.setSp(home_product_second_down, spannableStrings);
+            BStrUtils.setSp(homeProductSecondDown, spannableStrings);
         } else {
-            home_product_second_down.setTextSize(11);
-            BStrUtils.setTv(home_product_second_down, term);
+            homeProductSecondDown.setTextSize(11);
+            BStrUtils.setTv(homeProductSecondDown, term);
 
 
         }
@@ -657,50 +684,50 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
 
         SpannableString spannableStringmony = SpannableUtils.setTextSize(mony, 0, raised_amt.length(), DimensionPixelUtil.dip2px(baseActivity, 15));
-        BStrUtils.setSp(home_product_three_down, spannableStringmony);
+        BStrUtils.setSp(homeProductThreeDown, spannableStringmony);
         //第一个**********************拷贝过来的产品的一坨逻辑*************************************
         //显示下边具体数据的 一大坨的逻辑判断
         switch (bank.product.content.productType) {
             case "1":
-                BStrUtils.setTv1(home_product_frist_up, "业绩基准");
+                BStrUtils.setTv1(homeProductFristUp, "业绩基准");
                 String yield = bank.product.content.expectedYield + "%";
                 SpannableString spannableString = SpannableUtils.setTextSize(yield, 0, bank.product.content.expectedYield.length(), DimensionPixelUtil.dip2px(baseActivity, 15));
-                BStrUtils.setSp(home_product_frist_down, spannableString);
-//                BStrUtils.setTv1(home_product_frist_down, bank.product.content.expectedYield + "%");
+                BStrUtils.setSp(homeProductFristDown, spannableString);
+//                BStrUtils.setTv1(homeProductFristDown, bank.product.content.expectedYield + "%");
 
                 break;
             case "2":
-                BStrUtils.setTv1(home_product_frist_up, "累计净值");
+                BStrUtils.setTv1(homeProductFristUp, "累计净值");
                 String cumulativeNet = bank.product.content.cumulativeNet;
-                home_product_frist_down.setTextSize(11);
+                homeProductFristDown.setTextSize(11);
                 if (BStrUtils.isChineseStr(cumulativeNet)) {
                     SpannableString spannableStrings = SpannableUtils.setTextSize(cumulativeNet, 0, BStrUtils.postionChineseStr(cumulativeNet), DimensionPixelUtil.dip2px(baseActivity, 15));
-                    BStrUtils.setSp(home_product_frist_down, spannableStrings);
+                    BStrUtils.setSp(homeProductFristDown, spannableStrings);
                 } else if (cumulativeNet.contains("%")) {
                     SpannableString spannableStrings = SpannableUtils.setTextSize(cumulativeNet, 0, cumulativeNet.length() - 2, DimensionPixelUtil.dip2px(baseActivity, 15));
-                    BStrUtils.setSp(home_product_frist_down, spannableStrings);
+                    BStrUtils.setSp(homeProductFristDown, spannableStrings);
                 } else {
-                    home_product_frist_down.setTextSize(15);
-                    BStrUtils.setTv1(home_product_frist_down, bank.product.content.cumulativeNet);
+                    homeProductFristDown.setTextSize(15);
+                    BStrUtils.setTv1(homeProductFristDown, bank.product.content.cumulativeNet);
                 }
 
                 break;
             case "3":
-                BStrUtils.setTv1(home_product_frist_up, "剩余额度");
+                BStrUtils.setTv1(homeProductFristUp, "剩余额度");
                 String fudong = bank.product.content.expectedYield + "%+浮动";
 
                 SpannableString spannableString2 = SpannableUtils.setTextSize(fudong, 0, bank.product.content.expectedYield.length(), DimensionPixelUtil.dip2px(baseActivity, 15));
-                BStrUtils.setSp(home_product_frist_down, spannableString2);
+                BStrUtils.setSp(homeProductFristDown, spannableString2);
 
                 break;
         }
 
 
         if (!AppManager.getIsLogin(baseActivity)) {
-            BStrUtils.setTv1(view_home_product_tag, "风险评测后可见");
+            BStrUtils.setTv1(viewHomeProductTag, "风险评测后可见");
 
         } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {//需要风险测评
-            BStrUtils.setTv1(view_home_product_tag, "风险评测后可见");
+            BStrUtils.setTv1(viewHomeProductTag, "风险评测后可见");
 
         } else {//显示截至打款时间************拷贝过来的一坨产品逻辑***************
             try {
@@ -709,7 +736,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
                 if (productlsBean.raiseEndTime != null && !"".equals(productlsBean.raiseEndTime)) {
-                    java.util.Date end_time = dateFormat.parse(productlsBean.raiseEndTime);
+                    Date end_time = dateFormat.parse(productlsBean.raiseEndTime);
                     long l = end_time.getTime() - System.currentTimeMillis();
                     String dateString = null;
                     int day = (int) (l / 1000 / 60 / 60 / 24);
@@ -728,16 +755,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         }
                     }
                     if (l <= 0) {
-                        BStrUtils.setTv(view_home_product_tag, "已截止");
+                        BStrUtils.setTv(viewHomeProductTag, "已截止");
                     } else {
-                        BStrUtils.setTv(view_home_product_tag, "截止" + dateString + "打款");
+                        BStrUtils.setTv(viewHomeProductTag, "截止" + dateString + "打款");
                     }
                 } else {
-                    view_home_product_tag.setVisibility(View.GONE);
+                    viewHomeProductTag.setVisibility(View.GONE);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                view_home_product_tag.setVisibility(View.GONE);
+                viewHomeProductTag.setVisibility(View.GONE);
             }
 
 
@@ -757,7 +784,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             } else if (sizeNumber > 8) {
                 number = 5;
             }
-            main_home_gvw.setNumColumns(number);
+            mainHomeGvw.setNumColumns(number);
             operationAdapter.refreshData(module, number);
         }
     }
@@ -767,11 +794,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     private void initLevel(HomeEntity.Level level) {
         BStrUtils.setTv1(viewHomeLevelStr, level.memberLevel);
-        view_home_member.setTextColor(getResources().getColor("0".equals(level.level) ? R.color.home_level_gray : R.color.home_level_golde));
+        viewHomeMember.setTextColor(getResources().getColor("0".equals(level.level) ? R.color.home_level_gray : R.color.home_level_golde));
         viewHomeLevelStr.setTextColor(getResources().getColor("0".equals(level.level) ? R.color.home_level_gray : R.color.home_level_white));
-        view_home_level_bg.setImageResource("0".equals(level.level) ? R.drawable.home_level_normal_bg : R.drawable.home_level_level_bg);
+        viewHomeLevelBg.setImageResource("0".equals(level.level) ? R.drawable.home_level_normal_bg : R.drawable.home_level_level_bg);
 
-        view_home_level_arrow.setImageResource("0".equals(level.level) ? R.drawable.home_level_gray_arrow : R.drawable.home_level_arrow);
+        viewHomeLevelArrow.setImageResource("0".equals(level.level) ? R.drawable.home_level_gray_arrow : R.drawable.home_level_arrow);
     }
 
     @Override
@@ -787,8 +814,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void getCacheResult(HomeEntity.Result cachesData) {
         if (null == cachesData) return;
-        //横向轮播
-//        initHorizontalScroll(cachesData.module);
         //banner
         initViewPage(cachesData.banner);
         //用户等级信息
@@ -807,6 +832,40 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
     }
 
+    @Override
+    public void getPublicFundResult(PublishFundRecommendBean publishFundRecommendBean) {
+        initPublicFundData(false, publishFundRecommendBean);
+    }
+
+    PublishFundRecommendBean publishFundRecommend;
+
+    /**
+     * 初始化公募基金数据（历史原因需要进行单独请求）
+     *
+     * @param publishFundRecommendBean
+     */
+    private void initPublicFundData(boolean isCache, PublishFundRecommendBean publishFundRecommendBean) {
+        if (isCache) {
+        } else {
+
+        }
+        publishFundRecommend = publishFundRecommendBean;
+        viewHomePublicFundLay.setVisibility(View.VISIBLE);
+//        viewPublicFundRegist.setVisibility("1".equals(publishFundRecommendBean.getIsHaveAccount())?View.GONE:View.VISIBLE);
+        BStrUtils.setTv(viewHomePublicFundFundname, publishFundRecommendBean.getFundName());
+        BStrUtils.setTv(viewHomePublicFundFunddes, publishFundRecommendBean.getFundDes());
+        BStrUtils.setTv(viewHomePublicFundLeftvalues, publishFundRecommendBean.getLeftUpValue());
+        BStrUtils.setTv(viewHomePublicFundLeftdes, publishFundRecommendBean.getLeftDownDes());
+        BStrUtils.setTv(viewHomePublicFundRightvalues, publishFundRecommendBean.getRightUpValue());
+        BStrUtils.setTv(viewHomePublicFundRightdes, publishFundRecommendBean.getRightDownDes());
+
+    }
+
+    @Override
+    public void getPublicFundError(String error) {
+
+    }
+
 
     /**
      * 下拉刷新展示
@@ -818,6 +877,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainhomeWebview.loadUrl("javascript:refresh()");
         //请求数据
         getPresenter().getHomeData();
+        getPresenter().getPublicFundRecommend();
         RxBus.get().post(RxConstant.REFRESH_LIVE_DATA, true);
     }
 
@@ -881,14 +941,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 if (null != homeData && null != homeData.bank && null != homeData.bank.product && null != homeData.bank.product.content) {
                     HomeEntity.bankData productlsBean = homeData.bank.product.content;
                     ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
-//                    DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.shortName, "1".equals(productlsBean.isHotProduct));
                 }
                 TrackingDataManger.homeProduct(baseActivity);
                 break;
-            case R.id.home_product_skip_bank:
+            case R.id.view_home_private_fund_skip_lay:
                 NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
                 TrackingDataManger.homePrivateMore(baseActivity);
+
                 break;
+
+
         }
     }
 
@@ -926,7 +988,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     /**
-     * 开始倒计时十秒
+     * 手动闭合
      */
     private void timeCountDown() {
         RxCountDown.countdown(ADVISERSHOWTIME).doOnSubscribe(new Action0() {
@@ -938,7 +1000,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             @Override
             public void onCompleted() {
                 hindCard(200);
-
             }
 
             @Override
@@ -952,6 +1013,32 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
             }
         });
+    }
+
+
+    /**
+     * 公募基金的注册按钮
+     */
+    @OnClick(R.id.view_public_fund_regist)
+    public void onViewClicked() {
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+    }
+
+    /**
+     * 公募基金详情
+     */
+    @OnClick(R.id.view_home_public_fund_detial_lay)
+    public void publicFundDetail() {
+
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundCode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundCode()), false);
+    }
+
+    /**
+     * 公募基金转入
+     */
+    @OnClick(R.id.view_home_public_fund_shift)
+    public void publicFundShift() {
+
     }
 
 

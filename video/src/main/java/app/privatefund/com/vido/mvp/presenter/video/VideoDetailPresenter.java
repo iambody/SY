@@ -30,9 +30,6 @@ import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
 import com.lzy.okserver.listener.DownloadListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -173,7 +170,8 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
         viModel.currentTime = playTime;
         updataLocalVideoInfo();
     }
-    public void updataNowStop( ) {
+
+    public void updataNowStop() {
         if (viModel == null) {
             return;
         }
@@ -265,10 +263,6 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     //添加评论
     @Override
     public void addCommont(String commontStr, String vdieoId) {
-        if (!NetUtils.isNetworkAvailable(getContext())) {
-
-        }
-//        PromptManager.ShowCustomToast(getContext(),"sss");
         addSubscription(ApiClient.videoCommentAdd(commontStr, AppManager.getUserId(getContext()), vdieoId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -278,7 +272,6 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
 
             @Override
             protected void onRxError(Throwable error) {
-                LogUtils.Log("addcommont", error.toString());
 
             }
         }));
@@ -287,7 +280,6 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     //获取更多评论接口
     @Override
     public void getMoreCommont(String voideoId, String CommontId) {
-        //1tetetettetettetetetettetttee
         addSubscription(ApiClient.videoCommentLs(voideoId, CommontId).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -305,7 +297,7 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
     public void addressValidateResult(boolean refreshPage) {
         OkHttpClient okHttpClient = OKHTTP.getInstance().getOkClient().newBuilder().connectTimeout(5, TimeUnit.SECONDS).readTimeout(5, TimeUnit.SECONDS).build();
         Request request = new Request.Builder().url(NetConfig.TENCENT_VIDEO_URL).build();
-        okHttpClient.newCall(request).enqueue(new Callback(){
+        okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String contentLenght = response.header("Content-Length");
@@ -313,10 +305,11 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
                     getView().setAddressValidateResult("0", refreshPage);
                 }
             }
+
             @Override
             public void onFailure(Call call, IOException e) {
                 if (NetUtils.isNetworkAvailable(getContext())) {
-                    getView().setAddressValidateResult(TextUtils.equals(((ApiException)e).getCode(), "404") ? "1" : "0", refreshPage);
+                    getView().setAddressValidateResult(TextUtils.equals(((ApiException) e).getCode(), "404") ? "1" : "0", refreshPage);
                 }
             }
         });

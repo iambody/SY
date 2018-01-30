@@ -9,9 +9,10 @@ import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
+import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import com.google.gson.Gson;
 
@@ -128,6 +129,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存选择的地址
+     *
      * @param context
      * @param address
      */
@@ -136,7 +138,6 @@ public class AppInfStore implements AppinfConstant {
         ed.putString(SELECT_ADDRESS, address);
         ed.commit();
     }
-
 
 
     /**
@@ -199,6 +200,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 保存验证密码错误
+     *
      * @param context
      * @param errorNumber
      */
@@ -246,7 +248,8 @@ public class AppInfStore implements AppinfConstant {
         ed.commit();
     }
 
-    /**.
+    /**
+     * .
      * 保存聊天名称 －－产品分享需要用到
      *
      * @param context
@@ -528,10 +531,11 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 是否显示踢出dialog
+     *
      * @param sContext
-     * @param b 时间
+     * @param b        时间
      */
-    public static void saveDialogTag(Context sContext,boolean b) {
+    public static void saveDialogTag(Context sContext, boolean b) {
         SharedPreferences sp = getBasePreference(sContext);
         SharedPreferences.Editor ed = sp.edit();
         ed.putBoolean("dialogshow", b);
@@ -540,6 +544,7 @@ public class AppInfStore implements AppinfConstant {
 
     /**
      * 是否显示除个人中心外的新手引导
+     *
      * @param context
      */
     public static void saveGuideTag(Context context) {
@@ -548,8 +553,10 @@ public class AppInfStore implements AppinfConstant {
         ed.putBoolean("guideshow", true);
         ed.commit();
     }
+
     /**
      * 是否显示个人中心的新手引导
+     *
      * @param context
      */
     public static void saveGuideTagOfMine(Context context) {
@@ -557,5 +564,48 @@ public class AppInfStore implements AppinfConstant {
         SharedPreferences.Editor ed = sp.edit();
         ed.putBoolean("guideshowofmine", true);
         ed.commit();
+    }
+
+    /**
+     * 保存公募信息
+     */
+    public static void savePublicFundInf(Context context, PublicFundInf publicFundInf) {
+        SharedPreferences sp = getBasePreference(context);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString(PUBLIC_FUND_INF, new Gson().toJson(publicFundInf));
+        ed.commit();
+
+    }
+
+    /**
+     * 获取公募信息
+     */
+    public static PublicFundInf getPublicFundInf(Context context) {
+        SharedPreferences sp = getBasePreference(context);
+        String result = sp.getString(PUBLIC_FUND_INF, "");
+        if (BStrUtils.isEmpty(result)) return null;
+        return new Gson().fromJson(result, PublicFundInf.class);
+
+    }
+
+    /**
+     * 保存公募的首页推荐位
+     */
+    public static void savePublicFundRecommend(Context context, PublishFundRecommendBean publishFundRecommendBean) {
+
+        SharedPreferences sp = getBasePreference(context);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString(PUBIC_FUND_CACAHEA, new Gson().toJson(publishFundRecommendBean));
+        ed.commit();
+    }
+
+    /**
+     * 获取公募推荐
+     */
+    public static PublishFundRecommendBean getPublicFundRecommend(Context context) {
+        SharedPreferences sp = getBasePreference(context);
+        String result = sp.getString(PUBIC_FUND_CACAHEA, "");
+        if (BStrUtils.isEmpty(result)) return null;
+        return new Gson().fromJson(result, PublishFundRecommendBean.class);
     }
 }

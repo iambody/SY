@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.contract.home;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
+import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 
 /**
  * desc  ${DESC}
@@ -19,6 +20,10 @@ public class MainHomeContract {
         public void getCacheResult(HomeEntity.Result cachesData);
 
         public void getUseriInfsucc(int Type);
+
+        public void getPublicFundResult(PublishFundRecommendBean publishFundRecommendBean);
+
+        public void getPublicFundError(String error);
     }
 
     public interface Presenter extends BasePresenter {
@@ -28,7 +33,7 @@ public class MainHomeContract {
 
         public void getUserInf(int type);
 
-
+        public void getPublicFundRecommend();
 
 
     }

@@ -28,6 +28,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.listener.listener.BdLocationListener;
 import com.cgbsoft.lib.share.utils.WxAuthorManger;
+import com.cgbsoft.lib.utils.cache.CacheManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -43,6 +44,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.utils.tools.ZipUtils;
 import com.cgbsoft.lib.widget.WeiChatLoginDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.StrResult;
@@ -52,6 +54,8 @@ import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.umeng.analytics.MobclickAgent;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import app.ndk.com.enter.R;
@@ -63,6 +67,7 @@ import butterknife.OnClick;
 import cn.sharesdk.framework.ShareSDK;
 import io.rong.imkit.RongContext;
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 
 @Route(RouteConfig.GOTO_LOGIN)
@@ -215,6 +220,25 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             public boolean onTouch(View v, MotionEvent event) {
                 homeNameInput.setHintEnabled(true);
                 return false;
+            }
+        });
+
+
+        //解压一些资源
+        Observable.just(R.raw.ress).subscribeOn(Schedulers.io()).subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                String path = CacheManager.getCachePath(getApplicationContext(), CacheManager.RES);
+                InputStream is = getResources().openRawResource(integer);
+                try {
+                    ZipUtils.unZip(is, path, false);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
             }
         });
     }

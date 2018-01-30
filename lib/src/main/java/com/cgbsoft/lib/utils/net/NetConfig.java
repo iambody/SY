@@ -17,7 +17,7 @@ public class NetConfig {
     public static String START_APPEND = "https://";
 
     //        private static String START_APP = "https://app";
-//    public static String START_APP = "https://t3-app";//sim
+//    public static String START_APP = "https://d8-app";//sim
     public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
@@ -427,6 +427,14 @@ public class NetConfig {
         static final String UPLOAD_OTHER_CREDENTIALS = AUTH_URL_V3 + "/credential/upload";
         static final String GET_INDENTITY_LIST_ADD = AUTH_URL_V2 + "/subcredentials";
         static final String GET_LIVING_STATE = AUTH_URL_V3 + "/credential/livingbody/history";
+    }
+
+    /**
+     * 公募基金的API
+     */
+    static class PUBLIC_FUND {
+        static final String HOME_RECOMMEND = API_URL_V2 + "/kz/proxy/sixiangbao";
+        static  final  String PRIVATE_FUND_INF=API_URL_V2+"/kz/userinfo";
     }
 
     public static class SoDown {
