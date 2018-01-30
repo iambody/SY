@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pv="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/private_assert_title"
+        android:text="@string/private_fund"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/account_bank_on_bug_ll"
+                android:layout_marginBottom="@dimen/ui_10_dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/private_assert_title"
+                    android:text="@string/private_fund"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    style="@style/mine_item_desc_text"
+                    android:text="@string/account_bank_no_bugy"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/ui_10_dip"
+                    android:layout_marginRight="@dimen/ui_10_dip"
+                    android:id="@+id/account_bank_go_look_product"
+                    android:background="@drawable/selector_bg_btn_white_with_golden_boade"
+                    android:text="@string/account_bank_browse_buy"
+                    android:gravity="center"
+                    android:textColor="@color/app_golden"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/ui_10_dip"
+                    android:layout_marginRight="@dimen/ui_10_dip"
+                    android:id="@+id/account_bank_go_relative_assert"
+                    android:background="@drawable/selector_bg_btn_white_with_golden_boade"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/account_bank_no_relative_assert"
+                    android:textColor="@color/app_golden"/>
+            </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/account_bank_had_bug_ll"
+            android:gravity="center"
+            android:layout_margin="20dp"
+            android:visibility="gone">
+
+            <com.cgbsoft.lib.widget.RoundProgressbar
+                android:id="@+id/roundProgressBar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center_vertical"
+                pv:startAngle="0"
+                pv:ringColor="#000"
+                pv:ringWidth="10dip"
+                pv:progress = "0"
+                pv:ringProgressColor="#bf9b69"
+                pv:textIsDisplayable="false" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginLeft="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:id="@+id/account_bank_assert_total_text"
+                        android:text="存续资产"
+                        android:textSize="@dimen/dimens_sp_14"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="8dp"
+                        android:gravity="center"
+                        android:id="@+id/account_bank_assert_total_value"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimens_sp_24"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/app_golden"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:id="@+id/account_bank_assert_zhaiquan_text"
+                        android:text="债权占比"
+                        android:textSize="@dimen/dimens_sp_12"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/account_bank_assert_zhaiquan_value"
+                        android:textSize="@dimen/dimens_sp_18"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="8dp">
+
+                    <TextView
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginRight="4dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:background="@color/black"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/account_bank_assert_guquan_text"
+                        android:text="股权占比"
+                        android:textSize="@dimen/dimens_sp_12"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:id="@+id/account_bank_assert_guquan_value"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/dimens_sp_18"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/private_bank_bottom_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/ui_10_dip">
+
+        <LinearLayout
+            style="@style/mine_account_info_text_image_ll"
+            android:id="@+id/mine_bank_asset_match_ll">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                style="@style/mine_account_info_text_image"
+                android:drawableTop="@drawable/icon_assets_order"
+                android:text="@string/account_bank_asset_zuhe"/>
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="2dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            style="@style/mine_account_info_text_image_ll"
+            android:id="@+id/mine_bank_invistor_carlendar_ll">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                style="@style/mine_account_info_text_image"
+                android:drawableTop="@drawable/icon_investment_calendar"
+                android:text="@string/account_bank_invistor_carlendar"/>
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="2dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            style="@style/mine_account_info_text_image_ll"
+            android:id="@+id/mine_bank_datum_manager_ll">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                style="@style/mine_account_info_text_image"
+                android:drawableTop="@drawable/icon_data_folder"
+                android:text="@string/account_bank_info_manager"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

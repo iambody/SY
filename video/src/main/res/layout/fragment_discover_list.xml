@@ -25,8 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:paddingLeft="20dp"
-            android:layout_marginBottom="10dp"
             android:scrollbars="none"/>
+
+        <LinearLayout
+            android:id="@+id/divide_stock_index"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:orientation="horizontal"
+            android:background="@color/app_bg"/>
 
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@+id/discover_list_indicator"

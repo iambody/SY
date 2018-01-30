@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,9 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    @BindView(R.id.divide_stock_index)
+    LinearLayout linearlayout;
 
     @BindView(R.id.discover_bannerview)
     BannerView discoveryBannerView;
@@ -268,6 +272,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
                 notifyDataSetChanged();
             } else {
                 recyclerView.setVisibility(View.GONE);
+                linearlayout.setVisibility(View.GONE);
             }
         }
 

@@ -124,4 +124,17 @@
     <string name="permission_location_str">访问范围性的定位权限\n</string>
     <string name="permission_extenge_str">照片、媒体内容和文件权限\n</string>
 
+    <string name="finished_public_fund_create_account">完成公募基金开户</string>
+    <string name="public_fund">公募基金</string>
+    <string name="private_share_bao">私享宝</string>
+    <string name="private_fund">私募基金</string>
+    <string name="now_transfer">立即转入</string>
+    <string name="look_public_fund_product">看看公募基金产品</string>
+    <string name="serven_increase_percent">七日年化收益率</string>
+    <string name="wan_fen_increase_value">万份收益（元）</string>
+    <string name="subsist_assert">续存资产（元）</string>
+    <string name="continue_income">持有收益（元）</string>
+    <string name="yestoday_income">昨日收益（元）</string>
+    <string name="public_fund_no_assert">您还没有资产，可以</string>
+
 </resources>

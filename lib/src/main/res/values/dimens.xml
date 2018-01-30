@@ -57,6 +57,7 @@
     <dimen name="common_share_kuan_height">120dp</dimen>
     <dimen name="ui_34_dip">34dp</dimen>
     <dimen name="ui_25_dip">25dp</dimen>
+    <dimen name="ui_23_dip">23dp</dimen>
     <dimen name="ui_43_dip">43dp</dimen>
     <dimen name="common_share_cadr_title_size">16sp</dimen>
     <dimen name="ui_70_dip">70dp</dimen>

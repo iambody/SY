@@ -409,4 +409,38 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/dimens_sp_10</item>
     </style>
+
+    <style name="private_assert_title">
+        <item name="android:textColor">@color/app_golden</item>
+        <item name="android:textSize">@dimen/dimens_sp_16</item>
+    </style>
+
+    <style name="private_share_bao_increase_value">
+        <item name="android:textColor">@color/stock_red</item>
+        <item name="android:textSize">@dimen/dimens_sp_28</item>
+        <item name="android:layout_marginTop">@dimen/ui_15_dip</item>
+    </style>
+
+    <style name="private_share_bao_increase_value_desc">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/dimens_sp_14</item>
+        <item name="android:layout_marginTop">@dimen/ui_1_dip</item>
+    </style>
+
+    <style name="private_share_bao_assert_title">
+        <item name="android:textColor">@color/color_595959</item>
+        <item name="android:textSize">@dimen/dimens_sp_12</item>
+        <item name="android:layout_marginBottom">@dimen/ui_5_dip</item>
+    </style>
+
+    <style name="private_share_bao_assert_number">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/dimens_sp_18</item>
+    </style>
+
+    <style name="private_assert_number_golden">
+        <item name="android:textColor">@color/app_golden</item>
+        <item name="android:textSize">@dimen/dimens_sp_18</item>
+    </style>
+
 </resources>

@@ -183,6 +183,39 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.account_order_all_text)
     TextView account_order_all_text;
 
+    @BindView(R.id.ll_public_fund_create_account)
+    TextView ll_Public_f;
+
+    @BindView(R.id.tv_increase_percent)
+    TextView tv_increase_percent;
+
+    @BindView(R.id.tv_increase_value)
+    TextView tv_increase_value;
+
+    @BindView(R.id.tv_now_transfer)
+    TextView tv_now_transfer;
+
+    @BindView(R.id.tv_share_bao_subsist_assert)
+    TextView tv_share_bao_subsist_assert;
+
+    @BindView(R.id.tv_share_bao_continue_income)
+    TextView tv_share_bao_continue_income;
+
+    @BindView(R.id.tv_share_bao_yestoday_income)
+    TextView tv_share_bao_yestoday_income;
+
+    @BindView(R.id.tv_look_public_fund_product)
+    TextView tv_look_public_fund_product;
+
+    @BindView(R.id.tv_public_fund_subsist_assert)
+    TextView tv_public_fund_subsist_assert;
+
+    @BindView(R.id.tv_public_fund_continue_income)
+    TextView tv_public_fund_continue_income;
+
+    @BindView(R.id.tv_public_fund_yestoday_income)
+    TextView tv_public_fund_yestoday_income;
+
     @BindView(R.id.tab_layout)
     XTabLayout xTabLayout;
 

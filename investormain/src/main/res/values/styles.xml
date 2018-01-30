@@ -117,7 +117,7 @@
     <style name="mine_item_desc_text">
         <item name="android:textSize">@dimen/dimens_sp_14</item>
         <item name="android:textColor">@color/color_5a5a5a</item>
-        <item name="android:layout_marginTop">@dimen/dimens_sp_14</item>
+        <item name="android:layout_marginTop">@dimen/dimens_sp_15</item>
         <item name="android:layout_marginBottom">@dimen/dimens_sp_14</item>
     </style>
 
