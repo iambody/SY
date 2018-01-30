@@ -49,6 +49,7 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.OperationAdapter;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
@@ -77,7 +78,7 @@ import rx.Subscriber;
 import rx.functions.Action0;
 
 /**
- * desc
+ * desc 首页
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/6/26-21:06
  */
@@ -175,10 +176,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     RelativeLayout homeNewliveNowLay;
     @BindView(R.id.home_product_down_lay)
     LinearLayout homeProductDownLay;
-
-    View home_product_view;
-    View main_home_level_lay;
-    View main_home_newlive_lay;
+    //产品新增
+    View home_product_view, main_home_level_lay, main_home_newlive_lay;
     //私募基金新增
     LinearLayout view_home_product_focus, view_home_private_fund_skip_lay;
 
@@ -190,11 +189,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     HomeEntity.Result homeData;
     LiveInfBean homeliveInfBean;
 
-    boolean isLoading;
-    boolean bannerIsLeft;
-    boolean bannerIsRight;
-    boolean isRolling;
-    boolean isVisible;
+    boolean isLoading, bannerIsLeft, bannerIsRight, isRolling, isVisible;
 
 
     @Override
@@ -210,7 +205,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initCache();
         getPresenter().getHomeData();
         getPresenter().getPublicFundRecommend();
-        DataStatistApiParam.gohome();
+
 
     }
 
@@ -318,6 +313,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         HomeEntity.Result data = AppManager.getHomeCache(baseActivity);
         if (null != data)
             initResultData(data);
+
+        if (null != data)
+            DataStatistApiParam.gohome();
     }
 
     /**
@@ -1029,7 +1027,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_detial_lay)
     public void publicFundDetail() {
-
         NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundCode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundCode()), false);
     }
 
@@ -1038,6 +1035,20 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_shift)
     public void publicFundShift() {
+        //需要先判断是否注册绑卡
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
+        String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
+        if (BStrUtils.isEmpty(fundinf)) {//未开户
+            //跳转到开户页面ton
+            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+        } else if ("0".equals(publicFundInf.getIsHaveCustBankAcct())) {
+            //跳转到绑定银行卡页面
+            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct())) {
+            //开过户并且已经完成绑卡 跳转到数据里面
+            String toBuyObj = NavigationUtils.getObjToBuy(publishFundRecommend, publicFundInf);
+
+        }
 
     }
 
