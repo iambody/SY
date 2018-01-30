@@ -390,6 +390,9 @@ public class NetConfig {
 
         // 资讯列表页面
         final static String DISCOVERY_LIST_PAGE = API_URL + "/information/list";
+
+        // 股票指数
+        final static String DISCOVERY_STOCK_INDEX =  "/api/stockindex";
     }
 
     /**

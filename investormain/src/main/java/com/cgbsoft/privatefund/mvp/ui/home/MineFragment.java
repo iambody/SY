@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -13,8 +12,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +42,6 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
-import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.RoundImageView;
@@ -165,6 +161,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @BindView(R.id.account_health_had_bug_ll)
     LinearLayout health_had_data_ll;
+
+//    @BindView(R.id.health_record_look_all_text)
+//    TextView health_title_recodr_all;
 
     @BindView(R.id.account_health_on_bug_ll)
     LinearLayout health_had_no_data_ll;
@@ -1083,16 +1082,18 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.HEALTH_CHECK_PAGE);
     }
 
-    @OnClick(R.id.health_all_title_ll)
-    void gotoHealthAllctivity() {
-        String url = CwebNetConfig.mineHealthOrder;
-        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-        intent.putExtra(WebViewConstant.push_message_url, url);
-        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
-        intent.putExtra(WebViewConstant.right_message_index, true);
-        startActivity(intent);
-        DataStatistApiParam.operateMineHealthClick();
-    }
+//    @OnClick(R.id.health_all_title_ll)
+//    void gotoHealthAllctivity() {
+//        if (mineModel == null && mineModel.getHealthy() == null &&  mineModel.getHealthOrder() == null && isEmptyHealthData()) {
+//            String url = CwebNetConfig.mineHealthKnow;
+//            Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+//            intent.putExtra(WebViewConstant.push_message_url, url);
+//            intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
+//            intent.putExtra(WebViewConstant.right_message_index, true);
+//            startActivity(intent);
+//            DataStatistApiParam.operateMineHealthClick();
+//        }
+//    }
 
     private void initMineInfo(MineModel mineModel) {
         if (mineModel != null) {
@@ -1171,53 +1172,133 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                         waitReceiver.hide();
                     }
                 }
-
             }
         }
+    }
+
+    private boolean isEmptyHealthData() {
+       return CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) && CollectionUtils.isEmpty(mineModel.getHealthOrder().getContent());
     }
 
     private void initHealthView(MineModel mineModel) {
-        if (mineModel != null && mineModel.getHealthy() != null) {
-            health_had_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.GONE : View.VISIBLE);
-            health_had_no_data_ll.setVisibility(CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) ? View.VISIBLE : View.GONE);
-            if (!CollectionUtils.isEmpty(mineModel.getHealthy().getContent())) {
-                createHealthItem(mineModel.getHealthy().getContent());
+        if ((mineModel != null && mineModel.getHealthy() != null) || (mineModel != null && mineModel.getHealthOrder() != null)) {
+            health_had_data_ll.setVisibility(isEmptyHealthData() ? View.GONE : View.VISIBLE);
+            health_had_no_data_ll.setVisibility(isEmptyHealthData() ? View.VISIBLE : View.GONE);
+//            health_title_recodr_all.setVisibility(isEmptyHealthData() ? View.VISIBLE : View.GONE);
+            if (!isEmptyHealthData()) {
+                createHealthItem(mineModel.getHealthy());
+                createHealthOrderItem(mineModel.getHealthOrder());
             }
         }
     }
 
-    private void createHealthItem(List<MineModel.HealthItem> list) {
-        if (!CollectionUtils.isEmpty(list)) {
-            health_had_data_ll.removeAllViews();
-            for (int i = 0; i < list.size(); i++) {
-                MineModel.HealthItem healthItem = list.get(i);
-                TextView textView = new TextView(getActivity());
-                textView.setPadding(DimensionPixelUtil.dip2px(getActivity(), 15), 0, 0, 0);
-                textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-                textView.setSingleLine(true);
-                textView.setEllipsize(TextUtils.TruncateAt.END);
-                textView.setBackgroundResource(R.drawable.selector_bg_btn_white);
-                textView.setHeight(DimensionPixelUtil.dip2px(getActivity(), 60));
-                textView.setText(getString(R.string.account_health_zixun_server_title).concat(healthItem.getTitle()));
-                textView.setTextColor(Color.parseColor("#5a5a5a"));
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                textView.setOnClickListener(v -> {
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
+    private void createHealthItem(MineModel.Health health) {
+           health_had_data_ll.removeAllViews();
+        if (!CollectionUtils.isEmpty(health.getContent())) {
+            List<MineModel.HealthItem> healthList = health.getContent();
+            MineModel.HealthItem healthItem = healthList.get(healthList.size() - 1);
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_health, null);
+            TextView titleTextView = (TextView) view.findViewById(R.id.health_title);
+            TextView lookView = (TextView) view.findViewById(R.id.look_more);
+            TextView healthContent = (TextView) view.findViewById(R.id.health_content);
+            lookView.setText(R.string.look_more_show);
+            TextView healthTime = (TextView) view.findViewById(R.id.health_time);
+            titleTextView.setText(R.string.health_recode_discovery);
+            healthContent.setText(healthItem.getTitle());
+            healthTime.setText((!TextUtils.isEmpty(healthItem.getConsultTime()) && healthItem.getConsultTime().length() > 10) ? healthItem.getConsultTime().substring(0, 10) :  healthItem.getConsultTime());
+            lookView.setOnClickListener((View v) -> {
+                String url = CwebNetConfig.mineHealthKnow;
+                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, url);
+                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
+                intent.putExtra(WebViewConstant.right_message_index, true);
+                startActivity(intent);
+                DataStatistApiParam.operateMineHealthClick();
+            });
+            view.setOnClickListener(v -> {
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
 //                    hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
-                    hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_zhuanti_detail));
-                    NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
-                });
-                health_had_data_ll.addView(textView);
-                if (i != list.size() - 1) {
-                    View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
-                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
-                    lineView.setLayoutParams(layoutParams);
-                    health_had_data_ll.addView(lineView);
-                }
-            }
+                hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_zhuanti_detail));
+                NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+            });
+            health_had_data_ll.addView(view);
         }
     }
+
+    private void createHealthOrderItem(MineModel.HealthOrder healthOrder) {
+        if (!CollectionUtils.isEmpty(healthOrder.getContent())) {
+            List<MineModel.HealthOrder.HealthOrderItem> healthList = healthOrder.getContent();
+                View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
+                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+                lineView.setPadding(10,0, 0, 0);
+                lineView.setLayoutParams(layoutParams);
+                health_had_data_ll.addView(lineView);
+
+                MineModel.HealthOrder.HealthOrderItem healthOrderItem = healthList.get(healthList.size() - 1);
+                View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_health, null);
+                TextView titleTextView = (TextView) view.findViewById(R.id.health_title);
+                TextView lookView = (TextView) view.findViewById(R.id.look_more);
+                TextView healthContent = (TextView) view.findViewById(R.id.health_content);
+                TextView healthTime = (TextView) view.findViewById(R.id.health_time);
+                titleTextView.setText(R.string.health_order_recode);
+                lookView.setText(R.string.look_more_show);
+                String statusValue = chageStatusValue(healthOrderItem.getState());
+                healthContent.setText((!TextUtils.isEmpty(statusValue) ? "[".concat(statusValue).concat("] ") : "").concat(healthOrderItem.getHealthItemValues()));
+                healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCustReservationDate()) && healthOrderItem.getCustReservationDate().length() > 10) ? healthOrderItem.getCustReservationDate().substring(0, 10) :  healthOrderItem.getCustReservationDate());
+                lookView.setOnClickListener(v -> {
+                    String url = CwebNetConfig.mineHealthOrder;
+                    Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                    intent.putExtra(WebViewConstant.push_message_url, url);
+                    intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
+                    intent.putExtra(WebViewConstant.right_message_index, true);
+                    startActivity(intent);
+                    DataStatistApiParam.operateMineHealthClick();
+                });
+                view.setOnClickListener(v -> {
+                    String url = CwebNetConfig.mineHealthOrder;
+                    Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                    intent.putExtra(WebViewConstant.push_message_url, url);
+                    intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
+                    intent.putExtra(WebViewConstant.right_message_index, true);
+                    startActivity(intent);
+                });
+                health_had_data_ll.addView(view);
+            }
+    }
+
+//    private void createHealthItem(List<MineModel.HealthItem> list) {
+//        if (!CollectionUtils.isEmpty(list)) {
+//            health_had_data_ll.removeAllViews();
+//            for (int i = 0; i < list.size(); i++) {
+//                MineModel.HealthItem healthItem = list.get(i);
+//                TextView textView = new TextView(getActivity());
+//                textView.setPadding(DimensionPixelUtil.dip2px(getActivity(), 15), 0, 0, 0);
+//                textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+//                textView.setSingleLine(true);
+//                textView.setEllipsize(TextUtils.TruncateAt.END);
+//                textView.setBackgroundResource(R.drawable.selector_bg_btn_white);
+//                textView.setHeight(DimensionPixelUtil.dip2px(getActivity(), 60));
+//                textView.setText(getString(R.string.account_health_zixun_server_title).concat(healthItem.getTitle()));
+//                textView.setTextColor(Color.parseColor("#5a5a5a"));
+//                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+//                textView.setOnClickListener(v -> {
+//                    HashMap<String, Object> hashMap = new HashMap<>();
+//                    hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
+////                    hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
+//                    hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_zhuanti_detail));
+//                    NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
+//                });
+//                health_had_data_ll.addView(textView);
+//                if (i != list.size() - 1) {
+//                    View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
+//                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+//                    lineView.setLayoutParams(layoutParams);
+//                    health_had_data_ll.addView(lineView);
+//                }
+//            }
+//        }
+//    }
 
     //*******************************************
     DownloadManager downloadManager;
@@ -1412,5 +1493,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (viewPager != null) {
             viewPager.addHeight(position, height);
         }
+    }
+
+    public String chageStatusValue(String key) {
+        if (!TextUtils.isEmpty(key)) {
+           return Constant.healthOrder.get(key);
+        }
+        return null;
     }
 }

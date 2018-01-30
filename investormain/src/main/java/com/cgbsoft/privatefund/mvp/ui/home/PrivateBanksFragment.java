@@ -41,6 +41,7 @@ public class PrivateBanksFragment extends BasePageFragment {
     private final String PRODUCT_CODE = "2001";
     private final String INFOMATION_CODE = "2002";
     private final String VIDEO_CODE = "2003";
+    private final String PUBLIC_FUND_CODE = "2004";
     private ImageView privatebank_title_right;
     private UnreadInfoNumber unreadInfoNumber;
 
@@ -135,6 +136,10 @@ public class PrivateBanksFragment extends BasePageFragment {
                 case VIDEO_CODE:
                     TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), new VideoSchoolFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen3);
+                    break;
+                case PUBLIC_FUND_CODE:
+                    TabBean tabBeen4 = new TabBean(secondNavigation.getTitle(), new PublicFundFragment(), Integer.parseInt(secondNavigation.getCode()));
+                    tabBeens.add(tabBeen4);
                     break;
             }
         }

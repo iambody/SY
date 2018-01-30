@@ -755,6 +755,10 @@ interface RequestManager {
     @GET(NetConfig.Discovery.DISCOVERY_FIRST_PAGE)
     Observable<ResponseBody> getDiscoverFirstPage(@QueryMap Map<String, String> paramsMap);
 
+    // 资讯首页股票指数
+    @GET(NetConfig.Discovery.DISCOVERY_STOCK_INDEX)
+    Observable<ResponseBody> getDiscoverStockIndex(@QueryMap Map<String, String> paramsMap);
+
     // 资讯列表数据
     @GET(NetConfig.Discovery.DISCOVERY_LIST_PAGE)
     Observable<ResponseBody> getDiscoverListPage(@QueryMap Map<String, String> paramsMap);

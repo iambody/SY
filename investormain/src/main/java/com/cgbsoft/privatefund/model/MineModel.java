@@ -15,6 +15,8 @@ public class MineModel {
 
     public Health healthy;
 
+    private HealthOrder healthOrder;
+
     public MineUserInfo getMyInfo() {
         return myInfo;
     }
@@ -45,6 +47,14 @@ public class MineModel {
 
     public void setHealthy(Health healthy) {
         this.healthy = healthy;
+    }
+
+    public HealthOrder getHealthOrder() {
+        return healthOrder;
+    }
+
+    public void setHealthOrder(HealthOrder healthOrder) {
+        this.healthOrder = healthOrder;
     }
 
     public static class MineUserInfo {
@@ -262,6 +272,10 @@ public class MineModel {
 
         private String code;
 
+        private String consultTime;
+
+        private String imageUrl;
+
         public String getTitle() {
             return title;
         }
@@ -293,6 +307,94 @@ public class MineModel {
         public void setCode(String code) {
             this.code = code;
         }
+
+        public String getConsultTime() {
+            return consultTime;
+        }
+
+        public void setConsultTime(String consultTime) {
+            this.consultTime = consultTime;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
     }
+
+    public static class HealthOrder {
+
+        private List<HealthOrderItem> content;
+
+        public List<HealthOrderItem> getContent() {
+            return content;
+        }
+
+        public void setContent(List<HealthOrderItem> content) {
+            this.content = content;
+        }
+
+        public class HealthOrderItem {
+
+            private String custCredentialsNumber;
+            private String state;
+            private String healthItemValues;
+            private String custReservationDate;
+            private String imageUrl;
+            private String orderCode;
+
+            public String getCustCredentialsNumber() {
+                return custCredentialsNumber;
+            }
+
+            public void setCustCredentialsNumber(String custCredentialsNumber) {
+                this.custCredentialsNumber = custCredentialsNumber;
+            }
+
+            public String getState() {
+                return state;
+            }
+
+            public void setState(String state) {
+                this.state = state;
+            }
+
+            public String getHealthItemValues() {
+                return healthItemValues;
+            }
+
+            public void setHealthItemValues(String healthItemValues) {
+                this.healthItemValues = healthItemValues;
+            }
+
+            public String getCustReservationDate() {
+                return custReservationDate;
+            }
+
+            public void setCustReservationDate(String custReservationDate) {
+                this.custReservationDate = custReservationDate;
+            }
+
+            public String getImageUrl() {
+                return imageUrl;
+            }
+
+            public void setImageUrl(String imageUrl) {
+                this.imageUrl = imageUrl;
+            }
+
+            public String getOrderCode() {
+                return orderCode;
+            }
+
+            public void setOrderCode(String orderCode) {
+                this.orderCode = orderCode;
+            }
+        }
+    }
+
 }
 

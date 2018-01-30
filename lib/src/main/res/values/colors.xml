@@ -129,6 +129,9 @@
     <!-- 黑色40%透明度 -->
     <color name="line_40">#66000000</color>
 
+    <color name="stock_red">#E63945</color>
+    <color name="stock_green">#559A06</color>
+
     <color name="line_20">#33000000</color>
     <!-- 黑色10%透明度 -->
     <color name="line_10">#19000000</color>

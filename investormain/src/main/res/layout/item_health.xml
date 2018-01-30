@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_main_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="20dp"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/app_golden"
+        android:id="@+id/health_title"
+        android:textSize="@dimen/dimens_sp_16"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_595959"
+        android:layout_alignParentRight="true"
+        android:text="@string/look_more"
+        android:id="@+id/look_more"
+        android:textSize="@dimen/dimens_sp_15"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_595959"
+        android:layout_below="@id/health_title"
+        android:layout_marginTop="20dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:id="@+id/health_content"
+        android:textSize="@dimen/dimens_sp_14"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_595959"
+        android:layout_below="@id/look_more"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/health_time"
+        android:textSize="@dimen/dimens_sp_14"/>
+</RelativeLayout>
