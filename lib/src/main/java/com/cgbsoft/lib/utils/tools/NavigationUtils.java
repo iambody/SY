@@ -17,11 +17,16 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
+import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.chenenyu.router.IRouter;
 import com.chenenyu.router.RouteCallback;
 import com.chenenyu.router.Router;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -145,9 +150,16 @@ public class NavigationUtils {
     }
 
     /**
+     * 跳转到公募基金
+     */
+    public static void goPublicFundRegist(Activity activity,String paramJsonObject) {
+
+    }
+
+    /**
      * 跳转到统一的webactivity页面
      */
-    public static void gotoRightShareWebActivity(Activity activity, String url, String title ) {
+    public static void gotoRightShareWebActivity(Activity activity, String url, String title) {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put(WebViewConstant.RIGHT_SHARE, true);
         hashMap.put(WebViewConstant.push_message_title, title);
@@ -382,6 +394,50 @@ public class NavigationUtils {
             }.getType());
         }
         return null;
+
+    }
+
+    /**
+     * 申购的跳转
+     * @param publishFundRecommendBeans
+     * @param publicFundInf
+     * @return
+     */
+    public static String getObjToBuy(PublishFundRecommendBean publishFundRecommendBeans, PublicFundInf publicFundInf) {
+        String fundCode = publishFundRecommendBeans.getFundCode();//基金代码
+        String fundName = publishFundRecommendBeans.getFundName();//基金名称
+        String taNo = publishFundRecommendBeans.getTano();//TA代码
+        String businesscode = publishFundRecommendBeans.getBusinesscode();//业务类型，认购或申购
+        String buyflag = publishFundRecommendBeans.getBuyflag();//制购买标志，1为强制购买
+        String depositacct = RegexUtil.getPublicFundBanks(publishFundRecommendBeans.getDepositacct()); //客户银行卡号
+        String fundtype = publishFundRecommendBeans.getFundtype(); //基金类型，0-股票型基金 1-债券型基金 2-货币型基 金 3-混合型基金 4-专户基金 5-指数型基金 6-QDII 基金
+        String mobiletelno = publicFundInf.getMobileno();//客户手机号
+        String shareType = publishFundRecommendBeans.getSharetype(); //份额类别 'A'前收费 'B' 后收费
+        String certificatetype = publishFundRecommendBeans.getCertificatetype();//证件类型
+        String certificateno = publishFundRecommendBeans.getCertificateno(); //身份证号
+        String depositacctname = publishFundRecommendBeans.getDepositacctname(); //客户姓名（
+        //此处不用gson 如果某些字段是空的话 key值会直接隐藏不显示 会有问题
+        JSONObject JsonObj = new JSONObject();
+        try {
+            JsonObj.put("fundcode", fundCode);//基金代码
+            JsonObj.put("sharetype", shareType);
+            JsonObj.put("tano", taNo);
+            JsonObj.put("certificatetype", certificatetype);
+            JsonObj.put("certificateno", certificateno);
+            JsonObj.put("depositacctname", depositacctname);
+            JsonObj.put("businesscode", businesscode);
+            JsonObj.put("buyflag", buyflag);
+            JsonObj.put("depositacct", depositacct);
+            JsonObj.put("fundname", fundName);
+            JsonObj.put("fundtype", fundtype);
+            JsonObj.put("mobiletelno", mobiletelno);
+
+            return JsonObj.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
+
 
     }
 }

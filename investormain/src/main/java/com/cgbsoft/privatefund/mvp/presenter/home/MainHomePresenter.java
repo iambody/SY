@@ -91,9 +91,10 @@ public class MainHomePresenter extends BasePresenterImpl<MainHomeContract.View> 
                     try {
                         JSONObject object = new JSONObject(publishFundRecommendBean);
                         if (null != object && object.has("result")) {
-                            String result =  object.getString("result");
+                            String result = object.getString("result");
                             PublishFundRecommendBean publishFundRecommendBean1 = new Gson().fromJson(result, PublishFundRecommendBean.class);
                             if (null != publishFundRecommendBean1) {
+                                AppInfStore.savePublicFundRecommend(getContext(), publishFundRecommendBean1);
                                 getView().getPublicFundResult(publishFundRecommendBean1);
                             } else {
                                 getView().getPublicFundError("公募基金数据格式有误");

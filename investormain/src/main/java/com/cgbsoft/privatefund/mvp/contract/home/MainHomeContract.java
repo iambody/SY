@@ -36,5 +36,6 @@ public class MainHomeContract {
         public void getPublicFundRecommend();
 
 
+
     }
 }
