@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        >
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/delate_nor"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"
+            android:text="买入"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E1E6"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ui_15_dip"
+        >
+        <ImageView
+            android:id="@+id/iv_bank_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/delate_nor"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_bank_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_bank_icon"
+            android:layout_alignTop="@+id/iv_bank_icon"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:textSize="@dimen/dimens_sp_16"
+            android:textColor="@color/black"
+            android:text="招商银行"
+            />
+
+        <TextView
+            android:id="@+id/tv_bank_tailcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_bank_name"
+            android:layout_alignTop="@+id/tv_bank_name"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:textSize="@dimen/dimens_sp_16"
+            android:textColor="@color/app_golden"
+            android:text="0766"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:paddingLeft="@dimen/ui_15_dip"
+        >
+        <TextView
+            android:id="@+id/tv_buy_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/dimens_sp_16"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"
+            android:text="金额"
+            />
+
+
+        <EditText
+            android:id="@+id/ev_buy_money_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_sell_money"
+            android:layout_marginLeft="62dp"
+            android:layout_marginRight="@dimen/ui_35_dip"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:textColor="@color/black"
+            android:hint="最低转入金额100.00元"
+            android:inputType="numberDecimal"
+            android:textSize="@dimen/dimens_sp_16"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:layout_marginLeft="@dimen/ui_15_dip"
+        android:textSize="@dimen/dimens_sp_15"
+        android:textColor="#595959"
+        android:text="温馨提示：
+ 1. 申购费率0.15%；
+ 2. 预计1月16日可计算收益。"
+        />
+
+
+    <Button
+        android:id="@+id/bt_Confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/ui_15_dip"
+        android:layout_marginRight="@dimen/ui_15_dip"
+        android:layout_marginTop="@dimen/ui_30_dip"
+        android:background="@drawable/buyfund_button"
+        />
+
+
+</LinearLayout>

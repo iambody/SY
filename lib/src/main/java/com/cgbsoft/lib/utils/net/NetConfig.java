@@ -437,7 +437,9 @@ public class NetConfig {
         static final  String PRIVATE_FUND_INF=API_URL_V2+"/kz/userinfo";
         final static String MINE_FININCIAL_ASSERT = API_URL_V2 + "/kz/userfund";
         final static String DIRECT_JZ_URL = API_URL_V2 + "/kz/proxy";
+        static  final  String PUBLIBC_FUND_INF=API_URL_V2+"/kz/proxy";
      }
+
 
     public static class SoDown {
         public static final String DOWN_RUL = UPLOAD_FILE + "android_so/armeabi-v7a.zip";

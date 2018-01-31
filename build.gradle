@@ -3,6 +3,10 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -20,6 +24,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+
+        maven { url 'http://192.168.19.102:8089/nexus/content/groups/public/' }
         maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
         maven { url "https://jitpack.io" }
         flatDir {
@@ -28,8 +34,12 @@ allprojects {
             // 下把mall module中的libs目录添加到依赖关系中
             //TOdo
 //            dirs file(rootDir.absolutePath+'/mall/libs')
-            dirs file(rootDir.absolutePath+'/ocrlib/libs'),file(rootDir.absolutePath+'/mall/libs')
+            dirs file(rootDir.absolutePath + '/ocrlib/libs'), file(rootDir.absolutePath + '/mall/libs')
 //            dirs project(':ocrlib').file('libs'),project(':mall').file('libs')
+        }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
         }
     }
 }
@@ -41,15 +51,15 @@ def keystorePropertiesFile = rootProject.file("gradle.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 ext {
-    compileSdkVersion = 24
-    buildToolsVersion = "25.0.0"
+    compileSdkVersion = 26
+    buildToolsVersion = "26.0.1"
     minSdkVersion = 17
-    targetSdkVersion = 23
+    targetSdkVersion = 26
     databaseName = "sxydb.db";
     databaseVer = 1;
 
-    support_v4_version = '24.1.0'
-    android_need_version = '25.0.1'
+    support_v4_version = '26.0.1'
+    android_need_version = '26.0.1'
     okhttp_need_version = '3.5.0'
     okio_need_version = '1.11.0'
     retrofit_need_version = '2.1.0'

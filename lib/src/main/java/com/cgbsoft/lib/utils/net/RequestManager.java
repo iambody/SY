@@ -974,4 +974,5 @@ interface RequestManager {
      */
     @POST(NetConfig.PUBLIC_FUND.DIRECT_JZ_URL)
     Observable<ResponseBody> directJZServer(@Body RequestBody responseBody);
+
 }

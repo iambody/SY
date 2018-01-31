@@ -1850,6 +1850,18 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getPublicFudInf(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
+    /**
+     * 获取金证发的信息
+     */
+    public static Observable<String> getPublicFundFormProxy(Map<String,Object> params) {
+        if(params == null) params = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().getPublicFundFormProxy(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+
+
+
 
     /**
      * 直接请求金正接口
