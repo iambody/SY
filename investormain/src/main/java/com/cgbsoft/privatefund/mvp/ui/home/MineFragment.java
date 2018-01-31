@@ -187,7 +187,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     TextView account_order_all_text;
 
     @BindView(R.id.ll_public_fund_create_account)
-    TextView ll_public_fund_create_account;
+    LinearLayout ll_public_fund_create_account;
 
     @BindView(R.id.tv_increase_percent)
     TextView tv_increase_percent;
