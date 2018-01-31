@@ -156,4 +156,9 @@
     <string name="trade_password">交易密码</string>
     <string name="hint_trade_password">请输入交易密码</string>
     <string name="get_phone_validate_code">获取验证码</string>
+    <string name="confirm">确定</string>
+    <string name="after_appraisal_canvisible">风险评测后可见</string>
+    <string name="ten_thousand">万</string>
+    <string name="performance_standard">业绩基准</string>
+    <string name="residue_limit">剩余额度</string>
 </resources>

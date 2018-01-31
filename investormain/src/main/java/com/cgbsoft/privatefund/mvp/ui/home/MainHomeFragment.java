@@ -58,9 +58,7 @@ import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.FloatStewardView;
 import com.chenenyu.router.Router;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,7 +84,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public static final String LIVERXOBSERBER_TAG = "rxobserlivetag";
     public final int ADVISERSHOWTIME = 5;
     public final int ADVISERLOADTIME = 3;
-
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
     @BindView(R.id.main_home_new_iv)
@@ -180,16 +177,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     View home_product_view, main_home_level_lay, main_home_newlive_lay;
     //私募基金新增
     LinearLayout view_home_product_focus, view_home_private_fund_skip_lay;
+    //一些控制标识
+    boolean isLoading, bannerIsLeft, bannerIsRight, isRolling, isVisible;
 
+    HomeEntity.Result homeData;
+    LiveInfBean homeliveInfBean;
     OperationAdapter operationAdapter;
     UnreadInfoNumber unreadInfoNumber;
     Observable<LiveInfBean> liveObservable;
     Observable<Integer> userLayObservable, bindAdviserObservable;
-
-    HomeEntity.Result homeData;
-    LiveInfBean homeliveInfBean;
-
-    boolean isLoading, bannerIsLeft, bannerIsRight, isRolling, isVisible;
 
 
     @Override
@@ -219,18 +215,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         super.viewBeHide();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (unreadInfoNumber != null) {
-            unreadInfoNumber.initUnreadInfoAndPosition();
-        }
-        try {
-            homeBannerview.startBanner();
-        } catch (Exception e) {
 
-        }
-    }
 
 
     @Override
@@ -241,7 +226,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             homeBannerview.endBanner();
         } else {
             isVisible = false;
-            LogUtils.Log("onHiddenChanged", "isVisible");
+
             homeBannerview.startBanner();
         }
     }
@@ -277,7 +262,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             @Override
             public void phoneClick() {
                 if (needPermissions(Constant.PERMISSION_CALL_PHONE)) {
-                    PromptManager.ShowCustomToast(baseActivity, "请到设置允许拨打电话权限");
+                    PromptManager.ShowCustomToast(baseActivity, getResources().getString(R.string.set_call_jurisdiction));
                     return;
                 }
                 getPresenter().gotoConnectAdviser();
@@ -346,10 +331,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 bannerIsLeft = left;
                 bannerIsRight = right;
                 isRolling = true;
-                if (bannerIsLeft) {
-                }
-                if (bannerIsRight) {
-                }
+
             }
 
             @Override
@@ -515,8 +497,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         viewNewliveMengBg.setVisibility(View.VISIBLE);
                         homeNewliveNowLay.setVisibility(View.GONE);
                         Imageload.display(baseActivity, liveInfBean.image, viewNewliveIvBg);
-                        BStrUtils.setTv(viewNewliveTitleTag, liveInfBean.create_time + "开播");
-                        viewNewliveTag.setText("直播预告");
+                        BStrUtils.setTv(viewNewliveTitleTag, liveInfBean.create_time + getResources().getString(R.string.broadcast));
+                        viewNewliveTag.setText(getResources().getString(R.string.live_notice));
                         BStrUtils.setTv(viewNewliveContent, liveInfBean.title);
                         break;
                     case 1://直播中
@@ -526,9 +508,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         homeNewliveNowLay.setVisibility(View.VISIBLE);
                         viewNewliveMengBg.setVisibility(View.GONE);
                         Imageload.display(baseActivity, liveInfBean.image, viewNewliveIvBg);
-                        viewNewliveTag.setText("正在直播");
+                        viewNewliveTag.setText(getResources().getString(R.string.live_process));
                         BStrUtils.setTv(viewNewliveContent, liveInfBean.title);
-                        BStrUtils.setTv(viewNewliveNumber, BStrUtils.NullToStr(liveInfBean.visitors) + "人正在观看");
+                        BStrUtils.setTv(viewNewliveNumber, BStrUtils.NullToStr(liveInfBean.visitors) + getResources().getString(R.string.live_nume_look));
 
                         break;
                     case 2://无直播
@@ -673,11 +655,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //第三个*******************拷贝过来的产品的一坨逻辑************************************
         String raised_amt = BStrUtils.getYi(bank.product.content.remainingAmount);
         String mony;
-        if (raised_amt.contains("亿")) {
-            raised_amt = raised_amt.replace("亿", "");
-            mony = raised_amt + "亿";
+        if (raised_amt.contains(getResources().getString(R.string.calculate))) {
+            raised_amt = raised_amt.replace(getResources().getString(R.string.calculate), "");
+            mony = raised_amt + getResources().getString(R.string.calculate);
         } else {
-            mony = raised_amt + "万";
+            mony = raised_amt + getResources().getString(R.string.ten_thousand);//
 
         }
 
@@ -687,7 +669,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //显示下边具体数据的 一大坨的逻辑判断
         switch (bank.product.content.productType) {
             case "1":
-                BStrUtils.setTv1(homeProductFristUp, "业绩基准");
+                BStrUtils.setTv1(homeProductFristUp, getResources().getString(R.string.performance_standard));
                 String yield = bank.product.content.expectedYield + "%";
                 SpannableString spannableString = SpannableUtils.setTextSize(yield, 0, bank.product.content.expectedYield.length(), DimensionPixelUtil.dip2px(baseActivity, 15));
                 BStrUtils.setSp(homeProductFristDown, spannableString);
@@ -695,7 +677,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                 break;
             case "2":
-                BStrUtils.setTv1(homeProductFristUp, "累计净值");
+                BStrUtils.setTv1(homeProductFristUp, getResources().getString(R.string.total_worth));
                 String cumulativeNet = bank.product.content.cumulativeNet;
                 homeProductFristDown.setTextSize(11);
                 if (BStrUtils.isChineseStr(cumulativeNet)) {
@@ -711,7 +693,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                 break;
             case "3":
-                BStrUtils.setTv1(homeProductFristUp, "剩余额度");
+                BStrUtils.setTv1(homeProductFristUp, getResources().getString(R.string.residue_limit));
                 String fudong = bank.product.content.expectedYield + "%+浮动";
 
                 SpannableString spannableString2 = SpannableUtils.setTextSize(fudong, 0, bank.product.content.expectedYield.length(), DimensionPixelUtil.dip2px(baseActivity, 15));
@@ -722,48 +704,49 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
 
         if (!AppManager.getIsLogin(baseActivity)) {
-            BStrUtils.setTv1(viewHomeProductTag, "风险评测后可见");
+            BStrUtils.setTv1(viewHomeProductTag, getResources().getString(R.string.after_appraisal_canvisible));
 
         } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {//需要风险测评
-            BStrUtils.setTv1(viewHomeProductTag, "风险评测后可见");
+            BStrUtils.setTv1(viewHomeProductTag, getResources().getString(R.string.after_appraisal_canvisible));
 
         } else {//显示截至打款时间************拷贝过来的一坨产品逻辑***************
-            try {
-                HomeEntity.bankData productlsBean = bank.product.content;
-                // 服务器返回的时间格式，需要转换为毫秒值，与当前时间相减得到时间差，显示到list里
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-                if (productlsBean.raiseEndTime != null && !"".equals(productlsBean.raiseEndTime)) {
-                    Date end_time = dateFormat.parse(productlsBean.raiseEndTime);
-                    long l = end_time.getTime() - System.currentTimeMillis();
-                    String dateString = null;
-                    int day = (int) (l / 1000 / 60 / 60 / 24);
-                    int hour = (int) (l / 1000 / 60 / 60);
-                    int min = (int) (l / 1000 / 60);
-
-                    if (hour >= 72) {
-                        dateString = day + "天";
-                    } else if (hour > 0 && hour < 72) {
-                        dateString = hour + "小时";
-                    } else {
-                        if (min == 0) {
-                            dateString = 1 + "分钟";
-                        } else {
-                            dateString = min + "分钟";
-                        }
-                    }
-                    if (l <= 0) {
-                        BStrUtils.setTv(viewHomeProductTag, "已截止");
-                    } else {
-                        BStrUtils.setTv(viewHomeProductTag, "截止" + dateString + "打款");
-                    }
-                } else {
-                    viewHomeProductTag.setVisibility(View.GONE);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                viewHomeProductTag.setVisibility(View.GONE);
-            }
+            Utils.homeProductSet(viewHomeProductTag, bank.product.content.raiseEndTime);
+//            try {
+//                HomeEntity.bankData productlsBean = bank.product.content;
+//                // 服务器返回的时间格式，需要转换为毫秒值，与当前时间相减得到时间差，显示到list里
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//
+//                if (productlsBean.raiseEndTime != null && !"".equals(productlsBean.raiseEndTime)) {
+//                    Date end_time = dateFormat.parse(productlsBean.raiseEndTime);
+//                    long l = end_time.getTime() - System.currentTimeMillis();
+//                    String dateString = null;
+//                    int day = (int) (l / 1000 / 60 / 60 / 24);
+//                    int hour = (int) (l / 1000 / 60 / 60);
+//                    int min = (int) (l / 1000 / 60);
+//
+//                    if (hour >= 72) {
+//                        dateString = day + "天";
+//                    } else if (hour > 0 && hour < 72) {
+//                        dateString = hour + "小时";
+//                    } else {
+//                        if (min == 0) {
+//                            dateString = 1 + "分钟";
+//                        } else {
+//                            dateString = min + "分钟";
+//                        }
+//                    }
+//                    if (l <= 0) {
+//                        BStrUtils.setTv(viewHomeProductTag, "已截止");
+//                    } else {
+//                        BStrUtils.setTv(viewHomeProductTag, "截止" + dateString + "打款");
+//                    }
+//                } else {
+//                    viewHomeProductTag.setVisibility(View.GONE);
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                viewHomeProductTag.setVisibility(View.GONE);
+//            }
 
 
         }
@@ -819,7 +802,18 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //产品
         initProduct(cachesData.bank);
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.initUnreadInfoAndPosition();
+        }
+        try {
+            homeBannerview.startBanner();
+        } catch (Exception e) {
 
+        }
+    }
     @Override
     public void getUseriInfsucc(int type) {
         switch (type) {
@@ -904,7 +898,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 if (null == homeliveInfBean) return;
                 switch (homeliveInfBean.type) {
                     case 0://预告
-                        PromptManager.ShowCustomToast(baseActivity, "直播暂未开始");
+                        PromptManager.ShowCustomToast(baseActivity, getResources().getString(R.string.live_no_start));
                         TrackingDataManger.homeLiveClick(baseActivity, homeliveInfBean.content, homeliveInfBean.id);
 
                         break;
@@ -953,7 +947,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     private void gotoRiskevalust() {
-        DefaultDialog dialog = new DefaultDialog(baseActivity, "请先填写调查问卷", "取消", "确定") {
+        DefaultDialog dialog = new DefaultDialog(baseActivity, getResources().getString(R.string.fill_questionnaire), getResources().getString(R.string.cancle), getResources().getString(R.string.cancle)) {
             @Override
             public void left() {
                 dismiss();
@@ -974,7 +968,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void onPause() {
         super.onPause();
         homeBannerview.endBanner();
-        LogUtils.Log("sssaa", "首页不可见");
     }
 
 
@@ -1035,20 +1028,48 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_shift)
     public void publicFundShift() {
+
         //需要先判断是否注册绑卡
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
         String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
         if (BStrUtils.isEmpty(fundinf)) {//未开户
-            //跳转到开户页面ton
+            //没开户=》跳转到开户页面ton //TODO 跳转到公用的页面
             NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
         } else if ("0".equals(publicFundInf.getIsHaveCustBankAcct())) {
-            //跳转到绑定银行卡页面
+            //没绑定银行卡=》跳转到绑定银行卡页面 todo 跳转到公用的页面
             NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
-        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct())) {
-            //开过户并且已经完成绑卡 跳转到数据里面
+        } else if (BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
+            //没风险测评=》跳转到公共的页面 todo  跳转到公共的页面
+            DefaultDialog dialog = new DefaultDialog(baseActivity, getResources().getString(R.string.fill_questionnaire), getResources().getString(R.string.cancle), getResources().getString(R.string.confirm)) {
+                @Override
+                public void left() {
+                    dismiss();
+                }
+
+                @Override
+                public void right() {
+                    NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+                    dismiss();
+
+                }
+            };
+            dialog.show();
+        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
+            //开过户并且已经完成绑卡 跳转到数据里面//todo 跳转到申购页面
+            // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
+            riskIsmatch(publishFundRecommend.getRisklevel());
             String toBuyObj = NavigationUtils.getObjToBuy(publishFundRecommend, publicFundInf);
 
         }
+
+    }
+
+    /**
+     * 风险匹配
+     *
+     * @param risklevel =》01:安全型 02:保守型 03:稳健型 04:积极 型 05:进取型)
+     */
+    private void riskIsmatch(String risklevel) {
 
     }
 

@@ -13,8 +13,8 @@ public class PublishFundRecommendBean {
     private String fundtype;
 
     private String leftUpValue;
-    private String  leftDownDes;
-    private String  rightUpValue;
+    private String leftDownDes;
+    private String rightUpValue;
 
     private String rightDownDes;
     //1.30 15:00 新增
@@ -27,6 +27,8 @@ public class PublishFundRecommendBean {
     private String buyflag;// / 制购买标志，1为强制购买
     private String callbackurl;
     private String depositacct;// //客户银行卡号
+    private String custrisk;// 客户的风险等级！！！ 不为空就是风险风等级   1:安全型 2:保守型 3:稳健型 4:积极 型 5:进取型)
+    private String risklevel;//产品的风险等级！！
 
     public String getIsHaveAccount() {
         return isHaveAccount;
@@ -170,5 +172,21 @@ public class PublishFundRecommendBean {
 
     public void setDepositacct(String depositacct) {
         this.depositacct = depositacct;
+    }
+
+    public String getCustrisk() {
+        return custrisk;
+    }
+
+    public void setCustrisk(String custrisk) {
+        this.custrisk = custrisk;
+    }
+
+    public String getRisklevel() {
+        return risklevel;
+    }
+
+    public void setRisklevel(String risklevel) {
+        this.risklevel = risklevel;
     }
 }

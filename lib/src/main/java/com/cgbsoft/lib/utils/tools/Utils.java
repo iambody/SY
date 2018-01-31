@@ -22,11 +22,14 @@ import android.util.Log;
 import android.view.Display;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
+import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -45,8 +48,10 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -743,10 +748,10 @@ public class Utils {
     }
 
     public static boolean isAppRunningOnTop(Context context, String name) {
-        ActivityManager activityManager = (ActivityManager)context.getSystemService("activity");
+        ActivityManager activityManager = (ActivityManager) context.getSystemService("activity");
         List runningTaskInfo = activityManager.getRunningTasks(1);
-        if(runningTaskInfo != null && runningTaskInfo.size() != 0) {
-            String topAppPackageName = ((ActivityManager.RunningTaskInfo)runningTaskInfo.get(0)).topActivity.getPackageName();
+        if (runningTaskInfo != null && runningTaskInfo.size() != 0) {
+            String topAppPackageName = ((ActivityManager.RunningTaskInfo) runningTaskInfo.get(0)).topActivity.getPackageName();
             return !TextUtils.isEmpty(name) && name.equals(topAppPackageName);
         } else {
             return false;
@@ -781,4 +786,51 @@ public class Utils {
 //        }
 //        return url;
 //    }
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+    /**
+     * 首页商品的标签 已截止 等
+     *
+     * @param textView
+     * @param
+     */
+    public static void homeProductSet(TextView textView, String raiseEndTime) {
+        try {
+            // 服务器返回的时间格式，需要转换为毫秒值，与当前时间相减得到时间差，显示到list里
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+            if (!BStrUtils.isEmpty(raiseEndTime)) {
+                Date end_time = dateFormat.parse(raiseEndTime);
+                long l = end_time.getTime() - System.currentTimeMillis();
+                String dateString = null;
+                int day = (int) (l / 1000 / 60 / 60 / 24);
+                int hour = (int) (l / 1000 / 60 / 60);
+                int min = (int) (l / 1000 / 60);
+
+                if (hour >= 72) {
+                    dateString = day + "天";
+                } else if (hour > 0 && hour < 72) {
+                    dateString = hour + "小时";
+                } else {
+                    if (min == 0) {
+                        dateString = 1 + "分钟";
+                    } else {
+                        dateString = min + "分钟";
+                    }
+                }
+                if (l <= 0) {
+                    BStrUtils.setTv(textView, "已截止");
+                } else {
+                    BStrUtils.setTv(textView, "截止" + dateString + "打款");
+                }
+            } else {
+                textView.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            textView.setVisibility(View.GONE);
+        }
+
+    }
 }
