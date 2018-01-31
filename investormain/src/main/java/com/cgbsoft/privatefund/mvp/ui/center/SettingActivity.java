@@ -26,6 +26,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity;
@@ -50,6 +51,12 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     ImageView ivBack;
     @BindView(R.id.title_mid)
     TextView titleTV;
+    @BindView(R.id.sin_public_fund_account_status)
+    SettingItemNormal publicFundAccountStatus;
+    @BindView(R.id.sin_public_fund_bankcard)
+    SettingItemNormal publicFundBankCarkInfo;
+    @BindView(R.id.sin_public_fund_trade_password)
+    SettingItemNormal publicFundTradePasswordModify;
     @BindView(R.id.sit_gesture_switch)
     SettingItemNormal gestureSwitch;
     @BindView(R.id.sin_change_gesture_psd)
@@ -162,6 +169,44 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         } else {
             changeGesturePsdLayout.setVisibility(View.GONE);
         }
+        initPublicFund();
+    }
+
+    private void initPublicFund() {
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
+        boolean existAccount = !TextUtils.isEmpty(publicFundInf.getCustno());
+        boolean bindCard = TextUtils.equals("1", publicFundInf.getIsHaveCustBankAcct());
+        publicFundAccountStatus.setTitle(existAccount ? getString(R.string.public_fund_setting_account_info) : getString(R.string.public_fund_setting_account_create));
+        publicFundBankCarkInfo.setTitle(bindCard ? getString(R.string.public_fund_setting_bankcard_info) : getString(R.string.public_fund_setting_bind_bankcard));
+        publicFundTradePasswordModify.setTitle(getString(R.string.public_fund_setting_modify_public_fund_password));
+        publicFundBankCarkInfo.setVisibility(existAccount ? View.VISIBLE : View.GONE);
+        publicFundTradePasswordModify.setVisibility(existAccount ? View.VISIBLE : View.GONE);
+    }
+
+    @OnClick(R.id.sin_public_fund_account_status)
+    void gotoCreatePublicFundAccount() {
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
+        if (!TextUtils.isEmpty(publicFundInf.getCustno())) {
+            NavigationUtils.gotoWebActivity(this, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+        } else {
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_INFO_ACTIVITY);
+        }
+    }
+
+    @OnClick(R.id.sin_public_fund_bankcard)
+    void gotoPublicFundBankCard() {
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
+        boolean bindCard = TextUtils.equals("1", publicFundInf.getIsHaveCustBankAcct());
+        if (bindCard) {
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BIND_BANK_CARD_ACTIVITY);
+        } else {
+           // GOTO 绑定银行卡页面
+        }
+    }
+
+    @OnClick(R.id.sin_public_fund_trade_password)
+    void gotoPublicFundTradePasswordModify() {
+        NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_TRADE_PWD_MODIFY_ACTIVITY);
     }
 
     private void turnOffGesturePsd() {

@@ -21,6 +21,30 @@
             >
 
             <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/sin_public_fund_account_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_show_switchbutton="true"
+                app:setting_item_title="@string/public_fund_setting_account_create"
+                />
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/sin_public_fund_bankcard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_show_switchbutton="true"
+                app:setting_item_title="@string/public_fund_setting_bind_bankcard"
+                />
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
+                android:id="@+id/sin_public_fund_trade_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setting_item_show_switchbutton="true"
+                app:setting_item_title="@string/public_fund_setting_modify_public_fund_password"
+                />
+
+            <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sin_change_login_psd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

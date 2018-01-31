@@ -232,7 +232,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.ll_public_fund_fill)
     LinearLayout ll_public_fund_fill;
 
-
     @BindView(R.id.tab_layout)
     XTabLayout xTabLayout;
 

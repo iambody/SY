@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <include layout="@layout/title_normal_new"/>
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/ui_15_dip"
+        android:layout_marginRight="@dimen/ui_15_dip"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/icon_bank_card_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="20dp"
+            android:textSize="@dimen/dimens_sp_20"
+            android:textColor="@color/white"
+            android:id="@+id/bank_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:layout_alignLeft="@id/bank_name"
+            android:layout_below="@id/bank_name"
+            android:textSize="@dimen/dimens_sp_14"
+            android:textColor="@color/white"
+            android:id="@+id/bank_type"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_alignLeft="@id/bank_name"
+            android:layout_below="@id/bank_type"
+            android:textSize="@dimen/dimens_sp_18"
+            android:textColor="@color/white"
+            android:id="@+id/bank_number"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

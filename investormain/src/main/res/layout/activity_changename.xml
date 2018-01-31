@@ -9,28 +9,24 @@
         android:layout_height="@dimen/ui_70_dip"
         android:orientation="horizontal"
         >
-        <EditText
-            android:id="@+id/et_new_name"
+        <TextView
+            android:id="@+id/tv_new_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/transparent"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_16"
-            android:layout_marginLeft="@dimen/ui_20_dip"
-            android:textColorHint="@color/color_a6a6a6"
+            android:layout_marginStart="@dimen/ui_20_dip"
+            android:text="@string/user_name"
             android:maxLength="16"
-            android:hint="请输入您的姓名"
             />
-        <ImageView
-            android:id="@+id/iv_edit_text_clear"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center_vertical"
-            android:scaleType="centerInside"
-            android:src="@drawable/edit_text_clear"
-            android:layout_marginRight="@dimen/ui_20_dip"
-            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/color_595959"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/dimens_sp_14"
+            android:id="@+id/tv_public_fund_info_name"/>
     </LinearLayout>
     <include
         layout="@layout/acitivity_divide_online"
@@ -38,4 +34,29 @@
         android:layout_height="1dp"
         android:layout_marginLeft="@dimen/ui_20_dip"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_70_dip"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/tv_identify_info"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_16"
+            android:layout_marginStart="@dimen/ui_20_dip"
+            android:text="@string/identify_number"
+            android:maxLength="16"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/color_595959"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/dimens_sp_14"
+            android:id="@+id/tv_public_fund_info_identify_number"/>
+    </LinearLayout>
 </LinearLayout>

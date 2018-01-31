@@ -115,4 +115,9 @@ public class RouteConfig {
     public static final String UploadIndentityCradActivity = "UploadIndentityCradActivity";
     public static final String CrenditralGuideActivity = "CrenditralGuideActivity";
 
+    //公募基金身份信息
+    public static final String GOTO_PUBLIC_FUND_INFO_ACTIVITY="public_fund_info_activity";
+    public static final String GOTO_BIND_BANK_CARD_ACTIVITY="bind_bank_card_info_activity";
+    public static final String GOTO_PUBLIC_FUND_TRADE_PWD_MODIFY_ACTIVITY="public_fund_trade_pwd_modify_activity";
+
 }

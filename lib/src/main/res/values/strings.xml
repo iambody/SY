@@ -123,14 +123,14 @@
     <string name="permission_phone_str">读取电话的状态权限\n</string>
     <string name="permission_location_str">访问范围性的定位权限\n</string>
     <string name="permission_extenge_str">照片、媒体内容和文件权限\n</string>
+
+
     <string name="immediately">立即转入</string>
     <string name="private_fund">私募基金</string>
     <string name="publish_regist">完成公募基金开户</string>
-
     <string name="finished_public_fund_create_account">完成公募基金开户</string>
     <string name="public_fund">公募基金</string>
     <string name="private_share_bao">私享宝</string>
-    <string name="private_fund">私募基金</string>
     <string name="now_transfer">立即转入</string>
     <string name="look_public_fund_product">看看公募基金产品</string>
     <string name="serven_increase_percent">七日年化收益率</string>
@@ -140,4 +140,20 @@
     <string name="yestoday_income">昨日收益（元）</string>
     <string name="public_fund_no_assert">您还没有资产，可以</string>
 
+    <string name="public_fund_setting_account_create">公募基金开户认证</string>
+    <string name="public_fund_setting_account_info">公募基金身份信息</string>
+    <string name="public_fund_setting_bind_bankcard">绑定银行卡</string>
+    <string name="public_fund_setting_bankcard_info">公募基金银行卡信息</string>
+    <string name="public_fund_setting_modify_public_fund_password">修改公募基金交易密码</string>
+    <string name="user_name">姓名</string>
+    <string name="identify_number">身份证号</string>
+    <string name="hint_identify_number">请输入身份证号</string>
+    <string name="modify_public_fund_trade_pwd">修改公募基金交易密码</string>
+    <string name="phone_number">手 机 号</string>
+    <string name="hint_phone_number">请输入手机号</string>
+    <string name="validate_code">验 证 码</string>
+    <string name="hint_validate_code">请输入验证码</string>
+    <string name="trade_password">交易密码</string>
+    <string name="hint_trade_password">请输入交易密码</string>
+    <string name="get_phone_validate_code">获取验证码</string>
 </resources>
