@@ -59,6 +59,7 @@ public class PublicFundInfoPresenterImpl extends BasePresenterImpl<PublicFundInf
                     jsonObject = jsonObject.getJSONObject("result");
                     if (jsonObject != null) {
                         JSONArray jsonArray = jsonObject.getJSONArray("datasets");
+                        jsonArray = jsonArray.getJSONArray(0);
                         JSONObject dataJson = jsonArray.getJSONObject(0);
                         String[] perInfo = new String[2];
                         perInfo[0] = dataJson.getString("custfullname");

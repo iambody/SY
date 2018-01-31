@@ -65,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_public_fund_subsist_assert"
+                android:maxLines="1"
                 style="@style/private_share_bao_assert_number"/>
 
         </LinearLayout>
@@ -84,6 +85,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 android:id="@+id/tv_public_fund_continue_income"
                 style="@style/private_share_bao_assert_number"/>
 
@@ -105,6 +107,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
                 android:id="@+id/tv_public_fund_yestoday_income"
                 style="@style/private_assert_number_golden"/>
         </LinearLayout>

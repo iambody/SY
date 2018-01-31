@@ -30,10 +30,6 @@ android {
     }
 }
 
-repositories {
-    maven { url 'http://192.168.19.102:8089/nexus/content/groups/public/' }
-}
-
 dependencies {
 //    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -43,10 +39,6 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife_need_version}"
     compile  "com.jakewharton:butterknife:${butterknife_need_version}"
     testCompile "junit:junit:${testC}"
-
-
-    compile 'com.ytc.imkit:imkit:0.0.2'
-    compile 'com.ytc.imlib:imlib:0.0.1'
-    //compile project(':IMKit')
+    compile project(':IMKit')
     compile project(':lib')
 }

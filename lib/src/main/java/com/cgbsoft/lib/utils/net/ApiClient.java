@@ -1855,13 +1855,8 @@ public class ApiClient {
      */
     public static Observable<String> getPublicFundFormProxy(Map<String,Object> params) {
         if(params == null) params = new HashMap<>();
-        return OKHTTP.getInstance().getRequestManager().getPublicFundFormProxy(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
+        return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
-
-
-
-
 
     /**
      * 直接请求金正接口

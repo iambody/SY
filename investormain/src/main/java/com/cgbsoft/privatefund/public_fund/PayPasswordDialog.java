@@ -42,8 +42,8 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
      *  实例化view
      */
     private void initView() {
-        passwordInput = findViewById(R.id.ev_password_input);
-        close = findViewById(R.id.tv_close);
+        passwordInput = (GridPasswordView)findViewById(R.id.ev_password_input);
+        close = (TextView) findViewById(R.id.tv_close);
     }
 
     /**

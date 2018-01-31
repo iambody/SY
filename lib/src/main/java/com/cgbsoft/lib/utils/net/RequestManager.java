@@ -958,6 +958,7 @@ interface RequestManager {
 
     @GET(NetConfig.TRACKDATA.CONFIG)
     Observable<ResponseBody> getTrackingConfig();
+
     /**
      * 公募首页推荐位
      */

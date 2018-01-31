@@ -82,12 +82,12 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
 
     @OnClick(R.id.get_phone_validate_code)
     void getValidateCode() {
-        if (TextUtils.isEmpty(et_identify_number.getText().toString())) {
+        if (TextUtils.isEmpty(et_phone_number.getText().toString())) {
             Toast.makeText(this, app.privatefund.investor.health.R.string.please_input_phone, Toast.LENGTH_SHORT).show();
             return;
         }
         timer.start();
-        getPresenter().getPhoneValidateCode(et_identify_number.getText().toString());
+        getPresenter().getPhoneValidateCode(et_phone_number.getText().toString());
     }
 
     @OnClick(R.id.commit)
@@ -108,7 +108,6 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
             Toast.makeText(this, R.string.hint_trade_password, Toast.LENGTH_SHORT).show();
             return;
         }
-
         getPresenter().modifyPublicFundTradePwd(et_identify_number.getText().toString(), et_phone_number.getText().toString(),et_validate_code.getText().toString(), et_trade_password.getText().toString());
     }
 
