@@ -152,8 +152,8 @@ public class NavigationUtils {
     /**
      * 跳转到公募基金
      */
-    public static void goPublicFundRegist(Activity activity,String paramJsonObject) {
-
+    public static void goPublicFundCommon(Activity activity, int type) {
+//        NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
     }
 
     /**
@@ -399,6 +399,7 @@ public class NavigationUtils {
 
     /**
      * 申购的跳转
+     *
      * @param publishFundRecommendBeans
      * @param publicFundInf
      * @return

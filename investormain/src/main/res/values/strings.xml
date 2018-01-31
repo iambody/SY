@@ -296,4 +296,13 @@
     <string name="dangan">档案</string>
     <string name="publish_fund">公募基金</string>
     <string name="public_fund_regist">公募基金开户</string>
+    <string name="fill_questionnaire">请先填写调查问卷</string>
+    <string name="live_no_start">直播暂未开始</string>
+    <string name="set_call_jurisdiction">请到设置允许拨打电话权限</string>
+    <string name="broadcast">开播</string>
+    <string name="live_notice">直播预告</string>
+    <string name="live_process">正在直播</string>
+    <string name="live_nume_look">人正在观看</string>
+    <string name="calculate">亿</string>
+    <string name="total_worth">累计净值</string>
 </resources>
