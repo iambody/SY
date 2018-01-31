@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
@@ -51,8 +52,6 @@ import com.cgbsoft.lib.widget.RoundProgressbar;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
-import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.model.FinancialAssertModel;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
@@ -223,7 +222,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.ll_private_share_bao_empty)
     RelativeLayout ll_private_share_bao_empty;
 
-    @BindView(R.id.ll_private_share_bao_empty)
+    @BindView(R.id.ll_private_share_bao_fill)
     LinearLayout ll_private_share_bao_fill;
 
     @BindView(R.id.ll_public_fund_empty)
