@@ -45,7 +45,7 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
 
     @Override
     protected int layoutID() {
-        return R.layout.activity_public_fund_info;
+        return R.layout.activity_bank_card_info;
     }
 
     @Override
@@ -72,12 +72,11 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
     }
 
     @Override
-    public void requestInfoSuccess(String info) {
+    public void requestInfoSuccess(String[] info) {
         hideLoadDialog();
-        Log.i("public_fund_info=", info);
-        bank_name.setText("XINM");
-        bank_type.setText(hintLastBankCardNumber("JIEHANGJ"));
-        bank_number.setText(hintLastBankCardNumber("JIEHANGJ"));
+        bank_name.setText(info[0]);
+        bank_number.setText(hintLastBankCardNumber(info[1]));
+        bank_type.setText(hintLastBankCardNumber(info[2]));
     }
 
     @Override

@@ -1434,10 +1434,13 @@ public class ApiClient {
     }
 
     /**
-     * 预约健康手机验证
+     * 手机验证
      */
-    public static Observable<String> bespeakHealthValidatePhone(HashMap hashMap) {
-        return OKHTTP.getInstance().getRequestManager().bespeakHealthInfoValidate(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    public static Observable<String> mesageValidateCode(String phone, String duplicate) {
+        Map<String, String> map = new HashMap<>();
+        map.put("phone", phone);
+        map.put("checkPhoneDuplicate", duplicate);
+        return OKHTTP.getInstance().getRequestManager().sendCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**
@@ -1825,7 +1828,6 @@ public class ApiClient {
         Map<String, Object> params = new HashMap<>();
         params.put("url", remotPath);
         return OKHTTP.getInstance().getRequestManager().getPersonCompare(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
-
     }
 
     /**
@@ -1846,6 +1848,14 @@ public class ApiClient {
     public static Observable<String> getPublicFundInf() {
         Map<String, Object> params = new HashMap<>();
         return OKHTTP.getInstance().getRequestManager().getPublicFudInf(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+    /**
+     * 直接请求金正接口
+     */
+    public static Observable<String> directRequestJzServer(HashMap<String, String> hashMap) {
+        return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 

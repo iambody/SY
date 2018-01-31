@@ -437,6 +437,18 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" />
 
+        <activity
+            android:name=".mvp.ui.center.BindBankCardInfoActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".mvp.ui.center.PublicFundIdentifyInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.center.PublicFundTradePwdModifyActivity"
+            android:screenOrientation="portrait" />
+
         <!-- <activity -->
         <!-- android:name="com.cgbsoft.privatefund.widget.CloudMenuActivity" -->
         <!-- android:theme="@style/transcutestyle" -->

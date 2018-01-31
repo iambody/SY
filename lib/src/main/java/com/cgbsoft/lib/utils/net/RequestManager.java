@@ -747,9 +747,9 @@ interface RequestManager {
     @POST(NetConfig.Health.HEALTH_FREE_BESPEAK_URL)
     Observable<ResponseBody> bespeakHealth(@Body RequestBody responseBody);
 
-    // 预约健康检 短信验证
-    @POST(NetConfig.Health.HEALTH_INFO_VALIDATE_URL)
-    Observable<ResponseBody> bespeakHealthInfoValidate(@Body RequestBody responseBody);
+    // 短信验证
+    @POST(NetConfig.USER.SENDCODE_URL)
+    Observable<ResponseBody> messageValidateCodeValid(@Body RequestBody responseBody);
 
     // 资讯首页数据
     @GET(NetConfig.Discovery.DISCOVERY_FIRST_PAGE)
@@ -768,7 +768,7 @@ interface RequestManager {
     Observable<ResponseBody> getMineData(@QueryMap Map<String, String> paramsMap);
 
     // 我的金融资产
-    @GET(NetConfig.Mine.MINE_FININCIAL_ASSERT)
+    @GET(NetConfig.PUBLIC_FUND.MINE_FININCIAL_ASSERT)
     Observable<ResponseBody> getMineFinincailAssert(@QueryMap Map<String, String> paramsMap);
 
     // 我的活动
@@ -968,4 +968,10 @@ interface RequestManager {
      */
     @POST(NetConfig.PUBLIC_FUND.PRIVATE_FUND_INF)
     Observable<ResponseBody> getPublicFudInf(@Body RequestBody responseBody);
+
+    /**
+     *  直接请求金正接口
+     */
+    @POST(NetConfig.PUBLIC_FUND.DIRECT_JZ_URL)
+    Observable<ResponseBody> directJZServer(@Body RequestBody responseBody);
 }

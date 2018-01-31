@@ -26,7 +26,7 @@ public interface PublicFundTradePwdModifyContract {
 
     interface PublicFundTradePwdModifyoPresenter extends BasePresenter{
 
-        void modifyPublicFundTradePwd();
+        void modifyPublicFundTradePwd(String identifyNo, String phoneNumber, String validateCode, String tradePwd);
 
         void getPhoneValidateCode(String phone);
     }

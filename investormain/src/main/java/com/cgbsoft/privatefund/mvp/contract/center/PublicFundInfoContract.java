@@ -19,7 +19,7 @@ public interface PublicFundInfoContract {
          */
         void hideLoadDialog();
 
-        void  requestInfoSuccess(String info);
+        void  requestInfoSuccess(String[] info);
 
         void requestInfoFailure(String mssage);
     }

@@ -186,7 +186,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     @OnClick(R.id.sin_public_fund_account_status)
     void gotoCreatePublicFundAccount() {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
-        if (!TextUtils.isEmpty(publicFundInf.getCustno())) {
+        if (TextUtils.isEmpty(publicFundInf.getCustno())) {
             NavigationUtils.gotoWebActivity(this, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
         } else {
             NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_INFO_ACTIVITY);

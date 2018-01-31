@@ -62,11 +62,21 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
             @Override
             protected void onEvent(String s) {
                 Log.d("getMineFinincialAssert", "----" + s.toString());
-                FinancialAssertModel mineModel = new Gson().fromJson(s, new TypeToken<FinancialAssertModel>() {}.getType());
-                if (mineModel != null) {
-                    getView().requestFinancialAssertSuccess(mineModel);
-                } else {
-                    getView().requestDataFailure("数据加载错误！");
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    if (result != null) {
+                        FinancialAssertModel mineModel = new Gson().fromJson(result.toString(), new TypeToken<FinancialAssertModel>() {}.getType());
+                        if (mineModel != null) {
+                            getView().requestFinancialAssertSuccess(mineModel);
+                        } else {
+                            getView().requestDataFailure("数据加载错误！");
+                        }
+                    } else {
+                        getView().requestDataFailure("数据加载错误！");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
 

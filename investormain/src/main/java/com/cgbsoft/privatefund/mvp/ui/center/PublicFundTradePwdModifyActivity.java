@@ -108,6 +108,8 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
             Toast.makeText(this, R.string.hint_trade_password, Toast.LENGTH_SHORT).show();
             return;
         }
+
+        getPresenter().modifyPublicFundTradePwd(et_identify_number.getText().toString(), et_phone_number.getText().toString(),et_validate_code.getText().toString(), et_trade_password.getText().toString());
     }
 
     @Override
@@ -127,11 +129,14 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
 
     @Override
     public void modifyPwdSuccess(String info) {
-
+        hideLoadDialog();
+        Toast.makeText(this, info, Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override
     public void modifyPwdFailure(String message) {
+        hideLoadDialog();
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 

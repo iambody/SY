@@ -16,6 +16,8 @@ import com.cgbsoft.privatefund.mvp.contract.center.PublicFundInfoContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PublicFundInfoPresenterImpl;
 import com.chenenyu.router.annotation.Route;
 
+import org.json.JSONObject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -70,15 +72,17 @@ public class PublicFundIdentifyInfoActivity extends BaseActivity<PublicFundInfoP
     }
 
     @Override
-    public void requestInfoSuccess(String info) {
+    public void requestInfoSuccess(String[] info) {
         hideLoadDialog();
-        Log.i("public_fund_info=", info);
-        tv_public_fund_info_name.setText("XINM");
-        tv_public_fund_info_identify_number.setText(hintIndentifyNumber("JIEHANGJ"));
+        if (info != null) {
+            tv_public_fund_info_name.setText(info[0]);
+            tv_public_fund_info_identify_number.setText(hintIndentifyNumber(info[1]));
+        }
     }
 
     @Override
     public void requestInfoFailure(String mssage) {
+        hideLoadDialog();
         Toast.makeText(getApplicationContext(), mssage, Toast.LENGTH_SHORT).show();
     }
 
