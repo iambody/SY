@@ -1,7 +1,10 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
@@ -9,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +49,7 @@ import com.umeng.analytics.MobclickAgent;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,6 +91,22 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     DiscoverIndicatorAdapter disCoveryNavigationAdapter;
     MyHolderAdapter myHolderAdapter;
 
+    private MyHandler myHandler;
+
+    private class MyHandler extends Handler {
+
+        private final WeakReference<Activity> mActivity;
+
+        private MyHandler(Activity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            myHandler.postDelayed(runnable, 5 * DateUtils.SECOND_IN_MILLIS);
+        }
+    }
+
     @Override
     protected int layoutID() {
         return R.layout.fragment_discover_list;
@@ -95,12 +116,14 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart(Constant.SXY_SIHANG_ZX);
+        myHandler.post(runnable);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(Constant.SXY_SIHANG_ZX);
+        myHandler.removeCallbacks(runnable);
     }
 
     @Override
@@ -110,8 +133,13 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         initStockIndexView();
         initCache();
         getPresenter().getDiscoveryFirstData();
-        getPresenter().getStockIndex();
+        myHandler = new MyHandler(getActivity());
     }
+
+    Runnable runnable = () -> {
+        getPresenter().getStockIndex();
+        myHandler.obtainMessage().sendToTarget();
+    };
 
     private void initCache() {
         if (null != AppManager.getDiscoveryModleData(baseActivity)) {
@@ -258,16 +286,16 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         super.viewBeHide();
     }
 
-    public class MyHolderAdapter extends RecyclerView.Adapter<ViewHolder> {
+    private class MyHolderAdapter extends RecyclerView.Adapter<ViewHolder> {
         private LayoutInflater mInflater;
         private List<StockIndexBean> mDatas;
 
-        public MyHolderAdapter(Context context, List<StockIndexBean> datatsList) {
+        private MyHolderAdapter(Context context, List<StockIndexBean> datatsList) {
             mInflater = LayoutInflater.from(context);
             mDatas = datatsList;
         }
 
-        public void setDataList(List<StockIndexBean> dataList) {
+        private void setDataList(List<StockIndexBean> dataList) {
             if (!CollectionUtils.isEmpty(dataList)) {
                 mDatas.clear();
                 mDatas.addAll(dataList);
@@ -327,4 +355,5 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
             textView.setTextColor(ContextCompat.getColorStateList(getActivity(), indexValue.startsWith("-") ? R.color.stock_red : R.color.stock_red));
         }
     }
+
 }
