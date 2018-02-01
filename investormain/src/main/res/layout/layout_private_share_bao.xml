@@ -91,13 +91,13 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/private_share_bao_assert_title"
+                android:id="@+id/tv_share_bao_subsist_assert_desc"
                 android:text="@string/subsist_assert"/>
 
             <TextView
@@ -111,12 +111,12 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/tv_share_bao_continue_income_desc"
                 style="@style/private_share_bao_assert_title"
                 android:text="@string/continue_income"/>
 
@@ -131,7 +131,6 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -139,6 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/private_share_bao_assert_title"
+                android:id="@+id/tv_share_bao_yestoday_income_desc"
                 android:text="@string/yestoday_income"/>
 
             <TextView
