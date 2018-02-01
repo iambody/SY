@@ -198,15 +198,15 @@ public interface Constant {
 
     HashMap<String, String> healthOrder = new HashMap<String, String>() {
         {
-            put("10", "待授权");
-            put("20", "待报备");
-            put("40", "待审核");
-            put("50", "被驳回");
-            put("80", "已确认");
+            put("10", "待授权确认");
+            put("20", "预约中");
+            put("40", "预约确认中");
+            put("50", "预约中");
+            put("80", "预约成功");
             put("90", "已取消");
             put("85", "服务中");
             put("100", "服务完成");
-            put("200", "已发放");
+            put("200", "服务完成");
         }
     };
 
