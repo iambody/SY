@@ -409,6 +409,28 @@ public class ViewUtils {
         return "元";
     }
 
+    public static String formatNumberPatter(String targetValue, int unitNumber) {
+        String partten = "%." + unitNumber + "f";
+        if (!TextUtils.isEmpty(targetValue)) {
+            try {
+                return String.format(partten, Float.parseFloat(targetValue));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return targetValue;
+    }
 
-
+    public static String productEncodyStr(String cardNumber) {
+        StringBuffer sb = new StringBuffer();
+        if (!TextUtils.isEmpty(cardNumber)) {
+            char[] bs = cardNumber.toCharArray();
+            int i = 0;
+            while (i++ < bs.length) {
+                sb.append("*");
+            }
+            return sb.toString();
+        }
+        return "";
+    }
 }

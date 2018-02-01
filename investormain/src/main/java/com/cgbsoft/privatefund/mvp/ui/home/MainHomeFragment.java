@@ -1061,7 +1061,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             String toBuyObj = NavigationUtils.getObjToBuy(publishFundRecommend, publicFundInf);
 
         }
-
     }
 
     /**

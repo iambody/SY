@@ -2,7 +2,6 @@ package com.cgbsoft.privatefund.mvp.ui.center;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,13 +9,12 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.PublicFundInfoContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PublicFundInfoPresenterImpl;
 import com.chenenyu.router.annotation.Route;
-
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -89,7 +87,7 @@ public class PublicFundIdentifyInfoActivity extends BaseActivity<PublicFundInfoP
     private String hintIndentifyNumber(String identifyNumber) {
         if (!TextUtils.isEmpty(identifyNumber) && identifyNumber.length() > 14) {
             String hintStr = identifyNumber.substring(6, identifyNumber.length() - 4);
-            return identifyNumber.replace(hintStr, "*");
+            return identifyNumber.replace(hintStr, ViewUtils.productEncodyStr(hintStr));
         }
         return identifyNumber;
     }
