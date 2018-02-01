@@ -30,6 +30,7 @@ import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
+import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.BannerView;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
@@ -48,6 +49,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
 
 /**
@@ -299,7 +301,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         public void onBindViewHolder(ViewHolder holder, int position) {
             StockIndexBean stockIndexBean = mDatas.get(position);
             holder.name.setText(stockIndexBean.getName());
-            holder.stockValue.setText(stockIndexBean.getIndex());
+            holder.stockValue.setText(ViewUtils.formatNumberPatter(stockIndexBean.getIndex(), 2));
             holder.increaseValue.setText((!TextUtils.isEmpty(stockIndexBean.getGain()) && stockIndexBean.getGain().startsWith("-")) ? stockIndexBean.getGain() : "+".concat(stockIndexBean.getGain()));
             holder.increatePercent.setText((!TextUtils.isEmpty(stockIndexBean.getRate()) && stockIndexBean.getRate().startsWith("-")) ? stockIndexBean.getRate() : "+".concat(stockIndexBean.getRate()));
             setIndexValueColor(stockIndexBean.getIndex(), holder.stockValue);

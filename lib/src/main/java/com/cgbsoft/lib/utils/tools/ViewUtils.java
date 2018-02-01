@@ -409,6 +409,15 @@ public class ViewUtils {
         return "元";
     }
 
-
-
+    public static String formatNumberPatter(String targetValue, int unitNumber) {
+        String partten = "%." + unitNumber + "f";
+        if (!TextUtils.isEmpty(targetValue)) {
+            try {
+                return String.format(partten, Float.parseFloat(targetValue));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return targetValue;
+    }
 }
