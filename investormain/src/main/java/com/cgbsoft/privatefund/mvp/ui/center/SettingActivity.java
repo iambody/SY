@@ -30,6 +30,7 @@ import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity;
+import com.cgbsoft.privatefund.public_fund.BindingBankCardOfPublicFundActivity;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
@@ -186,7 +187,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     @OnClick(R.id.sin_public_fund_account_status)
     void gotoCreatePublicFundAccount() {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
-        if (!TextUtils.isEmpty(publicFundInf.getCustno())) {
+        if (TextUtils.isEmpty(publicFundInf.getCustno())) {
             NavigationUtils.gotoWebActivity(this, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
         } else {
             NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_INFO_ACTIVITY);
@@ -200,7 +201,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         if (bindCard) {
             NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BIND_BANK_CARD_ACTIVITY);
         } else {
-           // GOTO 绑定银行卡页面
+           NavigationUtils.startActivity(this, BindingBankCardOfPublicFundActivity.class);
         }
     }
 

@@ -72,7 +72,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
     }
 
     /**
-     * 公募inf
+     * 公募
      */
     @Override
     public void loadPublicFundInf() {

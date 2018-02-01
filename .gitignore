@@ -46,3 +46,7 @@ gradle/
 ehthumbs.db
 Thumbs.db
 /*.hprof
+
+fastDep.properties
+libs
+.gitignore

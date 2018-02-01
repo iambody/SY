@@ -3,14 +3,33 @@ package com.cgbsoft.privatefund.model;
 /**
  * @author chenlong
  */
+//{
+//        "message": "",
+//        "result": {
+//        "sxbInfo": {
+//        "growThrate":"1.34",
+//        "allud":"3452",
+//        "survivingAssets":"100000000",
+//        "yestincome":"1111",
+//        "addincome":"22.87"
+//        },
+//        "hasAccount": "1",
+//        "gmInfo": {
+//        "addincome": "61061.06",
+//        "yestincome": "0.00",
+//        "survivingAssets": "741741.75"
+//        }
+//        },
+//        "code": ""
+//        }
 
 public class FinancialAssertModel {
 
     private String openAccount;
 
-    private PrivateTreasure enjoyMoneyBaby;
+    private PrivateTreasure sxbInfo;
 
-    private PublicFund publicFund;
+    private PublicFund gmInfo;
 
     public String getOpenAccount() {
         return openAccount;
@@ -20,35 +39,35 @@ public class FinancialAssertModel {
         this.openAccount = openAccount;
     }
 
-    public PrivateTreasure getEnjoyMoneyBaby() {
-        return enjoyMoneyBaby;
+    public PrivateTreasure getSxbInfo() {
+        return sxbInfo;
     }
 
-    public void setEnjoyMoneyBaby(PrivateTreasure enjoyMoneyBaby) {
-        this.enjoyMoneyBaby = enjoyMoneyBaby;
+    public void setSxbInfo(PrivateTreasure sxbInfo) {
+        this.sxbInfo = sxbInfo;
     }
 
-    public PublicFund getPublicFund() {
-        return publicFund;
+    public PublicFund getGmInfo() {
+        return gmInfo;
     }
 
-    public void setPublicFund(PublicFund publicFund) {
-        this.publicFund = publicFund;
+    public void setGmInfo(PublicFund gmInfo) {
+        this.gmInfo = gmInfo;
     }
 
     public class PrivateTreasure {
 
         private String isBuyin;
 
-        private String incomeByYear;
+        private String growThrate;
 
-        private String incomeByTenThousand;
+        private String allud;
 
         private String survivingAssets;
 
-        private String benefitOfCarry;
+        private String addincome;
 
-        private String incomeByYesterday;
+        private String yestincome;
 
         public String getIsBuyin() {
             return isBuyin;
@@ -56,22 +75,6 @@ public class FinancialAssertModel {
 
         public void setIsBuyin(String isBuyin) {
             this.isBuyin = isBuyin;
-        }
-
-        public String getIncomeByYear() {
-            return incomeByYear;
-        }
-
-        public void setIncomeByYear(String incomeByYear) {
-            this.incomeByYear = incomeByYear;
-        }
-
-        public String getIncomeByTenThousand() {
-            return incomeByTenThousand;
-        }
-
-        public void setIncomeByTenThousand(String incomeByTenThousand) {
-            this.incomeByTenThousand = incomeByTenThousand;
         }
 
         public String getSurvivingAssets() {
@@ -82,20 +85,36 @@ public class FinancialAssertModel {
             this.survivingAssets = survivingAssets;
         }
 
-        public String getBenefitOfCarry() {
-            return benefitOfCarry;
+        public String getGrowThrate() {
+            return growThrate;
         }
 
-        public void setBenefitOfCarry(String benefitOfCarry) {
-            this.benefitOfCarry = benefitOfCarry;
+        public void setGrowThrate(String growThrate) {
+            this.growThrate = growThrate;
         }
 
-        public String getIncomeByYesterday() {
-            return incomeByYesterday;
+        public String getAllud() {
+            return allud;
         }
 
-        public void setIncomeByYesterday(String incomeByYesterday) {
-            this.incomeByYesterday = incomeByYesterday;
+        public void setAllud(String allud) {
+            this.allud = allud;
+        }
+
+        public String getAddincome() {
+            return addincome;
+        }
+
+        public void setAddincome(String addincome) {
+            this.addincome = addincome;
+        }
+
+        public String getYestincome() {
+            return yestincome;
+        }
+
+        public void setYestincome(String yestincome) {
+            this.yestincome = yestincome;
         }
     }
 
@@ -105,9 +124,9 @@ public class FinancialAssertModel {
 
         private String survivingAssets;
 
-        private String benefitOfCarry;
+        private String addincome;
 
-        private String incomeByYesterday;
+        private String yestincome;
 
         public String getIsBuyin() {
             return isBuyin;
@@ -125,20 +144,20 @@ public class FinancialAssertModel {
             this.survivingAssets = survivingAssets;
         }
 
-        public String getBenefitOfCarry() {
-            return benefitOfCarry;
+        public String getAddincome() {
+            return addincome;
         }
 
-        public void setBenefitOfCarry(String benefitOfCarry) {
-            this.benefitOfCarry = benefitOfCarry;
+        public void setAddincome(String addincome) {
+            this.addincome = addincome;
         }
 
-        public String getIncomeByYesterday() {
-            return incomeByYesterday;
+        public String getYestincome() {
+            return yestincome;
         }
 
-        public void setIncomeByYesterday(String incomeByYesterday) {
-            this.incomeByYesterday = incomeByYesterday;
+        public void setYestincome(String yestincome) {
+            this.yestincome = yestincome;
         }
     }
 }

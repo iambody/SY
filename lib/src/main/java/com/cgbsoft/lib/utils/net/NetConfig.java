@@ -299,6 +299,8 @@ public class NetConfig {
     // 腾讯视频内容校验文件
     public final static String TENCENT_VIDEO_URL = "http://1251892263.vod2.myqcloud.com/9dbfd9a6vodgzp1251892263/14f16f914564972818450529832/wW2YHIkwbNoA.mp4";
 
+
+
     static class TRACKDATA {
         final static String TRACKING = TRACKING_V2 + "/track/app";
         final static String CONFIG = TRACKING_V2 + "/track/config";
@@ -360,8 +362,6 @@ public class NetConfig {
         final static String ACTIVITES = API_URL + "/salons/mine";
         // 提交投资账号
         final static String CommitInvisitAccount = AUTH_URL_V2 + "/user/certSubmit";
-        // 我的金融资产
-        final static String MINE_FININCIAL_ASSERT = AUTH_URL_V2 + "/user/finincialAssert";
     }
 
     /**
@@ -432,10 +432,14 @@ public class NetConfig {
     /**
      * 公募基金的API
      */
-    static class PUBLIC_FUND {
+     static class PUBLIC_FUND {
         static final String HOME_RECOMMEND = API_URL_V2 + "/kz/sixiangbao";
-        static  final  String PRIVATE_FUND_INF=API_URL_V2+"/kz/userinfo";
-    }
+        static final  String PRIVATE_FUND_INF=API_URL_V2+"/kz/userinfo";
+        final static String MINE_FININCIAL_ASSERT = API_URL_V2 + "/kz/userfund";
+        final static String DIRECT_JZ_URL = API_URL_V2 + "/kz/proxy";
+        static  final  String PUBLIBC_FUND_INF=API_URL_V2+"/kz/proxy";
+     }
+
 
     public static class SoDown {
         public static final String DOWN_RUL = UPLOAD_FILE + "android_so/armeabi-v7a.zip";

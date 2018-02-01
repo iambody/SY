@@ -220,7 +220,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     TextView tv_public_fund_yestoday_income;
 
     @BindView(R.id.ll_private_share_bao_empty)
-    RelativeLayout ll_private_share_bao_empty;
+    LinearLayout ll_private_share_bao_empty;
 
     @BindView(R.id.ll_private_share_bao_fill)
     LinearLayout ll_private_share_bao_fill;
@@ -744,25 +744,25 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private boolean isExistPrivateShareMoney(FinancialAssertModel financialAssertModel) {
-        return financialAssertModel != null && financialAssertModel.getEnjoyMoneyBaby() != null && TextUtils.equals("1", financialAssertModel.getEnjoyMoneyBaby().getIsBuyin());
+        return financialAssertModel != null && financialAssertModel.getSxbInfo() != null && !TextUtils.isEmpty(financialAssertModel.getSxbInfo().getSurvivingAssets());
     }
 
     private boolean isExistPublicFundMoney(FinancialAssertModel financialAssertModel) {
-        return financialAssertModel != null && financialAssertModel.getPublicFund() != null && TextUtils.equals("1", financialAssertModel.getPublicFund().getIsBuyin());
+        return financialAssertModel != null && financialAssertModel.getGmInfo() != null && !TextUtils.isEmpty(financialAssertModel.getGmInfo().getSurvivingAssets());
     }
 
     private void initPrivateShareMoneyData(FinancialAssertModel financialAssertModel) {
         if (isExistPrivateShareMoney(financialAssertModel)) {
             ll_private_share_bao_empty.setVisibility(View.GONE);
             ll_private_share_bao_fill.setVisibility(View.VISIBLE);
-            tv_share_bao_subsist_assert.setText(financialAssertModel.getEnjoyMoneyBaby().getSurvivingAssets());
-            tv_share_bao_continue_income.setText(financialAssertModel.getEnjoyMoneyBaby().getBenefitOfCarry());
-            tv_share_bao_yestoday_income.setText(financialAssertModel.getEnjoyMoneyBaby().getIncomeByYesterday());
+            tv_share_bao_subsist_assert.setText(financialAssertModel.getSxbInfo().getSurvivingAssets());
+            tv_share_bao_continue_income.setText(financialAssertModel.getSxbInfo().getAddincome());
+            tv_share_bao_yestoday_income.setText(financialAssertModel.getSxbInfo().getYestincome());
         } else {
             ll_private_share_bao_empty.setVisibility(View.VISIBLE);
             ll_private_share_bao_fill.setVisibility(View.GONE);
-            tv_increase_percent.setText(financialAssertModel.getEnjoyMoneyBaby() != null ? financialAssertModel.getEnjoyMoneyBaby().getIncomeByYear() : "");
-            tv_increase_value.setText(financialAssertModel.getEnjoyMoneyBaby() != null ? financialAssertModel.getEnjoyMoneyBaby().getIncomeByTenThousand() : "");
+            tv_increase_percent.setText(financialAssertModel.getSxbInfo() != null ? financialAssertModel.getSxbInfo().getGrowThrate() : "");
+            tv_increase_value.setText(financialAssertModel.getGmInfo() != null ? financialAssertModel.getSxbInfo().getAllud() : "");
         }
     }
 
@@ -770,9 +770,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (isExistPublicFundMoney(financialAssertModel)) {
             ll_public_fund_empty.setVisibility(View.GONE);
             ll_public_fund_fill.setVisibility(View.VISIBLE);
-            tv_public_fund_subsist_assert.setText(financialAssertModel.getPublicFund().getSurvivingAssets());
-            tv_public_fund_continue_income.setText(financialAssertModel.getPublicFund().getBenefitOfCarry());
-            tv_public_fund_yestoday_income.setText(financialAssertModel.getPublicFund().getIncomeByYesterday());
+            tv_public_fund_subsist_assert.setText(financialAssertModel.getGmInfo().getSurvivingAssets());
+            tv_public_fund_continue_income.setText(financialAssertModel.getGmInfo().getAddincome());
+            tv_public_fund_yestoday_income.setText(financialAssertModel.getGmInfo().getYestincome());
         } else {
             ll_public_fund_empty.setVisibility(View.VISIBLE);
             ll_public_fund_fill.setVisibility(View.GONE);
