@@ -14,25 +14,31 @@
         android:theme="@style/AppTheme.AppBarLayout"
         app:elevation="0dp">
 
-        <com.cgbsoft.lib.widget.BannerView
-            android:id="@+id/discover_bannerview"
-            android:layout_width="match_parent"
-            android:layout_height="230dp"
-            app:layout_scrollFlags="scroll|enterAlways" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:paddingLeft="20dp"
-            android:scrollbars="none"/>
-
         <LinearLayout
-            android:id="@+id/divide_stock_index"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:orientation="horizontal"
-            android:background="@color/app_bg"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <com.cgbsoft.lib.widget.BannerView
+                android:id="@+id/discover_bannerview"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:paddingLeft="20dp"
+                android:scrollbars="none"/>
+
+            <LinearLayout
+                android:id="@+id/divide_stock_index"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:orientation="horizontal"
+                android:background="@color/app_bg"/>
+        </LinearLayout>
 
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@+id/discover_list_indicator"
