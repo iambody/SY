@@ -161,4 +161,5 @@
     <string name="ten_thousand">万</string>
     <string name="performance_standard">业绩基准</string>
     <string name="residue_limit">剩余额度</string>
+    <string name="public_fund_risk">风险测评</string>
 </resources>

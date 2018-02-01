@@ -11,6 +11,7 @@ import android.webkit.JavascriptInterface;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.webview.bean.JsCall;
 import com.cgbsoft.lib.contant.Contant;
@@ -28,7 +29,9 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.google.gson.Gson;
 import com.tencent.smtt.sdk.WebView;
 
@@ -143,7 +146,7 @@ public class JavaScriptObjectToc {
     }
 
     @JavascriptInterface
-    public void openCredentialsFolder(String param){
+    public void openCredentialsFolder(String param) {
         try {
             JSONObject ja = new JSONObject(param);
             JSONObject data = ja.getJSONObject("data");
@@ -155,14 +158,14 @@ public class JavaScriptObjectToc {
                     if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("credentialStateMedel", credentialStateMedel);
-                        NavigationUtils.startActivityByRouter(context,RouteConfig.CrenditralGuideActivity,bundle);
+                        NavigationUtils.startActivityByRouter(context, RouteConfig.CrenditralGuideActivity, bundle);
 //                        Intent intent = new Intent(context, CrenditralGuideActivity.class);
 //                        intent.putExtra("credentialStateMedel", credentialStateMedel);
 //                        startActivity(intent);
                     } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("credentialStateMedel", credentialStateMedel);
-                        NavigationUtils.startActivityByRouter(context,RouteConfig.UploadIndentityCradActivity,bundle);
+                        NavigationUtils.startActivityByRouter(context, RouteConfig.UploadIndentityCradActivity, bundle);
 
 //                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
 //                        intent.putExtra("credentialStateMedel", credentialStateMedel);
@@ -176,13 +179,13 @@ public class JavaScriptObjectToc {
                 } else {//  非大陆去证件列表
                     Bundle bundle = new Bundle();
                     bundle.putString("indentityCode", credentialStateMedel.getCustomerIdentity());
-                    NavigationUtils.startActivityByRouter(context,RouteConfig.CardCollectActivity,bundle);
+                    NavigationUtils.startActivityByRouter(context, RouteConfig.CardCollectActivity, bundle);
 //                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
 //                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
 //                    startActivity(intent);
                 }
             } else {//无身份
-                NavigationUtils.startActivityByRouter(context,RouteConfig.SelectIndentityActivity);
+                NavigationUtils.startActivityByRouter(context, RouteConfig.SelectIndentityActivity);
 //                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
 //                startActivity(intent);
             }
@@ -326,6 +329,62 @@ public class JavaScriptObjectToc {
             SPreference.putString(InvestorAppli.getContext(), Contant.CUR_LIVE_ROOM_NUM, jsonObject1.getString("id"));
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    @JavascriptInterface
+    public void subscribeFund(String jsonObj) {
+        if (!BStrUtils.isEmpty(jsonObj)) {
+            try {
+                JSONObject object = new JSONObject(jsonObj);
+                if (object.has("data")) {
+                    String data = object.getString("data");
+                    if (!BStrUtils.isEmpty(data)) {
+                        JSONObject obj = new JSONObject();
+                        String fundCode = obj.getString("fundcode");
+                        String riskLevel = obj.getString("risklevel");
+                        HashMap<String, Object> map = new HashMap<>();
+                        map.put("tag_fund_code", fundCode);
+                        map.put("tag_fund_risk_level", fundCode);
+                        //**********************跳转到申购页面的逻辑判断开始*****************************************************
+                        PublicFundInf publicFundInf = AppManager.getPublicFundInf(context.getApplicationContext());
+                        String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
+                        if (BStrUtils.isEmpty(fundinf) && "0".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {//未开户
+                            //没开户=》跳转到开户页面ton
+                            NavigationUtils.gotoWebActivity((Activity) context, CwebNetConfig.publicFundRegistUrl, "开户", false);
+                        } else if (!BStrUtils.isEmpty(fundinf) && "0".equals(publicFundInf.getIsHaveCustBankAcct())) {
+                            //没绑定银行卡=》跳转到绑定银行卡页面
+                            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, new HashMap<>());
+                        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
+                            //没风险测评=》跳转到公共的页面
+                            DefaultDialog dialog = new DefaultDialog(context, "请做风险测评", "取消", "确定") {
+                                @Override
+                                public void left() {
+                                    dismiss();
+                                }
+
+                                @Override
+                                public void right() {
+                                    //去风险测评
+                                    NavigationUtils.gotoWebActivity((Activity) context, CwebNetConfig.publicFundRiskUrl, context.getResources().getString(R.string.public_fund_risk), false);
+                                    dismiss();
+
+                                }
+                            };
+                            dialog.show();
+                        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
+                            //开过户并且已经完成绑卡 跳转到数据里面
+                            // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
+                            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PUBLIC_FUND_BUY, map);
+                        }
+                        //**********************跳转到申购页面的逻辑判断结束*****************************************************
+
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

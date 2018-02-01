@@ -408,8 +408,12 @@ public class CWebviewManger {
         } else if (action.contains("penLargeImage")) {
             //分享截屏的图片
             gotoLargeImage(action);
-        }else if(action.contains("CemeteryFundBuy")){
+        } else if (action.contains("subscribeFund")) {
             //跳转到去申购页面
+        } else if (action.contains("redeemFund")) {
+            //赎回指令
+        } else if (action.contains("openFundAccount")) {
+            //开户指令
         }
     }
 

@@ -85,6 +85,8 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                         if (!jsonObject.has("result")) return;
                         String resultStr = jsonObject.getString("result");
                         AppInfStore.savePublicFundInf(getContext(), new Gson().fromJson(resultStr, PublicFundInf.class));
+                        PublicFundInf p = AppManager.getPublicFundInf(getContext());
+                        Log.i("sss", "sss");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -54,6 +54,7 @@ import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
+import com.cgbsoft.privatefund.public_fund.BindingBankCardOfPublicFundActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.FloatStewardView;
 import com.chenenyu.router.Router;
@@ -216,8 +217,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
 
-
-
     @Override
     public void onHiddenChanged(boolean isVisibleToUser) {
         super.onHiddenChanged(isVisibleToUser);
@@ -269,6 +268,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 DataStatistApiParam.homeClickDuiHua();
                 TrackingDataManger.homePhone(baseActivity);
             }
+
 
             @Override
             public void noteClick() {
@@ -802,6 +802,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //产品
         initProduct(cachesData.bank);
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -814,6 +815,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         }
     }
+
     @Override
     public void getUseriInfsucc(int type) {
         switch (type) {
@@ -841,6 +843,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         } else {
 
         }
+        PublicFundInf publicFundInf =AppManager.getPublicFundInf(baseActivity.getApplicationContext());
+//        if(publicFundInf.get){}
+
         publishFundRecommend = publishFundRecommendBean;
         viewHomePublicFundLay.setVisibility(View.VISIBLE);
 //        viewPublicFundRegist.setVisibility("1".equals(publishFundRecommendBean.getIsHaveAccount())?View.GONE:View.VISIBLE);
@@ -1032,14 +1037,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //需要先判断是否注册绑卡
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
         String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
-        if (BStrUtils.isEmpty(fundinf)) {//未开户
-            //没开户=》跳转到开户页面ton //TODO 跳转到公用的页面
+        if (BStrUtils.isEmpty(fundinf)&&"0".equals(publicFundInf.getIsHaveCustBankAcct())&&BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {//未开户
+            //没开户=》跳转到开户页面ton
             NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
-        } else if ("0".equals(publicFundInf.getIsHaveCustBankAcct())) {
-            //没绑定银行卡=》跳转到绑定银行卡页面 todo 跳转到公用的页面
-            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
-        } else if (BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
-            //没风险测评=》跳转到公共的页面 todo  跳转到公共的页面
+        } else if (!BStrUtils.isEmpty(fundinf) && "0".equals(publicFundInf.getIsHaveCustBankAcct())) {
+            //没绑定银行卡=》跳转到绑定银行卡页面
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, BindingBankCardOfPublicFundActivity.class));
+        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
+            //没风险测评=》跳转到公共的页面
             DefaultDialog dialog = new DefaultDialog(baseActivity, getResources().getString(R.string.fill_questionnaire), getResources().getString(R.string.cancle), getResources().getString(R.string.confirm)) {
                 @Override
                 public void left() {
@@ -1048,17 +1053,23 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                 @Override
                 public void right() {
-                    NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+                    //去风险测评
+                    NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRiskUrl, getResources().getString(R.string.public_fund_risk), false);
                     dismiss();
 
                 }
             };
             dialog.show();
         } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
-            //开过户并且已经完成绑卡 跳转到数据里面//todo 跳转到申购页面
+            //开过户并且已经完成绑卡 跳转到数据里面
             // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
-            riskIsmatch(publishFundRecommend.getRisklevel());
-            String toBuyObj = NavigationUtils.getObjToBuy(publishFundRecommend, publicFundInf);
+//            riskIsmatch(publishFundRecommend.getRisklevel());
+//            String toBuyObj = NavigationUtils.getObjToBuy(publishFundRecommend, publicFundInf);
+
+//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, BuyPublicFundActivity.class).putExtra(BuyPublicFundActivity.TAG_FUND_CODE,publishFundRecommend.getFundCode()).putExtra(BuyPublicFundActivity.TAG_FUND_RISK_LEVEL,publishFundRecommend.getRisklevel()));
+
+
+
 
         }
     }
@@ -1069,6 +1080,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      * @param risklevel =》01:安全型 02:保守型 03:稳健型 04:积极 型 05:进取型)
      */
     private void riskIsmatch(String risklevel) {
+//        BindingBankCardOfPublicFundActivity.class
+//        BuyPublicFundActivity.class
 
     }
 

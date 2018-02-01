@@ -10,17 +10,19 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.privatefund.R;
+import com.chenenyu.router.annotation.Route;
 
 /**
  * Created by wangpeng on 18-1-29.
  */
-
-public class BuyPublicFundActivity extends BaseActivity implements View.OnClickListener{
-
-
+@Route(RouteConfig.GOTO_PUBLIC_FUND_BUY)
+public class BuyPublicFundActivity extends BaseActivity implements View.OnClickListener {
+    public static final String TAG_FUND_CODE = "tag_fund_code";
+    public static final String TAG_FUND_RISK_LEVEL = "tag_fund_risk_level";
     private Button buyConfirm;
     private ImageView bankIcon;
     private TextView bankName;
@@ -36,6 +38,7 @@ public class BuyPublicFundActivity extends BaseActivity implements View.OnClickL
     private String unit = "元"; //银行卡单笔限额
 
     private PayPasswordDialog payPasswordDialog;
+
     @Override
     protected int layoutID() {
         return R.layout.activity_buy_publicfund;
@@ -53,10 +56,10 @@ public class BuyPublicFundActivity extends BaseActivity implements View.OnClickL
     }
 
     /**
-     *  绑定View的监听与数据
+     * 绑定View的监听与数据
      */
     private void bindView() {
-        Imageload.display(this.getApplicationContext(),"",bankIcon);
+        Imageload.display(this.getApplicationContext(), "", bankIcon);
 
         buyConfirm.setOnClickListener(this);
 
@@ -70,15 +73,15 @@ public class BuyPublicFundActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.bt_Confirm:
                 String inputText = buyInput.getText().toString();
-                if(BStrUtils.isEmpty(inputText)){
-                    Toast.makeText(this,"请输入买入基金的金额",Toast.LENGTH_LONG).show();
+                if (BStrUtils.isEmpty(inputText)) {
+                    Toast.makeText(this, "请输入买入基金的金额", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(payPasswordDialog == null){
-                    payPasswordDialog = new PayPasswordDialog(this,null,fundName,inputText+unit);
+                if (payPasswordDialog == null) {
+                    payPasswordDialog = new PayPasswordDialog(this, null, fundName, inputText + unit);
                     payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                         @Override
                         public void onInputFinish(String psw) {
@@ -96,9 +99,10 @@ public class BuyPublicFundActivity extends BaseActivity implements View.OnClickL
 
     /**
      * 开始支付
+     *
      * @param psw
      */
-    private void starPay(String psw){
+    private void starPay(String psw) {
 
     }
 }
