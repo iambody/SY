@@ -79,6 +79,7 @@
                     android:orientation="horizontal"
                     android:id="@+id/ll_public_fund_create_account"
                     android:paddingLeft="20dp"
+                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:paddingRight="15dp">
 

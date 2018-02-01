@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -42,6 +43,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -52,6 +54,8 @@ import com.cgbsoft.lib.widget.RoundProgressbar;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
+import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.model.FinancialAssertModel;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
@@ -193,8 +197,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.tv_increase_percent)
     TextView tv_increase_percent;
 
+    @BindView(R.id.tv_server_increase)
+    TextView tv_server_increase;
+
     @BindView(R.id.tv_increase_value)
     TextView tv_increase_value;
+
+    @BindView(R.id.tv_increase_value_desc)
+    TextView tv_increase_value_desc;
 
     @BindView(R.id.tv_now_transfer)
     TextView tv_now_transfer;
@@ -770,7 +780,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         return financialAssertModel != null && financialAssertModel.getGmInfo() != null && !TextUtils.isEmpty(financialAssertModel.getGmInfo().getSurvivingAssets());
     }
 
+    @SuppressLint("StringFormatInvalid")
     private void initPrivateShareMoneyData(FinancialAssertModel financialAssertModel) {
+        ll_public_fund_create_account.setVisibility(TextUtils.equals("1", financialAssertModel.getOpenAccount()) ? View.VISIBLE : View.GONE);
         if (isExistPrivateShareMoney(financialAssertModel)) {
             ll_private_share_bao_empty.setVisibility(View.GONE);
             ll_private_share_bao_fill.setVisibility(View.VISIBLE);
@@ -783,11 +795,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         } else {
             ll_private_share_bao_empty.setVisibility(View.VISIBLE);
             ll_private_share_bao_fill.setVisibility(View.GONE);
-            tv_increase_percent.setText(financialAssertModel.getSxbInfo() != null ? financialAssertModel.getSxbInfo().getGrowThrate() : "");
-            tv_increase_value.setText(financialAssertModel.getGmInfo() != null ? financialAssertModel.getSxbInfo().getAllud() : "");
+            PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(getActivity());
+            tv_increase_percent.setText(publishFundRecommendBean.getLeftUpValue());
+            tv_server_increase.setText(publishFundRecommendBean.getLeftDownDes());
+            tv_increase_value.setText(publishFundRecommendBean.getRightUpValue());
+            tv_increase_value_desc.setText(publishFundRecommendBean.getRightDownDes());
         }
     }
 
+    @SuppressLint("StringFormatInvalid")
     private void initPublicFundData(FinancialAssertModel financialAssertModel) {
         if (isExistPublicFundMoney(financialAssertModel)) {
             ll_public_fund_empty.setVisibility(View.GONE);
@@ -851,6 +867,46 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.tv_now_transfer)
     void gotoNowTransferPrivateShare() {
+        //需要先判断是否注册绑卡
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
+        PublishFundRecommendBean publishFundRecommend = AppManager.getPubliFundRecommend(getActivity());
+        String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
+        if (BStrUtils.isEmpty(fundinf)) {//未开户
+            //没开户=》跳转到开户页面ton //TODO 跳转到公用的页面
+            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+        } else if ("0".equals(publicFundInf.getIsHaveCustBankAcct())) {
+            //没绑定银行卡=》跳转到绑定银行卡页面 todo 跳转到公用的页面
+            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+        } else if (BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
+            //没风险测评=》跳转到公共的页面 todo  跳转到公共的页面
+            DefaultDialog dialog = new DefaultDialog(baseActivity, getResources().getString(R.string.fill_questionnaire), getResources().getString(R.string.cancle), getResources().getString(R.string.confirm)) {
+                @Override
+                public void left() {
+                    dismiss();
+                }
+
+                @Override
+                public void right() {
+                    NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+                    dismiss();
+
+                }
+            };
+            dialog.show();
+        } else if ("1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
+            //开过户并且已经完成绑卡 跳转到数据里面//todo 跳转到申购页面
+            // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
+            riskIsmatch(publishFundRecommend.getRisklevel());
+            String toBuyObj = NavigationUtils.getObjToBuy(publishFundRecommend, publicFundInf);
+        }
+    }
+
+    /**
+     * 风险匹配
+     *
+     * @param risklevel =》01:安全型 02:保守型 03:稳健型 04:积极 型 05:进取型)
+     */
+    private void riskIsmatch(String risklevel) {
 
     }
 

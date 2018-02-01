@@ -15,7 +15,6 @@ public class PublishFundRecommendBean {
     private String leftUpValue;
     private String leftDownDes;
     private String rightUpValue;
-
     private String rightDownDes;
     //1.30 15:00 新增
     private String sharetype;////份额类别 'A'前收费 'B' 后收费

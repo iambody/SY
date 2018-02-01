@@ -66,7 +66,7 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
         timer = new CountDownTimer(TIMER_TOTAL, TIMER_DELAYT) {
             @Override
             public void onTick(long millisUntilFinished) {
-                get_phone_validate_code.setText(getString(app.privatefund.investor.health.R.string.health_bespeak_validate_send).concat("(").concat(String.valueOf(millisUntilFinished / 1000).concat("s)")));
+                get_phone_validate_code.setText((String.valueOf(millisUntilFinished / 1000).concat("s")));
                 get_phone_validate_code.setBackgroundResource(app.privatefund.investor.health.R.color.app_golden_disable);
                 get_phone_validate_code.setEnabled(false);
             }
