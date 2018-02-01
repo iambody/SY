@@ -420,4 +420,17 @@ public class ViewUtils {
         }
         return targetValue;
     }
+
+    public static String productEncodyStr(String cardNumber) {
+        StringBuffer sb = new StringBuffer();
+        if (!TextUtils.isEmpty(cardNumber)) {
+            char[] bs = cardNumber.toCharArray();
+            int i = 0;
+            while (i++ < bs.length) {
+                sb.append("*");
+            }
+            return sb.toString();
+        }
+        return "";
+    }
 }

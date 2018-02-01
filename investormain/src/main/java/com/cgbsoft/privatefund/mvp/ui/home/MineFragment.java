@@ -1440,7 +1440,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
                     intent.putExtra(WebViewConstant.push_message_url, url);
                     intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
-                    intent.putExtra(WebViewConstant.right_message_index, true);
+                    intent.putExtra(WebViewConstant.right_message_index, false);
                     startActivity(intent);
                     DataStatistApiParam.operateMineHealthClick();
                 });
@@ -1449,7 +1449,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
                     intent.putExtra(WebViewConstant.push_message_url, url);
                     intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
-                    intent.putExtra(WebViewConstant.right_message_index, true);
+                    intent.putExtra(WebViewConstant.right_message_index, false);
                     startActivity(intent);
                 });
                 health_had_data_ll.addView(view);

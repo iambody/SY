@@ -24,7 +24,7 @@ import butterknife.OnClick;
  * @auther chenlong
  */
 @Route(RouteConfig.GOTO_PUBLIC_FUND_TRADE_PWD_MODIFY_ACTIVITY)
-public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTradePwdModifyPresenterImpl> implements PublicFundTradePwdModifyContract.PublicFundTradePwdModifyView{
+public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTradePwdModifyPresenterImpl> implements PublicFundTradePwdModifyContract.PublicFundTradePwdModifyView {
 
     @BindView(R.id.title_left)
     ImageView back;
@@ -67,7 +67,7 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
             @Override
             public void onTick(long millisUntilFinished) {
                 get_phone_validate_code.setText((String.valueOf(millisUntilFinished / 1000).concat("s")));
-                get_phone_validate_code.setBackgroundResource(app.privatefund.investor.health.R.color.app_golden_disable);
+                get_phone_validate_code.setBackgroundResource(R.color.app_golden_disable);
                 get_phone_validate_code.setEnabled(false);
             }
 
@@ -75,7 +75,7 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
             public void onFinish() {
                 get_phone_validate_code.setText(R.string.get_phone_validate_code);
                 get_phone_validate_code.setEnabled(true);
-//              get_phone_validate_code.setBackgroundResource(app.privatefund.investor.health.R.color.app_golden);
+                get_phone_validate_code.setBackgroundResource(R.color.app_golden);
             }
         };
     }
@@ -108,7 +108,7 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
             Toast.makeText(this, R.string.hint_trade_password, Toast.LENGTH_SHORT).show();
             return;
         }
-        getPresenter().modifyPublicFundTradePwd(et_identify_number.getText().toString(), et_phone_number.getText().toString(),et_validate_code.getText().toString(), et_trade_password.getText().toString());
+        getPresenter().modifyPublicFundTradePwd(et_identify_number.getText().toString(), et_phone_number.getText().toString(), et_validate_code.getText().toString(), et_trade_password.getText().toString());
     }
 
     @Override
