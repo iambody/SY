@@ -54,7 +54,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
 
 /**
@@ -92,20 +91,6 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     MyHolderAdapter myHolderAdapter;
 
     private MyHandler myHandler;
-
-    private class MyHandler extends Handler {
-
-        private final WeakReference<Activity> mActivity;
-
-        private MyHandler(Activity activity) {
-            mActivity = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            myHandler.postDelayed(runnable, 5 * DateUtils.SECOND_IN_MILLIS);
-        }
-    }
 
     @Override
     protected int layoutID() {
@@ -353,6 +338,20 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     private void setIndexValueColor(String indexValue, TextView textView) {
         if (!TextUtils.isEmpty(indexValue)) {
             textView.setTextColor(ContextCompat.getColorStateList(getActivity(), indexValue.startsWith("-") ? R.color.stock_red : R.color.stock_red));
+        }
+    }
+
+    private class MyHandler extends Handler {
+
+        private final WeakReference<Activity> mActivity;
+
+        private MyHandler(Activity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            myHandler.postDelayed(runnable, 5 * DateUtils.SECOND_IN_MILLIS);
         }
     }
 

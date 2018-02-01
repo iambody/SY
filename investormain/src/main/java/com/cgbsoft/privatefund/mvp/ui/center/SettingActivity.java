@@ -27,6 +27,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
+import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity;
@@ -35,6 +36,8 @@ import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -199,9 +202,22 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
         boolean bindCard = TextUtils.equals("1", publicFundInf.getIsHaveCustBankAcct());
         if (bindCard) {
-            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BIND_BANK_CARD_ACTIVITY);
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BIND_BANK_CARD_ACTIVITY_INFO);
         } else {
-           NavigationUtils.startActivity(this, BindingBankCardOfPublicFundActivity.class);
+            HashMap<String, Object> hashMap = new HashMap<>();
+            PublicFundInf publicFundInf1 = AppManager.getPublicFundInf(this);
+            PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(this);
+            hashMap.put("trantype", "bgAddCard");
+            hashMap.put("custno", publicFundInf1.getCustno());
+            hashMap.put("authenticateflag", "1");
+            hashMap.put("certificateno", publishFundRecommendBean.getCertificateno());
+            hashMap.put("certificatetype", publishFundRecommendBean.getCertificatetype());
+            hashMap.put("depositacct", publishFundRecommendBean.getDepositacct());
+            hashMap.put("depositacctname", publishFundRecommendBean.getDepositacctname());
+            hashMap.put("depositname", publishFundRecommendBean.getDepositacctname());
+            hashMap.put("operorg", "9999");
+            hashMap.put("tpasswd", "");
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, hashMap);
         }
     }
 

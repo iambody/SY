@@ -24,7 +24,7 @@ import butterknife.OnClick;
 /**
  * @auther chenlong
  */
-@Route(RouteConfig.GOTO_BIND_BANK_CARD_ACTIVITY)
+@Route(RouteConfig.GOTO_BIND_BANK_CARD_ACTIVITY_INFO)
 public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPresenterImpl> implements BindBankCardInfoContract.BindBankCardInfoView{
 
     @BindView(R.id.title_left)
