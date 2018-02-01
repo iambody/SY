@@ -51,13 +51,13 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/tv_public_fund_subsist_assert_desc"
                 style="@style/private_share_bao_assert_title"
                 android:text="@string/subsist_assert"/>
 
@@ -73,12 +73,12 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/tv_public_fund_continue_income_desc"
                 style="@style/private_share_bao_assert_title"
                 android:text="@string/continue_income"/>
 
@@ -94,13 +94,13 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/tv_public_fund_yestoday_income_desc"
                 style="@style/private_share_bao_assert_title"
                 android:text="@string/yestoday_income"/>
 

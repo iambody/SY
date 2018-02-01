@@ -77,6 +77,7 @@ import java.util.List;
 
 import app.mall.com.mvp.ui.MallAddressListActivity;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
+import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongContext;
@@ -218,6 +219,24 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @BindView(R.id.tv_public_fund_yestoday_income)
     TextView tv_public_fund_yestoday_income;
+
+    @BindView(R.id.tv_share_bao_subsist_assert_desc)
+    TextView tv_share_bao_subsist_assert_desc;
+
+    @BindView(R.id.tv_share_bao_continue_income_desc)
+    TextView tv_share_bao_continue_income_desc;
+
+    @BindView(R.id.tv_share_bao_yestoday_income_desc)
+    TextView tv_share_bao_yestoday_income_desc;
+
+    @BindView(R.id.tv_public_fund_subsist_assert_desc)
+    TextView tv_public_fund_subsist_assert_desc;
+
+    @BindView(R.id.tv_public_fund_continue_income_desc)
+    TextView tv_public_fund_continue_income_desc;
+
+    @BindView(R.id.tv_public_fund_yestoday_income_desc)
+    TextView tv_public_fund_yestoday_income_desc;
 
     @BindView(R.id.ll_private_share_bao_empty)
     LinearLayout ll_private_share_bao_empty;
@@ -755,9 +774,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (isExistPrivateShareMoney(financialAssertModel)) {
             ll_private_share_bao_empty.setVisibility(View.GONE);
             ll_private_share_bao_fill.setVisibility(View.VISIBLE);
-            tv_share_bao_subsist_assert.setText(financialAssertModel.getSxbInfo().getSurvivingAssets());
-            tv_share_bao_continue_income.setText(financialAssertModel.getSxbInfo().getAddincome());
-            tv_share_bao_yestoday_income.setText(financialAssertModel.getSxbInfo().getYestincome());
+            tv_share_bao_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getSurvivingAssets()));
+            tv_share_bao_continue_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getAddincome()));
+            tv_share_bao_yestoday_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getYestincome()));
+            tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getSurvivingAssets())));
+            tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getAddincome())));
+            tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getYestincome())));
         } else {
             ll_private_share_bao_empty.setVisibility(View.VISIBLE);
             ll_private_share_bao_fill.setVisibility(View.GONE);
@@ -770,9 +792,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (isExistPublicFundMoney(financialAssertModel)) {
             ll_public_fund_empty.setVisibility(View.GONE);
             ll_public_fund_fill.setVisibility(View.VISIBLE);
-            tv_public_fund_subsist_assert.setText(financialAssertModel.getGmInfo().getSurvivingAssets());
-            tv_public_fund_continue_income.setText(financialAssertModel.getGmInfo().getAddincome());
-            tv_public_fund_yestoday_income.setText(financialAssertModel.getGmInfo().getYestincome());
+            tv_public_fund_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getGmInfo().getSurvivingAssets()));
+            tv_public_fund_continue_income.setText(ViewUtils.formateMoneyPattern((financialAssertModel.getGmInfo().getAddincome())));
+            tv_public_fund_yestoday_income.setText(ViewUtils.formateMoneyPattern((financialAssertModel.getGmInfo().getYestincome())));
+            tv_public_fund_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getSurvivingAssets())));
+            tv_public_fund_continue_income_desc.setText(String.format(getString(R.string.continue_income), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getAddincome())));
+            tv_public_fund_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getYestincome())));
         } else {
             ll_public_fund_empty.setVisibility(View.VISIBLE);
             ll_public_fund_fill.setVisibility(View.GONE);

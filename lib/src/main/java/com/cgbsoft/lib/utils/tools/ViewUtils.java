@@ -17,6 +17,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.TextureView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,6 +28,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.readystatesoftware.viewbadger.BadgeView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -377,4 +379,36 @@ public class ViewUtils {
             e.printStackTrace();
         }
     }
+
+    public static String formateMoneyPattern(String money) {
+        if (!TextUtils.isEmpty(money)) {
+            double moneyDouble = Double.parseDouble(money);
+            DecimalFormat df = new DecimalFormat("#.00");
+            if (moneyDouble > 10000 * 10000) {
+                return df.format(moneyDouble/(10000 * 10000));
+            } else if (moneyDouble > 10000) {
+                return df.format(moneyDouble/(10000));
+            } else {
+                return String.valueOf(moneyDouble);
+            }
+        }
+        return "";
+    }
+
+    public static String getMoneyUnit(String money) {
+        if (!TextUtils.isEmpty(money)) {
+            double moneyDouble = Double.parseDouble(money);
+            if (moneyDouble > 10000 * 10000) {
+                return "亿";
+            } else if (moneyDouble > 10000) {
+                return "万";
+            } else {
+                return "元";
+            }
+        }
+        return "元";
+    }
+
+
+
 }

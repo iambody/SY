@@ -146,7 +146,7 @@ public class SelectBankCardActivity extends BaseActivity {
 
             public SelectBankViewHolder(View itemView, final SelectBankCardLinsterer linsterer) {
                 super(itemView);
-                bankName = itemView.findViewById(R.id.tv_bank_name);
+                bankName = (TextView)itemView.findViewById(R.id.tv_bank_name);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
