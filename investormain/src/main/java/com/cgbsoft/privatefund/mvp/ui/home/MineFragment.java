@@ -1360,16 +1360,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
                     intent.putExtra(WebViewConstant.push_message_url, url);
                     intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
-                    intent.putExtra(WebViewConstant.right_message_index, true);
                     startActivity(intent);
                     DataStatistApiParam.operateMineHealthClick();
                 });
                 view.setOnClickListener(v -> {
-                    String url = CwebNetConfig.mineHealthOrder;
+                    String url = CwebNetConfig.mineHealthOrderDetail;
                     Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-                    intent.putExtra(WebViewConstant.push_message_url, url);
+                    intent.putExtra(WebViewConstant.push_message_url, url + healthOrderItem.getOrderCode());
                     intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
-                    intent.putExtra(WebViewConstant.right_message_index, true);
                     startActivity(intent);
                 });
                 health_had_data_ll.addView(view);
