@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
@@ -33,6 +34,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
+import com.chenenyu.router.Router;
 import com.google.gson.Gson;
 import com.tencent.smtt.sdk.WebView;
 
@@ -544,5 +546,92 @@ public class JavaScriptObjectToc {
         return map;
     }
 
+    /**
+     * 打开绑卡
+     */
+    @JavascriptInterface
+    public void bindBankCard(String jsonstr) {
+        try {
+            JSONObject object = new JSONObject(jsonstr);
+            String data = object.getString("data");
+            String callback = object.getString("callback");
+            webView.loadUrl(String.format("javascript:%s()", callback));
 
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("tag_parameter", data);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+//        JsCall jscall = new Gson().fromJson(jsonstr, JsCall.class);
+//        String callBackStr = jscall.getCallback();
+
+//        webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
+    }
+
+    //    同步用户信息
+    @JavascriptInterface
+    public void syncAccountInfo(String jsonstr) {
+//        JsCall jscall = new Gson().fromJson(jsonstr, JsCall.class);
+//        String callBackStr = jscall.getCallback();
+
+
+        if (!BStrUtils.isEmpty(jsonstr)) {
+            try {
+                JSONObject object = new JSONObject(jsonstr);
+                if (object.has("data")) {
+                    String result = object.getString("data");
+                    if (!BStrUtils.isEmpty(result)) {
+                        JSONObject obj = new JSONObject(result);
+                        PublicFundInf publicFundInf = AppManager.getPublicFundInf(context.getApplicationContext());
+                        if (obj.has("custno") && !BStrUtils.isEmpty(obj.getString("custno"))) {
+                            publicFundInf.setCustno(obj.getString("custno"));
+                            if (obj.has("type")) {
+                                publicFundInf.setType(obj.getString("type"));
+                            }
+                            AppInfStore.savePublicFundInf(context, publicFundInf);
+                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+                        }
+                        if (obj.has("custrisk") && !BStrUtils.isEmpty(obj.getString("custrisk"))) {
+                            publicFundInf.setCustRisk(obj.getString("custrisk"));
+                            if (obj.has("type")) {
+                                publicFundInf.setType(obj.getString("type"));
+                            }
+                            AppInfStore.savePublicFundInf(context, publicFundInf);
+                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+                        }
+
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //完成开户流程
+    @JavascriptInterface
+    public void finishOpeningFundAccount(String jsostr) {
+
+        try {
+            JSONObject object = new JSONObject(jsostr);
+            String callBack = object.getString("callback");
+            webView.loadUrl(String.format("javascript:%s()", callBack));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Router.build(RouteConfig.GOTOCMAINHONE).go(context);
+
+    }
+
+    //开户
+    @JavascriptInterface
+    public void openFundAccount(String jsostr) {
+        Log.i("s", jsostr);
+        Log.i("s", jsostr);
+    }
 }

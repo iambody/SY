@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -24,7 +23,9 @@ import java.util.TimerTask;
  * 绑定公募基金银行列表
  */
 @Route(RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD)
-public class BindingBankCardOfPublicFundActivity<BindingBankCardOfPublicFundPresenter> extends BaseActivity implements View.OnClickListener {
+public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBankCardOfPublicFundPresenter> implements View.OnClickListener {
+    public static final String TAG_PARAMETER = "tag_parameter";
+
     public final static int SELECT_BANK = 100;
 
     private TextView mPayBankName; // 用于支付的银行名字
@@ -52,7 +53,7 @@ public class BindingBankCardOfPublicFundActivity<BindingBankCardOfPublicFundPres
 
     @Override
     protected BindingBankCardOfPublicFundPresenter createPresenter() {
-        return new BindingBankCardOfPublicFundPresenter(this,null);
+        return new BindingBankCardOfPublicFundPresenter(this, null);
     }
 
     /**
@@ -75,7 +76,7 @@ public class BindingBankCardOfPublicFundActivity<BindingBankCardOfPublicFundPres
     }
 
 
-    private void bindBankInfo(){
+    private void bindBankInfo() {
 
     }
 
@@ -84,7 +85,7 @@ public class BindingBankCardOfPublicFundActivity<BindingBankCardOfPublicFundPres
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_get_verification_code: // 获取验证码
-                sendVerificationCode(getVerificationCode,60);
+                sendVerificationCode(getVerificationCode, 60);
                 break;
 
             case R.id.bt_Confirm: // 确认购买
@@ -125,27 +126,27 @@ public class BindingBankCardOfPublicFundActivity<BindingBankCardOfPublicFundPres
      * @param v
      * @param maxTime 最大秒数 默认60
      */
-    public void sendVerificationCode(final View v,int maxTime) {
-        if (v.getTag(TIME) == null || (Integer)v.getTag(TIME) == 0) {
-            v.setTag(TIME,maxTime);
-           final Timer timer =  new Timer();
+    public void sendVerificationCode(final View v, int maxTime) {
+        if (v.getTag(TIME) == null || (Integer) v.getTag(TIME) == 0) {
+            v.setTag(TIME, maxTime);
+            final Timer timer = new Timer();
             v.setTag(timer);
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     int time = (int) v.getTag(TIME);
-                    if(time > 1){
-                        v.setTag(TIME,--time);
+                    if (time > 1) {
+                        v.setTag(TIME, --time);
                         final int finalTime = time;
                         ThreadUtils.runOnMainThread(new Runnable() {
                             @Override
                             public void run() {
-                                getVerificationCode.setText(finalTime +"");
+                                getVerificationCode.setText(finalTime + "");
                             }
                         });
-                    }else {
+                    } else {
                         timer.cancel();
-                        v.setTag(TIME,null);
+                        v.setTag(TIME, null);
                         ThreadUtils.runOnMainThread(new Runnable() {
                             @Override
                             public void run() {
@@ -160,12 +161,12 @@ public class BindingBankCardOfPublicFundActivity<BindingBankCardOfPublicFundPres
             getPresenter().getVerificationCodeFormServer("", "", "", "", "", new BasePublicFundPresenter.PreSenterCallBack<String>() {
                 @Override
                 public void even(String s) {
-                      timer.cancel();
+                    timer.cancel();
                 }
 
                 @Override
                 public void field(String errorCode, String errorMsg) {
-                      timer.cancel();
+                    timer.cancel();
                 }
             });
         }
@@ -177,11 +178,11 @@ public class BindingBankCardOfPublicFundActivity<BindingBankCardOfPublicFundPres
     protected void onStart() {
         super.onStart();
         // 上次退出页面时,验证码的时间点
-        if(SPreference.getString(BindingBankCardOfPublicFundActivity.this,LAST_VERIFICATION_TIME) != null){
-            long lastTime = Long.valueOf(SPreference.getString(BindingBankCardOfPublicFundActivity.this,LAST_VERIFICATION_TIME));
+        if (SPreference.getString(BindingBankCardOfPublicFundActivity.this, LAST_VERIFICATION_TIME) != null) {
+            long lastTime = Long.valueOf(SPreference.getString(BindingBankCardOfPublicFundActivity.this, LAST_VERIFICATION_TIME));
             int time = (int) (System.currentTimeMillis() - lastTime);
-            if(time > 1000 && time < 60*1000){
-                sendVerificationCode(getVerificationCode,time/1000);
+            if (time > 1000 && time < 60 * 1000) {
+                sendVerificationCode(getVerificationCode, time / 1000);
             }
         }
     }
@@ -189,9 +190,9 @@ public class BindingBankCardOfPublicFundActivity<BindingBankCardOfPublicFundPres
     @Override
     protected void onStop() {
         super.onStop();
-        if(getVerificationCode.getTag(TIME)!=null && (Integer)getVerificationCode.getTag(TIME) > 1){
-            SPreference.putString(BindingBankCardOfPublicFundActivity.this,LAST_VERIFICATION_TIME,""+System.currentTimeMillis());
-            getVerificationCode.setTag(TIME,null);
+        if (getVerificationCode.getTag(TIME) != null && (Integer) getVerificationCode.getTag(TIME) > 1) {
+            SPreference.putString(BindingBankCardOfPublicFundActivity.this, LAST_VERIFICATION_TIME, "" + System.currentTimeMillis());
+            getVerificationCode.setTag(TIME, null);
             Timer timer = (Timer) getVerificationCode.getTag();
             timer.cancel();
         }
