@@ -5,12 +5,13 @@
     android:background="@color/app_bg"
     android:orientation="vertical">
 
-    <include layout="@layout/title_public_fund" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#E2E1E6" />
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/title_normal_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+   <!-- <include layout="@layout/title_public_fund" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"

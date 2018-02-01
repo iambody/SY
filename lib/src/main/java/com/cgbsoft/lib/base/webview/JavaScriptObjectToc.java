@@ -2,6 +2,7 @@ package com.cgbsoft.lib.base.webview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -460,6 +461,16 @@ public class JavaScriptObjectToc {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     *开启 绑定银行卡页面
+     * @param params
+     */
+    @JavascriptInterface
+    public void bindBankCard(String params) {
+        Log.e(this.getClass().getSimpleName()," 跳转 公募  绑定银行卡 "+params);
+        NavigationUtils.startActivityByRouter(googleWebView.getContext(),RouteConfig.GOTO_PUBLIC_FUND_BIND_BANKCARD_ACTIVITY,"params",params);
     }
 
     /**

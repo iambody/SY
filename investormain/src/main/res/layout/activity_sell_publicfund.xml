@@ -5,8 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/app_bg"
     android:orientation="vertical">
-
-    <RelativeLayout
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/title_normal_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+   <!-- <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="@color/white"
@@ -42,7 +46,7 @@
         android:layout_height="1dp"
         android:background="#E2E1E6"
         />
-
+-->
 
     <RelativeLayout
         android:layout_width="match_parent"
