@@ -109,17 +109,19 @@ public class CwebNetConfig extends BaseWebNetConfig {
     //贵宾卡兑换
     public static String vipCardExchange;
     //国内公募基注册的
-    public static String  publicFundRegistUrl;
+    public static String publicFundRegistUrl;
     //公募基金详情
-    public static  String publicFundDetailUrl;
+    public static String publicFundDetailUrl;
     //公募基金首页
-    public  static  String publicFundHomeUrl;
+    public static String publicFundHomeUrl;
     // 私享宝详情
-    public  static  String publicShareBaoDetail;
+    public static String publicShareBaoDetail;
     // 我的公募基金列表
-    public  static  String minePublicFund;
+    public static String minePublicFund;
     //公募基金的风险测评
-    public  static String publicFundRiskUrl;
+    public static String publicFundRiskUrl;
+    //赎回结果页
+    public static String publicFundRedeemResult;
 
     static {
         initApi();
@@ -192,12 +194,15 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
 
         //公募基金相关******************
-        publicFundRegistUrl=baseSxyParentUrl+"/biz/publicfund/account.html";
-        publicFundDetailUrl=baseSxyParentUrl+"/biz/publicfund/detail.html";
-        publicFundHomeUrl=baseSxyParentUrl+"/biz/publicfund/fundIndex.html";
-        publicShareBaoDetail=baseSxyParentUrl+"/biz/publicfund/profile.html";
-        minePublicFund=baseSxyParentUrl+"/biz/publicfund/myfund.html";
+        publicFundRegistUrl = baseSxyParentUrl + "/biz/publicfund/account.html";
+        publicFundDetailUrl = baseSxyParentUrl + "/biz/publicfund/detail.html";
+        publicFundHomeUrl = baseSxyParentUrl + "/biz/publicfund/fundIndex.html";
+        publicShareBaoDetail = baseSxyParentUrl + "/biz/publicfund/profile.html";
+        minePublicFund = baseSxyParentUrl + "/biz/publicfund/myfund.html";
         //开户
-        publicFundRiskUrl=baseSxyParentUrl+"/biz/publicfund/assessment.html";
+        publicFundRiskUrl = baseSxyParentUrl + "/biz/publicfund/assessment.html";
+
+        //赎回成功后 跳转的赎回结果页
+        publicFundRedeemResult = baseSxyParentUrl + "biz/publicfund/redemption_end.html";
     }
 }

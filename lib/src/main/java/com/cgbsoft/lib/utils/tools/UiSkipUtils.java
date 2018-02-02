@@ -114,7 +114,7 @@ public class UiSkipUtils {
                 @Override
                 public void right() {
                     //去风险测评
-                    NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRiskUrl, "风险测评", false);
+                    UiSkipUtils.gotoPublicFundRisk(activity);
                     dismiss();
 
                 }
@@ -152,7 +152,7 @@ public class UiSkipUtils {
                 @Override
                 public void right() {
                     //去风险测评
-                    NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRiskUrl, "风险测评", false);
+                    UiSkipUtils.gotoPublicFundRisk(activity);
                     dismiss();
                 }
             };
@@ -176,5 +176,57 @@ public class UiSkipUtils {
         map.put("tag_param", action);
         NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_REDEMPTION, map);
 
+    }
+
+    /**
+     * 跳转到风险测评
+     */
+    public static void gotoPublicFundRisk(Activity activity) {
+        NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRiskUrl + "?custno=" + AppManager.getPublicFundInf(activity.getApplicationContext()).getCustno(), "风险测评", false);
+
+    }
+
+
+    /**
+     * 赎回成功之后需要跳转到一个H5网页（赎回结果页）
+     * pageType(0 私享宝) allMoney(赎回份额/卖出金额) appsheetserialno confirmeddate operdate opertime redeemrefunddate transactiondate
+     */
+    public static void gotoRedeemResult(Activity activity, String pageType, String allMoney, String appsheetserialno, String confirmeddate, String operdate, String opertime, String redeemrefunddate, String transactiondate) {
+
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("pageType", pageType);
+        paramMap.put("allMoney", allMoney);
+        paramMap.put("appsheetserialno", appsheetserialno);
+        paramMap.put("confirmeddate", confirmeddate);
+        paramMap.put("operdate", operdate);
+        paramMap.put("opertime", opertime);
+        paramMap.put("redeemrefunddate", redeemrefunddate);
+        paramMap.put("transactiondate", transactiondate);
+        NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundRedeemResult, paramMap), "交易结果", false);
+
+    }
+
+    public static String getUrl(String host, HashMap<String, String> params) {
+        String url = host;
+        // 添加url参数
+        if (params != null) {
+            Iterator<String> it = params.keySet().iterator();
+            StringBuffer sb = null;
+            while (it.hasNext()) {
+                String key = it.next();
+                String value = params.get(key);
+                if (sb == null) {
+                    sb = new StringBuffer();
+                    sb.append("?");
+                } else {
+                    sb.append("&");
+                }
+                sb.append(key);
+                sb.append("=");
+                sb.append(value);
+            }
+            url += sb.toString();
+        }
+        return url;
     }
 }

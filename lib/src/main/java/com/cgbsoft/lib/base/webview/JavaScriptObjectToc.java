@@ -633,4 +633,31 @@ public class JavaScriptObjectToc {
 
     }
 
+    /**
+     * 赎回结果页 点击确定 直接回到首页
+     *
+     * @param jsostr
+     */
+    @JavascriptInterface
+    public void destroyWebview(String jsostr) {
+        Router.build(RouteConfig.GOTOCMAINHONE).go(context);
+        ((Activity) context).finish();
+    }
+
+    @JavascriptInterface
+    public void redeemFund(String jsostr) {
+        try {
+            JSONObject object = new JSONObject(jsostr);
+            if (object.has("data")) {
+                String data = object.getString("data");
+                //跳转到开户页面*************************
+                UiSkipUtils.gotoRedeemFund((Activity) context, data);
+            }
+        } catch (Exception e) {
+        }
+
+
+    }
+
+
 }
