@@ -12,6 +12,8 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
@@ -63,7 +65,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
         String data = getIntent().getStringExtra(TAG_PARAMETER);
         // 如果data不为说明是从h5跳转过来，否者从原生页面跳转过来
-        if(BStrUtils.isEmpty(data)){
+        if(!BStrUtils.isEmpty(data)){
             bindingBankCardBean =  new Gson().fromJson(data,BindingBankCardBean.class);
         }else {
             bindingBankCardBean = new BindingBankCardBean();
@@ -72,6 +74,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             bindingBankCardBean.setCertificatetype(AppManager.getPublicFundInf(this).getCertificatetype());
             bindingBankCardBean.setDepositacctname(AppManager.getPublicFundInf(this).getDepositacctname());
             bindingBankCardBean.setDepositname(AppManager.getPublicFundInf(this).getDepositacctname());
+            //tod
 
 
         }
@@ -266,6 +269,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                         MToast.makeText(BindingBankCardOfPublicFundActivity.this,"绑定成功", Toast.LENGTH_LONG);
                         // 去风险测评页面
                         UiSkipUtils.gotoPublicFundRisk(BindingBankCardOfPublicFundActivity.this);
+                        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
                         finish();
                     }else if(PublicFundContant.REQEUSTING.equals(code)){
                         MToast.makeText(BindingBankCardOfPublicFundActivity.this,"处理中", Toast.LENGTH_LONG);

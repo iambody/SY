@@ -560,7 +560,7 @@ public class JavaScriptObjectToc {
             HashMap<String, Object> map = new HashMap<>();
             map.put("tag_parameter", data);
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
-
+            ((Activity) context).finish();
 
         } catch (JSONException e) {
             e.printStackTrace();
