@@ -20,6 +20,9 @@ public class PublicFundInf {
 
     private String depositacct;// = "";客户银行卡号
 
+    private String  depositacctname;//客户姓名
+
+    private String type;//@永强添加 待定使用？？？？？？？？
 
     public String getCustno() {
         return custno;
@@ -85,5 +88,19 @@ public class PublicFundInf {
         this.depositacct = depositacct;
     }
 
+    public String getDepositacctname() {
+        return depositacctname;
+    }
 
+    public void setDepositacctname(String depositacctname) {
+        this.depositacctname = depositacctname;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

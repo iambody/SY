@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -24,7 +23,9 @@ import java.util.TimerTask;
  * 绑定公募基金银行列表
  */
 @Route(RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD)
-public class BindingBankCardOfPublicFundActivity extends BaseActivity implements View.OnClickListener {
+public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBankCardOfPublicFundPresenter> implements View.OnClickListener {
+    public static final String TAG_PARAMETER = "tag_parameter";
+
     public final static int SELECT_BANK = 100;
 
     private TextView mPayBankName; // 用于支付的银行名字
@@ -51,8 +52,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity implements
     }
 
     @Override
-    protected BasePresenterImpl createPresenter() {
-        return null;
+    protected BindingBankCardOfPublicFundPresenter createPresenter() {
+        return new BindingBankCardOfPublicFundPresenter(this, null);
     }
 
     /**
@@ -60,7 +61,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity implements
      */
     private void bindView() {
         // 该表标题
-        ((TextView) findViewById(R.id.tv_title)).setText("绑定银行卡");
+        ((TextView) findViewById(R.id.title_mid)).setText("绑定银行卡");
         // 获取验证码按钮
         findViewById(R.id.bt_get_verification_code).setOnClickListener(this);
         // 确认购买
@@ -68,6 +69,14 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity implements
 
         // 选择银行
         findViewById(R.id.rl_select_bankcard).setOnClickListener(this);
+
+        // 返回键
+        findViewById(R.id.title_left).setOnClickListener(this);
+
+    }
+
+
+    private void bindBankInfo() {
 
     }
 
@@ -86,6 +95,11 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity implements
             case R.id.rl_select_bankcard: //选择银行卡
                 startActivityForResult(new Intent(this, SelectBankCardActivity.class), SELECT_BANK);
                 break;
+
+            case R.id.title_left:// 返回键
+                finish();
+                break;
+
         }
     }
 
@@ -143,6 +157,18 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity implements
                     }
                 }
             }, 1000, 1000);
+
+            getPresenter().getVerificationCodeFormServer("", "", "", "", "", new BasePublicFundPresenter.PreSenterCallBack<String>() {
+                @Override
+                public void even(String s) {
+                    timer.cancel();
+                }
+
+                @Override
+                public void field(String errorCode, String errorMsg) {
+                    timer.cancel();
+                }
+            });
         }
 
 
@@ -171,4 +197,13 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity implements
             timer.cancel();
         }
     }
+
+    /**
+     *  开启页面
+     * @param context
+     * @param parms
+     */
+    /*public static void startPage(Context context,String parms){
+
+    }*/
 }

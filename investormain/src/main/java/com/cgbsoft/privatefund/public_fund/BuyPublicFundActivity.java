@@ -59,7 +59,13 @@ public class BuyPublicFundActivity extends BaseActivity implements View.OnClickL
      * 绑定View的监听与数据
      */
     private void bindView() {
-        Imageload.display(this.getApplicationContext(), "", bankIcon);
+        // 该表标题
+        ((TextView) findViewById(R.id.title_mid)).setText("买入");
+        // 返回键
+        findViewById(R.id.title_left).setOnClickListener(this);
+
+
+        Imageload.display(this.getApplicationContext(),"",bankIcon);
 
         buyConfirm.setOnClickListener(this);
 
@@ -73,15 +79,15 @@ public class BuyPublicFundActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.bt_Confirm:
                 String inputText = buyInput.getText().toString();
-                if (BStrUtils.isEmpty(inputText)) {
-                    Toast.makeText(this, "请输入买入基金的金额", Toast.LENGTH_LONG).show();
+                if(BStrUtils.isEmpty(inputText)){
+                    Toast.makeText(this,"请输入买入基金的金额",Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (payPasswordDialog == null) {
-                    payPasswordDialog = new PayPasswordDialog(this, null, fundName, inputText + unit);
+                if(payPasswordDialog == null){
+                    payPasswordDialog = new PayPasswordDialog(this,null,fundName,inputText+unit);
                     payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                         @Override
                         public void onInputFinish(String psw) {
@@ -93,16 +99,19 @@ public class BuyPublicFundActivity extends BaseActivity implements View.OnClickL
                 payPasswordDialog.show();
 
                 break;
+
+                case R.id.title_left: // 返回
+                    finish();
+                    break;
         }
     }
 
 
     /**
      * 开始支付
-     *
      * @param psw
      */
-    private void starPay(String psw) {
+    private void starPay(String psw){
 
     }
 }

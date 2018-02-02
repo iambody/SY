@@ -55,6 +55,7 @@ import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.cgbsoft.privatefund.public_fund.BindingBankCardOfPublicFundActivity;
+import com.cgbsoft.privatefund.public_fund.BuyPublicFundActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.FloatStewardView;
 import com.chenenyu.router.Router;
@@ -64,7 +65,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
-import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.product.com.utils.ProductNavigationUtils;
 import butterknife.BindView;
@@ -308,16 +308,18 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
+//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRiskUrl, getResources().getString(R.string.public_fund_risk), false);
 
-        if (AppManager.isVisitor(baseActivity)) {
-            Intent intent = new Intent(baseActivity, LoginActivity.class);
-            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-        } else {
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-        }
-        DataStatistApiParam.homeClickNew();
-        TrackingDataManger.homeNew(baseActivity);
+          NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+//        if (AppManager.isVisitor(baseActivity)) {
+//            Intent intent = new Intent(baseActivity, LoginActivity.class);
+//            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+//        } else {
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+//        }
+//        DataStatistApiParam.homeClickNew();
+//        TrackingDataManger.homeNew(baseActivity);
 
     }
 
@@ -843,7 +845,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         } else {
 
         }
-        PublicFundInf publicFundInf =AppManager.getPublicFundInf(baseActivity.getApplicationContext());
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
 //        if(publicFundInf.get){}
 
         publishFundRecommend = publishFundRecommendBean;
@@ -1037,7 +1039,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //需要先判断是否注册绑卡
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
         String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
-        if (BStrUtils.isEmpty(fundinf)&&"0".equals(publicFundInf.getIsHaveCustBankAcct())&&BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {//未开户
+        if (BStrUtils.isEmpty(fundinf) && "0".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {//未开户
             //没开户=》跳转到开户页面ton
             NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
         } else if (!BStrUtils.isEmpty(fundinf) && "0".equals(publicFundInf.getIsHaveCustBankAcct())) {
@@ -1063,12 +1065,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
             //开过户并且已经完成绑卡 跳转到数据里面
             // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
-//            riskIsmatch(publishFundRecommend.getRisklevel());
-//            String toBuyObj = NavigationUtils.getObjToBuy(publishFundRecommend, publicFundInf);
 
-//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, BuyPublicFundActivity.class).putExtra(BuyPublicFundActivity.TAG_FUND_CODE,publishFundRecommend.getFundCode()).putExtra(BuyPublicFundActivity.TAG_FUND_RISK_LEVEL,publishFundRecommend.getRisklevel()));
-
-
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, BuyPublicFundActivity.class).putExtra(BuyPublicFundActivity.TAG_FUND_CODE, publishFundRecommend.getFundCode()).putExtra(BuyPublicFundActivity.TAG_FUND_RISK_LEVEL, publishFundRecommend.getRisklevel()));
 
 
         }

@@ -4,28 +4,24 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by wangpeng on 18-1-30.
  */
 
-public class SelectBankCardActivity extends BaseActivity {
+public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublicFundPresenter> {
     public final static String BANK_NAME = "bankname";
     public final static String CHANNEL_ID = "channelid";
     public final static String CHANNEL_NAME = "channelname";
@@ -40,9 +36,7 @@ public class SelectBankCardActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        ((TextView) findViewById(R.id.tv_title)).setText("选择所支持的银行");
         bankList = (RecyclerView) findViewById(R.id.rv_bank_list);
-
         bindView();
     }
 
@@ -51,6 +45,17 @@ public class SelectBankCardActivity extends BaseActivity {
      * 绑定view的数据与监听
      */
     private void bindView() {
+        // 该表标题
+        ((TextView) findViewById(R.id.title_mid)).setText("请选择银行卡");
+        // 返回键
+        findViewById(R.id.title_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         bankList.setLayoutManager(linearLayoutManager);
         bankList.setAdapter(new SelectBankAdapter(bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
@@ -68,8 +73,8 @@ public class SelectBankCardActivity extends BaseActivity {
     }
 
     @Override
-    protected BasePresenterImpl createPresenter() {
-        return null;
+    protected BindingBankCardOfPublicFundPresenter createPresenter() {
+        return new BindingBankCardOfPublicFundPresenter(this,null);
     }
 
 
@@ -83,18 +88,9 @@ public class SelectBankCardActivity extends BaseActivity {
      * }
      */
     private void bindBankCardData() {
-        Map<String,Object> parms = new HashMap();
-            parms.put("trantype", "530335");
-            parms.put("custno", "175");
-            parms.put("planflag", "");
-
-      //  NetWork.post("/api/v2/kz/proxy", RequestBody.create(MediaType.parse("application/json; charset=UTF-8"), jsonObject.toString()), String.class)
-
-        ApiClient.getPublicFundFormProxy(parms).subscribe(new RxSubscriber<String>() {
+        getPresenter().getBinidedBankList(new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
-            protected void onEvent(String s) {
-                Log.e("test","   金证 所支持的银行卡 ："+s);
-               /* String result = JsonUtils.gerSringFromJsonStr(s, "result");
+            public void even(String result) {
                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
                 if ("0000".equals(bankListOfJZSupport.getErrorCode())) { //成功
                     bankOfJZSupportList.addAll(bankListOfJZSupport.getDatasets());
@@ -103,12 +99,12 @@ public class SelectBankCardActivity extends BaseActivity {
                     Toast.makeText(SelectBankCardActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(SelectBankCardActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG).show();
-                }*/
+                }
             }
 
             @Override
-            protected void onRxError(Throwable error) {
-                Log.e("绑定银行卡", error.toString());
+            public void field(String errorCode, String errorMsg) {
+
             }
         });
     }

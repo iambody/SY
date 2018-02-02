@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
@@ -36,6 +37,11 @@ public class SellPublicFundActivity extends BaseActivity implements View.OnClick
         input = (EditText) findViewById(R.id.ev_sell_money_input);
         sellFinsh = (Button) findViewById(R.id.bt_finsh);
         sellFinsh.setOnClickListener(this);
+
+        // 该表标题
+        ((TextView) findViewById(R.id.title_mid)).setText("卖出");
+        // 返回键
+        findViewById(R.id.title_left).setOnClickListener(this);
     }
 
     @Override
@@ -64,6 +70,10 @@ public class SellPublicFundActivity extends BaseActivity implements View.OnClick
                     });
                 }
                 payPasswordDialog.show();
+                break;
+
+            case R.id.title_left:// 返回键
+                finish();
                 break;
         }
     }
