@@ -160,7 +160,7 @@
             android:value="${UMENG_APPKEY_VALUE}" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="UMENG_APPKEY_VALUE" />
+            android:value="5983d8c365b6d632a2000c06" />
         <!--
         umeng
             正式Key:5983d8c365b6d632a2000c06
@@ -223,7 +223,7 @@
         <!-- label：组件标签说明 -->
         <!-- targetActivity：组件的类 -->
          <activity-alias
-            android:name=".MainActivity"
+            android:name=".MainActivity0"
             android:enabled="true"
             android:icon="@drawable/sxy_logo"
             android:label="@string/app_name_customer"

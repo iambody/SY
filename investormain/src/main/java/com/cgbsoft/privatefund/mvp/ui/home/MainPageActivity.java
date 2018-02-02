@@ -234,7 +234,17 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         zipResourceDownload.initZipResource();
 
         TrackingDataManger.gohome(baseContext);
-
+//        ApiClient.getPublicFundConfig("210013").subscribe(new RxSubscriber<String>() {
+//            @Override
+//            protected void onEvent(String s) {
+//
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {
+//
+//            }
+//        });
     }
 
     private void initLogo() {

@@ -884,7 +884,7 @@ interface RequestManager {
     Observable<ResponseBody> uploadOtherPath(@Body RequestBody requestBody);
 
     @GET(NetConfig.Indentity.CREDENTIALS_DETILS)
-    Observable<ResponseBody> getCredentialDetial(@QueryMap Map<String,String> params);
+    Observable<ResponseBody> getCredentialDetial(@QueryMap Map<String, String> params);
 
     @GET(NetConfig.Indentity.GET_INDENTITY_LIST_ADD)
     Observable<BaseResult<CardListEntity.Result>> getCardListAdd(@QueryMap Map<String, String> programObject);
@@ -912,7 +912,8 @@ interface RequestManager {
      * 活体检测结果通知处理
      */
     @POST(NetConfig.Compliance.COMPLIANCE_BEAN_RESULT)
-    Observable<ResponseBody > queryDataResult(@Body RequestBody requestBody);
+    Observable<ResponseBody> queryDataResult(@Body RequestBody requestBody);
+
     /**
      * 活体检测公用锁的通知接口
      */
@@ -930,11 +931,12 @@ interface RequestManager {
      */
     @POST(NetConfig.Compliance.COMPLIANCE_OCR)
     Observable<BaseResult<IdentityCard>> getOcrResult(@Body RequestBody responseBody);
+
     /**
      * person对比
      */
     @GET(NetConfig.Compliance.COMPLIANCE_PERSON_COMPARE)
-    Observable<ResponseBody>getPersonCompare(@QueryMap Map<String, String> programObject);
+    Observable<ResponseBody> getPersonCompare(@QueryMap Map<String, String> programObject);
 
     /**
      * 通用的Get请求接口
@@ -964,16 +966,23 @@ interface RequestManager {
      */
     @POST(NetConfig.PUBLIC_FUND.HOME_RECOMMEND)
     Observable<ResponseBody> getHomeRecommend(@Body RequestBody responseBody);
+
     /**
-     *  公募信息
+     * 公募信息
      */
     @POST(NetConfig.PUBLIC_FUND.PRIVATE_FUND_INF)
     Observable<ResponseBody> getPublicFudInf(@Body RequestBody responseBody);
 
     /**
-     *  直接请求金正接口
+     * 直接请求金正接口
      */
     @POST(NetConfig.PUBLIC_FUND.DIRECT_JZ_URL)
     Observable<ResponseBody> directJZServer(@Body RequestBody responseBody);
+
+    /**
+     * 获取申购页面的配置信息
+     */
+    @GET(NetConfig.PUBLIC_FUND.BUY_CONFIG)
+    Observable<ResponseBody> getFundPayConfig(@QueryMap Map<String, String> paramsMap);
 
 }
