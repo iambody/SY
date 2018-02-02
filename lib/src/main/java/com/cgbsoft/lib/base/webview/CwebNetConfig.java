@@ -114,6 +114,10 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static  String publicFundDetailUrl;
     //公募基金首页
     public  static  String publicFundHomeUrl;
+    // 私享宝详情
+    public  static  String publicShareBaoDetail;
+    // 我的公募基金列表
+    public  static  String minePublicFund;
     //公募基金的风险测评
     public  static String publicFundRiskUrl;
 
@@ -191,6 +195,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
         publicFundRegistUrl=baseSxyParentUrl+"/biz/publicfund/account.html";
         publicFundDetailUrl=baseSxyParentUrl+"/biz/publicfund/detail.html";
         publicFundHomeUrl=baseSxyParentUrl+"/biz/publicfund/fundIndex.html";
+        publicShareBaoDetail=baseSxyParentUrl+"/biz/publicfund/profile.html";
+        minePublicFund=baseSxyParentUrl+"/biz/publicfund/myfund.html";
         //开户
         publicFundRiskUrl=baseSxyParentUrl+"/biz/publicfund/assessment.html";
     }

@@ -716,10 +716,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         isLoading = true;
         initVideoView();
         getPresenter().getMineData();
-        getPresenter().getMineFinacailAssert();
         getPresenter().verifyIndentityV3();
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
+        }
+        if (!AppManager.isVisitor(getActivity())) {
+            getPresenter().getMineFinacailAssert();
         }
     }
 
@@ -843,6 +845,21 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.account_info_image_id)
     void gotoPersonInfoHeaderctivity() {
         NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY, LEVER_NAME, (mineModel != null && mineModel.getMyInfo() != null) ? mineModel.getMyInfo().getMemberLevel() : "");
+    }
+
+    @OnClick(R.id.ll_private_share_bao_fill)
+    void gotoPrivateShareBaoDetail() {
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicShareBaoDetail, getString(R.string.private_share_bao), false);
+    }
+
+    @OnClick(R.id.ll_public_fund_fill)
+    void gotoMinePublicFund() {
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.minePublicFund, getString(R.string.public_fund), false);
+    }
+
+    @OnClick(R.id.tv_look_public_fund_product)
+    void gotoLookPublicFundProduct() {
+        NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.PUBLIC_FUND_PAGE);
     }
 
     @OnClick(R.id.account_info_level_ll)

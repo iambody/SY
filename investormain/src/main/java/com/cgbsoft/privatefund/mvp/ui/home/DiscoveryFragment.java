@@ -68,8 +68,8 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-   /* @BindView(R.id.divide_stock_index)
-    LinearLayout linearlayout;*/
+    @BindView(R.id.divide_stock_index)
+    LinearLayout linearlayout;
 
     @BindView(R.id.discover_bannerview)
     BannerView discoveryBannerView;
@@ -89,6 +89,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     List<BaseLazyFragment> lazyFragments = new ArrayList<>();
     DiscoverIndicatorAdapter disCoveryNavigationAdapter;
     MyHolderAdapter myHolderAdapter;
+    private boolean isStockLoading;
 
     private MyHandler myHandler;
 
@@ -122,7 +123,10 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     }
 
     Runnable runnable = () -> {
-        getPresenter().getStockIndex();
+        if (!isStockLoading) {
+            getPresenter().getStockIndex();
+            isStockLoading = true;
+        }
         myHandler.obtainMessage().sendToTarget();
     };
 
@@ -161,7 +165,6 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
             public void onPageSelected(int position) {
                 magicIndicator.onPageSelected(position);
-                System.out.println("-------postion=" + position);
                 if (currentPosition == position) {
                     return;
                 }
@@ -212,16 +215,18 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     @Override
     public void requestFirstDataFailure(String errMsg) {
-
+        MToast.makeText(getActivity(), errMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void requestStockIndexSuccess(List<StockIndexBean> dataList) {
+        isStockLoading = false;
         myHolderAdapter.setDataList(dataList);
     }
 
     @Override
     public void reqeustStockIndexFailure(String message) {
+        isStockLoading = false;
         MToast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
@@ -287,7 +292,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
                 notifyDataSetChanged();
             } else {
                 recyclerView.setVisibility(View.GONE);
-              //  linearlayout.setVisibility(View.GONE);
+                linearlayout.setVisibility(View.GONE);
             }
         }
 
@@ -342,7 +347,6 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     }
 
     private class MyHandler extends Handler {
-
         private final WeakReference<Activity> mActivity;
 
         private MyHandler(Activity activity) {
@@ -354,5 +358,4 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
             myHandler.postDelayed(runnable, 5 * DateUtils.SECOND_IN_MILLIS);
         }
     }
-
 }

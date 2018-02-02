@@ -465,15 +465,15 @@ public class JavaScriptObjectToc {
         }
     }
 
-    /**
-     *开启 绑定银行卡页面
-     * @param params
-     */
-    @JavascriptInterface
-    public void bindBankCard(String params) {
-        Log.e(this.getClass().getSimpleName()," 跳转 公募  绑定银行卡 "+params);
-        NavigationUtils.startActivityByRouter(googleWebView.getContext(),RouteConfig.GOTO_PUBLIC_FUND_BIND_BANKCARD_ACTIVITY,"params",params);
-    }
+//    /**
+//     *开启 绑定银行卡页面
+//     * @param params
+//     */
+//    @JavascriptInterface
+//    public void bindBankCard(String params) {
+//        Log.e(this.getClass().getSimpleName()," 跳转 公募  绑定银行卡 "+params);
+//        NavigationUtils.startActivityByRouter(googleWebView.getContext(),RouteConfig.GOTO_PUBLIC_FUND_BIND_BANKCARD_ACTIVITY,"params",params);
+//    }
 
     /**
      * H5 存储 Key Value

@@ -104,6 +104,10 @@ public class WebViewConstant {
          */
         public static final int VIDEO_PAGE = 2003;
         /**
+         * 公募基金
+         */
+        public static final int PUBLIC_FUND_PAGE = 2004;
+        /**
          * 乐享生活
          */
         public static final int LIFE_ENJOY_PAGE = 30;
