@@ -121,7 +121,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
-    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable;
+    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable, publicFundInfObservable;
     private Observable<Boolean> liveRefreshObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
@@ -739,6 +739,25 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 }
             });
         }
+        //公募用户信息
+        if (null == publicFundInfObservable) {
+            publicFundInfObservable = RxBus.get().register(RxConstant.REFRESH_PUBLIC_FUND_INFO, Integer.class);
+            publicFundInfObservable.subscribe(new RxSubscriber<Integer>() {
+                @Override
+                protected void onEvent(Integer publicFundInf) {
+                    if (10 == publicFundInf) {
+                        //刷新
+                        getPresenter().loadPublicFundInf();
+                    }
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+
+                }
+            });
+        }
+
 //        //刷新webview的信息配置
 //        freshWebObservable= RxBus.get().register(RxConstant.MAIN_FRESH_WEB_CONFIG, Integer.class);
 //        freshWebObservable.subscribe(new RxSubscriber<Integer>() {
@@ -870,7 +889,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             RxBus.get().unregister(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, hasReadResultObservable);
             hasReadResultObservable = null;
         }
+        if (null != publicFundInfObservable) {
+            RxBus.get().unregister(RxConstant.REFRESH_PUBLIC_FUND_INFO, publicFundInfObservable);
+            publicFundInfObservable = null;
 
+        }
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
         zipResourceDownload.closeDilaog();

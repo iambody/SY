@@ -11,22 +11,27 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.privatefund.R;
+import com.chenenyu.router.annotation.Route;
 
 /**
  * Created by wangpeng on 18-1-29.
- *
+ * <p>
  * 卖出公募基金
  */
-
-public class SellPublicFundActivity extends BaseActivity implements View.OnClickListener{
+@Route(RouteConfig.GOTO_PUBLIC_FUND_REDEMPTION)
+public class SellPublicFundActivity extends BaseActivity implements View.OnClickListener {
+    //在进入赎回页面时候需要传进Intent()的参数的key
+    public static  final  String Tag_PARAM="tag_param";
     private Button sellFinsh;
     private EditText input;
 
     private PayPasswordDialog payPasswordDialog;
     private String fundName; // 基金名字
     private String unit = "份"; // 基金份额单位
+
     @Override
     protected int layoutID() {
         return R.layout.activity_sell_publicfund;
@@ -52,15 +57,15 @@ public class SellPublicFundActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.bt_finsh:
                 String inputText = input.getText().toString();
-                if(BStrUtils.isEmpty(inputText)){
-                    Toast.makeText(this,"请输入卖出的基金数量",Toast.LENGTH_LONG).show();
+                if (BStrUtils.isEmpty(inputText)) {
+                    Toast.makeText(this, "请输入卖出的基金数量", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(payPasswordDialog == null){
-                    payPasswordDialog = new PayPasswordDialog(this,null,fundName,inputText+unit);
+                if (payPasswordDialog == null) {
+                    payPasswordDialog = new PayPasswordDialog(this, null, fundName, inputText + unit);
                     payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                         @Override
                         public void onInputFinish(String psw) {
@@ -80,10 +85,11 @@ public class SellPublicFundActivity extends BaseActivity implements View.OnClick
 
 
     /**
-     *  开始支付
+     * 开始支付
+     *
      * @param payPassword
      */
-    private void starPay(String payPassword){
+    private void starPay(String payPassword) {
 
     }
 
@@ -91,12 +97,13 @@ public class SellPublicFundActivity extends BaseActivity implements View.OnClick
     private final static String FUND_CODE = "fundCode";
     private final static String FUND_NAME = "fundName";
     private final static String CURRENT_MAX_COUNT = "currentmaxcount"; // 持有当前基金的总数
-    public static void startSellPublicFundActivity(Context context,String fundcode, String fundName, String currentMaxCount){
-       Intent intent = new Intent(context,SellPublicFundActivity.class);
-       intent.putExtra(FUND_CODE,fundcode);
-       intent.putExtra(FUND_NAME,fundName);
-       intent.putExtra(CURRENT_MAX_COUNT,currentMaxCount);
-       context.startActivity(intent);
+
+    public static void startSellPublicFundActivity(Context context, String fundcode, String fundName, String currentMaxCount) {
+        Intent intent = new Intent(context, SellPublicFundActivity.class);
+        intent.putExtra(FUND_CODE, fundcode);
+        intent.putExtra(FUND_NAME, fundName);
+        intent.putExtra(CURRENT_MAX_COUNT, currentMaxCount);
+        context.startActivity(intent);
     }
 
 }

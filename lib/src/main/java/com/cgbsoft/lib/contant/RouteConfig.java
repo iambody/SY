@@ -124,5 +124,5 @@ public class RouteConfig {
     //跳转到公募基金的申购页面
     public static final String GOTO_PUBLIC_FUND_BUY="public_fund_buy_activity";
     public static final String GOTO_PUBLIC_FUND_BIND_BANK_CARD="BindingBankCardOfPublicFund";
-
+    public static final String  GOTO_PUBLIC_FUND_REDEMPTION="public_fund_redemption";
 }
