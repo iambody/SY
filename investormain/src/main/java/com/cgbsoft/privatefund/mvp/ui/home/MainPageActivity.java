@@ -178,6 +178,9 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             switchID = R.id.nav_right_second;
             switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
         }
+        if (!AppManager.isVisitor(baseContext)) {
+            getPresenter().loadPublicFundInf();
+        }
         getPresenter().loadRedPacket();
 
     }
@@ -223,7 +226,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             autoSign();
             initDayTask();
             initRongInterface();
-            getPresenter().loadPublicFundInf();
+//            getPresenter().loadPublicFundInf();
         }
         RxBus.get().post(RxConstant.LOGIN_KILL, 1);
         // 推送过来的跳转

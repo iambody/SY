@@ -64,7 +64,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 "tpasswd":"123456"*/
 
         String data = getIntent().getStringExtra(TAG_PARAMETER);
-        // 如果data不为说明是从h5跳转过来，否者从原生页面跳转过来
+        // 如果data不为说明是从h5跳转过来，否者从原生页面跳转过来  (目前逻辑全部是不为空的 原生和h5都是有数据的@wyk)
         if(!BStrUtils.isEmpty(data)){
             bindingBankCardBean =  new Gson().fromJson(data,BindingBankCardBean.class);
         }else {
