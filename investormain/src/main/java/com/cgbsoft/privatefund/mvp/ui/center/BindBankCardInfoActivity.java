@@ -83,6 +83,7 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
 
     @Override
     public void requestInfoFailure(String mssage) {
+        hideLoadDialog();
         Toast.makeText(getApplicationContext(), mssage, Toast.LENGTH_SHORT).show();
     }
 

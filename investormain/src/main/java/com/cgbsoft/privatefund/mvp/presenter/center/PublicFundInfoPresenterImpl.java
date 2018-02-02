@@ -53,19 +53,22 @@ public class PublicFundInfoPresenterImpl extends BasePresenterImpl<PublicFundInf
         addSubscription(ApiClient.directRequestJzServer(hashMap).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                System.out.println("-------requestPublicFundInfo=" + s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     jsonObject = jsonObject.getJSONObject("result");
                     if (jsonObject != null) {
                         JSONArray jsonArray = jsonObject.getJSONArray("datasets");
                         jsonArray = jsonArray.getJSONArray(0);
-                        JSONObject dataJson = jsonArray.getJSONObject(0);
-                        String[] perInfo = new String[2];
-                        perInfo[0] = dataJson.getString("custfullname");
-                        perInfo[1] = dataJson.getString("certificateno");
-                        getView().requestInfoSuccess(perInfo);
+                        if (jsonArray != null && jsonArray.length() > 0) {
+                            JSONObject dataJson = jsonArray.getJSONObject(0);
+                            String[] perInfo = new String[2];
+                            perInfo[0] = dataJson.getString("custfullname");
+                            perInfo[1] = dataJson.getString("certificateno");
+                            getView().requestInfoSuccess(perInfo);
+                            return;
+                        }
                     }
+                    getView().requestInfoFailure("查询公募基金账号失败");
                 } catch (JSONException e) {
                     e.printStackTrace();
                     getView().requestInfoFailure(e.getMessage());

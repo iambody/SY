@@ -49,7 +49,7 @@ public class PublicFundIdentifyInfoActivity extends BaseActivity<PublicFundInfoP
     @Override
     protected void init(Bundle savedInstanceState) {
         back.setVisibility(View.VISIBLE);
-        titleTV.setText(getResources().getString(R.string.setting_title));
+        titleTV.setText(getResources().getString(R.string.public_fund_account_info));
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         getPresenter().requestPublicFundInfo();
     }

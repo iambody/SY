@@ -385,10 +385,14 @@ public class ApiClient {
      * @return
      */
     public static Observable<String> sendCode(String phone, int which) {
-        Map<String, String> map = new HashMap<>();
-        map.put("phone", phone);
-        map.put("checkPhoneDuplicate", String.valueOf(which));
-        return OKHTTP.getInstance().getRequestManager().sendCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        JSONObject object = new JSONObject();
+        try {
+            object.put("phone", phone);
+            object.put("checkPhoneDuplicate", String.valueOf(which));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return OKHTTP.getInstance().getRequestManager().sendCode(jsonToBody(object)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     public static Observable<String> sendTestCode(String phone, int which) {
@@ -1437,10 +1441,14 @@ public class ApiClient {
      * 手机验证
      */
     public static Observable<String> mesageValidateCode(String phone, String duplicate) {
-        Map<String, String> map = new HashMap<>();
-        map.put("phone", phone);
-        map.put("checkPhoneDuplicate", duplicate);
-        return OKHTTP.getInstance().getRequestManager().sendCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        JSONObject object = new JSONObject();
+        try {
+            object.put("phone", phone);
+            object.put("checkPhoneDuplicate", duplicate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return OKHTTP.getInstance().getRequestManager().sendCode(jsonToBody(object)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**

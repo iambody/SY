@@ -187,7 +187,7 @@ interface RequestManager {
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.SENDCODE_URL)
-    Observable<BaseResult<String>> sendCode(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>> sendCode(@Body RequestBody paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.SENDCODE_URL)

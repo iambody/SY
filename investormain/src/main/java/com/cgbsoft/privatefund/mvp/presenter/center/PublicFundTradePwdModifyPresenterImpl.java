@@ -21,7 +21,7 @@ import java.util.HashMap;
  */
 public class PublicFundTradePwdModifyPresenterImpl extends BasePresenterImpl<PublicFundTradePwdModifyContract.PublicFundTradePwdModifyView> implements PublicFundTradePwdModifyContract.PublicFundTradePwdModifyoPresenter {
 
-    private static final String PASSWORD_MODIFY_CODE = "901";
+    private static final int PASSWORD_MODIFY_CODE = 0;
     private static final String KEY = "123456";
 
     public PublicFundTradePwdModifyPresenterImpl(@NonNull Context context, @NonNull PublicFundTradePwdModifyContract.PublicFundTradePwdModifyView view) {
@@ -32,6 +32,7 @@ public class PublicFundTradePwdModifyPresenterImpl extends BasePresenterImpl<Pub
     public void modifyPublicFundTradePwd(String identifyNo, String phoneNumber, String validateCode, String tradePwd) {
         getView().showLoadDialog();
         HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("accttype", "7");
         hashMap.put("trantype", "520049");
         hashMap.put("mobileno", phoneNumber);
         hashMap.put("captcha", validateCode);
@@ -43,38 +44,39 @@ public class PublicFundTradePwdModifyPresenterImpl extends BasePresenterImpl<Pub
         addSubscription(ApiClient.directRequestJzServer(hashMap).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                System.out.println("-------modifyPublicFundTradePwd=" + s);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
                     jsonObject = jsonObject.getJSONObject("result");
                     if (jsonObject != null) {
                         JSONArray jsonArray = jsonObject.getJSONArray("datasets");
                         jsonArray = jsonArray.getJSONArray(0);
-                        JSONObject dataJson = jsonArray.getJSONObject(0);
-                        String modify = dataJson.getString("appsheetserialno");
-                        if (!TextUtils.isEmpty(modify)) {
-                            getView().modifyPwdSuccess("修改交易密码成功");
-                        } else {
-                            getView().modifyPwdSuccess("修改交易密码失败");
+                        if (jsonArray != null && jsonArray.length() > 0) {
+                            JSONObject dataJson = jsonArray.getJSONObject(0);
+                            String modify = dataJson.getString("appsheetserialno");
+                            if (!TextUtils.isEmpty(modify)) {
+                                getView().modifyPwdSuccess("修改交易密码成功");
+                                return;
+                            }
                         }
                     }
+                    getView().modifyPwdFailure("修改交易密码失败");
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    getView().modifyPwdSuccess(e.getMessage());
+                    getView().modifyPwdFailure(e.getMessage());
                 }
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                Log.i("s", "sss");
-                getView().modifyPwdSuccess(error.getMessage());
+                Log.i("s", error.getMessage());
+                getView().modifyPwdFailure(error.getMessage());
             }
         }));
     }
 
     @Override
     public void getPhoneValidateCode(String phone) {
-        addSubscription(ApiClient.mesageValidateCode(phone, PASSWORD_MODIFY_CODE).subscribe(new RxSubscriber<String>(){
+        addSubscription(ApiClient.sendTestCode(phone, PASSWORD_MODIFY_CODE).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 Log.d("getPhoneValidateCode", s);

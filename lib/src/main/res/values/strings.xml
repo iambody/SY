@@ -149,9 +149,9 @@
     <string name="identify_number">身份证号</string>
     <string name="hint_identify_number">请输入身份证号</string>
     <string name="modify_public_fund_trade_pwd">修改公募基金交易密码</string>
-    <string name="phone_number">手 机 号</string>
+    <string name="phone_number">手  机  号</string>
     <string name="hint_phone_number">请输入手机号</string>
-    <string name="validate_code">验 证 码</string>
+    <string name="validate_code">验  证  码</string>
     <string name="hint_validate_code">请输入验证码</string>
     <string name="trade_password">交易密码</string>
     <string name="hint_trade_password">请输入交易密码</string>

@@ -148,6 +148,7 @@
                 android:layout_weight="1"
                 android:background="@color/transparent"
                 android:hint="@string/hint_trade_password"
+                android:inputType="numberPassword"
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textColorHint="@color/color_A5A5A5"
