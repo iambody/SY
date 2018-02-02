@@ -10,9 +10,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
@@ -70,6 +72,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         // 该表标题
         ((TextView) findViewById(R.id.title_mid)).setText("买入");
         // 返回键
+        findViewById(R.id.title_left).setVisibility(View.VISIBLE);
         findViewById(R.id.title_left).setOnClickListener(this);
 
 
@@ -124,7 +127,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      * @param fundCode "210013" "004373" 调试数据
      */
     private void requestData(String fundCode){
-        getPresenter().getData("", new BasePublicFundPresenter.PreSenterCallBack<String>() {
+        getPresenter().getData(fundCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String o) {
                 Log.e("申购信息",""+o);
@@ -155,8 +158,8 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 BankListOfJZSupport bankListOfJZSupport =   new Gson().fromJson(result, BankListOfJZSupport.class);
 
                  if(PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())){
-
-
+                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult,"申购成功",false);
+                     finish();
                  }else {
                      MToast.makeText(BuyPublicFundActivity.this,bankListOfJZSupport.getErrorMessage(),Toast.LENGTH_LONG);
                  }

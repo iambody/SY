@@ -48,6 +48,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
         // 该表标题
         ((TextView) findViewById(R.id.title_mid)).setText("请选择银行卡");
         // 返回键
+        findViewById(R.id.title_left).setVisibility(View.VISIBLE);
         findViewById(R.id.title_left).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,10 +93,10 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
             @Override
             public void even(String result) {
                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
-                if ("0000".equals(bankListOfJZSupport.getErrorCode())) { //成功
+                if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                     bankOfJZSupportList.addAll(bankListOfJZSupport.getDatasets());
                     bankList.getAdapter().notifyDataSetChanged();
-                } else if ("PPPP".equals(bankListOfJZSupport.getErrorCode())) {// 处理中
+                } else if (PublicFundContant.REQEUSTING.equals(bankListOfJZSupport.getErrorCode())) {// 处理中
                     Toast.makeText(SelectBankCardActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(SelectBankCardActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG).show();

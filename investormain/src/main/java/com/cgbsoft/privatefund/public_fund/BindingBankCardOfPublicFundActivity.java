@@ -107,6 +107,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         findViewById(R.id.rl_select_bankcard).setOnClickListener(this);
 
         // 返回键
+        findViewById(R.id.title_left).setVisibility(View.VISIBLE);
         findViewById(R.id.title_left).setOnClickListener(this);
 
     }
