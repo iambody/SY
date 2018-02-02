@@ -29,27 +29,18 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
-import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
-import com.tencent.msdk.dns.MSDKDnsResolver;
-import com.tencent.qcload.playersdk.util.VideoInfo;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;

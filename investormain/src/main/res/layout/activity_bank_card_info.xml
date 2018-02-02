@@ -33,6 +33,7 @@
             android:layout_below="@id/bank_name"
             android:layout_marginTop="1dp"
             android:text="储蓄卡"
+            android:visibility="invisible"
             android:textColor="@color/white"
             android:textSize="@dimen/dimens_sp_14" />
 

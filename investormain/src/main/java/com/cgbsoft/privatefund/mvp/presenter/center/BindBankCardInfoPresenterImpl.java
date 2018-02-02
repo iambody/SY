@@ -35,7 +35,7 @@ public class BindBankCardInfoPresenterImpl extends BasePresenterImpl<BindBankCar
         String cusno = AppManager.getPublicFundInf(getContext()) != null ? AppManager.getPublicFundInf(getContext()).getCustno() : "";
         hashMap.put("trantype", "520012");
         hashMap.put("custno", cusno);
-        hashMap.put("signstatus", "1");
+        hashMap.put("signstatus", ""); // TODO
         addSubscription(ApiClient.directRequestJzServer(hashMap).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
@@ -49,7 +49,8 @@ public class BindBankCardInfoPresenterImpl extends BasePresenterImpl<BindBankCar
                             String[] perInfo = new String[3];
                             JSONObject dataJson = jsonArray.getJSONObject(0);
                             perInfo[0] = dataJson.getString("bankname");
-                            perInfo[1] = dataJson.getString("depositcard");
+                            perInfo[1] = dataJson.getString("depositacct");
+
                             perInfo[2] = "储蓄卡";
                             getView().requestInfoSuccess(perInfo);
                             return;
