@@ -1858,11 +1858,12 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().getPublicFudInf(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
+
     /**
      * 获取金证发的信息
      */
-    public static Observable<String> getPublicFundFormProxy(Map<String,Object> params) {
-        if(params == null) params = new HashMap<>();
+    public static Observable<String> getPublicFundFormProxy(Map<String, Object> params) {
+        if (params == null) params = new HashMap<>();
         return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
@@ -1871,6 +1872,27 @@ public class ApiClient {
      */
     public static Observable<String> directRequestJzServer(HashMap<String, String> hashMap) {
         return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+    /**
+     * 获取申购时候的配置信息
+     */
+    public static Observable<String> getPublicFundConfig(String fundCode) {
+
+
+
+        JSONObject js = new JSONObject();
+        try {
+            js.put("fundcode", fundCode);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString()))
+            params.put("param", js.toString());
+        return OKHTTP.getInstance().getRequestManager().getFundPayConfig(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 

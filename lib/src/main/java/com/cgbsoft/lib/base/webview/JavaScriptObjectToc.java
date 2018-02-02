@@ -2,7 +2,6 @@ package com.cgbsoft.lib.base.webview;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -335,6 +334,10 @@ public class JavaScriptObjectToc {
         }
     }
 
+    /**
+     * 申购页面
+     * @param jsonObj
+     */
     @JavascriptInterface
     public void subscribeFund(String jsonObj) {
         if (!BStrUtils.isEmpty(jsonObj)) {
@@ -466,16 +469,6 @@ public class JavaScriptObjectToc {
     }
 
     /**
-     *开启 绑定银行卡页面
-     * @param params
-     */
-    @JavascriptInterface
-    public void bindBankCard(String params) {
-        Log.e(this.getClass().getSimpleName()," 跳转 公募  绑定银行卡 "+params);
-        NavigationUtils.startActivityByRouter(googleWebView.getContext(),RouteConfig.GOTO_PUBLIC_FUND_BIND_BANKCARD_ACTIVITY,"params",params);
-    }
-
-    /**
      * H5 存储 Key Value
      */
     private void putValue(String key, String value) {
@@ -565,17 +558,11 @@ public class JavaScriptObjectToc {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        JsCall jscall = new Gson().fromJson(jsonstr, JsCall.class);
-//        String callBackStr = jscall.getCallback();
-
-//        webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
     }
 
     //    同步用户信息
     @JavascriptInterface
     public void syncAccountInfo(String jsonstr) {
-//        JsCall jscall = new Gson().fromJson(jsonstr, JsCall.class);
-//        String callBackStr = jscall.getCallback();
 
 
         if (!BStrUtils.isEmpty(jsonstr)) {
@@ -631,7 +618,7 @@ public class JavaScriptObjectToc {
     //开户
     @JavascriptInterface
     public void openFundAccount(String jsostr) {
-        Log.i("s", jsostr);
-        Log.i("s", jsostr);
+        NavigationUtils.gotoWebActivity((Activity) context, CwebNetConfig.publicFundRegistUrl, "公募基金开户", false);
+
     }
 }
