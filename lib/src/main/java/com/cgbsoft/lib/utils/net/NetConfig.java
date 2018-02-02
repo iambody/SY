@@ -439,7 +439,7 @@ public class NetConfig {
         final static String MINE_FININCIAL_ASSERT = PUBLIC_FUND_API_V2 + "/kz/userfund";
         final static String DIRECT_JZ_URL = PUBLIC_FUND_API_V2 + "/kz/proxy";
         static final String PUBLIBC_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/proxy";
-        static final String BUY_CONFIG = PUBLIC_FUND_API_V2+"/kz/fundbuyinginfo";//申购配置信息
+        static final String BUY_CONFIG = PUBLIC_FUND_API_V2 + "/kz/fundbuyinginfo";//申购配置信息
     }
 
 

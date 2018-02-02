@@ -12,7 +12,6 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
-import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.webview.bean.JsCall;
 import com.cgbsoft.lib.contant.Contant;
@@ -338,6 +337,7 @@ public class JavaScriptObjectToc {
 
     /**
      * 申购页面
+     *
      * @param jsonObj
      */
     @JavascriptInterface
@@ -556,7 +556,7 @@ public class JavaScriptObjectToc {
             String data = object.getString("data");
             String callback = object.getString("callback");
             webView.loadUrl(String.format("javascript:%s()", callback));
-
+            RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
             HashMap<String, Object> map = new HashMap<>();
             map.put("tag_parameter", data);
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
@@ -641,6 +641,7 @@ public class JavaScriptObjectToc {
     @JavascriptInterface
     public void destroyWebview(String jsostr) {
         Router.build(RouteConfig.GOTOCMAINHONE).go(context);
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
         ((Activity) context).finish();
     }
 
@@ -650,7 +651,7 @@ public class JavaScriptObjectToc {
             JSONObject object = new JSONObject(jsostr);
             if (object.has("data")) {
                 String data = object.getString("data");
-                //跳转到开户页面*************************
+                //跳转到赎回*************************
                 UiSkipUtils.gotoRedeemFund((Activity) context, data);
             }
         } catch (Exception e) {
