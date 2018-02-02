@@ -12,6 +12,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.webview.bean.JsCall;
 import com.cgbsoft.lib.contant.Contant;
@@ -337,7 +338,6 @@ public class JavaScriptObjectToc {
 
     /**
      * 申购页面
-     *
      * @param jsonObj
      */
     @JavascriptInterface

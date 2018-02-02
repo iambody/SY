@@ -34,20 +34,7 @@ public class BasePublicFundPresenter extends BasePresenterImpl {
         ApiClient.getPublicFundFormProxy(parms).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-
-                String message = "";
-                String result = "";
-                try {
-                    result =  new JSONObject(s).getString("result");
-                    message =  new JSONObject(s).getString("message");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if(!BStrUtils.isEmpty(message)){
-                    if(preSenterCallBack!=null) preSenterCallBack.field(0+"",message);
-                }else {
-                    if(preSenterCallBack!=null) preSenterCallBack.even(result);
-                }
+                parseResultFormServer(s,preSenterCallBack);
             }
 
             @Override
@@ -60,6 +47,23 @@ public class BasePublicFundPresenter extends BasePresenterImpl {
         });
 
 
+    }
+
+
+    public void parseResultFormServer(String s ,PreSenterCallBack preSenterCallBack){
+        String message = "";
+        String result = "";
+        try {
+            result =  new JSONObject(s).getString("result");
+            message =  new JSONObject(s).getString("message");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(!BStrUtils.isEmpty(message)){
+            if(preSenterCallBack!=null) preSenterCallBack.field(0+"",message);
+        }else {
+            if(preSenterCallBack!=null) preSenterCallBack.even(result);
+        }
     }
 
 
