@@ -212,9 +212,15 @@
 
           <!--  <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
+
+            <intent-filter>
+                <data android:scheme="growing.18625968b7277671"/>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+            </intent-filter>
 
         </activity>
         <!-- name：组件名字 -->
