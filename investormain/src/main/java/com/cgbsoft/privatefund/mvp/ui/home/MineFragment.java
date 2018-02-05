@@ -1245,7 +1245,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 lookView.setText(R.string.look_more_show);
                 String statusValue = chageStatusValue(healthOrderItem.getState());
                 healthContent.setText((!TextUtils.isEmpty(statusValue) ? "[".concat(statusValue).concat("] ") : "").concat(healthOrderItem.getHealthItemValues()));
-                healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCustReservationDate()) && healthOrderItem.getCustReservationDate().length() > 10) ? healthOrderItem.getCustReservationDate().substring(0, 10) :  healthOrderItem.getCustReservationDate());
+                healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCreateTime()) && healthOrderItem.getCreateTime().length() > 10) ? healthOrderItem.getCreateTime().substring(0, 10) :  healthOrderItem.getCreateTime());
                 lookView.setOnClickListener(v -> {
                     String url = CwebNetConfig.mineHealthOrder;
                     Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
