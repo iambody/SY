@@ -1,12 +1,22 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +25,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.model.HomeEntity;
 import com.cgbsoft.lib.base.model.bean.BannerBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
@@ -23,6 +34,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.SkineColorManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
@@ -54,7 +66,6 @@ import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.FloatStewardView;
-import com.growingio.android.sdk.collection.GrowingIO;
 import com.chenenyu.router.Router;
 
 import java.text.SimpleDateFormat;
@@ -80,7 +91,7 @@ import rx.functions.Action0;
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/6/26-21:06
  */
-public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener, View.OnClickListener {
+public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener, View.OnClickListener, SensorEventListener {
     public static final String LIVERXOBSERBER_TAG = "rxobserlivetag";
     public final int ADVISERSHOWTIME = 5;
     public final int ADVISERLOADTIME = 3;
@@ -98,6 +109,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     MySwipeRefreshLayout mainHomeSwiperefreshlayout;
     @BindView(R.id.main_home_smartscrollview)
     SmartScrollView mainHomeSmartscrollview;
+    @BindView(R.id.festival_style)
+    LinearLayout festival_style;
     View home_product_view;
     View main_home_level_lay;
     View main_home_newlive_lay;
@@ -142,6 +155,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private boolean bannerIsRight;
     private boolean isRolling;
     protected boolean isVisible;
+    private ImageView[] imageViews;
+    private SensorManager sensorManager;
+    private Sensor magneticSensor;
+    private Sensor accelerometerSensor;
+    private Sensor gyroscopeSensor;
+
+    private static final float NS2S = 1.0f / 10000000.0f;
+    private float timestamp;
+    private float[] angle = {0f, 0f, 0f};
 
 
     @Override
@@ -180,6 +202,27 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         try {
             homeBannerview.startBanner();
         } catch (Exception e) {
+
+        }
+    }
+
+    private void initSensor() {
+        sensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
+
+        magneticSensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+
+        sensorManager.registerListener(this, gyroscopeSensor, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(this, magneticSensor, SensorManager.SENSOR_DELAY_GAME);
+        sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
+
+        try {
+            imageViews[0].setPivotY(imageViews[0].getHeight() / 22);
+            imageViews[1].setPivotY(imageViews[1].getHeight() / 22);
+            imageViews[2].setPivotY(imageViews[2].getHeight() / 22);
+            imageViews[3].setPivotY(imageViews[3].getHeight() / 22);
+        }catch (Exception e){
 
         }
     }
@@ -359,31 +402,35 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HomeEntity.Operate data = (HomeEntity.Operate) parent.getItemAtPosition(position);
-                if ("0".equals(data.isVisitorVisible) && AppManager.isVisitor(baseActivity)) {//需要跳转到登录页面
-                    Intent toHomeIntent = new Intent(baseActivity, LoginActivity.class);
-                    toHomeIntent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-                    UiSkipUtils.toNextActivityWithIntent(baseActivity, toHomeIntent);
-                    return;
-                }
-                if ("h5".equals(data.jumpType)) {//跳转h5
-                    if ("1004".equals(data.jumpId)) {// 云豆乐园 需要显示充值按钮
-                        NavigationUtils.gotoWebActivityWithPay(baseActivity, data.url, data.title);
-                    } else {
-                        NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
-                    }
-
-                } else if ("app".equals(data.jumpType)) {
-                    NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
-                    if (null != Integer.decode(data.jumpId) && Integer.decode(data.jumpId) == WebViewConstant.Navigation.TASK_PAGE)
-                        TrackingDataManger.homeTask(baseActivity);
-                }
-                DataStatistApiParam.operateBannerClick(null == data || BStrUtils.isEmpty(data.title) ? "" : data.title);
-                TrackingDataManger.homeOperateItemClick(baseActivity, data.title);
+                setGVWClick(data);
             }
         });
 
 
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
+    }
+
+    private void setGVWClick(HomeEntity.Operate data) {
+        if ("0".equals(data.isVisitorVisible) && AppManager.isVisitor(baseActivity)) {//需要跳转到登录页面
+            Intent toHomeIntent = new Intent(baseActivity, LoginActivity.class);
+            toHomeIntent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, toHomeIntent);
+            return;
+        }
+        if ("h5".equals(data.jumpType)) {//跳转h5
+            if ("1004".equals(data.jumpId)) {// 云豆乐园 需要显示充值按钮
+                NavigationUtils.gotoWebActivityWithPay(baseActivity, data.url, data.title);
+            } else {
+                NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
+            }
+
+        } else if ("app".equals(data.jumpType)) {
+            NavigationUtils.jumpNativePage(baseActivity, Integer.decode(data.jumpId));
+            if (null != Integer.decode(data.jumpId) && Integer.decode(data.jumpId) == WebViewConstant.Navigation.TASK_PAGE)
+                TrackingDataManger.homeTask(baseActivity);
+        }
+        DataStatistApiParam.operateBannerClick(null == data || BStrUtils.isEmpty(data.title) ? "" : data.title);
+        TrackingDataManger.homeOperateItemClick(baseActivity, data.title);
     }
 
 
@@ -571,11 +618,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (homeBannerview != null) {
             homeBannerview.startBanner();
         }
-        List<String>  bannerDesc = new ArrayList();
-        for (BannerBean banner : valuelist) {
-            bannerDesc.add(banner.getTitle());
-        }
-        GrowingIO.getInstance().trackBanner(homeBannerview, bannerDesc);
     }
 
     @Override
@@ -593,13 +635,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             //设置&&刷新缓存数据
             AppInfStore.saveHomeData(baseActivity, data);
         }
+        boolean isAutumn = SkineColorManager.isautumnHoliay();
+        if (isAutumn) {
+            initSensor();
+        }
 
     }
 
     /**
      * 获取数据进行数据填充
      */
-
     private void initResultData(HomeEntity.Result data) {
         homeData = data;
         //banner
@@ -764,7 +809,58 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
             main_home_gvw.setNumColumns(number);
             operationAdapter.refreshData(module, number);
+
+            boolean isAutumn = SkineColorManager.isautumnHoliay();
+            if (!isAutumn) {
+                main_home_gvw.setVisibility(View.VISIBLE);
+                festival_style.setVisibility(View.GONE);
+            } else {
+                festival_style.removeAllViews();
+                main_home_gvw.setVisibility(View.GONE);
+                imageViews = new ImageView[4];
+                for (int i = 0; i < module.size(); i++) {
+                    LinearLayout inflate = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.item_operation_spring, festival_style, false);
+
+                    ImageView imageView = (ImageView) inflate.findViewById(R.id.item_operation_iv);
+                    TextView textView = (TextView) inflate.findViewById(R.id.item_operation_des);
+                    textView.setText(module.get(i).title);
+                    Imageload.display(getActivity(), getResource("main_icon_function_" + (i + 1)), imageView);
+//                    imageView.setRotation(30);
+//                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)inflate.getLayoutParams();
+//                    layoutParams.weight = 1;
+//                    layoutParams.width = 0;
+//                    layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                    inflate.setLayoutParams(layoutParams);
+//                    ViewGroup.LayoutParams layoutParams = inflate.getLayoutParams();
+//                    int width = festival_style.getWidth() / 4;
+//                    layoutParams.width = width;
+//                    inflate.setLayoutParams(layoutParams);
+                    festival_style.addView(inflate);
+
+                    imageViews[i] = imageView;
+                    int finalI = i;
+                    inflate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            setGVWClick(module.get(finalI));
+                        }
+                    });
+                }
+                festival_style.setVisibility(View.VISIBLE);
+            }
         }
+    }
+
+    /**
+     * 获取图片名称获取图片的资源id的方法
+     *
+     * @param imageName
+     * @return
+     */
+    public int getResource(String imageName) {
+        Context ctx = BaseApplication.getContext();
+        int resId = ctx.getResources().getIdentifier(imageName, "drawable", ctx.getPackageName());
+        return resId;
     }
 
     /**
@@ -920,6 +1016,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         super.onPause();
         homeBannerview.endBanner();
         LogUtils.Log("sssaa", "首页不可见");
+
+        if (null != sensorManager) {
+            sensorManager.unregisterListener(this);
+        }
     }
 
 
@@ -957,6 +1057,109 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
             }
         });
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            // x,y,z分别存储坐标轴x,y,z上的加速度
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            // 根据三个方向上的加速度值得到总的加速度值a
+            float a = (float) Math.sqrt(x * x + y * y + z * z);
+            System.out.println("a---------->" + a);
+            // 传感器从外界采集数据的时间间隔为10000微秒
+            System.out.println("magneticSensor.getMinDelay()-------->"
+                    + magneticSensor.getMinDelay());
+            // 加速度传感器的最大量程
+            System.out.println("event.sensor.getMaximumRange()-------->"
+                    + event.sensor.getMaximumRange());
+
+            System.out.println("x------------->" + x);
+            System.out.println("y------------->" + y);
+            System.out.println("z------------->" + z);
+
+            Log.d("jarlen", "x------------->" + x);
+            Log.d("jarlen", "y------------>" + y);
+            Log.d("jarlen", "z----------->" + z);
+
+
+            if (Math.abs(x) < 5) {
+                imageViews[0].setPivotX(imageViews[0].getWidth() / 2);
+                imageViews[0].setRotation(x * 5);
+                imageViews[1].setPivotX(imageViews[1].getWidth() / 2);
+                imageViews[1].setRotation(x * 5);
+                imageViews[2].setPivotX(imageViews[2].getWidth() / 2);
+                imageViews[2].setRotation(x * 5);
+                imageViews[3].setPivotX(imageViews[3].getWidth() / 2);
+                imageViews[3].setRotation(x * 5);
+//                RotateAnimation animation = new RotateAnimation(-deValue, deValue, Animation.RELATIVE_TO_SELF,
+//                        pxValue, Animation.RELATIVE_TO_SELF, pyValue);
+
+//                imageView.setAnimation(animation);
+//                imageView
+
+            }
+
+        } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+
+            // 三个坐标轴方向上的电磁强度，单位是微特拉斯(micro-Tesla)，用uT表示，也可以是高斯(Gauss),1Tesla=10000Gauss
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            // 手机的磁场感应器从外部采集数据的时间间隔是10000微秒
+            System.out.println("magneticSensor.getMinDelay()-------->"
+                    + magneticSensor.getMinDelay());
+            // 磁场感应器的最大量程
+            System.out.println("event.sensor.getMaximumRange()----------->"
+                    + event.sensor.getMaximumRange());
+            System.out.println("x------------->" + x);
+            System.out.println("y------------->" + y);
+            System.out.println("z------------->" + z);
+
+            // Log.d("TAG","x------------->" + x);
+            // Log.d("TAG", "y------------>" + y);
+            // Log.d("TAG", "z----------->" + z);
+
+            // showTextView.setText("x---------->" + x + "\ny-------------->" +
+            // y + "\nz----------->" + z);
+        } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+            //从 x、y、z 轴的正向位置观看处于原始方位的设备，如果设备逆时针旋转，将会收到正值；否则，为负值
+            if (timestamp != 0) {
+
+                // 得到两次检测到手机旋转的时间差（纳秒），并将其转化为秒
+                final float dT = (event.timestamp - timestamp) * NS2S;
+
+                // 将手机在各个轴上的旋转角度相加，即可得到当前位置相对于初始位置的旋转弧度
+                angle[0] += event.values[0] * dT;
+                angle[1] += event.values[1] * dT;
+                angle[2] += event.values[2] * dT;
+
+                // 将弧度转化为角度
+                float anglex = (float) Math.toDegrees(angle[0]);
+
+                float angley = (float) Math.toDegrees(angle[1]);
+
+                float anglez = (float) Math.toDegrees(angle[2]);
+
+                System.out.println("anglex------------>" + anglex);
+                System.out.println("angley------------>" + angley);
+                System.out.println("anglez------------>" + anglez);
+
+
+                System.out.println("gyroscopeSensor.getMinDelay()----------->" +
+                        gyroscopeSensor.getMinDelay());
+            }
+            //将当前时间赋值给timestamp
+            timestamp = event.timestamp;
+        }
+    }
+
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        //TODO Auto-generated method stub
     }
 
 

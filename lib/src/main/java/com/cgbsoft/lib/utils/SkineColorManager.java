@@ -11,9 +11,9 @@ public class SkineColorManager {
 
 
     //结束时间
-    private static final int END_YEAR = 2017;
-    private static final int END_MONTH = 11;
-    private static final int END_DAY = 25;
+    private static final int END_YEAR = 2018;
+    private static final int END_MONTH = 3;
+    private static final int END_DAY = 2;
     private static final int END_HOUR = 23;
     private static final int END_MINITE = 59;
     private static final int END_SECOND = 59;
