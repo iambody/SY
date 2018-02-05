@@ -129,7 +129,7 @@ public class PrivateBanksFragment extends BasePageFragment {
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
                 case PRODUCT_CODE:
-                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new OnLineProductListFragment(), Integer.parseInt(secondNavigation.getCode()));
+                    TabBean tabBeen1 = new TabBean("私募基金", new OnLineProductListFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen1);
                     break;
                 case INFOMATION_CODE:
