@@ -18,7 +18,7 @@ public class BindingBankCardBean {
 
     private String custno = ""; // 客户号
     private String certificatetype; //证件类型
-    private String certificateno; // 证件号
+    private String certificateno=""; // 证件号
     private String depositacctname; // 客户名字
     private String depositname; // 客户名字
     private String depositprov = ""; // 客户所在省

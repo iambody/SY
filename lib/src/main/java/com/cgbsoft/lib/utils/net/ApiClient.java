@@ -83,7 +83,6 @@ public class ApiClient {
 
     /**
      * map转换为json 用于生成RequestBody用于V2接口是使用
-     *
      * @param map
      * @return
      */

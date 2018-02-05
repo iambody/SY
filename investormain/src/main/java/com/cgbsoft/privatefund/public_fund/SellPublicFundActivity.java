@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -22,8 +21,8 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  * Created by wangpeng on 18-1-29.
@@ -36,6 +35,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     public static  final  String Tag_PARAM="tag_param";
     private Button sellFinsh;
     private EditText input;
+    private TextView prompt;
 
     private PayPasswordDialog payPasswordDialog;
     private String fundName; // 基金名字
@@ -68,6 +68,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             branchcode = jsonObject.getString("branchcode");
             tano = jsonObject.getString("tano");
             availbal = jsonObject.getString("availbal");
+            fastredeemflag = jsonObject.getString("fastredeemflag");
            if("1".equals(jsonObject.getString("issxb"))){
                 isFund = true;
             };
@@ -86,7 +87,12 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 availbal:availbal,
                 issxb:(code == '210013') ? '0':'1'
         }*/
-
+        prompt = findViewById(R.id.tv_prompt);
+        if(!isFund){
+            unit = "元";
+        }else{
+            unit = "份";
+        }
 
         // 跳转到成功页面
         // UiSkipUtils.gotoRedeemResult(this,"","","","");
@@ -95,10 +101,16 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         sellFinsh.setOnClickListener(this);
 
         // 该表标题
-        ((TextView) findViewById(R.id.title_mid)).setText("卖出");
+        ((TextView) findViewById(R.id.title_mid)).setText("卖基金");
         // 返回键
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
         findViewById(R.id.title_left).setOnClickListener(this);
+
+        if(!BStrUtils.isEmpty(fastredeemflag)){//
+          prompt.setText("本转出为快速到账(一般两小时内)，不享受转出当天收益");
+        }else {
+            prompt.setText("卖出至原银行卡");
+        }
     }
 
     @Override
@@ -111,11 +123,13 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_finsh:
-                String inputText = input.getText().toString();
+                String inputText = new DecimalFormat("00.00").format(new BigDecimal(input.getText().toString()));
                 if (BStrUtils.isEmpty(inputText)) {
                     Toast.makeText(this, "请输入卖出的基金数量", Toast.LENGTH_LONG).show();
                     return;
                 }
+
+
                 if (payPasswordDialog == null) {
                     payPasswordDialog = new PayPasswordDialog(this, null, fundName, inputText + unit);
                     payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
@@ -142,39 +156,8 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
      * @param payPassword
      */
     private void starSell(String money,String payPassword) {
-       /* {
-            trantype: '520004',
-                    applicationvol:'100000',//申请份额(必填 String)[用户手动填写]
-                branchcode:'8866',//份额托管网点编号(必填 String)[H5调取app指令的时候会传入]
-                custno:'152',//客户号(必填 String)[H5调取app指令的时候会传入]
-                fundcode:'DC0010',//基金代码(必填 String)[H5调取app指令的时候会传入]
-                largeredemptionflag:'1',//巨额赎回标志0-放弃超额部分 1-继续赎回[110051](必填 String)[固定传1]
-                tano:'DC',//TA 代码 (必填 String)[H5调取app指令的时候会传入]
-                transactionaccountid:'0108A00000229',//交易账号(必填 String)[H5调取app指令的时候会传入]
-                taserialno:'',//TA 确认流水号(必须有，无值时用''占位)
-                transactorcertno:'',//监护人证件号码，未成证年人交易必填(必须有,无值时用''占位)
-                transactorcerttype:'',//监护人证件类型，未成年人交易必填[110047](必须有,无值时用''占位)
-                transactorname:'',//监护人姓名，未成年人交易必填(必须有,无值时用''占位)
-
-        }*/
-
-        Map<String,Object> parms = new HashMap<>();
-        parms.put("trantype","520004");
-        parms.put("custno", AppManager.getPublicFundInf(this).getCustno());
-        parms.put("fundcode",this.fundcode);
-        parms.put("largeredemptionflag",this.largeredemptionflag);
-        parms.put("transactionaccountid",this.transactionaccountid);
-        parms.put("branchcode",this.branchcode);
-        parms.put("tano",this.tano);
-
-        parms.put("taserialno","");
-        parms.put("transactorcertno","");
-        parms.put("transactorcerttype","");
-        parms.put("transactorname","");
-
-        parms.put("applicationvol",money); // 申请份额
-
-        getPresenter().sureSell(parms, new BasePublicFundPresenter.PreSenterCallBack<String>() {
+        getPresenter().sureSell(fundcode,this.largeredemptionflag,this.transactionaccountid,branchcode,tano,
+                fastredeemflag,money,payPassword,new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);

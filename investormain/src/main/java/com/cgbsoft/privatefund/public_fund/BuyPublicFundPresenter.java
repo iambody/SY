@@ -9,6 +9,7 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.exception.ApiException;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -102,7 +103,7 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
                 riskwarnflag: '1' //已经阅读风险提示标志，传死1即可
 */
         Map<String,Object> parms = new HashMap<>();
-        parms.put("trantype","'orderAndPay'");
+        parms.put("trantype","orderAndPay");
         parms.put("fundcode",bean.getFundCode());
         parms.put("fundname",bean.getFundName());
         parms.put("fundtype",bean.getFundtype());
@@ -113,7 +114,7 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
         parms.put("certificatetype", AppManager.getPublicFundInf(getContext()).getCertificatetype());
         parms.put("certificateno", AppManager.getPublicFundInf(getContext()).getCertificateno());
         parms.put("depositacctname", AppManager.getPublicFundInf(getContext()).getDepositacctname());
-        parms.put("custno", AppManager.getPublicFundInf(getContext()).getCustno());
+        parms.put("custno", bean.getBankCardInfo().getCustno());
 
         parms.put("buyflag",bean.getBuyflag());
 
@@ -127,6 +128,7 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
         parms.put("branchcode",bean.getBankCardInfo().getBranchcode());
         parms.put("riskwarnflag","1");
         parms.put("callbackurl","");
+        parms.put("businesscode", BStrUtils.isEmpty(bean.getBusinesscode())?"22":bean.getBusinesscode());
 
 
         parms.put("applicationamt",money); // 认申购金额

@@ -63,6 +63,7 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
             //输入密码完成时执行此方法
             public void onInputFinish(String psw) {
               // 密码输入完成
+                passwordInput.setPassword(psw);
                 if(mPassWordInputListener != null) mPassWordInputListener.onInputFinish(psw);
             }
         });
@@ -75,6 +76,12 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
                 dismiss();
                 break;
         }
+    }
+
+    @Override
+    public void dismiss() {
+        passwordInput.clearPassword();
+        super.dismiss();
     }
 
     public void setmPassWordInputListener(PassWordInputListener mPassWordInputListener) {
