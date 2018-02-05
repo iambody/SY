@@ -1204,7 +1204,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             lookView.setText(R.string.look_more_show);
             TextView healthTime = (TextView) view.findViewById(R.id.health_time);
             titleTextView.setText(R.string.health_recode_discovery);
-            healthContent.setText(healthItem.getTitle());
+            healthContent.setText(getString(R.string.account_health_zixun_server_title).concat(healthItem.getTitle()));
             healthTime.setText((!TextUtils.isEmpty(healthItem.getConsultTime()) && healthItem.getConsultTime().length() > 10) ? healthItem.getConsultTime().substring(0, 10) :  healthItem.getConsultTime());
             lookView.setOnClickListener((View v) -> {
                 String url = CwebNetConfig.mineHealthKnow;
@@ -1244,7 +1244,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 titleTextView.setText(R.string.health_order_recode);
                 lookView.setText(R.string.look_more_show);
                 String statusValue = chageStatusValue(healthOrderItem.getState());
-                healthContent.setText((!TextUtils.isEmpty(statusValue) ? "[".concat(statusValue).concat("] ") : "").concat(healthOrderItem.getHealthItemValues()));
+                healthContent.setText((!TextUtils.isEmpty(statusValue) ? "【".concat(statusValue).concat("】") : "").concat(healthOrderItem.getHealthItemValues()));
                 healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCreateTime()) && healthOrderItem.getCreateTime().length() > 10) ? healthOrderItem.getCreateTime().substring(0, 10) :  healthOrderItem.getCreateTime());
                 lookView.setOnClickListener(v -> {
                     String url = CwebNetConfig.mineHealthOrder;
