@@ -191,7 +191,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/ui_15_dip"
-            android:text="银行卡号"
+            android:text="手机号"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_16" />
 
@@ -243,7 +243,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/ui_15_dip"
-            android:text="银行卡号"
+            android:text="验证码"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_16" />
 

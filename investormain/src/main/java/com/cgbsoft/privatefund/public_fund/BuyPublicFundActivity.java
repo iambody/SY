@@ -43,7 +43,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     private String unit = "元"; //银行卡单笔限额
 
     private Bean bean;
-    private PayPasswordDialog payPasswordDialog;
 
     @Override
     protected int layoutID() {
@@ -102,17 +101,15 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     Log.e(this.getClass().getSimpleName()," 可以请求申购的数据出现了问题");
                     return;
                 }
-                if(payPasswordDialog == null){
-                    payPasswordDialog = new PayPasswordDialog(this,null,bean.getFundName(),money+unit);
-                    payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
+                PayPasswordDialog  payPasswordDialog = new PayPasswordDialog(this,null,bean.getFundName(),money+unit);
+                payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                         @Override
                         public void onInputFinish(String psw) {
                             starPay(money,psw);
                             payPasswordDialog.dismiss();
                         }
                     });
-                }
-                payPasswordDialog.show();
+                 payPasswordDialog.show();
 
                 break;
 
@@ -132,6 +129,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             public void even(String o) {
                 Log.e("申购信息",""+o);
                 bean = new Gson().fromJson(o,Bean.class);
+                bean.setFundCode(fundCode);
                 bankName.setText(bean.getBankCardInfo().getBankname());
                 String bankCoade = bean.getBankCardInfo().getDepositacct();
                 if(bankCoade.length()>4){
@@ -168,6 +166,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
              @Override
              public void field(String errorCode, String errorMsg) {
+                 Log.e("Test"," 申购异常 "+errorMsg);
                  MToast.makeText(BuyPublicFundActivity.this," 支付失败",Toast.LENGTH_LONG);
              }
          });
@@ -203,7 +202,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         private String sharetype; // 收费类型
         private String buyflag;
         private String tano;// TA代码
-        private BankCardInfo BankCardInfo;
+        private BankCardInfo userBankCardInfo;
 
         private String rate; // 费率
         private String profitDate; // 收益日期
@@ -251,11 +250,11 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         }
 
         public BuyPublicFundActivity.BankCardInfo getBankCardInfo() {
-            return BankCardInfo;
+            return userBankCardInfo;
         }
 
         public void setBankCardInfo(BuyPublicFundActivity.BankCardInfo bankCardInfo) {
-            BankCardInfo = bankCardInfo;
+            userBankCardInfo = bankCardInfo;
         }
 
         public String getRate() {
@@ -300,6 +299,8 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     }
 
     public static class BankCardInfo{
+      //  {"fundtype":"2","sharetype":" ","buyflag":"1","userBankCardInfo":{"transactionaccountid":"Z001A00000249","moneyaccount":"199","depositacct":"6222020502022289222","status":"0","bankname":"工商银行","cardtelno":" ","custno":"189","paycenterid":"0330","authenticateflag":"1","branchcode":"370","isopenmobiletrade":"1","depositacctname":"能星辰","channelid":"Z001"},"fundName":"金鹰货币B","tano":"21"}
+
          /* "moneyaccount": "199",
                 "depositacct": "6222020502022289222",
                 "status": "0",

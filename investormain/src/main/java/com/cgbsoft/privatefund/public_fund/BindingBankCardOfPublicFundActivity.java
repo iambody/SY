@@ -215,6 +215,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                             MToast.makeText(BindingBankCardOfPublicFundActivity.this,"处理中", Toast.LENGTH_LONG);
                         }else{
                             MToast.makeText(BindingBankCardOfPublicFundActivity.this,bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG);
+                            getVerificationCode.setTag(TIME,null);
                             timer.cancel();
                         }
                     }
@@ -223,7 +224,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
                 @Override
                 public void field(String errorCode, String errorMsg) {
-                      timer.cancel();
+                    getVerificationCode.setTag(TIME,null);
+                    timer.cancel();
                 }
             });
         }
