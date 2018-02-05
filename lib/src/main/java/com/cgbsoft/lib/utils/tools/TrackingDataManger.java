@@ -544,5 +544,14 @@ public class TrackingDataManger {
         TrackingDataUtils.save(context, "1091000011", "");
     }
 
+    /**
+     * 退出登陆
+     *
+     * @param context
+     */
+    public static void existLoginout(Context context) {
+        TrackingDataUtils.save(context, "1055002081", "退出登录");
+        Log.i("existLoginout", "退出登录*******");
+    }
 
 }
