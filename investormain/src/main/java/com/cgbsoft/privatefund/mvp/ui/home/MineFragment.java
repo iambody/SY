@@ -1079,7 +1079,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_health_to_look_server)
     void gotoHealthSeverctivity() {
-        NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.HEALTH_CHECK_PAGE);
+        NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.HEALTH_PROJECT_SIMPLE);
     }
 
 //    @OnClick(R.id.health_all_title_ll)
