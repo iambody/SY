@@ -67,6 +67,10 @@
     <color name="mred">#ea1202</color>
     <color name="red_down">#d22214</color>
 
+
+    <color name="increase_income_color">#E8541E</color>
+    <color name="decrease_income_color">#108EE9</color>
+
     <color name="c_btn_circle_nor">#f47900</color>
     <color name="c_btn__circle_press">#ff9019</color>
 

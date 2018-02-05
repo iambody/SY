@@ -795,6 +795,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (isExistPrivateShareMoney(financialAssertModel)) {
             ll_private_share_bao_empty.setVisibility(View.GONE);
             ll_private_share_bao_fill.setVisibility(View.VISIBLE);
+            tv_share_bao_subsist_assert.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getSurvivingAssets().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+            tv_share_bao_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+            tv_share_bao_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
             tv_share_bao_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getSurvivingAssets()));
             tv_share_bao_continue_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getAddincome()));
             tv_share_bao_yestoday_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getYestincome()));
@@ -817,6 +820,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (isExistPublicFundMoney(financialAssertModel)) {
             ll_public_fund_empty.setVisibility(View.GONE);
             ll_public_fund_fill.setVisibility(View.VISIBLE);
+            tv_public_fund_subsist_assert.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getSurvivingAssets().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+            tv_public_fund_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+            tv_public_fund_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
             tv_public_fund_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getGmInfo().getSurvivingAssets()));
             tv_public_fund_continue_income.setText(ViewUtils.formateMoneyPattern((financialAssertModel.getGmInfo().getAddincome())));
             tv_public_fund_yestoday_income.setText(ViewUtils.formateMoneyPattern((financialAssertModel.getGmInfo().getYestincome())));
