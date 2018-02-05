@@ -9,6 +9,7 @@ import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.exception.ApiException;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -127,7 +128,7 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
         parms.put("branchcode",bean.getBankCardInfo().getBranchcode());
         parms.put("riskwarnflag","1");
         parms.put("callbackurl","");
-        parms.put("businesscode",""); // 认申购
+        parms.put("businesscode", BStrUtils.isEmpty(bean.getBusinesscode())?"22":bean.getBusinesscode());
 
 
         parms.put("applicationamt",money); // 认申购金额

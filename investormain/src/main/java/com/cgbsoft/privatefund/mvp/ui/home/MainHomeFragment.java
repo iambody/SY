@@ -175,7 +175,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     //产品新增
     View home_product_view, main_home_level_lay, main_home_newlive_lay;
     //私募基金新增
-    LinearLayout view_home_product_focus, view_home_private_fund_skip_lay;
+    LinearLayout view_home_product_focus, view_home_private_fund_skip_lay, view_public_fund_regist;
     //一些控制标识
     boolean isLoading, bannerIsLeft, bannerIsRight, isRolling, isVisible;
 
@@ -184,7 +184,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     OperationAdapter operationAdapter;
     UnreadInfoNumber unreadInfoNumber;
     Observable<LiveInfBean> liveObservable;
-    Observable<Integer> userLayObservable, bindAdviserObservable;
+    Observable<Integer> userLayObservable, bindAdviserObservable, publicFundInfObservable, finishOpeningFundAccount;
 
 
     @Override
@@ -200,8 +200,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initCache();
         getPresenter().getHomeData();
         getPresenter().getPublicFundRecommend();
-
-
     }
 
     @Override
@@ -307,8 +305,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRiskUrl, getResources().getString(R.string.public_fund_risk), false);
-
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+        UiSkipUtils.gotoPublicFundRisk(baseActivity);
+//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
 //        if (AppManager.isVisitor(baseActivity)) {
 //            Intent intent = new Intent(baseActivity, LoginActivity.class);
 //            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
@@ -413,7 +411,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //私募基金
         view_home_product_focus = ViewHolders.get(mFragmentView, R.id.view_home_product_focus);
         view_home_private_fund_skip_lay = ViewHolders.get(mFragmentView, R.id.view_home_private_fund_skip_lay);
-
+        view_public_fund_regist = ViewHolders.get(mFragmentView, R.id.view_public_fund_regist);
 
         view_home_product_focus.setOnClickListener(this);
         view_home_private_fund_skip_lay.setOnClickListener(this);
@@ -525,6 +523,30 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
             }
         });
+        //私享宝刷新
+        if (null == publicFundInfObservable) {
+            publicFundInfObservable = RxBus.get().register(RxConstant.REFRESH_PUBLIC_FUND_INFO, Integer.class);
+            publicFundInfObservable.subscribe(new RxSubscriber<Integer>() {
+                @Override
+                protected void onEvent(Integer publicFundInf) {
+                    if (10 == publicFundInf) {
+                        //刷新
+                        getPresenter().getPublicFundRecommend();
+                    }
+                    if (9 == publicFundInf) {
+                        if (null != view_public_fund_regist)
+                            view_public_fund_regist.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+
+                }
+            });
+        }
+        //开户流程走完
+
     }
 
 
@@ -543,6 +565,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
         if (null != bindAdviserObservable) {
             RxBus.get().unregister(RxConstant.BindAdviser, bindAdviserObservable);
+        }
+        if (null != publicFundInfObservable) {
+            RxBus.get().unregister(RxConstant.REFRESH_PUBLIC_FUND_INFO, publicFundInfObservable);
         }
     }
 
@@ -711,44 +736,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         } else {//显示截至打款时间************拷贝过来的一坨产品逻辑***************
             Utils.homeProductSet(viewHomeProductTag, bank.product.content.raiseEndTime);
-//            try {
-//                HomeEntity.bankData productlsBean = bank.product.content;
-//                // 服务器返回的时间格式，需要转换为毫秒值，与当前时间相减得到时间差，显示到list里
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-//
-//                if (productlsBean.raiseEndTime != null && !"".equals(productlsBean.raiseEndTime)) {
-//                    Date end_time = dateFormat.parse(productlsBean.raiseEndTime);
-//                    long l = end_time.getTime() - System.currentTimeMillis();
-//                    String dateString = null;
-//                    int day = (int) (l / 1000 / 60 / 60 / 24);
-//                    int hour = (int) (l / 1000 / 60 / 60);
-//                    int min = (int) (l / 1000 / 60);
-//
-//                    if (hour >= 72) {
-//                        dateString = day + "天";
-//                    } else if (hour > 0 && hour < 72) {
-//                        dateString = hour + "小时";
-//                    } else {
-//                        if (min == 0) {
-//                            dateString = 1 + "分钟";
-//                        } else {
-//                            dateString = min + "分钟";
-//                        }
-//                    }
-//                    if (l <= 0) {
-//                        BStrUtils.setTv(viewHomeProductTag, "已截止");
-//                    } else {
-//                        BStrUtils.setTv(viewHomeProductTag, "截止" + dateString + "打款");
-//                    }
-//                } else {
-//                    viewHomeProductTag.setVisibility(View.GONE);
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                viewHomeProductTag.setVisibility(View.GONE);
-//            }
-
-
         }
     }
 
@@ -841,20 +828,29 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private void initPublicFundData(boolean isCache, PublishFundRecommendBean publishFundRecommendBean) {
         if (isCache) {
         } else {
-
         }
-        PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
-//        if(publicFundInf.get){}
-
         publishFundRecommend = publishFundRecommendBean;
         viewHomePublicFundLay.setVisibility(View.VISIBLE);
-//        viewPublicFundRegist.setVisibility("1".equals(publishFundRecommendBean.getIsHaveAccount())?View.GONE:View.VISIBLE);
+        initRegistLay();
         BStrUtils.setTv(viewHomePublicFundFundname, publishFundRecommendBean.getFundName());
         BStrUtils.setTv(viewHomePublicFundFunddes, publishFundRecommendBean.getFundDes());
         BStrUtils.setTv(viewHomePublicFundLeftvalues, publishFundRecommendBean.getLeftUpValue());
         BStrUtils.setTv(viewHomePublicFundLeftdes, publishFundRecommendBean.getLeftDownDes());
         BStrUtils.setTv(viewHomePublicFundRightvalues, publishFundRecommendBean.getRightUpValue());
         BStrUtils.setTv(viewHomePublicFundRightdes, publishFundRecommendBean.getRightDownDes());
+
+    }
+
+    /**
+     * 刷新注册布局
+     */
+    public void initRegistLay() {
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
+        if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustRisk()) || BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
+            view_public_fund_regist.setVisibility(View.VISIBLE);
+        } else {
+            view_public_fund_regist.setVisibility(View.GONE);
+        }
 
     }
 
@@ -1034,40 +1030,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_shift)
     public void publicFundShift() {
-
         UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundCode(), publishFundRecommend.getRisklevel());
 
-//        if (BStrUtils.isEmpty(fundinf) && "0".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {//未开户
-//            //没开户=》跳转到开户页面ton
-//            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
-//        } else if (!BStrUtils.isEmpty(fundinf) && "0".equals(publicFundInf.getIsHaveCustBankAcct())) {
-//            //没绑定银行卡=》跳转到绑定银行卡页面
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, BindingBankCardOfPublicFundActivity.class));
-//        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
-//            //没风险测评=》跳转到公共的页面
-//            DefaultDialog dialog = new DefaultDialog(baseActivity, getResources().getString(R.string.fill_questionnaire), getResources().getString(R.string.cancle), getResources().getString(R.string.confirm)) {
-//                @Override
-//                public void left() {
-//                    dismiss();
-//                }
-//
-//                @Override
-//                public void right() {
-//                    //去风险测评
-//                    NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRiskUrl, getResources().getString(R.string.public_fund_risk), false);
-//                    dismiss();
-//
-//                }
-//            };
-//            dialog.show();
-//        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
-//            //开过户并且已经完成绑卡 跳转到数据里面
-//            // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
-//
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, BuyPublicFundActivity.class).putExtra(BuyPublicFundActivity.TAG_FUND_CODE, publishFundRecommend.getFundCode()).putExtra(BuyPublicFundActivity.TAG_FUND_RISK_LEVEL, publishFundRecommend.getRisklevel()));
-//
-//
-//        }
+
     }
 
     /**

@@ -95,13 +95,13 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.bt_Confirm:
-                String money =   new DecimalFormat("00.00").format(new BigDecimal( buyInput.getText().toString()));
+                String money = buyInput.getText().toString();
                 if(BStrUtils.isEmpty(money)){
                     Toast.makeText(this,"请输入金额",Toast.LENGTH_LONG).show();
                     return;
                 }
                 if(bean == null) {
-                    Log.e(this.getClass().getSimpleName()," 可能请求申购的数据出现了问题");
+                    Log.e(this.getClass().getSimpleName()," 可以请求申购的数据出现了问题");
                     return;
                 }
                 PayPasswordDialog  payPasswordDialog = new PayPasswordDialog(this,null,bean.getFundName(),money+unit);
@@ -178,7 +178,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     public static  class Bean{
          /* {
                     "fundtype": "2",
-                        "      ": " ",
+                        "sharetype": " ",
                         "buyflag": "1",
                         "userBankCardInfo": {
                     "transactionaccountid": "Z001A00000249",
@@ -206,7 +206,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         private String buyflag;
         private String tano;// TA代码
         private BankCardInfo userBankCardInfo;
-
+        private String businesscode;
         private String rate; // 费率
         private String profitDate; // 收益日期
         private String limitOfDay; //银行卡每日限额
@@ -298,6 +298,14 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
         public void setTano(String tano) {
             this.tano = tano;
+        }
+
+        public String getBusinesscode() {
+            return businesscode;
+        }
+
+        public void setBusinesscode(String businesscode) {
+            this.businesscode = businesscode;
         }
     }
 
