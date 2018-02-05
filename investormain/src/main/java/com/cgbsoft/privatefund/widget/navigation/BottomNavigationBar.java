@@ -295,27 +295,31 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     }
 
     private void addAnimation(int drawableId, ImageView imageView, int TAG) {
-        Glide.with(getContext()).load(drawableId).listener(new RequestListener<Integer, GlideDrawable>() {
-            @Override
-            public boolean onException(Exception e, Integer model, Target<GlideDrawable> target, boolean isFirstResource) {
-                return false;
-            }
+        boolean isAutumn = SkineColorManager.isautumnHoliay();
 
-            @Override
-            public boolean onResourceReady(GlideDrawable resource, Integer model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                // 计算动画时长
-                int duration = 0;
-                GifDrawable drawable = (GifDrawable) resource;
-                GifDecoder decoder = drawable.getDecoder();
-                for (int i = 0; i < drawable.getFrameCount(); i++) {
-                    duration += decoder.getDelay(i);
+        if (isAutumn) {
+            Glide.with(getContext()).load(drawableId).listener(new RequestListener<Integer, GlideDrawable>() {
+                @Override
+                public boolean onException(Exception e, Integer model, Target<GlideDrawable> target, boolean isFirstResource) {
+                    return false;
                 }
-                //发送延时消息，通知动画结束
-                handler.sendEmptyMessageDelayed(TAG,
-                        duration);
-                return false;
-            }
-        }).into(new GlideDrawableImageViewTarget(imageView, 1));
+
+                @Override
+                public boolean onResourceReady(GlideDrawable resource, Integer model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    // 计算动画时长
+                    int duration = 0;
+                    GifDrawable drawable = (GifDrawable) resource;
+                    GifDecoder decoder = drawable.getDecoder();
+                    for (int i = 0; i < drawable.getFrameCount(); i++) {
+                        duration += decoder.getDelay(i);
+                    }
+                    //发送延时消息，通知动画结束
+                    handler.sendEmptyMessageDelayed(TAG,
+                            duration);
+                    return false;
+                }
+            }).into(new GlideDrawableImageViewTarget(imageView, 1));
+        }
     }
 
     private Handler handler = new Handler() {
