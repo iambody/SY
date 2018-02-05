@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.public_fund;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 
@@ -65,14 +66,15 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
 
     /**
      * 确定绑定
+     *
      * @param
      * @param callBack
      */
-    public void sureBind(BindingBankCardBean bindingBankCardBean,String bankName,String bankCode,String phoneCode,String verificationCode, PreSenterCallBack<String> callBack) {
+    public void sureBind(BindingBankCardBean bindingBankCardBean, String bankName, String bankCode, String phoneCode, String verificationCode, PreSenterCallBack<String> callBack) {
         Map parms = new HashMap();
         parms.put("trantype", "bgAddCard");
-        parms.put("custno", BStrUtils.nullToEmpty(bindingBankCardBean.getCustno()) );
-        parms.put("mobileno",BStrUtils.nullToEmpty(phoneCode));
+        parms.put("custno", BStrUtils.nullToEmpty(bindingBankCardBean.getCustno()));
+        parms.put("mobileno", BStrUtils.nullToEmpty(phoneCode));
         parms.put("verificationCode", BStrUtils.nullToEmpty(verificationCode));
         parms.put("authenticateflag", "1");
         parms.put("bankname", BStrUtils.nullToEmpty(bankName));
@@ -83,10 +85,18 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
         parms.put("depositname", BStrUtils.nullToEmpty(bindingBankCardBean.getDepositname()));
         parms.put("depositcity", ""); // 所在城市
         parms.put("depositprov", ""); // 所以省份
-        parms.put("operorg", BStrUtils.isEmpty(bindingBankCardBean.getOperorg())?"9999":bindingBankCardBean.getOperorg());  //交易操作网点，写死9999就可以
-        parms.put("tpasswd", BStrUtils.isEmpty(bindingBankCardBean.getTpasswd()));
-        parms.put("certificatetype", BStrUtils.isEmpty(bindingBankCardBean.getCertificatetype()));
-        parms.put("certificateno", BStrUtils.isEmpty(bindingBankCardBean.getCertificateno()));
+        parms.put("operorg", BStrUtils.isEmpty(bindingBankCardBean.getOperorg()) ? "9999" : bindingBankCardBean.getOperorg());  //交易操作网点，写死9999就可以
+        parms.put("tpasswd", BStrUtils.isEmpty(bindingBankCardBean.getTpasswd()) ? "" : bindingBankCardBean.getTpasswd());
+        parms.put("certificatetype", "0");
+        //获取身份证号
+        String certificateno = bindingBankCardBean.getCertificateno();
+
+        if (BStrUtils.isEmpty(certificateno)) {
+            certificateno= AppManager.getPublicFundInf(getContext()).getCertificateno();
+        }
+
+        parms.put("certificateno", BStrUtils.isEmpty(certificateno)?"":certificateno);
+
         super.getFundDataFormJZ(parms, callBack);
     }
 }

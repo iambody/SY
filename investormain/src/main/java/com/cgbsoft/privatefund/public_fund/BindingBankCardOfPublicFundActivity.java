@@ -44,6 +44,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
 
     private BindingBankCardBean bindingBankCardBean;
+
     @Override
     protected int layoutID() {
         return R.layout.activity_binding_bankcard;

@@ -184,7 +184,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     OperationAdapter operationAdapter;
     UnreadInfoNumber unreadInfoNumber;
     Observable<LiveInfBean> liveObservable;
-    Observable<Integer> userLayObservable, bindAdviserObservable;
+    Observable<Integer> userLayObservable, bindAdviserObservable, publicFundInfObservable;
 
 
     @Override
@@ -525,6 +525,24 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
             }
         });
+        //私享宝刷新
+        if (null == publicFundInfObservable) {
+            publicFundInfObservable = RxBus.get().register(RxConstant.REFRESH_PUBLIC_FUND_INFO, Integer.class);
+            publicFundInfObservable.subscribe(new RxSubscriber<Integer>() {
+                @Override
+                protected void onEvent(Integer publicFundInf) {
+                    if (10 == publicFundInf) {
+                        //刷新
+                        getPresenter().getPublicFundRecommend();
+                    }
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+
+                }
+            });
+        }
     }
 
 
@@ -543,6 +561,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
         if (null != bindAdviserObservable) {
             RxBus.get().unregister(RxConstant.BindAdviser, bindAdviserObservable);
+        }
+        if(null!=publicFundInfObservable){
+            RxBus.get().unregister(RxConstant.REFRESH_PUBLIC_FUND_INFO, publicFundInfObservable);
         }
     }
 

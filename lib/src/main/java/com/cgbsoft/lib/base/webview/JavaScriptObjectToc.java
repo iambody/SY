@@ -560,6 +560,7 @@ public class JavaScriptObjectToc {
             HashMap<String, Object> map = new HashMap<>();
             map.put("tag_parameter", data);
             NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
+            RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
             ((Activity) context).finish();
 
         } catch (JSONException e) {
@@ -571,7 +572,7 @@ public class JavaScriptObjectToc {
     @JavascriptInterface
     public void syncAccountInfo(String jsonstr) {
 
-
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
         if (!BStrUtils.isEmpty(jsonstr)) {
             try {
                 JSONObject object = new JSONObject(jsonstr);
@@ -609,7 +610,6 @@ public class JavaScriptObjectToc {
     //完成开户流程
     @JavascriptInterface
     public void finishOpeningFundAccount(String jsostr) {
-
         try {
             JSONObject object = new JSONObject(jsostr);
             String callBack = object.getString("callback");

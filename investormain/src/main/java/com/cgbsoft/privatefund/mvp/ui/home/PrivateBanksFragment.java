@@ -28,6 +28,7 @@ import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvc.ui.SearchBaseActivity;
+import app.product.com.mvp.ui.OnLineProductListFragment;
 
 /**
  * desc  ${DESC}
@@ -40,7 +41,9 @@ public class PrivateBanksFragment extends BasePageFragment {
     private final String PRODUCT_CODE = "2001";
     private final String INFOMATION_CODE = "2002";
     private final String VIDEO_CODE = "2003";
-    private final String PUBLIC_FUND_CODE = "2004";
+    public final String PUBLIC_FUND_CODE = "2004";//公募基金新增加的code
+
+
     private ImageView privatebank_title_right;
     private UnreadInfoNumber unreadInfoNumber;
 
@@ -53,6 +56,7 @@ public class PrivateBanksFragment extends BasePageFragment {
     protected ArrayList<TabBean> list() {
         ArrayList<NavigationBean> navigationBeans = NavigationUtils.getNavigationBeans(getActivity());
         ArrayList<TabBean> tabBeens = new ArrayList<>();
+        tabBeens.add(new TabBean("公募基金", new PublicFundFragment(), Integer.parseInt(PUBLIC_FUND_CODE)));
         if (navigationBeans != null) {
             for (NavigationBean navigationBean : navigationBeans) {
                 if (navigationBean.getCode().equals(NAVIGATION_CODE)) {
@@ -124,10 +128,10 @@ public class PrivateBanksFragment extends BasePageFragment {
         List<SecondNavigation> secondNavigations = navigationBean.getSecondNavigation();
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
-//                case PRODUCT_CODE:
-//                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new OnLineProductListFragment(), Integer.parseInt(secondNavigation.getCode()));
-//                    tabBeens.add(tabBeen1);
-//                    break;
+                case PRODUCT_CODE:
+                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new OnLineProductListFragment(), Integer.parseInt(secondNavigation.getCode()));
+                    tabBeens.add(tabBeen1);
+                    break;
                 case INFOMATION_CODE:
                     TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new DiscoveryFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen2);
@@ -137,10 +141,10 @@ public class PrivateBanksFragment extends BasePageFragment {
                     tabBeens.add(tabBeen3);
                     break;
 //                case PUBLIC_FUND_CODE:
-                case PRODUCT_CODE:
-                    TabBean tabBeen4 = new TabBean(secondNavigation.getTitle(), new PublicFundFragment(), Integer.parseInt(secondNavigation.getCode()));
-                    tabBeens.add(tabBeen4);
-                    break;
+//                case PRODUCT_CODE:
+//                    TabBean tabBeen4 = new TabBean(secondNavigation.getTitle(), new PublicFundFragment(), Integer.parseInt(secondNavigation.getCode()));
+//                    tabBeens.add(tabBeen4);
+//                    break;
             }
         }
         return tabBeens;
