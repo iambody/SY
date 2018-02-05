@@ -598,6 +598,15 @@ public class JavaScriptObjectToc {
                             webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
                         }
 
+                        if (obj.has("custRisk") && !BStrUtils.isEmpty(obj.getString("custRisk"))) {
+                            publicFundInf.setCustRisk(obj.getString("custRisk"));
+                            if (obj.has("type")) {
+                                publicFundInf.setType(obj.getString("type"));
+                            }
+//                            AppInfStore.savePublicFundInf(context, publicFundInf);
+                            RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
+                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+                        }
                     }
                 }
 
@@ -618,7 +627,7 @@ public class JavaScriptObjectToc {
             e.printStackTrace();
         }
         RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
-
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 9);
         Router.build(RouteConfig.GOTOCMAINHONE).go(context);
 
     }

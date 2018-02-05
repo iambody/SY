@@ -75,7 +75,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         findViewById(R.id.title_left).setOnClickListener(this);
 
 
-        Imageload.display(this.getApplicationContext(),"",bankIcon);
+        Imageload.display(this.getApplicationContext(), "", bankIcon);
 
         buyConfirm.setOnClickListener(this);
 
@@ -85,61 +85,62 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
     @Override
     protected BuyPublicFundPresenter createPresenter() {
-        return new BuyPublicFundPresenter(this,null);
+        return new BuyPublicFundPresenter(this, null);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.bt_Confirm:
                 String money = buyInput.getText().toString();
-                if(BStrUtils.isEmpty(money)){
-                    Toast.makeText(this,"请输入金额",Toast.LENGTH_LONG).show();
+                if (BStrUtils.isEmpty(money)) {
+                    Toast.makeText(this, "请输入金额", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if(bean == null) {
-                    Log.e(this.getClass().getSimpleName()," 可以请求申购的数据出现了问题");
+                if (bean == null) {
+                    Log.e(this.getClass().getSimpleName(), " 可以请求申购的数据出现了问题");
                     return;
                 }
-                PayPasswordDialog  payPasswordDialog = new PayPasswordDialog(this,null,bean.getFundName(),money+unit);
+                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, bean.getFundName(), money + unit);
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
-                        @Override
-                        public void onInputFinish(String psw) {
-                            starPay(money,psw);
-                            payPasswordDialog.dismiss();
-                        }
-                    });
-                 payPasswordDialog.show();
+                    @Override
+                    public void onInputFinish(String psw) {
+                        starPay(money, psw);
+                        payPasswordDialog.dismiss();
+                    }
+                });
+                payPasswordDialog.show();
 
                 break;
 
-                case R.id.title_left: // 返回
-                    finish();
-                    break;
+            case R.id.title_left: // 返回
+                finish();
+                break;
         }
     }
 
     /**
-     *  获取信息
+     * 获取信息
+     *
      * @param fundCode "210013" "004373" 调试数据
      */
-    private void requestData(String fundCode){
+    private void requestData(String fundCode) {
         getPresenter().getData(fundCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String o) {
-                Log.e("申购信息",""+o);
-                bean = new Gson().fromJson(o,Bean.class);
+                Log.e("申购信息", "" + o);
+                bean = new Gson().fromJson(o, Bean.class);
                 bean.setFundCode(fundCode);
                 bankName.setText(bean.getBankCardInfo().getBankname());
                 String bankCoade = bean.getBankCardInfo().getDepositacct();
-                if(bankCoade.length()>4){
-                    bankTailCode.setText(bankCoade.substring(bankCoade.length()-4));
+                if (bankCoade.length() > 4) {
+                    bankTailCode.setText(bankCoade.substring(bankCoade.length() - 4));
                 }
             }
 
             @Override
             public void field(String errorCode, String errorMsg) {
-                Log.e("申购信息",""+errorMsg);
+                Log.e("申购信息", "" + errorMsg);
             }
         });
     }
@@ -147,32 +148,33 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
     /**
      * 开始支付
+     *
      * @param psw
      */
-    private void starPay(String money,String psw){
-         getPresenter().sure(bean, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
-             @Override
-             public void even(String result) {
-                BankListOfJZSupport bankListOfJZSupport =   new Gson().fromJson(result, BankListOfJZSupport.class);
+    private void starPay(String money, String psw) {
+        getPresenter().sure(bean, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
+            @Override
+            public void even(String result) {
+                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
 
-                 if(PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())){
-                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult,"申购成功",false);
-                     finish();
-                 }else {
-                     MToast.makeText(BuyPublicFundActivity.this,bankListOfJZSupport.getErrorMessage(),Toast.LENGTH_LONG);
-                 }
+                if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) {
+                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult, "申购成功", false);
+                    finish();
+                } else {
+                    MToast.makeText(BuyPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG);
+                }
 
-             }
+            }
 
-             @Override
-             public void field(String errorCode, String errorMsg) {
-                 Log.e("Test"," 申购异常 "+errorMsg);
-                 MToast.makeText(BuyPublicFundActivity.this," 支付失败",Toast.LENGTH_LONG);
-             }
-         });
+            @Override
+            public void field(String errorCode, String errorMsg) {
+                Log.e("Test", " 申购异常 " + errorMsg);
+                MToast.makeText(BuyPublicFundActivity.this, " 支付失败", Toast.LENGTH_LONG);
+            }
+        });
     }
 
-    public static  class Bean{
+    public static class Bean {
          /* {
                     "fundtype": "2",
                         "sharetype": " ",
@@ -203,7 +205,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         private String buyflag;
         private String tano;// TA代码
         private BankCardInfo userBankCardInfo;
-
+        private String businesscode;
         private String rate; // 费率
         private String profitDate; // 收益日期
         private String limitOfDay; //银行卡每日限额
@@ -296,10 +298,18 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         public void setTano(String tano) {
             this.tano = tano;
         }
+
+        public String getBusinesscode() {
+            return businesscode;
+        }
+
+        public void setBusinesscode(String businesscode) {
+            this.businesscode = businesscode;
+        }
     }
 
-    public static class BankCardInfo{
-      //  {"fundtype":"2","sharetype":" ","buyflag":"1","userBankCardInfo":{"transactionaccountid":"Z001A00000249","moneyaccount":"199","depositacct":"6222020502022289222","status":"0","bankname":"工商银行","cardtelno":" ","custno":"189","paycenterid":"0330","authenticateflag":"1","branchcode":"370","isopenmobiletrade":"1","depositacctname":"能星辰","channelid":"Z001"},"fundName":"金鹰货币B","tano":"21"}
+    public static class BankCardInfo {
+        //  {"fundtype":"2","sharetype":" ","buyflag":"1","userBankCardInfo":{"transactionaccountid":"Z001A00000249","moneyaccount":"199","depositacct":"6222020502022289222","status":"0","bankname":"工商银行","cardtelno":" ","custno":"189","paycenterid":"0330","authenticateflag":"1","branchcode":"370","isopenmobiletrade":"1","depositacctname":"能星辰","channelid":"Z001"},"fundName":"金鹰货币B","tano":"21"}
 
          /* "moneyaccount": "199",
                 "depositacct": "6222020502022289222",
