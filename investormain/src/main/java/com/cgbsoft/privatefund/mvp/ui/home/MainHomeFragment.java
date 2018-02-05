@@ -217,14 +217,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         sensorManager.registerListener(this, magneticSensor, SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(this, accelerometerSensor, SensorManager.SENSOR_DELAY_GAME);
 
-        try {
-            imageViews[0].setPivotY(imageViews[0].getHeight() / 22);
-            imageViews[1].setPivotY(imageViews[1].getHeight() / 22);
-            imageViews[2].setPivotY(imageViews[2].getHeight() / 22);
-            imageViews[3].setPivotY(imageViews[3].getHeight() / 22);
-        }catch (Exception e){
-
-        }
+        imageViews[0].setPivotY(imageViews[0].getHeight() / 22);
+        imageViews[1].setPivotY(imageViews[1].getHeight() / 22);
+        imageViews[2].setPivotY(imageViews[2].getHeight() / 22);
+        imageViews[3].setPivotY(imageViews[3].getHeight() / 22);
     }
 
 
@@ -583,6 +579,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
         if (null != bindAdviserObservable) {
             RxBus.get().unregister(RxConstant.BindAdviser, bindAdviserObservable);
+        }
+        if (null != sensorManager) {
+            sensorManager.unregisterListener(this);
         }
     }
 
@@ -1016,10 +1015,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         super.onPause();
         homeBannerview.endBanner();
         LogUtils.Log("sssaa", "首页不可见");
-
-        if (null != sensorManager) {
-            sensorManager.unregisterListener(this);
-        }
     }
 
 
