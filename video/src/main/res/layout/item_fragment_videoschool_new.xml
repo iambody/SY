@@ -25,12 +25,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-
             android:layout_marginRight="@dimen/ui_10_dip"
             android:layout_marginTop="@dimen/ui_10_dip"
             android:ellipsize="end"
-            android:maxLines="1"
-
+            android:maxLines="2"
             android:textColor="@color/white"
             android:textSize="@dimen/dimens_sp_18"
             android:textStyle="bold" />

@@ -824,16 +824,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                     TextView textView = (TextView) inflate.findViewById(R.id.item_operation_des);
                     textView.setText(module.get(i).title);
                     Imageload.display(getActivity(), getResource("main_icon_function_" + (i + 1)), imageView);
-//                    imageView.setRotation(30);
-//                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)inflate.getLayoutParams();
-//                    layoutParams.weight = 1;
-//                    layoutParams.width = 0;
-//                    layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                    inflate.setLayoutParams(layoutParams);
-//                    ViewGroup.LayoutParams layoutParams = inflate.getLayoutParams();
-//                    int width = festival_style.getWidth() / 4;
-//                    layoutParams.width = width;
-//                    inflate.setLayoutParams(layoutParams);
                     festival_style.addView(inflate);
 
                     imageViews[i] = imageView;
@@ -1054,6 +1044,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         });
     }
 
+    private float lastRotate = 0;
+
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -1081,14 +1073,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
 
             if (Math.abs(x) < 5) {
-                imageViews[0].setPivotX(imageViews[0].getWidth() / 2);
-                imageViews[0].setRotation(x * 5);
-                imageViews[1].setPivotX(imageViews[1].getWidth() / 2);
-                imageViews[1].setRotation(x * 5);
-                imageViews[2].setPivotX(imageViews[2].getWidth() / 2);
-                imageViews[2].setRotation(x * 5);
-                imageViews[3].setPivotX(imageViews[3].getWidth() / 2);
-                imageViews[3].setRotation(x * 5);
+                if (Math.abs(lastRotate - (x * 5)) > 1)
+                    setRotate(lastRotate, x * 5);
+                lastRotate = x * 5;
 //                RotateAnimation animation = new RotateAnimation(-deValue, deValue, Animation.RELATIVE_TO_SELF,
 //                        pxValue, Animation.RELATIVE_TO_SELF, pyValue);
 
@@ -1148,6 +1135,28 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
             //将当前时间赋值给timestamp
             timestamp = event.timestamp;
+        }
+    }
+
+    private void setRotate(float lastRotate, float r) {
+        float min, max;
+        if (lastRotate < r) {
+            max = r;
+            min = lastRotate;
+        } else {
+            max = lastRotate;
+            min = r;
+        }
+//        Log.e("setRotate --- ", " r = " + r + " lastRotate = " + lastRotate + "----" + (lastRotate-r));
+        for (float i = min; i < max; i = i + 1) {
+            imageViews[0].setPivotX(imageViews[0].getWidth() / 2);
+            imageViews[0].setRotation(i);
+            imageViews[1].setPivotX(imageViews[1].getWidth() / 2);
+            imageViews[1].setRotation(i);
+            imageViews[2].setPivotX(imageViews[2].getWidth() / 2);
+            imageViews[2].setRotation(i);
+            imageViews[3].setPivotX(imageViews[3].getWidth() / 2);
+            imageViews[3].setRotation(i);
         }
     }
 
