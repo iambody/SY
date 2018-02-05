@@ -137,10 +137,10 @@ public class PrivateBanksFragment extends BasePageFragment {
                     TabBean tabBeen3 = new TabBean(secondNavigation.getTitle(), new VideoSchoolFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen3);
                     break;
-                case PUBLIC_FUND_CODE:
-                    TabBean tabBeen4 = new TabBean(secondNavigation.getTitle(), new PublicFundFragment(), Integer.parseInt(secondNavigation.getCode()));
-                    tabBeens.add(tabBeen4);
-                    break;
+//                case PUBLIC_FUND_CODE:
+//                    TabBean tabBeen4 = new TabBean(secondNavigation.getTitle(), new PublicFundFragment(), Integer.parseInt(secondNavigation.getCode()));
+//                    tabBeens.add(tabBeen4);
+//                    break;
             }
         }
         return tabBeens;
