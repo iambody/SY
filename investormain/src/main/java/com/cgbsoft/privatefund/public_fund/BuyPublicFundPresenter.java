@@ -127,7 +127,7 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
         parms.put("branchcode",bean.getBankCardInfo().getBranchcode());
         parms.put("riskwarnflag","1");
         parms.put("callbackurl","");
-        parms.put("businesscode","");
+        parms.put("businesscode",""); // 认申购
 
 
         parms.put("applicationamt",money); // 认申购金额

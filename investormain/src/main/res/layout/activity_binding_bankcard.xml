@@ -114,7 +114,7 @@
 
         <TextView
             android:id="@+id/tv_select_bankcard"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/ui_64_dip"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/ui_15_dip"
@@ -149,7 +149,7 @@
 
         <TextView
             android:id="@+id/tv_bankcard_number"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/ui_64_dip"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/ui_15_dip"
@@ -187,7 +187,7 @@
 
         <TextView
             android:id="@+id/tv_phone_number"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/ui_64_dip"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/ui_15_dip"
@@ -239,7 +239,7 @@
 
         <TextView
             android:id="@+id/verification_code"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/ui_64_dip"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/ui_15_dip"

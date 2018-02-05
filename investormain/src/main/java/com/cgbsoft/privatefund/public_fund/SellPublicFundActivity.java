@@ -21,6 +21,9 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 /**
  * Created by wangpeng on 18-1-29.
  * <p>
@@ -32,6 +35,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     public static  final  String Tag_PARAM="tag_param";
     private Button sellFinsh;
     private EditText input;
+    private TextView prompt;
 
     private PayPasswordDialog payPasswordDialog;
     private String fundName; // 基金名字
@@ -83,7 +87,12 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 availbal:availbal,
                 issxb:(code == '210013') ? '0':'1'
         }*/
-
+        prompt = findViewById(R.id.tv_prompt);
+        if(!isFund){
+            unit = "元";
+        }else{
+            unit = "份";
+        }
 
         // 跳转到成功页面
         // UiSkipUtils.gotoRedeemResult(this,"","","","");
@@ -92,10 +101,16 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         sellFinsh.setOnClickListener(this);
 
         // 该表标题
-        ((TextView) findViewById(R.id.title_mid)).setText("卖出");
+        ((TextView) findViewById(R.id.title_mid)).setText("卖基金");
         // 返回键
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
         findViewById(R.id.title_left).setOnClickListener(this);
+
+        if(!BStrUtils.isEmpty(fastredeemflag)){//
+          prompt.setText("本转出为快速到账(一般两小时内)，不享受转出当天收益");
+        }else {
+            prompt.setText("卖出至原银行卡");
+        }
     }
 
     @Override
@@ -108,11 +123,13 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_finsh:
-                String inputText = input.getText().toString();
+                String inputText = new DecimalFormat("00.00").format(new BigDecimal(input.getText().toString()));
                 if (BStrUtils.isEmpty(inputText)) {
                     Toast.makeText(this, "请输入卖出的基金数量", Toast.LENGTH_LONG).show();
                     return;
                 }
+
+
                 if (payPasswordDialog == null) {
                     payPasswordDialog = new PayPasswordDialog(this, null, fundName, inputText + unit);
                     payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
