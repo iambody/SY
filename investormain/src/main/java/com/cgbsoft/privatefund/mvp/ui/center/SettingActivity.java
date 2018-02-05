@@ -183,6 +183,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         MobclickAgent.onProfileSignOff();
         LogOutAccount returnLogin = new LogOutAccount();
         returnLogin.accounttExit(this);
+        DataStatistApiParam.existLogout();
     }
 
     @OnClick(R.id.view_switch_clickarea)
