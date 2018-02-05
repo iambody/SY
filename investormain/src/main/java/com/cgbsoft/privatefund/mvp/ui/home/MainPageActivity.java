@@ -60,6 +60,7 @@ import com.chenenyu.router.annotation.Route;
 import com.cn.hugo.android.scanner.QrCodeBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.growingio.android.sdk.collection.GrowingIO;
 import com.tencent.TIMUserProfile;
 import com.umeng.analytics.MobclickAgent;
 
@@ -1072,6 +1073,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         locationManger.startLocation(new BdLocationListener() {
             @Override
             public void getLocation(LocationBean locationBean) {
+                GrowingIO.getInstance().setGeoLocation(locationBean.getLocationlatitude(), locationBean.getLocationlatitude());
                 locationManger.unregistLocation();
             }
 

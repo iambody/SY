@@ -54,6 +54,7 @@ import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.FloatStewardView;
+import com.growingio.android.sdk.collection.GrowingIO;
 import com.chenenyu.router.Router;
 
 import java.text.SimpleDateFormat;
@@ -570,6 +571,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (homeBannerview != null) {
             homeBannerview.startBanner();
         }
+        List<String>  bannerDesc = new ArrayList();
+        for (BannerBean banner : valuelist) {
+            bannerDesc.add(banner.getTitle());
+        }
+        GrowingIO.getInstance().trackBanner(homeBannerview, bannerDesc);
     }
 
     @Override
