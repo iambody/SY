@@ -203,8 +203,6 @@ dependencies {
     // 密码框
     compile 'com.jungly:gridPasswordView:0.3'
 
-    compile 'com.ytc.lib:picselect:0.0.1'
-
     //    //1. 云刷脸SDK
 //    compile(name: 'WbCloudFaceVerifySdk-proRelease-v1.5.27-bc15c6e', ext: 'aar')
 //    //2. 云OCR SDK

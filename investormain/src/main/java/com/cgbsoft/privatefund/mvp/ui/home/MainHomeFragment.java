@@ -1035,7 +1035,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.view_home_public_fund_shift)
     public void publicFundShift() {
 
-
         UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundCode(), publishFundRecommend.getRisklevel());
 
 //        if (BStrUtils.isEmpty(fundinf) && "0".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {//未开户

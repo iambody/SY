@@ -77,6 +77,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:id="@+id/tv_now_transfer"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:background="@drawable/selector_bg_btn_white_with_golden_bg"
             android:text="@string/now_transfer"/>

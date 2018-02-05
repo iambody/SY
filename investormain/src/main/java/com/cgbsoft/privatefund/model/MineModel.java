@@ -342,7 +342,7 @@ public class MineModel {
             private String custCredentialsNumber;
             private String state;
             private String healthItemValues;
-            private String custReservationDate;
+            private String createTime;
             private String imageUrl;
             private String orderCode;
 
@@ -370,12 +370,12 @@ public class MineModel {
                 this.healthItemValues = healthItemValues;
             }
 
-            public String getCustReservationDate() {
-                return custReservationDate;
+            public String getCreateTime() {
+                return createTime;
             }
 
-            public void setCustReservationDate(String custReservationDate) {
-                this.custReservationDate = custReservationDate;
+            public void setCreateTime(String createTime) {
+                this.createTime = createTime;
             }
 
             public String getImageUrl() {

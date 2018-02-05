@@ -37,6 +37,9 @@ import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.umeng.analytics.MobclickAgent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -204,20 +207,28 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         if (bindCard) {
             NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BIND_BANK_CARD_ACTIVITY_INFO);
         } else {
-            HashMap<String, Object> hashMap = new HashMap<>();
             PublicFundInf publicFundInf1 = AppManager.getPublicFundInf(this);
             PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(this);
-            hashMap.put("trantype", "bgAddCard");
-            hashMap.put("custno", publicFundInf1.getCustno());
-            hashMap.put("authenticateflag", "1");
-            hashMap.put("certificateno", publishFundRecommendBean.getCertificateno());
-            hashMap.put("certificatetype", publishFundRecommendBean.getCertificatetype());
-            hashMap.put("depositacct", publishFundRecommendBean.getDepositacct());
-            hashMap.put("depositacctname", publishFundRecommendBean.getDepositacctname());
-            hashMap.put("depositname", publishFundRecommendBean.getDepositacctname());
-            hashMap.put("operorg", "9999");
-            hashMap.put("tpasswd", "");
-            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, hashMap);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("trantype", "bgAddCard");
+                jsonObject.put("custno", publicFundInf1.getCustno());
+                jsonObject.put("authenticateflag", "1");
+                jsonObject.put("certificateno", publishFundRecommendBean.getCertificateno());
+                jsonObject.put("certificatetype", publishFundRecommendBean.getCertificatetype());
+                jsonObject.put("depositacct", publishFundRecommendBean.getDepositacct());
+                jsonObject.put("depositacctname", publishFundRecommendBean.getDepositacctname());
+                jsonObject.put("depositname", publishFundRecommendBean.getDepositacctname());
+                jsonObject.put("depositcity", "");
+                jsonObject.put("depositprov", "");
+                jsonObject.put("operorg", "9999");
+                jsonObject.put("tpasswd", "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("tag_parameter", jsonObject.toString());
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
         }
     }
 

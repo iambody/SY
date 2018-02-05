@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -47,6 +48,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.RoundImageView;
@@ -68,6 +70,7 @@ import com.cgbsoft.privatefund.mvp.ui.center.UploadIndentityCradActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
+import com.google.gson.Gson;
 import com.lzy.okserver.download.DownloadInfo;
 import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
@@ -784,7 +787,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @SuppressLint("StringFormatInvalid")
     private void initPrivateShareMoneyData(FinancialAssertModel financialAssertModel) {
-        ll_public_fund_create_account.setVisibility(TextUtils.equals("1", financialAssertModel.getOpenAccount()) ? View.VISIBLE : View.GONE);
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(getActivity());
+        String custno = publicFundInf.getCustno();
+        String isHaveBanckAccount = publicFundInf.getIsHaveCustBankAcct();
+        String ristPingce = publicFundInf.getCustRisk();
+        ll_public_fund_create_account.setVisibility(TextUtils.isEmpty(custno) || (!TextUtils.equals("1", isHaveBanckAccount) || TextUtils.isEmpty(ristPingce)) ? View.VISIBLE : View.GONE);
         if (isExistPrivateShareMoney(financialAssertModel)) {
             ll_private_share_bao_empty.setVisibility(View.GONE);
             ll_private_share_bao_fill.setVisibility(View.VISIBLE);
@@ -874,57 +881,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.ll_public_fund_create_account)
     void gotoCreatePublicFundAccount() {
-        String url = CwebNetConfig.memeberArea;
-        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-        intent.putExtra(WebViewConstant.push_message_url, url);
-        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_members));
-        intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
-        startActivity(intent);
+        UiSkipUtils.toPublicFundRegist(getActivity());
     }
 
     @OnClick(R.id.tv_now_transfer)
     void gotoNowTransferPrivateShare() {
-        //需要先判断是否注册绑卡
-        PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
-        PublishFundRecommendBean publishFundRecommend = AppManager.getPubliFundRecommend(getActivity());
-        String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
-        if (BStrUtils.isEmpty(fundinf)) {//未开户
-            //没开户=》跳转到开户页面ton //TODO 跳转到公用的页面
-            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
-        } else if ("0".equals(publicFundInf.getIsHaveCustBankAcct())) {
-            //没绑定银行卡=》跳转到绑定银行卡页面 todo 跳转到公用的页面
-            NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
-        } else if (BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
-            //没风险测评=》跳转到公共的页面 todo  跳转到公共的页面
-            DefaultDialog dialog = new DefaultDialog(baseActivity, getResources().getString(R.string.fill_questionnaire), getResources().getString(R.string.cancle), getResources().getString(R.string.confirm)) {
-                @Override
-                public void left() {
-                    dismiss();
-                }
-
-                @Override
-                public void right() {
-                    NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
-                    dismiss();
-
-                }
-            };
-            dialog.show();
-        } else if ("1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publishFundRecommend.getCustrisk())) {
-            //开过户并且已经完成绑卡 跳转到数据里面//todo 跳转到申购页面
-            // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
-            riskIsmatch(publishFundRecommend.getRisklevel());
-            String toBuyObj = NavigationUtils.getObjToBuy(publishFundRecommend, publicFundInf);
-        }
-    }
-
-    /**
-     * 风险匹配
-     *
-     * @param risklevel =》01:安全型 02:保守型 03:稳健型 04:积极 型 05:进取型)
-     */
-    private void riskIsmatch(String risklevel) {
-
+        PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundCode(), publicFundInf.getRisklevel());
     }
 
     @OnClick(R.id.account_info_caifu_value_ll)
@@ -1451,7 +1414,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 lookView.setText(R.string.look_more_show);
                 String statusValue = chageStatusValue(healthOrderItem.getState());
                 healthContent.setText((!TextUtils.isEmpty(statusValue) ? "[".concat(statusValue).concat("] ") : "").concat(healthOrderItem.getHealthItemValues()));
-                healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCustReservationDate()) && healthOrderItem.getCustReservationDate().length() > 10) ? healthOrderItem.getCustReservationDate().substring(0, 10) :  healthOrderItem.getCustReservationDate());
+                healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCreateTime()) && healthOrderItem.getCreateTime().length() > 10) ? healthOrderItem.getCreateTime().substring(0, 10) :  healthOrderItem.getCreateTime());
                 lookView.setOnClickListener(v -> {
                     String url = CwebNetConfig.mineHealthOrder;
                     Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);

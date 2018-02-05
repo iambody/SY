@@ -156,7 +156,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineAssertOrder = baseSxyParentUrl + "/biz/mine/balance_order.html";
         mineHealthKnow = baseSxyParentUrl + "/biz/mine/mine_health.html";
         mineHealthOrder = baseSxyParentUrl + "/biz/mine/health_order.html";
-        mineHealthOrderDetail = baseSxyParentUrl + "/health_order_detail.html?orderCode=";
+        mineHealthOrderDetail = baseSxyParentUrl + "/biz/mine/health_order_detail.html?orderCode=";
 
 //        msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";// 博伦修改地址
         msgDetal = baseSxyParentUrl + "/biz/product/notice.html?id=";
