@@ -32,6 +32,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author chenlong on 16/9/5.
@@ -432,5 +433,14 @@ public class ViewUtils {
             return sb.toString();
         }
         return "";
+    }
+
+    public static boolean checkIdNumberRegex(String idNumber) {
+        return Pattern.matches("^([0-9]{17}[0-9Xx])|([0-9]{15})$", idNumber);
+    }
+
+    public static boolean checkPhoneNumberRegex(String phoneNumber) {
+        String mobileRegex = "^1(3|4|5|7|8)\\d{9}$";
+        return phoneNumber.matches(mobileRegex);
     }
 }

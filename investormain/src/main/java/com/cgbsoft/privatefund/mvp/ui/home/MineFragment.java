@@ -773,11 +773,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private boolean isExistPrivateShareMoney(FinancialAssertModel financialAssertModel) {
-        return financialAssertModel != null && financialAssertModel.getSxbInfo() != null && !TextUtils.isEmpty(financialAssertModel.getSxbInfo().getSurvivingAssets());
+        return financialAssertModel != null && financialAssertModel.getSxbInfo() != null && TextUtils.equals("1", financialAssertModel.getSxbInfo().isBuyIn());
     }
 
     private boolean isExistPublicFundMoney(FinancialAssertModel financialAssertModel) {
-        return financialAssertModel != null && financialAssertModel.getGmInfo() != null && !TextUtils.isEmpty(financialAssertModel.getGmInfo().getSurvivingAssets());
+        return financialAssertModel != null && financialAssertModel.getGmInfo() != null && TextUtils.equals("1", financialAssertModel.getGmInfo().isBuyIn());
     }
 
     @SuppressLint("StringFormatInvalid")

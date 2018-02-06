@@ -11,12 +11,14 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.contract.center.PublicFundTradePwdModifyContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PublicFundTradePwdModifyPresenterImpl;
 import com.chenenyu.router.annotation.Route;
 
+import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -96,6 +98,7 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
             Toast.makeText(this, R.string.hint_identify_number, Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (TextUtils.isEmpty(et_phone_number.getText().toString())) {
             Toast.makeText(this, R.string.hint_phone_number, Toast.LENGTH_SHORT).show();
             return;
@@ -108,6 +111,17 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
             Toast.makeText(this, R.string.hint_trade_password, Toast.LENGTH_SHORT).show();
             return;
         }
+
+        if (!ViewUtils.checkIdNumberRegex(et_identify_number.getText().toString())) {
+            Toast.makeText(this, R.string.hint_identify_number_erro_prompt, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!ViewUtils.checkPhoneNumberRegex(et_phone_number.getText().toString())) {
+            Toast.makeText(this, R.string.hint_phone_number_error_prompt, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         getPresenter().modifyPublicFundTradePwd(et_identify_number.getText().toString(), et_phone_number.getText().toString(), et_validate_code.getText().toString(), et_trade_password.getText().toString());
     }
 

@@ -35,6 +35,7 @@
                 android:layout_weight="1"
                 android:background="@color/transparent"
                 android:hint="@string/hint_identify_number"
+                android:maxLength="20"
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textColorHint="@color/color_A5A5A5"
@@ -70,6 +71,7 @@
                 android:background="@color/transparent"
                 android:hint="@string/hint_phone_number"
                 android:maxLength="16"
+                android:inputType="phone"
                 android:textColor="@color/black"
                 android:textColorHint="@color/color_A5A5A5"
                 android:textSize="@dimen/dimens_sp_16" />
@@ -155,6 +157,16 @@
                 android:textSize="@dimen/dimens_sp_16" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/risk_prompt"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="@dimen/ui_15_dip"
+        android:textSize="@dimen/dimens_sp_16"
+        android:textColor="@color/color_A5A5A5"
+        />
 
     <TextView
         android:id="@+id/commit"

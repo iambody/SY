@@ -23,20 +23,44 @@ package com.cgbsoft.privatefund.model;
 //        "code": ""
 //        }
 
+//    {
+//            "message": "",
+//            "result": {
+//            "sxbInfo": {
+//            "growThrate": "0.0000",
+//            "riskLevel": "03",
+//            "fundcode": "202107",
+//            "addincome": "2840.36",
+//            "allud": "0.00",
+//            "buyIn": true,
+//            "yestincome": "713.61",
+//            "survivingAssets": "5981228.50"
+//            },
+//            "hasAccount": true,
+//            "gmInfo": {
+//            "addincome": "222108096.00",
+//            "buyIn": true,
+//            "yestincome": "57926452.00",
+//            "survivingAssets": "500422213632.00"
+//            }
+//            },
+//            "code": ""
+//            }
+
 public class FinancialAssertModel {
 
-    private String openAccount;
+    private String hasAccount;
 
     private PrivateTreasure sxbInfo;
 
     private PublicFund gmInfo;
 
-    public String getOpenAccount() {
-        return openAccount;
+    public String getHasAccount() {
+        return hasAccount;
     }
 
-    public void setOpenAccount(String openAccount) {
-        this.openAccount = openAccount;
+    public void setHasAccount(String hasAccount) {
+        this.hasAccount = hasAccount;
     }
 
     public PrivateTreasure getSxbInfo() {
@@ -57,9 +81,13 @@ public class FinancialAssertModel {
 
     public class PrivateTreasure {
 
-        private String isBuyin;
+        private String buyIn;
 
         private String growThrate;
+
+        private String riskLevel;
+
+        private String fundcode;
 
         private String allud;
 
@@ -69,12 +97,32 @@ public class FinancialAssertModel {
 
         private String yestincome;
 
-        public String getIsBuyin() {
-            return isBuyin;
+        public String isBuyIn() {
+            return buyIn;
         }
 
-        public void setIsBuyin(String isBuyin) {
-            this.isBuyin = isBuyin;
+        public void setBuyIn(String buyIn) {
+            this.buyIn = buyIn;
+        }
+
+        public String getRiskLevel() {
+            return riskLevel;
+        }
+
+        public void setRiskLevel(String riskLevel) {
+            this.riskLevel = riskLevel;
+        }
+
+        public String getBuyIn() {
+            return buyIn;
+        }
+
+        public String getFundcode() {
+            return fundcode;
+        }
+
+        public void setFundcode(String fundcode) {
+            this.fundcode = fundcode;
         }
 
         public String getSurvivingAssets() {
@@ -120,21 +168,13 @@ public class FinancialAssertModel {
 
     public class PublicFund {
 
-        private String isBuyin;
+        private String buyIn;
 
         private String survivingAssets;
 
         private String addincome;
 
         private String yestincome;
-
-        public String getIsBuyin() {
-            return isBuyin;
-        }
-
-        public void setIsBuyin(String isBuyin) {
-            this.isBuyin = isBuyin;
-        }
 
         public String getSurvivingAssets() {
             return survivingAssets;
@@ -158,6 +198,14 @@ public class FinancialAssertModel {
 
         public void setYestincome(String yestincome) {
             this.yestincome = yestincome;
+        }
+
+        public String isBuyIn() {
+            return buyIn;
+        }
+
+        public void setBuyIn(String buyIn) {
+            this.buyIn = buyIn;
         }
     }
 }

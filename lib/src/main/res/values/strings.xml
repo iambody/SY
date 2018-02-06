@@ -148,6 +148,8 @@
     <string name="user_name">姓名</string>
     <string name="identify_number">身份证号</string>
     <string name="hint_identify_number">请输入身份证号</string>
+    <string name="hint_identify_number_erro_prompt">输入身份证号错误!</string>
+    <string name="hint_phone_number_error_prompt">输入手机号错误!</string>
     <string name="modify_public_fund_trade_pwd">修改公募基金交易密码</string>
     <string name="phone_number">手  机  号</string>
     <string name="hint_phone_number">请输入手机号</string>
@@ -156,6 +158,7 @@
     <string name="trade_password">交易密码</string>
     <string name="hint_trade_password">请输入交易密码</string>
     <string name="get_phone_validate_code">获取验证码</string>
+    <string name="risk_prompt">请不要使用过于简单的密码（如：自己的生日、简单连续的数字等）</string>
     <string name="confirm">确定</string>
     <string name="after_appraisal_canvisible">风险评测后可见</string>
     <string name="ten_thousand">万</string>
