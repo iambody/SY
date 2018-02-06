@@ -1863,7 +1863,7 @@ public class ApiClient {
      */
     public static Observable<String> getPublicFundFormProxy(Map<String, Object> params) {
         if (params == null) params = new HashMap<>();
-        return OKHTTP.getInstance().getRequestManager().directJZServer(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1871,7 +1871,7 @@ public class ApiClient {
      */
     public static Observable<String> directRequestJzServer(HashMap<String, Object> hashMap) {
 
-        return OKHTTP.getInstance().getRequestManager().directJZServer(createProgramObject(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
