@@ -12,6 +12,7 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -262,7 +263,9 @@ public class UiSkipUtils {
         String redeemrefunddate = "";
         String transactiondate = "";
         try {
-            JSONObject jsonObject =  new JSONObject(result);
+//            JSONArray jsonArray=new JSONArray(result).getJSONArray(0).getJSONObject(0);
+
+            JSONObject jsonObject = new JSONArray(result).getJSONArray(0).getJSONObject(0);
             appsheetserialno = jsonObject.getString("appsheetserialno");
             confirmeddate = jsonObject.getString("confirmeddate");
             operdate = jsonObject.getString("operdate");
@@ -282,6 +285,7 @@ public class UiSkipUtils {
         paramMap.put("opertime", opertime);
         paramMap.put("redeemrefunddate", redeemrefunddate);
         paramMap.put("transactiondate", transactiondate);
+
         NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundRedeemResult, paramMap), "交易结果", false);
 
     }
@@ -359,6 +363,7 @@ public class UiSkipUtils {
 
     /**
      * 客户的风险测评
+     *
      * @param
      * @return
      */

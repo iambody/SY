@@ -2,7 +2,6 @@ package com.cgbsoft.privatefund.mvp.presenter.center;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.cgbsoft.lib.AppManager;

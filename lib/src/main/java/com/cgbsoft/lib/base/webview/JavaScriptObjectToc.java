@@ -611,8 +611,8 @@ public class JavaScriptObjectToc {
     @JavascriptInterface
     public void destroyWebview(String jsostr) {
 //        Router.build(RouteConfig.GOTOCMAINHONE).go(context);
-//        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
-//        ((Activity) context).finish();
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
+        ((Activity) context).finish();
     }
 
     @JavascriptInterface

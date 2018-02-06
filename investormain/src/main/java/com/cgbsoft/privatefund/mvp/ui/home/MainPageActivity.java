@@ -53,7 +53,6 @@ import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
-import com.cgbsoft.privatefund.public_fund.PayPasswordDialog;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.utils.PageJumpMananger;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;

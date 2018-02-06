@@ -41,6 +41,7 @@ public class LogOutAccount {
             map.put("fromValidatePassword", needExitApp);
 //            NavigationUtils.startActivityByRouter(context, "enter_loginactivity",map, Intent.FLAG_ACTIVITY_CLEAR_TASK);
             NavigationUtils.startActivityByRouter(context, "enter_loginactivity", map);
+            RxBus.get().post(RxConstant.MAIN_PAGE_KILL, 1);
             ((Activity) context).finish();
 
             //退出时清空融云token en

@@ -205,6 +205,6 @@ public class CwebNetConfig extends BaseWebNetConfig {
         publicFundRiskUrl = baseSxyParentUrl + "/biz/publicfund/assessment.html";
 
         //赎回成功后 跳转的赎回结果页
-        publicFundRedeemResult = baseSxyParentUrl + "biz/publicfund/redemption_end.html";
+        publicFundRedeemResult = baseSxyParentUrl + "/biz/publicfund/redemption_end.html";
     }
 }
