@@ -31,7 +31,7 @@ public class PublicFundTradePwdModifyPresenterImpl extends BasePresenterImpl<Pub
     @Override
     public void modifyPublicFundTradePwd(String identifyNo, String phoneNumber, String validateCode, String tradePwd) {
         getView().showLoadDialog();
-        HashMap<String, String> hashMap = new HashMap<>();
+        HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("accttype", "7");
         hashMap.put("trantype", "520049");
         hashMap.put("mobileno", phoneNumber);
