@@ -976,7 +976,7 @@ interface RequestManager {
     /**
      * 直接请求金正接口
      */
-    @POST(NetConfig.PUBLIC_FUND.DIRECT_JZ_URL)
+    @GET(NetConfig.PUBLIC_FUND.DIRECT_JZ_URL)
     Observable<ResponseBody> directJZServer(@Body RequestBody responseBody);
 
     /**
