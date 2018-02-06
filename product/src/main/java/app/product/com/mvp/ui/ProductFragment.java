@@ -572,6 +572,9 @@ public class ProductFragment extends BaseFragment<ProductPresenter> implements P
      * 开始初始化筛选条件
      */
     public void initFilterDate(final List<Series> filterDate) {
+        if (null==filterDate){
+            return;
+        }
         final List dataList = BUtils.arrayListClone(filterDate);
 
         productProductfragmentProductserieslayout.setOnClickTextCallBack(new ProductSeriesLayout.OnClickTextCallBack() {
