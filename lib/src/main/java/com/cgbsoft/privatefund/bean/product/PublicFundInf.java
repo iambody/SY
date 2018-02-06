@@ -8,7 +8,7 @@ public class PublicFundInf {
     private String custno;
     private String mobileno;
     private String isHaveCustBankAcct;//0：未绑卡1：已绑卡
-    private String custRisk;//01：安逸型 02：保守型 03：稳健型 04：积极型 05：激进型 空表示无
+    private String custrisk;//01：安逸型 02：保守型 03：稳健型 04：积极型 05：激进型 空表示无
 
 
     private String certificateno;//= 220301197912013513;//证件号
@@ -20,7 +20,7 @@ public class PublicFundInf {
 
     private String depositacct;// = "";客户银行卡号
 
-    private String  depositacctname;//客户姓名
+    private String depositacctname;//客户姓名
 
     private String type;//@永强添加 待定使用？？？？？？？？
 
@@ -48,12 +48,12 @@ public class PublicFundInf {
         this.isHaveCustBankAcct = isHaveCustBankAcct;
     }
 
-    public String getCustRisk() {
-        return custRisk;
+    public String getCustrisk() {
+        return custrisk;
     }
 
-    public void setCustRisk(String custRisk) {
-        this.custRisk = custRisk;
+    public void setCustrisk(String custrisk) {
+        this.custrisk = custrisk;
     }
 
     public String getCertificateno() {

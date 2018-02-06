@@ -13,6 +13,9 @@ import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
@@ -29,6 +32,7 @@ import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvc.ui.SearchBaseActivity;
 import app.product.com.mvp.ui.OnLineProductListFragment;
+import rx.Observable;
 
 /**
  * desc  ${DESC}
@@ -43,7 +47,7 @@ public class PrivateBanksFragment extends BasePageFragment {
     private final String VIDEO_CODE = "2003";
     public final String PUBLIC_FUND_CODE = "2004";//公募基金新增加的code
 
-
+    private Observable<Integer> privateFundIdex;
     private ImageView privatebank_title_right;
     private UnreadInfoNumber unreadInfoNumber;
 
@@ -71,6 +75,26 @@ public class PrivateBanksFragment extends BasePageFragment {
     protected void init(View view, Bundle savedInstanceState) {
         super.init(view, savedInstanceState);
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), privatebank_title_right, true);
+        privateFundIdex = RxBus.get().register(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, Integer.class);
+        privateFundIdex.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                setCode(2001);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(null!=privateFundIdex){
+            RxBus.get().unregister(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, privateFundIdex);
+        }
     }
 
     @Override

@@ -1846,7 +1846,7 @@ public class ApiClient {
     public static Observable<String> getHomePublicFundRecommend() {
         Map<String, Object> params = new HashMap<>();
         params.put("trantype", "YT003");
-        return OKHTTP.getInstance().getRequestManager().getHomeRecommend(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().getHomeRecommend(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1854,7 +1854,7 @@ public class ApiClient {
      */
     public static Observable<String> getPublicFundInf() {
         Map<String, Object> params = new HashMap<>();
-        return OKHTTP.getInstance().getRequestManager().getPublicFudInf(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().getPublicFudInf(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 

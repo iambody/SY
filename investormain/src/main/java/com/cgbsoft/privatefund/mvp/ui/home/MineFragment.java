@@ -785,7 +785,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(getActivity());
         String custno = publicFundInf.getCustno();
         String isHaveBanckAccount = publicFundInf.getIsHaveCustBankAcct();
-        String ristPingce = publicFundInf.getCustRisk();
+        String ristPingce = publicFundInf.getCustrisk();
         ll_public_fund_create_account.setVisibility(TextUtils.isEmpty(custno) || (!TextUtils.equals("1", isHaveBanckAccount) || TextUtils.isEmpty(ristPingce)) ? View.VISIBLE : View.GONE);
         if (isExistPrivateShareMoney(financialAssertModel)) {
             ll_private_share_bao_empty.setVisibility(View.GONE);
@@ -867,7 +867,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.tv_look_public_fund_product)
     void gotoLookPublicFundProduct() {
-        NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.PUBLIC_FUND_PAGE);
+//        NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.PUBLIC_FUND_PAGE);
+        NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
     }
 
     @OnClick(R.id.account_info_level_ll)
@@ -1347,7 +1348,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private boolean isEmptyHealthData() {
-       return CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) && CollectionUtils.isEmpty(mineModel.getHealthOrder().getContent());
+        return CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) && CollectionUtils.isEmpty(mineModel.getHealthOrder().getContent());
     }
 
     private void initHealthView(MineModel mineModel) {
@@ -1363,7 +1364,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void createHealthItem(MineModel.Health health) {
-           health_had_data_ll.removeAllViews();
+        health_had_data_ll.removeAllViews();
         if (!CollectionUtils.isEmpty(health.getContent())) {
             List<MineModel.HealthItem> healthList = health.getContent();
             MineModel.HealthItem healthItem = healthList.get(healthList.size() - 1);
@@ -1375,7 +1376,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             TextView healthTime = (TextView) view.findViewById(R.id.health_time);
             titleTextView.setText(R.string.health_recode_discovery);
             healthContent.setText(healthItem.getTitle());
-            healthTime.setText((!TextUtils.isEmpty(healthItem.getConsultTime()) && healthItem.getConsultTime().length() > 10) ? healthItem.getConsultTime().substring(0, 10) :  healthItem.getConsultTime());
+            healthTime.setText((!TextUtils.isEmpty(healthItem.getConsultTime()) && healthItem.getConsultTime().length() > 10) ? healthItem.getConsultTime().substring(0, 10) : healthItem.getConsultTime());
             lookView.setOnClickListener((View v) -> {
                 String url = CwebNetConfig.mineHealthKnow;
                 Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
@@ -1399,42 +1400,42 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void createHealthOrderItem(MineModel.HealthOrder healthOrder) {
         if (!CollectionUtils.isEmpty(healthOrder.getContent())) {
             List<MineModel.HealthOrder.HealthOrderItem> healthList = healthOrder.getContent();
-                View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
-                lineView.setPadding(10,0, 0, 0);
-                lineView.setLayoutParams(layoutParams);
-                health_had_data_ll.addView(lineView);
+            View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+            lineView.setPadding(10, 0, 0, 0);
+            lineView.setLayoutParams(layoutParams);
+            health_had_data_ll.addView(lineView);
 
-                MineModel.HealthOrder.HealthOrderItem healthOrderItem = healthList.get(healthList.size() - 1);
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_health, null);
-                TextView titleTextView = (TextView) view.findViewById(R.id.health_title);
-                TextView lookView = (TextView) view.findViewById(R.id.look_more);
-                TextView healthContent = (TextView) view.findViewById(R.id.health_content);
-                TextView healthTime = (TextView) view.findViewById(R.id.health_time);
-                titleTextView.setText(R.string.health_order_recode);
-                lookView.setText(R.string.look_more_show);
-                String statusValue = chageStatusValue(healthOrderItem.getState());
-                healthContent.setText((!TextUtils.isEmpty(statusValue) ? "[".concat(statusValue).concat("] ") : "").concat(healthOrderItem.getHealthItemValues()));
-                healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCreateTime()) && healthOrderItem.getCreateTime().length() > 10) ? healthOrderItem.getCreateTime().substring(0, 10) :  healthOrderItem.getCreateTime());
-                lookView.setOnClickListener(v -> {
-                    String url = CwebNetConfig.mineHealthOrder;
-                    Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-                    intent.putExtra(WebViewConstant.push_message_url, url);
-                    intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
-                    intent.putExtra(WebViewConstant.right_message_index, false);
-                    startActivity(intent);
-                    DataStatistApiParam.operateMineHealthClick();
-                });
-                view.setOnClickListener(v -> {
-                    String url = CwebNetConfig.mineHealthOrderDetail;
-                    Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-                    intent.putExtra(WebViewConstant.push_message_url, url + healthOrderItem.getOrderCode());
-                    intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
-                    intent.putExtra(WebViewConstant.right_message_index, false);
-                    startActivity(intent);
-                });
-                health_had_data_ll.addView(view);
-            }
+            MineModel.HealthOrder.HealthOrderItem healthOrderItem = healthList.get(healthList.size() - 1);
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_health, null);
+            TextView titleTextView = (TextView) view.findViewById(R.id.health_title);
+            TextView lookView = (TextView) view.findViewById(R.id.look_more);
+            TextView healthContent = (TextView) view.findViewById(R.id.health_content);
+            TextView healthTime = (TextView) view.findViewById(R.id.health_time);
+            titleTextView.setText(R.string.health_order_recode);
+            lookView.setText(R.string.look_more_show);
+            String statusValue = chageStatusValue(healthOrderItem.getState());
+            healthContent.setText((!TextUtils.isEmpty(statusValue) ? "[".concat(statusValue).concat("] ") : "").concat(healthOrderItem.getHealthItemValues()));
+            healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCreateTime()) && healthOrderItem.getCreateTime().length() > 10) ? healthOrderItem.getCreateTime().substring(0, 10) : healthOrderItem.getCreateTime());
+            lookView.setOnClickListener(v -> {
+                String url = CwebNetConfig.mineHealthOrder;
+                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, url);
+                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
+                intent.putExtra(WebViewConstant.right_message_index, false);
+                startActivity(intent);
+                DataStatistApiParam.operateMineHealthClick();
+            });
+            view.setOnClickListener(v -> {
+                String url = CwebNetConfig.mineHealthOrderDetail;
+                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, url + healthOrderItem.getOrderCode());
+                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
+                intent.putExtra(WebViewConstant.right_message_index, false);
+                startActivity(intent);
+            });
+            health_had_data_ll.addView(view);
+        }
     }
 
 //    private void createHealthItem(List<MineModel.HealthItem> list) {
@@ -1667,7 +1668,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     public String chageStatusValue(String key) {
         if (!TextUtils.isEmpty(key)) {
-           return Constant.healthOrder.get(key);
+            return Constant.healthOrder.get(key);
         }
         return null;
     }

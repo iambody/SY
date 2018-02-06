@@ -158,4 +158,5 @@ public interface RxConstant {
     String COMPIANCE_LIVING_BACK = "compliance_living_back";
     /*************************公募基金********************************/
     String REFRESH_PUBLIC_FUND_INFO = "refresh_public_fund_info";
+    String MAIN_FRESH_PRIVATE_IDEXLAY = "mainfresh_private_index";
 }

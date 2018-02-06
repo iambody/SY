@@ -91,6 +91,11 @@ public class WebViewConstant {
          * 尊享私行
          */
         public static final int PRIVATE_BANK_PAGE = 20;
+
+        /**
+         * 尊享私行
+         */
+        public static final int PRIVATE_BANK_PAGE_PRIVATE = 201;
         /**
          * 产品
          */
