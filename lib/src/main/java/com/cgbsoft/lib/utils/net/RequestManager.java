@@ -977,7 +977,7 @@ interface RequestManager {
      * 直接请求金正接口
      */
     @GET(NetConfig.PUBLIC_FUND.DIRECT_JZ_URL)
-    Observable<ResponseBody> directJZServer(@Body RequestBody responseBody);
+    Observable<ResponseBody> directJZServer(@QueryMap Map<String, String> paramsMap);
 
     /**
      * 获取申购页面的配置信息
