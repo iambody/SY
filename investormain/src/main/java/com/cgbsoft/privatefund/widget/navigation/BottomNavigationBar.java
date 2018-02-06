@@ -219,22 +219,22 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                             switch (view.getId()) {
                                 case R.id.fl_bottom_nav_left_first:
                                     RxBus.get().post(MAIN_BOTTOM_NAVIGATION_DOUBLE_CLICK_LEFT_FIRST, true);
-                                    addAnimation(R.drawable.icon_main_gif, iv_bottom_nav_left_first, BUTTON_LEFT_FIRST);
+                                    addAnimation(R.drawable.icon_main_gif, iv_bottom_nav_left_first, BUTTON_LEFT_FIRST, 2);
                                     break;
                                 case R.id.fl_bottom_nav_left_second:
                                     RxBus.get().post(MAIN_BOTTOM_NAVIGATION_DOUBLE_CLICK_LEFT_SEC, true);
-                                    addAnimation(R.drawable.icon_fund_gif, iv_bottom_nav_left_second, BUTTON_LEFT_SECEND);
+                                    addAnimation(R.drawable.icon_fund_gif, iv_bottom_nav_left_second, BUTTON_LEFT_SECEND, 1);
                                     break;
                                 case R.id.fl_bottom_nav_right_first:
                                     RxBus.get().post(MAIN_BOTTOM_NAVIGATION_DOUBLE_CLICK_RIGHT_FIRST, true);
-                                    addAnimation(R.drawable.enjoy_left_gif, iv_bottom_nav_right_first, BUTTON_RIGHT_FIRST);
+                                    addAnimation(R.drawable.enjoy_left_gif, iv_bottom_nav_right_first, BUTTON_RIGHT_FIRST, 1);
                                     break;
                                 case R.id.fl_bottom_nav_right_second:
                                     RxBus.get().post(MAIN_BOTTOM_NAVIGATION_DOUBLE_CLICK_RIGHT_SEC, true);
-                                    addAnimation(R.drawable.icon_health_gif, iv_bottom_nav_right_second, BUTTON_RIGHT_SECEND);
+                                    addAnimation(R.drawable.icon_health_gif, iv_bottom_nav_right_second, BUTTON_RIGHT_SECEND, 1);
                                     break;
                                 case R.id.fl_bottom_nav_center:
-                                    addAnimation(R.drawable.icon_mine_gif, ivBottomNavCenter, BUTTON_CENTER);
+                                    addAnimation(R.drawable.icon_mine_gif, ivBottomNavCenter, BUTTON_CENTER, 1);
                                     break;
                             }
                         } else {
@@ -246,7 +246,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(0, 0);
                                     }
-                                    addAnimation(R.drawable.icon_main_gif, iv_bottom_nav_left_first, BUTTON_LEFT_FIRST);
+                                    addAnimation(R.drawable.icon_main_gif, iv_bottom_nav_left_first, BUTTON_LEFT_FIRST, 2);
                                     break;
                                 case R.id.fl_bottom_nav_left_second:
                                     if (nowPosition != 1) {
@@ -255,7 +255,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(1, 0);
                                     }
-                                    addAnimation(R.drawable.icon_fund_gif, iv_bottom_nav_left_second, BUTTON_LEFT_FIRST);
+                                    addAnimation(R.drawable.icon_fund_gif, iv_bottom_nav_left_second, BUTTON_LEFT_FIRST, 1);
                                     break;
                                 case R.id.fl_bottom_nav_center:
                                     if (nowPosition != 2) {
@@ -264,7 +264,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(2, 0);
                                     }
-                                    addAnimation(R.drawable.enjoy_left_gif, ivBottomNavCenter, BUTTON_LEFT_FIRST);
+                                    addAnimation(R.drawable.enjoy_left_gif, ivBottomNavCenter, BUTTON_LEFT_FIRST, 1);
                                     break;
                                 case R.id.fl_bottom_nav_right_first:
                                     if (nowPosition != 3) {
@@ -273,7 +273,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(3, 0);
                                     }
-                                    addAnimation(R.drawable.icon_health_gif, iv_bottom_nav_right_first, BUTTON_LEFT_FIRST);
+                                    addAnimation(R.drawable.icon_health_gif, iv_bottom_nav_right_first, BUTTON_LEFT_FIRST, 1);
                                     break;
                                 case R.id.fl_bottom_nav_right_second:
                                     if (nowPosition != 4) {
@@ -282,7 +282,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(4, 0);
                                     }
-                                    addAnimation(R.drawable.icon_mine_gif, iv_bottom_nav_right_second, BUTTON_LEFT_FIRST);
+                                    addAnimation(R.drawable.icon_mine_gif, iv_bottom_nav_right_second, BUTTON_LEFT_FIRST, 1);
                                     break;
                             }
                         }
@@ -294,7 +294,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                 });
     }
 
-    private void addAnimation(int drawableId, ImageView imageView, int TAG) {
+    private void addAnimation(int drawableId, ImageView imageView, int TAG, int respeatCount) {
         boolean isAutumn = SkineColorManager.isautumnHoliay();
 
         if (isAutumn) {
@@ -315,10 +315,10 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                     }
                     //发送延时消息，通知动画结束
                     handler.sendEmptyMessageDelayed(TAG,
-                            duration);
+                            duration * respeatCount);
                     return false;
                 }
-            }).into(new GlideDrawableImageViewTarget(imageView, 1));
+            }).into(new GlideDrawableImageViewTarget(imageView, respeatCount));
         }
     }
 
