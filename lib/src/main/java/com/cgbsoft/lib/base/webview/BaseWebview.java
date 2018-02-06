@@ -35,7 +35,7 @@ public class BaseWebview extends WebView {
     private Context wcontext;
 
     /**
-     * 这个接口是直播和认购时候的特殊url截取逻辑 单独回调给ui进行处理   @按照陈龙之前业务逻辑
+     * 这个接口是直播和认购时候的特殊url截取逻辑 单独回调给ui进行处理   @按照陈龙之前业务 逻辑
      */
 
     public CWebClient.WebviewOnClick click;
@@ -106,13 +106,13 @@ public class BaseWebview extends WebView {
         getSettings().setDefaultFontSize(16);
         //硬件加速暂时不用  目前Android不支持view级别开启硬件加速
 //        this.setLayerType(View.LAYER_TYPE_HARDWARE,null);
-        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             this.setWebContentsDebuggingEnabled(true);
         }
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
 //        } else {
-            getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+        getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
 //        }
         javaScriptObject = new JavaScriptObjectToc(context, this);
         this.addJavascriptInterface(javaScriptObject, "simuyun");
@@ -125,7 +125,6 @@ public class BaseWebview extends WebView {
                 return true;
             }
         } : cWebClient);
-
 //        this.setWebContentsDebuggingEnabled(true);
     }
 

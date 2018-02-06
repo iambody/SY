@@ -964,20 +964,20 @@ interface RequestManager {
     /**
      * 公募首页推荐位
      */
-    @POST(NetConfig.PUBLIC_FUND.HOME_RECOMMEND)
-    Observable<ResponseBody> getHomeRecommend(@Body RequestBody responseBody);
+    @GET(NetConfig.PUBLIC_FUND.HOME_RECOMMEND)
+    Observable<ResponseBody> getHomeRecommend(@QueryMap Map<String, String> paramsMap);
 
     /**
      * 公募信息
      */
-    @POST(NetConfig.PUBLIC_FUND.PRIVATE_FUND_INF)
-    Observable<ResponseBody> getPublicFudInf(@Body RequestBody responseBody);
+    @GET(NetConfig.PUBLIC_FUND.PRIVATE_FUND_INF)
+    Observable<ResponseBody> getPublicFudInf(@QueryMap Map<String, String> paramsMap);
 
     /**
      * 直接请求金正接口
      */
     @GET(NetConfig.PUBLIC_FUND.DIRECT_JZ_URL)
-    Observable<ResponseBody> directJZServer(@Body RequestBody responseBody);
+    Observable<ResponseBody> directJZServer(@QueryMap Map<String, String> paramsMap);
 
     /**
      * 获取申购页面的配置信息

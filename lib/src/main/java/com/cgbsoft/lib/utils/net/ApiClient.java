@@ -1846,7 +1846,7 @@ public class ApiClient {
     public static Observable<String> getHomePublicFundRecommend() {
         Map<String, Object> params = new HashMap<>();
         params.put("trantype", "YT003");
-        return OKHTTP.getInstance().getRequestManager().getHomeRecommend(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().getHomeRecommend(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1854,7 +1854,7 @@ public class ApiClient {
      */
     public static Observable<String> getPublicFundInf() {
         Map<String, Object> params = new HashMap<>();
-        return OKHTTP.getInstance().getRequestManager().getPublicFudInf(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().getPublicFudInf(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
@@ -1863,14 +1863,15 @@ public class ApiClient {
      */
     public static Observable<String> getPublicFundFormProxy(Map<String, Object> params) {
         if (params == null) params = new HashMap<>();
-        return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().directJZServer(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
      * 直接请求金正接口
      */
-    public static Observable<String> directRequestJzServer(HashMap<String, String> hashMap) {
-        return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    public static Observable<String> directRequestJzServer(HashMap<String, Object> hashMap) {
+
+        return OKHTTP.getInstance().getRequestManager().directJZServer(createProgramObject(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 

@@ -551,7 +551,7 @@ public class JavaScriptObjectToc {
                             webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
                         }
                         if (obj.has("custrisk") && !BStrUtils.isEmpty(obj.getString("custrisk"))) {
-                            publicFundInf.setCustRisk(obj.getString("custrisk"));
+                            publicFundInf.setCustrisk(obj.getString("custrisk"));
                             if (obj.has("type")) {
                                 publicFundInf.setType(obj.getString("type"));
                             }
@@ -560,7 +560,7 @@ public class JavaScriptObjectToc {
                         }
 
                         if (obj.has("custRisk") && !BStrUtils.isEmpty(obj.getString("custRisk"))) {
-                            publicFundInf.setCustRisk(obj.getString("custRisk"));
+                            publicFundInf.setCustrisk(obj.getString("custRisk"));
                             if (obj.has("type")) {
                                 publicFundInf.setType(obj.getString("type"));
                             }

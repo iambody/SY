@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 import com.cgbsoft.privatefund.R;
-import com.jungly.gridpasswordview.GridPasswordView;
+import com.cgbsoft.privatefund.public_fund.passworddiglog.CustomPasswordView;
 
 /**
  * Created by wangpeng on 18-1-29.
@@ -19,7 +19,7 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
     private String title,summary, money;
     private PassWordInputListener mPassWordInputListener;
 
-    private GridPasswordView passwordInput;
+    private CustomPasswordView passwordInput;
     private TextView close;
     public PayPasswordDialog(Context context,String title,String summary,String money) {
         super(context, R.style.dialog_alpha);
@@ -42,7 +42,7 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
      *  实例化view
      */
     private void initView() {
-        passwordInput = (GridPasswordView)findViewById(R.id.ev_password_input);
+        passwordInput = (CustomPasswordView)findViewById(R.id.ev_password_input);
         close = (TextView) findViewById(R.id.tv_close);
     }
 
@@ -55,7 +55,7 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
         if(!TextUtils.isEmpty(money)) ((TextView) findViewById(R.id.tv_money)).setText(money);
         close.setOnClickListener(this);
         //设置输入密码监听
-        passwordInput.setOnPasswordChangedListener(new GridPasswordView.OnPasswordChangedListener() {
+        passwordInput.setOnPasswordChangedListener(new CustomPasswordView.OnPasswordChangedListener() {
             //正在输入密码时执行此方法
             public void onTextChanged(String psw) {
               // 密码正在输入

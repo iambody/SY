@@ -8,10 +8,10 @@ import java.util.List;
  * 金证支持的银行卡列表类
  */
 
-public class BankListOfJZSupport {
+public class BankListOfJZSupport<T> {
     private String errorCode; // "0000" 代表成功
     private String errorMessage; // 消息
-    private List<List<BankOfJZSupport>> datasets; // 银行卡列表
+    private List<List<T>> datasets; // 银行卡列表
 
 
     public String getErrorCode() {
@@ -30,11 +30,11 @@ public class BankListOfJZSupport {
         this.errorMessage = errorMessage;
     }
 
-    public List<BankOfJZSupport> getDatasets() {
+    public List<T> getDatasets() {
         return datasets == null?null:datasets.get(0);
     }
 
-    public void setDatasets(List<List<BankOfJZSupport>> datasets) {
+    public void setDatasets(List<List<T>> datasets) {
         this.datasets = datasets;
     }
 

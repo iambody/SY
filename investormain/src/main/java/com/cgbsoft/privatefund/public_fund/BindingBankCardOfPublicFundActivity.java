@@ -21,6 +21,7 @@ import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -139,7 +140,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (SELECT_BANK == requestCode) {
+        if (SELECT_BANK == requestCode && data != null) {
             mPayBankName.setText(data.getStringExtra(SelectBankCardActivity.CHANNEL_NAME));
             bindingBankCardBean.setChannelid(data.getStringExtra(SelectBankCardActivity.CHANNEL_ID));
         }
@@ -205,8 +206,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             getPresenter().getVerificationCodeFormServer(bindingBankCardBean,phoneCode,bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
                 @Override
                 public void even(String s) {
-
-                    BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(s,BankListOfJZSupport.class);
+                    BankListOfJZSupport<String> bankListOfJZSupport = new Gson().fromJson(s,new TypeToken<BankListOfJZSupport<String>>(){}.getType());
                     if(bankListOfJZSupport != null){
                         String code = bankListOfJZSupport.getErrorCode();
                         if(PublicFundContant.REQEUST_SUCCESS.equals(code)){

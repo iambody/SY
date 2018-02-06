@@ -176,7 +176,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     //产品新增
     View home_product_view, main_home_level_lay, main_home_newlive_lay;
     //私募基金新增
-    LinearLayout view_home_product_focus, view_home_private_fund_skip_lay, view_public_fund_regist;
+    LinearLayout view_home_product_focus, view_home_private_fund_skip_lay, view_public_fund_regist, view_home_public_fund_skip_lay;
     //一些控制标识
     boolean isLoading, bannerIsLeft, bannerIsRight, isRolling, isVisible;
 
@@ -414,10 +414,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         view_home_product_focus = ViewHolders.get(mFragmentView, R.id.view_home_product_focus);
         view_home_private_fund_skip_lay = ViewHolders.get(mFragmentView, R.id.view_home_private_fund_skip_lay);
         view_public_fund_regist = ViewHolders.get(mFragmentView, R.id.view_public_fund_regist);
-
+        view_home_public_fund_skip_lay = ViewHolders.get(mFragmentView, R.id.view_home_public_fund_skip_lay);
         view_home_product_focus.setOnClickListener(this);
         view_home_private_fund_skip_lay.setOnClickListener(this);
-
+        view_home_public_fund_skip_lay.setOnClickListener(this);
 
     }
 
@@ -848,7 +848,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     public void initRegistLay() {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
-        if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustRisk()) || BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
+        if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustrisk()) || BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
             view_public_fund_regist.setVisibility(View.VISIBLE);
         } else {
             view_public_fund_regist.setVisibility(View.GONE);
@@ -940,12 +940,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 TrackingDataManger.homeProduct(baseActivity);
                 break;
             case R.id.view_home_private_fund_skip_lay:
-                NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
+                NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE);
                 TrackingDataManger.homePrivateMore(baseActivity);
 
                 break;
 
-
+            case R.id.view_home_public_fund_skip_lay:
+                NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
+                break;
         }
     }
 

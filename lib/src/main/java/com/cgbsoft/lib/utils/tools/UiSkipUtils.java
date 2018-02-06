@@ -12,6 +12,9 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -93,7 +96,7 @@ public class UiSkipUtils {
 
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(activity.getApplicationContext());
         String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
-        if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {//未开户
+        if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustrisk())) {//未开户
             //没风险测评=》跳转到公共的页面
             DefaultDialog dialog = new DefaultDialog(activity, "您还未开户，马上去开户吧～", "取消", "确定") {
                 @Override
@@ -131,7 +134,7 @@ public class UiSkipUtils {
                 }
             };
             dialog.show();
-        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
+        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
             //没风险测评=》跳转到公共的页面
             DefaultDialog dialog = new DefaultDialog(activity, "您还未进行风险测评，马上去开展测评吧～", "取消", "确定") {
                 @Override
@@ -159,7 +162,7 @@ public class UiSkipUtils {
         //需要先判断是否注册绑卡
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(activity.getApplicationContext());
         String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
-        if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {//未开户
+        if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustrisk())) {//未开户
             //没开户=》跳转到开户页面ton
             DefaultDialog dialog = new DefaultDialog(activity, "您还未开户，马上去开户吧～", "取消", "确定") {
                 @Override
@@ -195,7 +198,7 @@ public class UiSkipUtils {
                 }
             };
             dialog.show();
-        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
+        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
             //没风险测评=》跳转到公共的页面
             DefaultDialog dialog = new DefaultDialog(activity, "您还未进行风险测评，马上去开展测评吧～", "取消", "确定") {
                 @Override
@@ -211,7 +214,7 @@ public class UiSkipUtils {
                 }
             };
             dialog.show();
-        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
+        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
             //开过户并且已经完成绑卡 跳转到数据里面
             // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
             //判断风险等级
@@ -251,7 +254,24 @@ public class UiSkipUtils {
      * 赎回成功之后需要跳转到一个H5网页（赎回结果页）
      * pageType(0 私享宝) allMoney(赎回份额/卖出金额) appsheetserialno confirmeddate operdate opertime redeemrefunddate transactiondate
      */
-    public static void gotoRedeemResult(Activity activity, String pageType, String allMoney, String appsheetserialno, String confirmeddate, String operdate, String opertime, String redeemrefunddate, String transactiondate) {
+    public static void gotoRedeemResult(Activity activity, String pageType, String allMoney, String result) {
+        String appsheetserialno = "";
+        String confirmeddate = "";
+        String operdate = "";
+        String opertime = "";
+        String redeemrefunddate = "";
+        String transactiondate = "";
+        try {
+            JSONObject jsonObject =  new JSONObject(result);
+            appsheetserialno = jsonObject.getString("appsheetserialno");
+            confirmeddate = jsonObject.getString("confirmeddate");
+            operdate = jsonObject.getString("operdate");
+            opertime = jsonObject.getString("opertime");
+            redeemrefunddate = jsonObject.getString("redeemrefunddate");
+            transactiondate = jsonObject.getString("transactiondate");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("pageType", pageType);
@@ -298,10 +318,10 @@ public class UiSkipUtils {
         if (BStrUtils.isEmpty(fundRisk)) {
             return true;
         }
-        if (BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
+        if (BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
             return true;
         }
-        int customRisk = Integer.parseInt(publicFundInf.getCustRisk());
+        int customRisk = Integer.parseInt(publicFundInf.getCustrisk());
         int publicFundRisk = Integer.parseInt(fundRisk);
         if (customRisk >= publicFundRisk) {
             return true;
@@ -339,7 +359,6 @@ public class UiSkipUtils {
 
     /**
      * 客户的风险测评
-     *
      * @param
      * @return
      */

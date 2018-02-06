@@ -53,6 +53,7 @@ import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
+import com.cgbsoft.privatefund.public_fund.PayPasswordDialog;
 import com.cgbsoft.privatefund.utils.MainTabManager;
 import com.cgbsoft.privatefund.utils.PageJumpMananger;
 import com.cgbsoft.privatefund.widget.navigation.BottomNavigationBar;
@@ -160,6 +161,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 //            透明导航栏
 //            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+
+        PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this,null,"","");
+        payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
+            @Override
+            public void onInputFinish(String psw) {
+                Log.e("test","测试");
+                //  starPay(money,psw);
+                payPasswordDialog.dismiss();
+            }
+        });
+        payPasswordDialog.show();
+
+        NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, new HashMap<>());
     }
 
     @Override

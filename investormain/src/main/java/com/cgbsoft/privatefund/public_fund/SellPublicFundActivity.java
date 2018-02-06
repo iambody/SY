@@ -17,6 +17,7 @@ import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +50,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     private String tano; // TA 代码
     private String availbal; //
     private boolean isFund; // 死否是私享宝
+    private String issxb = "";
     private String transactionaccountid; //
+    private String limitMoney = ""; //
     @Override
     protected int layoutID() {
         return R.layout.activity_sell_publicfund;
@@ -69,7 +72,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             tano = jsonObject.getString("tano");
             availbal = jsonObject.getString("availbal");
             fastredeemflag = jsonObject.getString("fastredeemflag");
-           if("1".equals(jsonObject.getString("issxb"))){
+            issxb = jsonObject.getString("issxb");
+            limitMoney = jsonObject.getString("limitMoney");
+           if("1".equals(issxb)){
                 isFund = true;
             };
         } catch (JSONException e) {
@@ -97,6 +102,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         // 跳转到成功页面
         // UiSkipUtils.gotoRedeemResult(this,"","","","");
         input = (EditText) findViewById(R.id.ev_sell_money_input);
+        input.setHint("至少卖出"+limitMoney+unit);
         sellFinsh = (Button) findViewById(R.id.bt_finsh);
         sellFinsh.setOnClickListener(this);
 
@@ -129,7 +135,6 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     return;
                 }
 
-
                 if (payPasswordDialog == null) {
                     payPasswordDialog = new PayPasswordDialog(this, null, fundName, inputText + unit);
                     payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
@@ -160,10 +165,11 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 fastredeemflag,money,payPassword,new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
-                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
+                BankListOfJZSupport<String> bankListOfJZSupport = new Gson().fromJson(result, new TypeToken<BankListOfJZSupport<String>>(){}.getType());
                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                     // 跳转到成功页面
-                     UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this,"","","","","","","","");
+                     String successData = bankListOfJZSupport.getDatasets().get(0);
+                     UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this,issxb,money,successData);
                      finish();
                 } else if (PublicFundContant.REQEUSTING.equals(bankListOfJZSupport.getErrorCode())) {// 处理中
                     Toast.makeText(SellPublicFundActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
