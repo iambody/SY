@@ -17,7 +17,6 @@ import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -165,10 +164,15 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 fastredeemflag,money,payPassword,new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
-                BankListOfJZSupport<String> bankListOfJZSupport = new Gson().fromJson(result, new TypeToken<BankListOfJZSupport<String>>(){}.getType());
+                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                     // 跳转到成功页面
-                     String successData = bankListOfJZSupport.getDatasets().get(0);
+                    String successData = "";
+                    try {
+                        successData =  new JSONObject(result).getString("datasets");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                      UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this,issxb,money,successData);
                      finish();
                 } else if (PublicFundContant.REQEUSTING.equals(bankListOfJZSupport.getErrorCode())) {// 处理中

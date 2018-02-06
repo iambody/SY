@@ -19,7 +19,6 @@ import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 /**
  * Created by wangpeng on 18-1-29.
@@ -42,7 +41,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     private String profitDate; // 收益日期
     private String limitOfDay; //银行卡每日限额
     private String limitOfSingle; //银行卡单笔限额
-    private String limitMoney; //银行卡单笔限额
     private String unit = "元"; //银行卡单笔限额
 
     private Bean bean;
@@ -78,6 +76,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
 
         Imageload.display(this.getApplicationContext(),"",bankIcon);
+        buyInput.setHint("请输入金额");
 
         buyConfirm.setOnClickListener(this);
 
@@ -132,7 +131,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 Log.e("申购信息",""+o);
                 bean = new Gson().fromJson(o,Bean.class);
                 bean.setFundCode(fundCode);
-                buyInput.setHint("最低买入"+bean.getLimitMoney()+unit);
+                buyInput.setHint("最低买入"+bean.getLimitOrderAmt()+unit);
                 bankName.setText(bean.getUserBankCardInfo().getBankname());
                 String bankCoade = bean.getUserBankCardInfo().getDepositacct();
                 if(bankCoade.length()>4){
@@ -156,7 +155,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
          getPresenter().sure(bean, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
              @Override
              public void even(String result) {
-                 BankListOfJZSupport<String> bankListOfJZSupport = new Gson().fromJson(result, new TypeToken<BankListOfJZSupport<String>>(){}.getType());
+                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result,BankListOfJZSupport.class);
 
                  if(PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())){
                      NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult+"?amout="+money,"申购成功",false);
@@ -205,13 +204,14 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         private String sharetype; // 收费类型
         private String buyflag;
         private String tano;// TA代码
-        private BankCardInfo userBankCardInfo;
         private String businesscode;
         private String rate; // 费率
         private String profitDate; // 收益日期
         private String limitOfDay; //银行卡每日限额
         private String limitOfSingle; //银行卡单笔限额
-        private String limitMoney; //最低买入
+        private String limitOrderAmt; //最低买入
+        private BankCardInfo userBankCardInfo;
+
 
         public String getFundName() {
             return fundName;
@@ -309,12 +309,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             this.userBankCardInfo = userBankCardInfo;
         }
 
-        public String getLimitMoney() {
-            return limitMoney;
+        public String getLimitOrderAmt() {
+            return limitOrderAmt;
         }
 
-        public void setLimitMoney(String limitMoney) {
-            this.limitMoney = limitMoney;
+        public void setLimitOrderAmt(String limitOrderAmt) {
+            this.limitOrderAmt = limitOrderAmt;
         }
     }
 

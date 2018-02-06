@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.privatefund.R;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +93,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
         getPresenter().getBinidedBankList(new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
-                BankListOfJZSupport<BankListOfJZSupport.BankOfJZSupport> bankListOfJZSupport = new Gson().fromJson(result, new TypeToken<BankListOfJZSupport<BankListOfJZSupport.BankOfJZSupport>>(){}.getType());
+                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result,BankListOfJZSupport.class);
                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                     bankOfJZSupportList.addAll(bankListOfJZSupport.getDatasets());
                     bankList.getAdapter().notifyDataSetChanged();
@@ -106,7 +106,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
 
             @Override
             public void field(String errorCode, String errorMsg) {
-
+                Log.e("SellPublicFundActivity"," "+errorMsg);
             }
         });
     }
