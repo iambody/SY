@@ -32,12 +32,11 @@ import java.text.DecimalFormat;
 @Route(RouteConfig.GOTO_PUBLIC_FUND_REDEMPTION)
 public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter> implements View.OnClickListener {
     //在进入赎回页面时候需要传进Intent()的参数的key
-    public static  final  String Tag_PARAM="tag_param";
+    public static final String Tag_PARAM = "tag_param";
     private Button sellFinsh;
     private EditText input;
     private TextView prompt;
 
-    private PayPasswordDialog payPasswordDialog;
     private String fundName; // 基金名字
     private String unit = "份"; // 基金份额单位
 
@@ -52,6 +51,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     private String issxb = "";
     private String transactionaccountid; //
     private String limitMoney = ""; //
+
     @Override
     protected int layoutID() {
         return R.layout.activity_sell_publicfund;
@@ -62,7 +62,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         String data = getIntent().getStringExtra(Tag_PARAM);
 
         try {
-            JSONObject jsonObject =  new JSONObject(data);
+            JSONObject jsonObject = new JSONObject(data);
             fundcode = jsonObject.getString("fundcode");
             fundName = jsonObject.getString("fundname");
             transactionaccountid = jsonObject.getString("transactionaccountid");
@@ -72,9 +72,10 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             availbal = jsonObject.getString("availbal");
             issxb = jsonObject.getString("issxb");
             limitMoney = jsonObject.getString("limitMoney");
-            if("1".equals(issxb)){
+            if ("1".equals(issxb)) {
                 isFund = true;
-            };
+            }
+            ;
             fastredeemflag = jsonObject.getString("fastredeemflag");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -92,16 +93,16 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 issxb:(code == '210013') ? '0':'1'
         }*/
         prompt = (TextView) findViewById(R.id.tv_prompt);
-        if(!isFund){
+        if (!isFund) {
             unit = "元";
-        }else{
+        } else {
             unit = "份";
         }
 
         // 跳转到成功页面
         // UiSkipUtils.gotoRedeemResult(this,"","","","");
         input = (EditText) findViewById(R.id.ev_sell_money_input);
-        input.setHint("至少卖出"+limitMoney+unit);
+        input.setHint("至少卖出" + limitMoney + unit);
         sellFinsh = (Button) findViewById(R.id.bt_finsh);
         sellFinsh.setOnClickListener(this);
 
@@ -114,16 +115,16 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         // 卖出全部
         findViewById(R.id.bt_sell_all).setOnClickListener(this);
 
-        if(!BStrUtils.isEmpty(fastredeemflag)){//
-          prompt.setText("本转出为快速到账(一般两小时内)，不享受转出当天收益");
-        }else {
+        if (!BStrUtils.isEmpty(fastredeemflag)) {//
+            prompt.setText("本转出为快速到账(一般两小时内)，不享受转出当天收益");
+        } else {
             prompt.setText("卖出至原银行卡");
         }
     }
 
     @Override
     protected SellPUblicFundPresenter createPresenter() {
-        return new SellPUblicFundPresenter(this,null);
+        return new SellPUblicFundPresenter(this, null);
     }
 
 
@@ -137,16 +138,14 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     return;
                 }
 
-                if (payPasswordDialog == null) {
-                    payPasswordDialog = new PayPasswordDialog(this, null, fundName, inputText + unit);
-                    payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
-                        @Override
-                        public void onInputFinish(String psw) {
-                            starSell(inputText,psw);
-                            payPasswordDialog.dismiss();
-                        }
-                    });
-                }
+                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, fundName, inputText + unit);
+                payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
+                    @Override
+                    public void onInputFinish(String psw) {
+                        starSell(inputText, psw);
+                        payPasswordDialog.dismiss();
+                    }
+                });
                 payPasswordDialog.show();
                 break;
 
@@ -167,34 +166,34 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
      *
      * @param payPassword
      */
-    private void starSell(String money,String payPassword) {
-        getPresenter().sureSell(fundcode,this.largeredemptionflag,this.transactionaccountid,branchcode,tano,
-                fastredeemflag,money,payPassword,new BasePublicFundPresenter.PreSenterCallBack<String>() {
-            @Override
-            public void even(String result) {
-                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
-                if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
-                    // 跳转到成功页面
-                    String successData = "";
-                    try {
-                        successData =  new JSONObject(result).getString("datasets");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+    private void starSell(String money, String payPassword) {
+        getPresenter().sureSell(fundcode, this.largeredemptionflag, this.transactionaccountid, branchcode, tano,
+                fastredeemflag, money, payPassword, new BasePublicFundPresenter.PreSenterCallBack<String>() {
+                    @Override
+                    public void even(String result) {
+                        BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
+                        if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
+                            // 跳转到成功页面
+                            String successData = "";
+                            try {
+                                successData = new JSONObject(result).getString("datasets");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, issxb, money, successData);
+                            finish();
+                        } else if (PublicFundContant.REQEUSTING.equals(bankListOfJZSupport.getErrorCode())) {// 处理中
+                            Toast.makeText(SellPublicFundActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(SellPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG).show();
+                        }
                     }
-                     UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this,issxb,money,successData);
-                     finish();
-                } else if (PublicFundContant.REQEUSTING.equals(bankListOfJZSupport.getErrorCode())) {// 处理中
-                    Toast.makeText(SellPublicFundActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(SellPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
 
-            @Override
-            public void field(String errorCode, String errorMsg) {
-                MToast.makeText(SellPublicFundActivity.this,errorMsg,Toast.LENGTH_LONG);
-            }
-        });
+                    @Override
+                    public void field(String errorCode, String errorMsg) {
+                        MToast.makeText(SellPublicFundActivity.this, errorMsg, Toast.LENGTH_LONG);
+                    }
+                });
     }
 
 
