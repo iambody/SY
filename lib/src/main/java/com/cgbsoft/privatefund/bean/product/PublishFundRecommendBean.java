@@ -7,7 +7,7 @@ package com.cgbsoft.privatefund.bean.product;
 public class PublishFundRecommendBean {
 
     private String isHaveAccount;
-    private String fundCode;
+    private String fundcode;
     private String fundName;
     private String fundDes;
     private String fundtype;
@@ -37,13 +37,7 @@ public class PublishFundRecommendBean {
         this.isHaveAccount = isHaveAccount;
     }
 
-    public String getFundCode() {
-        return fundCode;
-    }
 
-    public void setFundCode(String fundCode) {
-        this.fundCode = fundCode;
-    }
 
     public String getFundName() {
         return fundName;
@@ -188,4 +182,13 @@ public class PublishFundRecommendBean {
     public void setRisklevel(String risklevel) {
         this.risklevel = risklevel;
     }
+
+    public String getFundcode() {
+        return fundcode;
+    }
+
+    public void setFundcode(String fundcode) {
+        this.fundcode = fundcode;
+    }
+
 }

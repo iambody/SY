@@ -348,49 +348,10 @@ public class JavaScriptObjectToc {
                 if (object.has("data")) {
                     String data = object.getString("data");
                     if (!BStrUtils.isEmpty(data)) {
-                        JSONObject obj = new JSONObject();
+                        JSONObject obj = new JSONObject(data);
                         String fundCode = obj.getString("fundcode");
                         String riskLevel = obj.getString("risklevel");
-//                        HashMap<String, Object> map = new HashMap<>();
-//                        map.put("tag_fund_code", fundCode);
-//                        map.put("tag_fund_risk_level", fundCode);
                         UiSkipUtils.toBuyPublicFundFromNative((Activity) context, fundCode, riskLevel);
-
-                        //**********************跳转到申购页面的逻辑判断开始*****************************************************
-//                        PublicFundInf publicFundInf = AppManager.getPublicFundInf(context.getApplicationContext());
-//                        String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
-//                        if (BStrUtils.isEmpty(fundinf) && "0".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {//未开户
-//                            //没开户=》跳转到开户页面ton
-//                            NavigationUtils.gotoWebActivity((Activity) context, CwebNetConfig.publicFundRegistUrl, "开户", false);
-//                        } else if (!BStrUtils.isEmpty(fundinf) && "0".equals(publicFundInf.getIsHaveCustBankAcct())) {
-//                            //没绑定银行卡=》跳转到绑定银行卡页面
-//                            String bankParam = new Gson().toJson(publicFundInf);
-//                            HashMap<String, Object> maps = new HashMap<>();
-//                            map.put("tag_parameter", bankParam);
-//                            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, maps);
-//                        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
-//                            //没风险测评=》跳转到公共的页面
-//                            DefaultDialog dialog = new DefaultDialog(context, "请做风险测评", "取消", "确定") {
-//                                @Override
-//                                public void left() {
-//                                    dismiss();
-//                                }
-//
-//                                @Override
-//                                public void right() {
-//                                    //去风险测评
-//                                    NavigationUtils.gotoWebActivity((Activity) context, CwebNetConfig.publicFundRiskUrl, context.getResources().getString(R.string.public_fund_risk), false);
-//                                    dismiss();
-//
-//                                }
-//                            };
-//                            dialog.show();
-//                        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
-//                            //开过户并且已经完成绑卡 跳转到数据里面
-//                            // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
-//                            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PUBLIC_FUND_BUY, map);
-//                        }
-                        //**********************跳转到申购页面的逻辑判断结束*****************************************************
 
                     }
                 }

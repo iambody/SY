@@ -87,7 +87,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 availbal:availbal,
                 issxb:(code == '210013') ? '0':'1'
         }*/
-        prompt = findViewById(R.id.tv_prompt);
+        prompt = (TextView) findViewById(R.id.tv_prompt);
         if(!isFund){
             unit = "元";
         }else{

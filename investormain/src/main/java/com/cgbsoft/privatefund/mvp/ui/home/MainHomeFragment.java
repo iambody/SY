@@ -63,6 +63,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
+import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.product.com.utils.ProductNavigationUtils;
 import butterknife.BindView;
@@ -304,18 +305,19 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
+
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRiskUrl, getResources().getString(R.string.public_fund_risk), false);
-        UiSkipUtils.gotoPublicFundRisk(baseActivity);
+//        UiSkipUtils.gotoPublicFundRisk(baseActivity);
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
-//        if (AppManager.isVisitor(baseActivity)) {
-//            Intent intent = new Intent(baseActivity, LoginActivity.class);
-//            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-//        } else {
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-//        }
-//        DataStatistApiParam.homeClickNew();
-//        TrackingDataManger.homeNew(baseActivity);
+        if (AppManager.isVisitor(baseActivity)) {
+            Intent intent = new Intent(baseActivity, LoginActivity.class);
+            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+        } else {
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+        }
+        DataStatistApiParam.homeClickNew();
+        TrackingDataManger.homeNew(baseActivity);
 
     }
 
@@ -1022,7 +1024,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_detial_lay)
     public void publicFundDetail() {
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundCode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundCode()), false);
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundcode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundcode()), false);
     }
 
     /**
@@ -1030,7 +1032,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_shift)
     public void publicFundShift() {
-        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundCode(), publishFundRecommend.getRisklevel());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundcode(), publishFundRecommend.getRisklevel());
 
 
     }

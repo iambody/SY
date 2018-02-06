@@ -165,6 +165,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onResume() {
         super.onResume();
+
         zipResourceDownload.initDownDialog();
         MobclickAgent.onResume(this);       //统计时长
         baseWebview.loadUrls(CwebNetConfig.pageInit);

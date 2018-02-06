@@ -405,7 +405,7 @@ public class NavigationUtils {
      * @return
      */
     public static String getObjToBuy(PublishFundRecommendBean publishFundRecommendBeans, PublicFundInf publicFundInf) {
-        String fundCode = publishFundRecommendBeans.getFundCode();//基金代码
+        String fundCode = publishFundRecommendBeans.getFundcode();//基金代码
         String fundName = publishFundRecommendBeans.getFundName();//基金名称
         String taNo = publishFundRecommendBeans.getTano();//TA代码
         String businesscode = publishFundRecommendBeans.getBusinesscode();//业务类型，认购或申购

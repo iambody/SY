@@ -2,7 +2,6 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -19,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +42,6 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -70,7 +67,6 @@ import com.cgbsoft.privatefund.mvp.ui.center.UploadIndentityCradActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
-import com.google.gson.Gson;
 import com.lzy.okserver.download.DownloadInfo;
 import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
@@ -84,7 +80,6 @@ import java.util.List;
 
 import app.mall.com.mvp.ui.MallAddressListActivity;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
-import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongContext;
@@ -893,7 +888,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.tv_now_transfer)
     void gotoNowTransferPrivateShare() {
         PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
-        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundCode(), publicFundInf.getRisklevel());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundcode(), publicFundInf.getRisklevel());
     }
 
     @OnClick(R.id.account_info_caifu_value_ll)
