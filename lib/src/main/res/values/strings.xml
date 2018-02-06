@@ -144,7 +144,7 @@
     <string name="public_fund_setting_account_info">公募基金身份信息</string>
     <string name="public_fund_setting_bind_bankcard">绑定银行卡</string>
     <string name="public_fund_setting_bankcard_info">公募基金银行卡信息</string>
-    <string name="public_fund_setting_modify_public_fund_password">修改公募基金交易密码</string>
+    <string name="public_fund_setting_modify_public_fund_password">重置公募基金交易密码</string>
     <string name="user_name">姓名</string>
     <string name="identify_number">身份证号</string>
     <string name="hint_identify_number">请输入身份证号</string>
