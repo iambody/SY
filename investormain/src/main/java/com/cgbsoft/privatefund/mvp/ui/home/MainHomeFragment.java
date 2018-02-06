@@ -1148,16 +1148,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             min = r;
         }
 //        Log.e("setRotate --- ", " r = " + r + " lastRotate = " + lastRotate + "----" + (lastRotate-r));
-        for (float i = min; i < max; i = i + 1) {
+//        for (float i = min; i < max; i = i + 1) {
             imageViews[0].setPivotX(imageViews[0].getWidth() / 2);
-            imageViews[0].setRotation(i);
+            imageViews[0].setRotation(r);
             imageViews[1].setPivotX(imageViews[1].getWidth() / 2);
-            imageViews[1].setRotation(i);
+            imageViews[1].setRotation(r);
             imageViews[2].setPivotX(imageViews[2].getWidth() / 2);
-            imageViews[2].setRotation(i);
+            imageViews[2].setRotation(r);
             imageViews[3].setPivotX(imageViews[3].getWidth() / 2);
-            imageViews[3].setRotation(i);
-        }
+            imageViews[3].setRotation(r);
+//        }
     }
 
 
