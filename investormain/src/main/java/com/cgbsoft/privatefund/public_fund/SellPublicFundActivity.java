@@ -70,12 +70,12 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             branchcode = jsonObject.getString("branchcode");
             tano = jsonObject.getString("tano");
             availbal = jsonObject.getString("availbal");
-            fastredeemflag = jsonObject.getString("fastredeemflag");
             issxb = jsonObject.getString("issxb");
             limitMoney = jsonObject.getString("limitMoney");
-           if("1".equals(issxb)){
+            if("1".equals(issxb)){
                 isFund = true;
             };
+            fastredeemflag = jsonObject.getString("fastredeemflag");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -110,6 +110,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         // 返回键
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
         findViewById(R.id.title_left).setOnClickListener(this);
+
+        // 卖出全部
+        findViewById(R.id.bt_sell_all).setOnClickListener(this);
 
         if(!BStrUtils.isEmpty(fastredeemflag)){//
           prompt.setText("本转出为快速到账(一般两小时内)，不享受转出当天收益");
@@ -147,9 +150,14 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 payPasswordDialog.show();
                 break;
 
+            case R.id.bt_sell_all:
+                input.setText(availbal);
+                break;
+
             case R.id.title_left:// 返回键
                 finish();
                 break;
+
         }
     }
 

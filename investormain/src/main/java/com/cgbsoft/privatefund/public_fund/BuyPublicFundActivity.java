@@ -158,7 +158,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                  BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result,BankListOfJZSupport.class);
 
                  if(PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())){
-                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult+"?amout="+money,"申购成功",false);
+                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult+"?amount="+money,"申购成功",false);
                      finish();
                  }else {
                      MToast.makeText(BuyPublicFundActivity.this,bankListOfJZSupport.getErrorMessage(),Toast.LENGTH_LONG);
