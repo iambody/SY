@@ -200,7 +200,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         publicFundHomeUrl = baseSxyParentUrl + "/biz/publicfund/fundIndex.html";
         publicShareBaoDetail = baseSxyParentUrl + "/biz/publicfund/profile.html";
         minePublicFund = baseSxyParentUrl + "/biz/publicfund/myfund.html";
-        publicFundBuyResult = baseSxyParentUrl + "/biz/publicfund/result4subscription..html";
+        publicFundBuyResult = baseSxyParentUrl + "/biz/publicfund/result4subscription.html";
         //开户
         publicFundRiskUrl = baseSxyParentUrl + "/biz/publicfund/assessment.html";
 

@@ -12,6 +12,9 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -251,7 +254,24 @@ public class UiSkipUtils {
      * 赎回成功之后需要跳转到一个H5网页（赎回结果页）
      * pageType(0 私享宝) allMoney(赎回份额/卖出金额) appsheetserialno confirmeddate operdate opertime redeemrefunddate transactiondate
      */
-    public static void gotoRedeemResult(Activity activity, String pageType, String allMoney, String appsheetserialno, String confirmeddate, String operdate, String opertime, String redeemrefunddate, String transactiondate) {
+    public static void gotoRedeemResult(Activity activity, String pageType, String allMoney, String result) {
+        String appsheetserialno = "";
+        String confirmeddate = "";
+        String operdate = "";
+        String opertime = "";
+        String redeemrefunddate = "";
+        String transactiondate = "";
+        try {
+            JSONObject jsonObject =  new JSONObject(result);
+            appsheetserialno = jsonObject.getString("appsheetserialno");
+            confirmeddate = jsonObject.getString("confirmeddate");
+            operdate = jsonObject.getString("operdate");
+            opertime = jsonObject.getString("opertime");
+            redeemrefunddate = jsonObject.getString("redeemrefunddate");
+            transactiondate = jsonObject.getString("transactiondate");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("pageType", pageType);

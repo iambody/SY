@@ -200,9 +200,6 @@ dependencies {
     compile project(':ocrlib')
 
     compile 'com.squareup.picasso:picasso:2.5.2'
-    // 密码框
-    compile 'com.jungly:gridPasswordView:0.3'
-
     //    //1. 云刷脸SDK
 //    compile(name: 'WbCloudFaceVerifySdk-proRelease-v1.5.27-bc15c6e', ext: 'aar')
 //    //2. 云OCR SDK

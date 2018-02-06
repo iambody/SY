@@ -114,18 +114,18 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
         parms.put("certificatetype", AppManager.getPublicFundInf(getContext()).getCertificatetype());
         parms.put("certificateno", AppManager.getPublicFundInf(getContext()).getCertificateno());
         parms.put("depositacctname", AppManager.getPublicFundInf(getContext()).getDepositacctname());
-        parms.put("custno", bean.getBankCardInfo().getCustno());
+        parms.put("custno", bean.getUserBankCardInfo().getCustno());
 
         parms.put("buyflag",bean.getBuyflag());
 
 
-        parms.put("depositacct", bean.getBankCardInfo().getDepositacct());
+        parms.put("depositacct", bean.getUserBankCardInfo().getDepositacct());
         parms.put("mobiletelno",AppManager.getPublicFundInf(getContext()).getMobileno());
-        parms.put("transactionaccountid",bean.getBankCardInfo().getTransactionaccountid());
-        parms.put("channelid",bean.getBankCardInfo().getChannelid());
-        parms.put("moneyaccount",bean.getBankCardInfo().getMoneyaccount());
-        parms.put("paycenterid",bean.getBankCardInfo().getPaycenterid());
-        parms.put("branchcode",bean.getBankCardInfo().getBranchcode());
+        parms.put("transactionaccountid",bean.getUserBankCardInfo().getTransactionaccountid());
+        parms.put("channelid",bean.getUserBankCardInfo().getChannelid());
+        parms.put("moneyaccount",bean.getUserBankCardInfo().getMoneyaccount());
+        parms.put("paycenterid",bean.getUserBankCardInfo().getPaycenterid());
+        parms.put("branchcode",bean.getUserBankCardInfo().getBranchcode());
         parms.put("riskwarnflag","1");
         parms.put("callbackurl","");
         parms.put("businesscode", BStrUtils.isEmpty(bean.getBusinesscode())?"22":bean.getBusinesscode());

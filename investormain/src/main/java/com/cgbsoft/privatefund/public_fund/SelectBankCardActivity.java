@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.privatefund.R;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
         getPresenter().getBinidedBankList(new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
-                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
+                BankListOfJZSupport<BankListOfJZSupport.BankOfJZSupport> bankListOfJZSupport = new Gson().fromJson(result, new TypeToken<BankListOfJZSupport<BankListOfJZSupport.BankOfJZSupport>>(){}.getType());
                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                     bankOfJZSupportList.addAll(bankListOfJZSupport.getDatasets());
                     bankList.getAdapter().notifyDataSetChanged();

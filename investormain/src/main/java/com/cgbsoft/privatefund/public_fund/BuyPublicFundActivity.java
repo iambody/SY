@@ -19,9 +19,7 @@ import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
-
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * Created by wangpeng on 18-1-29.
@@ -30,6 +28,7 @@ import java.text.DecimalFormat;
 public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> implements View.OnClickListener {
     public static final String TAG_FUND_CODE = "tag_fund_code";
     public static final String TAG_FUND_RISK_LEVEL = "tag_fund_risk_level";
+    public static final String LIMIT_MONEY = "limitMoney";
     private Button buyConfirm;
     private ImageView bankIcon;
     private TextView bankName;
@@ -43,6 +42,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     private String profitDate; // 收益日期
     private String limitOfDay; //银行卡每日限额
     private String limitOfSingle; //银行卡单笔限额
+    private String limitMoney; //银行卡单笔限额
     private String unit = "元"; //银行卡单笔限额
 
     private Bean bean;
@@ -56,7 +56,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     protected void init(Bundle savedInstanceState) {
         fundCode = getIntent().getStringExtra(TAG_FUND_CODE);
         fundRiskLevel = getIntent().getStringExtra(TAG_FUND_RISK_LEVEL);
-
 
         buyInput = (EditText) findViewById(R.id.ev_buy_money_input);
         bankIcon = (ImageView) findViewById(R.id.iv_bank_icon);
@@ -133,8 +132,9 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 Log.e("申购信息",""+o);
                 bean = new Gson().fromJson(o,Bean.class);
                 bean.setFundCode(fundCode);
-                bankName.setText(bean.getBankCardInfo().getBankname());
-                String bankCoade = bean.getBankCardInfo().getDepositacct();
+                buyInput.setHint("最低买入"+bean.getLimitMoney()+unit);
+                bankName.setText(bean.getUserBankCardInfo().getBankname());
+                String bankCoade = bean.getUserBankCardInfo().getDepositacct();
                 if(bankCoade.length()>4){
                     bankTailCode.setText(bankCoade.substring(bankCoade.length()-4));
                 }
@@ -156,10 +156,10 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
          getPresenter().sure(bean, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
              @Override
              public void even(String result) {
-                BankListOfJZSupport bankListOfJZSupport =   new Gson().fromJson(result, BankListOfJZSupport.class);
+                 BankListOfJZSupport<String> bankListOfJZSupport = new Gson().fromJson(result, new TypeToken<BankListOfJZSupport<String>>(){}.getType());
 
                  if(PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())){
-                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult,"申购成功",false);
+                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult+"?amout="+money,"申购成功",false);
                      finish();
                  }else {
                      MToast.makeText(BuyPublicFundActivity.this,bankListOfJZSupport.getErrorMessage(),Toast.LENGTH_LONG);
@@ -211,6 +211,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         private String profitDate; // 收益日期
         private String limitOfDay; //银行卡每日限额
         private String limitOfSingle; //银行卡单笔限额
+        private String limitMoney; //最低买入
 
         public String getFundName() {
             return fundName;
@@ -250,14 +251,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
         public void setBuyflag(String buyflag) {
             this.buyflag = buyflag;
-        }
-
-        public BuyPublicFundActivity.BankCardInfo getBankCardInfo() {
-            return userBankCardInfo;
-        }
-
-        public void setBankCardInfo(BuyPublicFundActivity.BankCardInfo bankCardInfo) {
-            userBankCardInfo = bankCardInfo;
         }
 
         public String getRate() {
@@ -306,6 +299,22 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
         public void setBusinesscode(String businesscode) {
             this.businesscode = businesscode;
+        }
+
+        public BankCardInfo getUserBankCardInfo() {
+            return userBankCardInfo;
+        }
+
+        public void setUserBankCardInfo(BankCardInfo userBankCardInfo) {
+            this.userBankCardInfo = userBankCardInfo;
+        }
+
+        public String getLimitMoney() {
+            return limitMoney;
+        }
+
+        public void setLimitMoney(String limitMoney) {
+            this.limitMoney = limitMoney;
         }
     }
 
