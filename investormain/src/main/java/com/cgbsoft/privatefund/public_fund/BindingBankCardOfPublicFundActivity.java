@@ -44,7 +44,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     private EditText mVerificationCode; // 验证码
     private Button getVerificationCode; // 获取验证码
 
-
+    private boolean isSendVerificationCoded = false;
     private BindingBankCardBean bindingBankCardBean;
 
     @Override
@@ -68,9 +68,9 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
         String data = getIntent().getStringExtra(TAG_PARAMETER);
         // 如果data不为说明是从h5跳转过来，否者从原生页面跳转过来  (目前逻辑全部是不为空的 原生和h5都是有数据的@wyk)
-        if(!BStrUtils.isEmpty(data)){
-            bindingBankCardBean =  new Gson().fromJson(data,BindingBankCardBean.class);
-        }else {
+        if (!BStrUtils.isEmpty(data)) {
+            bindingBankCardBean = new Gson().fromJson(data, BindingBankCardBean.class);
+        } else {
             bindingBankCardBean = new BindingBankCardBean();
             bindingBankCardBean.setCustno(AppManager.getPublicFundInf(this).getCustno());
             bindingBankCardBean.setCertificateno(AppManager.getPublicFundInf(this).getCertificateno());
@@ -92,7 +92,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
     @Override
     protected BindingBankCardOfPublicFundPresenter createPresenter() {
-        return new BindingBankCardOfPublicFundPresenter(this,null);
+        return new BindingBankCardOfPublicFundPresenter(this, null);
     }
 
     /**
@@ -113,20 +113,22 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
         findViewById(R.id.title_left).setOnClickListener(this);
 
+        // 上次退出页面时,验证码的时间点
+        if (SPreference.getString(BindingBankCardOfPublicFundActivity.this, LAST_VERIFICATION_TIME) != null) {
+            long lastTime = Long.valueOf(SPreference.getString(BindingBankCardOfPublicFundActivity.this, LAST_VERIFICATION_TIME));
+            int time = (int) (System.currentTimeMillis() - lastTime);
+            if (time > 1000 && time < 60 * 1000) {
+                sendVerificationCode(getVerificationCode, time / 1000,false);
+            }
+        }
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_get_verification_code: // 获取验证码
-
-                String phoneCode = mPhoneCode.getText().toString();
-
-                if(BStrUtils.isEmpty(phoneCode)) {
-                    MToast.makeText(this,"请输入手机号",Toast.LENGTH_LONG);
-                    return;
-                }
-                sendVerificationCode(getVerificationCode,60);
+                sendVerificationCode(getVerificationCode, 60,true);
                 break;
 
             case R.id.bt_Confirm: // 确认绑定
@@ -168,27 +170,44 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
      * @param v
      * @param maxTime 最大秒数 默认60
      */
-    public void sendVerificationCode(final View v,int maxTime) {
-        if (v.getTag(TIME) == null || (Integer)v.getTag(TIME) == 0) {
-            v.setTag(TIME,maxTime);
-           final Timer timer =  new Timer();
+    public void sendVerificationCode(final View v, int maxTime,boolean isCheck) {
+        // 发起验证码请求
+        String phoneCode = mPhoneCode.getText().toString().trim();
+        if (isCheck&&BStrUtils.isEmpty(phoneCode)) {
+            MToast.makeText(this, "手机号不能为空", Toast.LENGTH_LONG);
+            return;
+        }
+
+        String bankCode = mPankcardCode.getText().toString().trim();
+        if (isCheck&&BStrUtils.isEmpty(bankCode)) {
+            MToast.makeText(this, "银行号不能为空", Toast.LENGTH_LONG);
+            return;
+        }
+
+
+
+
+        if (v.getTag(TIME) == null || (Integer) v.getTag(TIME) == 0) {
+            v.setTag(TIME, maxTime);
+            final Timer timer = new Timer();
             v.setTag(timer);
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     int time = (int) v.getTag(TIME);
-                    if(time > 1){
-                        v.setTag(TIME,--time);
+                    Log.e("testset", "  倒计时 " + time + "  " + maxTime);
+                    if (time > 1) {
+                        v.setTag(TIME, --time);
                         final int finalTime = time;
                         ThreadUtils.runOnMainThread(new Runnable() {
                             @Override
                             public void run() {
-                                getVerificationCode.setText(finalTime +"");
+                                getVerificationCode.setText(finalTime + "s");
                             }
                         });
-                    }else {
+                    } else {
                         timer.cancel();
-                        v.setTag(TIME,null);
+                        v.setTag(TIME, null);
                         ThreadUtils.runOnMainThread(new Runnable() {
                             @Override
                             public void run() {
@@ -200,31 +219,22 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 }
             }, 1000, 1000);
 
-            // 发起验证码请求
-            String phoneCode =  mPhoneCode.getText().toString();
-            if(BStrUtils.isEmpty(phoneCode)){
-                MToast.makeText(this,"手机号不能为空",Toast.LENGTH_LONG);
-                return;
-            }
-            String bankCode = mPankcardCode.getText().toString();
-            if(BStrUtils.isEmpty(bankCode)){
-                MToast.makeText(this,"银行号不能为空",Toast.LENGTH_LONG);
-                return;
-            }
-            getPresenter().getVerificationCodeFormServer(bindingBankCardBean,phoneCode,bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
+            if(!isCheck) return;
+            isSendVerificationCoded = true;
+            getPresenter().getVerificationCodeFormServer(bindingBankCardBean, phoneCode, bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
                 @Override
                 public void even(String s) {
-                    BankListOfJZSupport  bankListOfJZSupport = new Gson().fromJson(s,BankListOfJZSupport.class);
-                    if(bankListOfJZSupport != null){
+                    BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(s, BankListOfJZSupport.class);
+                    if (bankListOfJZSupport != null) {
                         String code = bankListOfJZSupport.getErrorCode();
-                        if(PublicFundContant.REQEUST_SUCCESS.equals(code)){
+                        if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
                             // 发送成功
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this,"验证码发送成功", Toast.LENGTH_LONG);
-                        }else if(PublicFundContant.REQEUSTING.equals(code)){
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this,"处理中", Toast.LENGTH_LONG);
-                        }else{
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this,bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG);
-                            getVerificationCode.setTag(TIME,null);
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "验证码发送成功", Toast.LENGTH_LONG);
+                        } else if (PublicFundContant.REQEUSTING.equals(code)) {
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "处理中", Toast.LENGTH_LONG);
+                        } else {
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG);
+                            getVerificationCode.setTag(TIME, null);
                             timer.cancel();
                         }
                     }
@@ -233,7 +243,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
                 @Override
                 public void field(String errorCode, String errorMsg) {
-                    getVerificationCode.setTag(TIME,null);
+                    getVerificationCode.setTag(TIME, null);
                     timer.cancel();
                 }
             });
@@ -243,61 +253,66 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     }
 
     /**
-     *  完成绑定
+     * 完成绑定
      */
-    private void finshBanding(){
-        String phoneCode =  mPhoneCode.getText().toString();
-        if(BStrUtils.isEmpty(phoneCode)){
-            MToast.makeText(this,"手机号不能为空",Toast.LENGTH_LONG);
+    private void finshBanding() {
+        String phoneCode = mPhoneCode.getText().toString();
+        if (BStrUtils.isEmpty(phoneCode)) {
+            MToast.makeText(this, "手机号不能为空", Toast.LENGTH_LONG);
             return;
         }
 
         String verificationCode = mVerificationCode.getText().toString();
-        if(BStrUtils.isEmpty(verificationCode)){
-            MToast.makeText(this,"验证码不能为空",Toast.LENGTH_LONG);
+        if (BStrUtils.isEmpty(verificationCode)) {
+            MToast.makeText(this, "验证码不能为空", Toast.LENGTH_LONG);
             return;
         }
 
         String payBankName = mPayBankName.getText().toString();
-        if(BStrUtils.isEmpty(payBankName)){
-            MToast.makeText(this,"请选择银行",Toast.LENGTH_LONG);
+        if (BStrUtils.isEmpty(payBankName)) {
+            MToast.makeText(this, "请选择银行", Toast.LENGTH_LONG);
             return;
         }
 
         String bankCode = mPankcardCode.getText().toString();
-        if(BStrUtils.isEmpty(bankCode)){
-            MToast.makeText(this,"银行号不能为空",Toast.LENGTH_LONG);
+        if (BStrUtils.isEmpty(bankCode)) {
+            MToast.makeText(this, "银行号不能为空", Toast.LENGTH_LONG);
             return;
         }
 
-        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"正在绑定",false,false);
+        if (!isSendVerificationCoded) {
+            MToast.makeText(this, "请先点击获取验证码", Toast.LENGTH_LONG);
+            return;
+        }
 
-        getPresenter().sureBind(bindingBankCardBean,payBankName,bankCode,phoneCode,verificationCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
+        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在绑定", false, false);
+
+        getPresenter().sureBind(bindingBankCardBean, payBankName, bankCode, phoneCode, verificationCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String s) {
                 loadingDialog.dismiss();
-                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(s,BankListOfJZSupport.class);
-                if(bankListOfJZSupport != null){
+                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(s, BankListOfJZSupport.class);
+                if (bankListOfJZSupport != null) {
                     String code = bankListOfJZSupport.getErrorCode();
-                    if(PublicFundContant.REQEUST_SUCCESS.equals(code)){ // 成功
+                    if (PublicFundContant.REQEUST_SUCCESS.equals(code)) { // 成功
 
-                        MToast.makeText(BindingBankCardOfPublicFundActivity.this,"绑定成功", Toast.LENGTH_LONG);
+                        MToast.makeText(BindingBankCardOfPublicFundActivity.this, "绑定成功", Toast.LENGTH_LONG);
                         // 去风险测评页面
                         UiSkipUtils.gotoPublicFundRisk(BindingBankCardOfPublicFundActivity.this);
                         RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
                         finish();
-                    }else if(PublicFundContant.REQEUSTING.equals(code)){
-                        MToast.makeText(BindingBankCardOfPublicFundActivity.this,"处理中", Toast.LENGTH_LONG);
-                    }else{
-                        MToast.makeText(BindingBankCardOfPublicFundActivity.this,bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG);
+                    } else if (PublicFundContant.REQEUSTING.equals(code)) {
+                        MToast.makeText(BindingBankCardOfPublicFundActivity.this, "处理中", Toast.LENGTH_LONG);
+                    } else {
+                        MToast.makeText(BindingBankCardOfPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG);
                     }
                 }
             }
 
             @Override
             public void field(String errorCode, String errorMsg) {
-                MToast.makeText(BindingBankCardOfPublicFundActivity.this,"绑定失败",Toast.LENGTH_LONG);
-                Log.e("绑定页面"," 网络错误 "+errorMsg);
+                MToast.makeText(BindingBankCardOfPublicFundActivity.this, "绑定失败", Toast.LENGTH_LONG);
+                Log.e("绑定页面", " 网络错误 " + errorMsg);
                 loadingDialog.dismiss();
             }
         });
@@ -308,22 +323,14 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     @Override
     protected void onStart() {
         super.onStart();
-        // 上次退出页面时,验证码的时间点
-        if(SPreference.getString(BindingBankCardOfPublicFundActivity.this,LAST_VERIFICATION_TIME) != null){
-            long lastTime = Long.valueOf(SPreference.getString(BindingBankCardOfPublicFundActivity.this,LAST_VERIFICATION_TIME));
-            int time = (int) (System.currentTimeMillis() - lastTime);
-            if(time > 1000 && time < 60*1000){
-                sendVerificationCode(getVerificationCode,time/1000);
-            }
-        }
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        if(getVerificationCode.getTag(TIME)!=null && (Integer)getVerificationCode.getTag(TIME) > 1){
-            SPreference.putString(BindingBankCardOfPublicFundActivity.this,LAST_VERIFICATION_TIME,""+System.currentTimeMillis());
-            getVerificationCode.setTag(TIME,null);
+    protected void onDestroy() {
+        super.onDestroy();
+        if (getVerificationCode.getTag(TIME) != null && (Integer) getVerificationCode.getTag(TIME) > 1) {
+            SPreference.putString(BindingBankCardOfPublicFundActivity.this, LAST_VERIFICATION_TIME, "" + System.currentTimeMillis());
+            getVerificationCode.setTag(TIME, null);
             Timer timer = (Timer) getVerificationCode.getTag();
             timer.cancel();
         }

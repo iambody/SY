@@ -71,12 +71,6 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
         });
     }
 
-
-    public  interface AsynCallBack {
-        void bankList(BankListOfPublicListBean bankListOfPublicListBean);
-    }
-
-
     public void sure(BuyPublicFundActivity.Bean bean,String money,String paswd,PreSenterCallBack preSenterCallBack){
          /* trantype: 'orderAndPay',
                 custno: '155', //客户号
@@ -101,6 +95,7 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
                 moneyaccount: '资金账户', //资金账户（从银行卡列表信息中获取）
                 paycenterid: '支付网点所属中心', //支付网点所属中心（从银行卡列表信息中获取）
                 riskwarnflag: '1' //已经阅读风险提示标志，传死1即可
+                highriskwarnflag:'1' 买最高风险等级产品
 */
         Map<String,Object> parms = new HashMap<>();
         parms.put("trantype","orderAndPay");
@@ -127,6 +122,7 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
         parms.put("paycenterid",bean.getUserBankCardInfo().getPaycenterid());
         parms.put("branchcode",bean.getUserBankCardInfo().getBranchcode());
         parms.put("riskwarnflag","1");
+        parms.put("highriskwarnflag","1");
         parms.put("callbackurl","");
         parms.put("businesscode", BStrUtils.isEmpty(bean.getBusinesscode())?"22":bean.getBusinesscode());
 

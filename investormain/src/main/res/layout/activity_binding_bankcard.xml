@@ -232,7 +232,7 @@
             android:layout_marginLeft="@dimen/ui_30_dip"
             android:layout_toRightOf="@+id/tv_bankcard_number"
             android:background="@null"
-            android:hint="请输入您的储蓄卡号"
+            android:hint="请输入银行卡号"
             android:inputType="number"
             android:textColor="@color/black"
             android:textColorHint="#A5A5A5"

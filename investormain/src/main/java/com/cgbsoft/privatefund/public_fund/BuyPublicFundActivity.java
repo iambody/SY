@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.MToast;
@@ -28,7 +27,6 @@ import com.google.gson.Gson;
 public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> implements View.OnClickListener {
     public static final String TAG_FUND_CODE = "tag_fund_code";
     public static final String TAG_FUND_RISK_LEVEL = "tag_fund_risk_level";
-    public static final String LIMIT_MONEY = "limitMoney";
     private Button buyConfirm;
     private ImageView bankIcon;
     private TextView bankName;
@@ -75,8 +73,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
         findViewById(R.id.title_left).setOnClickListener(this);
 
-
-        Imageload.display(this.getApplicationContext(),"",bankIcon);
         buyInput.setHint("请输入金额");
 
         buyConfirm.setOnClickListener(this);
@@ -132,7 +128,9 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 Log.e("申购信息",""+o);
                 bean = new Gson().fromJson(o,Bean.class);
                 bean.setFundCode(fundCode);
-                buyInput.setHint("最低买入"+bean.getLimitOrderAmt()+unit);
+                if(!BStrUtils.isEmpty(bean.getLimitOrderAmt())&&!"null".equals(bean.getLimitOrderAmt())){
+                    buyInput.setHint("最低买入"+bean.getLimitOrderAmt()+unit);
+                }
                 bankName.setText(bean.getUserBankCardInfo().getBankname());
                 String bankCoade = bean.getUserBankCardInfo().getDepositacct();
                 if(bankCoade.length()>4){
@@ -207,7 +205,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         private String fundCode; // 基金号
         private String fundtype; // 基金类型
         private String sharetype; // 收费类型
-        private String buyflag;
+        private String buyflag = "1";
         private String tano;// TA代码
         private String businesscode;
         private String rate; // 费率

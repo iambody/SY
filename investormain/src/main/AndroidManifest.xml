@@ -619,19 +619,19 @@
          <!-- 公募基金  -->
         <activity
             android:name=".public_fund.SellPublicFundActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".public_fund.BuyPublicFundActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".public_fund.BindingBankCardOfPublicFundActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".public_fund.SelectBankCardActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
             />
 
 
