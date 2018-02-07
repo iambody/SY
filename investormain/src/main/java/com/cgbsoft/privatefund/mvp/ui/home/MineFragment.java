@@ -832,10 +832,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             ll_private_share_bao_empty.setVisibility(View.VISIBLE);
             ll_private_share_bao_fill.setVisibility(View.GONE);
             PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(getActivity());
-            tv_increase_percent.setText(publishFundRecommendBean.getLeftUpValue());
-            tv_server_increase.setText(publishFundRecommendBean.getLeftDownDes());
-            tv_increase_value.setText(publishFundRecommendBean.getRightUpValue());
-            tv_increase_value_desc.setText(publishFundRecommendBean.getRightDownDes());
+            if (publishFundRecommendBean != null) {
+                tv_increase_percent.setText(publishFundRecommendBean.getLeftUpValue());
+                tv_server_increase.setText(publishFundRecommendBean.getLeftDownDes());
+                tv_increase_value.setText(publishFundRecommendBean.getRightUpValue());
+                tv_increase_value_desc.setText(publishFundRecommendBean.getRightDownDes());
+            }
         }
     }
 
