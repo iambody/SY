@@ -322,8 +322,8 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
             holder.stockValue.setText(ViewUtils.formatNumberPatter(stockIndexBean.getIndex(), 2));
             holder.increaseValue.setText((!TextUtils.isEmpty(stockIndexBean.getGain()) && stockIndexBean.getGain().startsWith("-")) ? stockIndexBean.getGain() : "+".concat(stockIndexBean.getGain()));
             holder.increatePercent.setText((!TextUtils.isEmpty(stockIndexBean.getRate()) && stockIndexBean.getRate().startsWith("-")) ? stockIndexBean.getRate() : "+".concat(stockIndexBean.getRate()));
-            setIndexValueColor(stockIndexBean.getIndex(), holder.stockValue);
-            setIndexValueColor(stockIndexBean.getGain(), holder.increaseValue);
+            setIndexValueColor(stockIndexBean.getRate(), holder.stockValue);
+            setIndexValueColor(stockIndexBean.getRate(), holder.increaseValue);
             setIndexValueColor(stockIndexBean.getRate(), holder.increatePercent);
         }
     }
@@ -342,7 +342,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     private void setIndexValueColor(String indexValue, TextView textView) {
         if (!TextUtils.isEmpty(indexValue)) {
-            textView.setTextColor(ContextCompat.getColorStateList(getActivity(), indexValue.startsWith("-") ? R.color.stock_red : R.color.stock_red));
+            textView.setTextColor(ContextCompat.getColorStateList(getActivity(), indexValue.startsWith("-") ? R.color.decrease_income_color : R.color.stock_red));
         }
     }
 
