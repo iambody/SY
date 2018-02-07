@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -81,6 +82,7 @@ public class ViewUtils {
     public static void textViewFormatPasswordType(TextView textView) {
         String values = textView.getText().toString();
         values = values.replace(values, PASSWROD_TYPE_START_SIX);
+        textView.setTextColor(ContextCompat.getColorStateList(textView.getContext(), R.color.black));
         textView.setText(values);
     }
 
