@@ -342,7 +342,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
     private void setIndexValueColor(String indexValue, TextView textView) {
         if (!TextUtils.isEmpty(indexValue)) {
-            textView.setTextColor(ContextCompat.getColorStateList(getActivity(), indexValue.startsWith("-") ? R.color.decrease_income_color : R.color.stock_red));
+            textView.setTextColor(ContextCompat.getColorStateList(getActivity(), indexValue.startsWith("-") ? R.color.colorGreen : R.color.stock_red));
         }
     }
 
