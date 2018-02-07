@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
@@ -70,30 +69,16 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
             }
         });
 
+        autoShowSoftInput();
+    }
 
-
-        // window.setContentView(view);
-
+    private void autoShowSoftInput(){
         WindowManager.LayoutParams lp = getWindow().getAttributes();
-
         lp.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
         getWindow().setAttributes(lp);
-       /* getWindow().setAttributes(lp);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
-                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-*/
-
-    /*    //view加载完成时回调
-        passwordInput.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                // TODO Auto-generated method stub
-                if(passwordInput!=null){
-                    passwordInput.forceInputViewGetFocus();
-                }
-            }
-        });*/
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -102,19 +87,6 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
                 dismiss();
                 break;
         }
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        passwordInput.forceInputViewGetFocus();
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
-      //  InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-       // imm.showSoftInput(mInputView, InputMethodManager.SHOW_IMPLICIT);
     }
 
     @Override
