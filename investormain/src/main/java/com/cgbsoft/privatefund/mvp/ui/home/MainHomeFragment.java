@@ -144,7 +144,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     TextView homeProductThreeUp;
     @BindView(R.id.home_product_three_down)
     TextView homeProductThreeDown;
-
     //等级
     @BindView(R.id.view_home_member)
     TextView viewHomeMember;
@@ -173,19 +172,24 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     RelativeLayout homeNewliveNowLay;
     @BindView(R.id.home_product_down_lay)
     LinearLayout homeProductDownLay;
+    //新的直播
+    @BindView(R.id.view_home_public_fund_skip_lay)
+    LinearLayout viewHomePublicFundSkipLay;
+    @BindView(R.id.view_home_private_fund_skip_lay)
+    LinearLayout viewHomePrivateFundSkipLay;
+    @BindView(R.id.view_home_product_focus)
+    LinearLayout viewHomeProductFocus;
     //产品新增
     View home_product_view, main_home_level_lay, main_home_newlive_lay;
-    //私募基金新增
-    LinearLayout view_home_product_focus, view_home_private_fund_skip_lay, view_public_fund_regist, view_home_public_fund_skip_lay;
     //一些控制标识
     boolean isLoading, bannerIsLeft, bannerIsRight, isRolling, isVisible;
-
+    //一些数据&标示为
     HomeEntity.Result homeData;
     LiveInfBean homeliveInfBean;
     OperationAdapter operationAdapter;
     UnreadInfoNumber unreadInfoNumber;
     Observable<LiveInfBean> liveObservable;
-    Observable<Integer> userLayObservable, bindAdviserObservable, publicFundInfObservable, finishOpeningFundAccount;
+    Observable<Integer> userLayObservable, bindAdviserObservable, publicFundInfObservable, registLayFresh;
 
 
     @Override
@@ -222,7 +226,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             homeBannerview.endBanner();
         } else {
             isVisible = false;
-
             homeBannerview.startBanner();
         }
     }
@@ -374,7 +377,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         operationAdapter = new OperationAdapter(baseActivity, R.layout.item_operation);
         mainHomeGvw.setAdapter(operationAdapter);
 
-        initProduct(mFragmentView);
+//        initProduct(mFragmentView);
         //游客模式下或者没有绑定过理财师需要
         initRxEvent();
         mainHomeGvw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -406,19 +409,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
 
         mainhomeWebview.loadUrls(CwebNetConfig.HOME_URL);
-    }
-
-
-    private void initProduct(View mFragmentView) {
-        //私募基金
-        view_home_product_focus = ViewHolders.get(mFragmentView, R.id.view_home_product_focus);
-        view_home_private_fund_skip_lay = ViewHolders.get(mFragmentView, R.id.view_home_private_fund_skip_lay);
-        view_public_fund_regist = ViewHolders.get(mFragmentView, R.id.view_public_fund_regist);
-        view_home_public_fund_skip_lay = ViewHolders.get(mFragmentView, R.id.view_home_public_fund_skip_lay);
-        view_home_product_focus.setOnClickListener(this);
-        view_home_private_fund_skip_lay.setOnClickListener(this);
-        view_home_public_fund_skip_lay.setOnClickListener(this);
-
     }
 
 
@@ -536,8 +526,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         getPresenter().getPublicFundRecommend();
                     }
                     if (9 == publicFundInf) {
-                        if (null != view_public_fund_regist)
-                            view_public_fund_regist.setVisibility(View.GONE);
+                        if (null != viewHomePublicFundSkipLay)
+                            viewHomePublicFundSkipLay.setVisibility(View.GONE);
                     }
                 }
 
@@ -547,8 +537,22 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 }
             });
         }
-        //开户流程走完
+        //开户的布局显示隐藏
 
+        if (null == registLayFresh) {
+            registLayFresh = RxBus.get().register(RxConstant.REFRESH_PUBLIC_FUND_RESGIST_LAY, Integer.class);
+            registLayFresh.subscribe(new RxSubscriber<Integer>() {
+                @Override
+                protected void onEvent(Integer publicFundInf) {
+                    initRegistLay();
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+
+                }
+            });
+        }
     }
 
 
@@ -571,6 +575,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (null != publicFundInfObservable) {
             RxBus.get().unregister(RxConstant.REFRESH_PUBLIC_FUND_INFO, publicFundInfObservable);
         }
+        if (null != registLayFresh) {
+            RxBus.get().unregister(RxConstant.REFRESH_PUBLIC_FUND_RESGIST_LAY, registLayFresh);
+        }
+
+
     }
 
 
@@ -849,9 +858,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void initRegistLay() {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
         if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustrisk()) || BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
-            view_public_fund_regist.setVisibility(View.VISIBLE);
+            viewHomePublicFundSkipLay.setVisibility(View.VISIBLE);
         } else {
-            view_public_fund_regist.setVisibility(View.GONE);
+            viewHomePublicFundSkipLay.setVisibility(View.GONE);
         }
 
     }
@@ -921,38 +930,55 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 }
                 DataStatistApiParam.homeliveclick();
                 break;
-            case R.id.view_home_product_focus://点击产品 先判断是否登录 和是否做过风险测评
 
-                if (AppManager.isVisitor(baseActivity)) {
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("insidegotologin", true);
-                    map.put("backgohome", true);
-                    NavigationUtils.startActivityByRouter(baseActivity, RouteConfig.GOTO_LOGIN, map);
-                    return;
-                } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {//需要风险测评
-                    gotoRiskevalust();
-                    return;
-                }
-                if (null != homeData && null != homeData.bank && null != homeData.bank.product && null != homeData.bank.product.content) {
-                    HomeEntity.bankData productlsBean = homeData.bank.product.content;
-                    ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
-                }
-                TrackingDataManger.homeProduct(baseActivity);
-                break;
-            case R.id.view_home_private_fund_skip_lay:
-                NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE);
-                TrackingDataManger.homePrivateMore(baseActivity);
-
-                break;
-
-            case R.id.view_home_public_fund_skip_lay:
-                NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
-                break;
         }
     }
 
+    /**
+     * 私募基金产品点击
+     */
+    @OnClick(R.id.view_home_product_focus)
+    public void onViewHomeProductClicked() {
+        if (AppManager.isVisitor(baseActivity)) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("insidegotologin", true);
+            map.put("backgohome", true);
+            NavigationUtils.startActivityByRouter(baseActivity, RouteConfig.GOTO_LOGIN, map);
+            return;
+        } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {//需要风险测评
+            gotoRiskevalust();
+            return;
+        }
+        if (null != homeData && null != homeData.bank && null != homeData.bank.product && null != homeData.bank.product.content) {
+            HomeEntity.bankData productlsBean = homeData.bank.product.content;
+            ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
+        }
+        TrackingDataManger.homeProduct(baseActivity);
+
+
+    }
+
+    /**
+     * 私募基金跳转到navagation
+     */
+    @OnClick(R.id.view_home_private_fund_skip_lay)
+    public void onViewHomePrivateFundSkipClicked() {
+        NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE);
+        TrackingDataManger.homePrivateMore(baseActivity);
+
+
+    }
+
+    /**
+     * 公募基金跳转到navagation
+     */
+    @OnClick(R.id.view_home_public_fund_skip_lay)
+    public void onViewPublicFundSkipClicked() {
+        NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
+    }
+
     private void gotoRiskevalust() {
-        DefaultDialog dialog = new DefaultDialog(baseActivity, getResources().getString(R.string.fill_questionnaire), getResources().getString(R.string.cancle), getResources().getString(R.string.cancle)) {
+        DefaultDialog dialog = new DefaultDialog(baseActivity, getResources().getString(R.string.fill_questionnaire), getResources().getString(R.string.cancle), getResources().getString(R.string.sure)) {
             @Override
             public void left() {
                 dismiss();
@@ -1026,7 +1052,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_detial_lay)
     public void publicFundDetail() {
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundcode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundcode()), false);
+        //跳转到基金详情页面
+//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundcode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundcode()), false);
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publishFundRecommend.getFundName()), BStrUtils.nullToEmpty(publishFundRecommend.getFundcode())), false);
+
+
     }
 
     /**
@@ -1035,19 +1065,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.view_home_public_fund_shift)
     public void publicFundShift() {
         UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundcode(), publishFundRecommend.getRisklevel());
-
-
-    }
-
-    /**
-     * 风险匹配
-     * 跳转到绑定银行卡页面
-     *
-     * @param risklevel =》01:安全型 02:保守型 03:稳健型 04:积极 型 05:进取型)
-     */
-    private void riskIsmatch(String risklevel) {
-
-
     }
 
 

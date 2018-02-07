@@ -79,7 +79,15 @@ public class PrivateBanksFragment extends BasePageFragment {
         privateFundIdex.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-                setCode(2001);
+                switch (integer){
+                    case 1:
+                        setCode(2001);
+                        break;
+                    case 2://公募 postion第一位置
+                        setCode(2004);
+                        break;
+                }
+
             }
 
             @Override

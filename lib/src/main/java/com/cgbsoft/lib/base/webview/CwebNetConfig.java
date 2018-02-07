@@ -123,7 +123,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
     //赎回结果页
     public static String publicFundRedeemResult;
     public static String publicFundBuyResult;
-
+   //私享宝详情页
+    public static  String sxbFundDetailUrl;
     static {
         initApi();
         initSxyUrl();
@@ -203,6 +204,8 @@ public class CwebNetConfig extends BaseWebNetConfig {
         publicFundBuyResult = baseSxyParentUrl + "/biz/publicfund/result4subscription.html";
         //开户
         publicFundRiskUrl = baseSxyParentUrl + "/biz/publicfund/assessment.html";
+        //首页跳转到私享宝详情页
+        sxbFundDetailUrl = baseSxyParentUrl + "/biz/publicfund/profile.html";
 
         //赎回成功后 跳转的赎回结果页
         publicFundRedeemResult = baseSxyParentUrl + "/biz/publicfund/redemption_end.html";

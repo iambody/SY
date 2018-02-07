@@ -42,6 +42,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -920,6 +921,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     void gotoNowTransferPrivateShare() {
         PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
         UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundcode(), publicFundInf.getRisklevel());
+    }
+
+    @OnClick(R.id.ll_private_share_bao_empty)
+    void gotoSxbDetail() {
+        PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
+        if(null==publicFundInf)return;
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publicFundInf.getFundName()), BStrUtils.nullToEmpty(publicFundInf.getFundcode())), false);
     }
 
     @OnClick(R.id.account_info_caifu_value_ll)
