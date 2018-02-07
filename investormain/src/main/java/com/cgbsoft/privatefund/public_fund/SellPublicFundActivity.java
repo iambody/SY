@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.public_fund;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
@@ -167,10 +169,13 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
      * @param payPassword
      */
     private void starSell(String money, String payPassword) {
+        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"正在绑定",false,false);
+
         getPresenter().sureSell(fundcode, this.largeredemptionflag, this.transactionaccountid, branchcode, tano,
                 fastredeemflag, money, payPassword, new BasePublicFundPresenter.PreSenterCallBack<String>() {
                     @Override
                     public void even(String result) {
+                        loadingDialog.dismiss();
                         BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
                         if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                             // 跳转到成功页面
@@ -191,7 +196,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
 
                     @Override
                     public void field(String errorCode, String errorMsg) {
-                        MToast.makeText(SellPublicFundActivity.this, errorMsg, Toast.LENGTH_LONG);
+                        loadingDialog.dismiss();
+                        Log.e("赎回页面"," 网络异常 "+errorMsg);
+                        MToast.makeText(SellPublicFundActivity.this, "支付失败", Toast.LENGTH_LONG);
                     }
                 });
     }
