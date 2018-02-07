@@ -1,6 +1,8 @@
 package com.cgbsoft.privatefund.widget.navigation;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +12,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.gifdecoder.GifDecoder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.bumptech.glide.request.target.Target;
 import com.cgbsoft.lib.utils.SkineColorManager;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.R;
@@ -65,6 +74,12 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
     TextView tv_bottom_nav_right_second;
 
     private static final int doubleClickTime = 3;
+
+    private static final int BUTTON_LEFT_FIRST = 11;
+    private static final int BUTTON_LEFT_SECEND = 12;
+    private static final int BUTTON_CENTER = 13;
+    private static final int BUTTON_RIGHT_FIRST = 14;
+    private static final int BUTTON_RIGHT_SECEND = 15;
     private List<TextView> bottomls;
     //消息文本
 //    @BindView(R.id.tv_bottom_nav_msgnum)
@@ -137,11 +152,17 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         boolean isAutumn = SkineColorManager.isautumnHoliay();
 
         if (isAutumn) {
-            leftFirstRes = R.drawable.autumn_one;
-            leftSecRes = R.drawable.autumn_two;
-            centerRes = R.drawable.autumn_three;
-            rightFirstRes = R.drawable.autumn_four;
-            rightSecRes = R.drawable.autumn_five;
+//            iv_bottom_nav_left_first.setBackgroundResource(R.drawable.selector_bottom_home_spring);
+//            iv_bottom_nav_left_second.setBackgroundResource(R.drawable.selector_bottom_home_spring);
+//            ivBottomNavCenter.setBackgroundResource(R.drawable.selector_bottom_home_spring);
+//            iv_bottom_nav_right_first.setBackgroundResource(R.drawable.selector_bottom_home_spring);
+//            iv_bottom_nav_right_second.setBackgroundResource(R.drawable.selector_bottom_home_spring);
+
+            leftFirstRes = nowPosition == 0 ? R.drawable.icon_home_press_spring : R.drawable.icon_home_spring;
+            leftSecRes = nowPosition == 1 ? R.drawable.icon_fund_press_spring : R.drawable.icon_fund_spring;
+            centerRes = nowPosition == 2 ? R.drawable.icon_left_press_spring : R.drawable.icon_left_spring;
+            rightFirstRes = nowPosition == 3 ? R.drawable.icon_health_press_spring : R.drawable.icon_health_spring;
+            rightSecRes = nowPosition == 4 ? R.drawable.icon_mine_press_spring : R.drawable.icon_mine_spring;
         } else {
             leftFirstRes = nowPosition == 0 ? R.drawable.icon_home_press : R.drawable.icon_home;
             leftSecRes = nowPosition == 1 ? R.drawable.icon_wealth_press : R.drawable.icon_wealth;
@@ -173,7 +194,6 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
         setBottonTxt(tv_bottom_nav_right_first, rightFirstStr, nowPosition == 3);
         setBottonTxt(tv_bottom_nav_right_second, rightSecStr, nowPosition == 4);
 
-
     }
 
     public void setBottonTxt(TextView textView, int textId, boolean isselect) {
@@ -199,17 +219,22 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                             switch (view.getId()) {
                                 case R.id.fl_bottom_nav_left_first:
                                     RxBus.get().post(MAIN_BOTTOM_NAVIGATION_DOUBLE_CLICK_LEFT_FIRST, true);
+                                    addAnimation(R.drawable.icon_main_gif, iv_bottom_nav_left_first, BUTTON_LEFT_FIRST, 2);
                                     break;
                                 case R.id.fl_bottom_nav_left_second:
                                     RxBus.get().post(MAIN_BOTTOM_NAVIGATION_DOUBLE_CLICK_LEFT_SEC, true);
+                                    addAnimation(R.drawable.icon_fund_gif, iv_bottom_nav_left_second, BUTTON_LEFT_SECEND, 1);
                                     break;
                                 case R.id.fl_bottom_nav_right_first:
                                     RxBus.get().post(MAIN_BOTTOM_NAVIGATION_DOUBLE_CLICK_RIGHT_FIRST, true);
+                                    addAnimation(R.drawable.enjoy_left_gif, iv_bottom_nav_right_first, BUTTON_RIGHT_FIRST, 1);
                                     break;
                                 case R.id.fl_bottom_nav_right_second:
                                     RxBus.get().post(MAIN_BOTTOM_NAVIGATION_DOUBLE_CLICK_RIGHT_SEC, true);
+                                    addAnimation(R.drawable.icon_health_gif, iv_bottom_nav_right_second, BUTTON_RIGHT_SECEND, 1);
                                     break;
                                 case R.id.fl_bottom_nav_center:
+                                    addAnimation(R.drawable.icon_mine_gif, ivBottomNavCenter, BUTTON_CENTER, 1);
                                     break;
                             }
                         } else {
@@ -221,6 +246,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(0, 0);
                                     }
+                                    addAnimation(R.drawable.icon_main_gif, iv_bottom_nav_left_first, BUTTON_LEFT_FIRST, 2);
                                     break;
                                 case R.id.fl_bottom_nav_left_second:
                                     if (nowPosition != 1) {
@@ -229,6 +255,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(1, 0);
                                     }
+                                    addAnimation(R.drawable.icon_fund_gif, iv_bottom_nav_left_second, BUTTON_LEFT_FIRST, 1);
                                     break;
                                 case R.id.fl_bottom_nav_center:
                                     if (nowPosition != 2) {
@@ -237,6 +264,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(2, 0);
                                     }
+                                    addAnimation(R.drawable.enjoy_left_gif, ivBottomNavCenter, BUTTON_LEFT_FIRST, 1);
                                     break;
                                 case R.id.fl_bottom_nav_right_first:
                                     if (nowPosition != 3) {
@@ -245,6 +273,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(3, 0);
                                     }
+                                    addAnimation(R.drawable.icon_health_gif, iv_bottom_nav_right_first, BUTTON_LEFT_FIRST, 1);
                                     break;
                                 case R.id.fl_bottom_nav_right_second:
                                     if (nowPosition != 4) {
@@ -253,6 +282,7 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                                         if (bottomClickListener != null)
                                             bottomClickListener.onTabSelected(4, 0);
                                     }
+                                    addAnimation(R.drawable.icon_mine_gif, iv_bottom_nav_right_second, BUTTON_LEFT_FIRST, 1);
                                     break;
                             }
                         }
@@ -263,4 +293,39 @@ public class BottomNavigationBar extends FrameLayout implements RxConstant {
                     }
                 });
     }
+
+    private void addAnimation(int drawableId, ImageView imageView, int TAG, int respeatCount) {
+        boolean isAutumn = SkineColorManager.isautumnHoliay();
+
+        if (isAutumn) {
+            Glide.with(getContext()).load(drawableId).listener(new RequestListener<Integer, GlideDrawable>() {
+                @Override
+                public boolean onException(Exception e, Integer model, Target<GlideDrawable> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GlideDrawable resource, Integer model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    // 计算动画时长
+                    int duration = 0;
+                    GifDrawable drawable = (GifDrawable) resource;
+                    GifDecoder decoder = drawable.getDecoder();
+                    for (int i = 0; i < drawable.getFrameCount(); i++) {
+                        duration += decoder.getDelay(i);
+                    }
+                    //发送延时消息，通知动画结束
+                    handler.sendEmptyMessageDelayed(TAG,
+                            duration * respeatCount);
+                    return false;
+                }
+            }).into(new GlideDrawableImageViewTarget(imageView, respeatCount));
+        }
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            changeResWithIdtentify();
+        }
+    };
 }

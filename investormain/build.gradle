@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.chenenyu.router'
 apply plugin: 'io.fabric'
+apply plugin: 'com.growingio.android'
 
 repositories {
     mavenCentral()
@@ -36,6 +37,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+
     defaultConfig {
         applicationId "com.cgbsoft.privatefund"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -48,6 +50,9 @@ android {
                                 DATABASE_NAME: rootProject.ext.databaseName,
                                 DATABASE_VER : rootProject.ext.databaseVer]
         testInstrumentationRunner rootProject.ext.testRunner
+
+        resValue("string", "growingio_project_id", "8438b85a5ce60c07")
+        resValue("string", "growingio_url_scheme", "growing.18625968b7277671")
 
         //排除某个间接依赖
         packagingOptions {

@@ -15,6 +15,7 @@ buildscript {
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.0'
         classpath 'com.chenenyu.router:gradle-plugin:latest.integration'
         classpath 'io.fabric.tools:gradle:1.24.2'
+        classpath 'com.growingio.android:vds-gradle-plugin:1.1.2'
     }
 }
 

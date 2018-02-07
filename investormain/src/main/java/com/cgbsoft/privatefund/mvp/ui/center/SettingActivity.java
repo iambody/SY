@@ -23,6 +23,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogOutAccount;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
@@ -257,6 +258,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         LogOutAccount returnLogin = new LogOutAccount();
         returnLogin.accounttExit(this);
         DataStatistApiParam.existLogout();
+        TrackingDataManger.existLoginout(this);
     }
 
     @OnClick(R.id.view_switch_clickarea)

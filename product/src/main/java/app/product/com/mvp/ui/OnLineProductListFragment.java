@@ -305,7 +305,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                 if (productlsAdapter.getItemViewType(position) == productlsAdapter.CHECKOLD) {
                     productlsAdapter.destoryFootView();
                     reSetConditionAction();
-                    TrackingDataUtils.save(baseActivity,"1010011081","");
+                    TrackingDataUtils.save(baseActivity, "1010011081", "");
                     onLineProduct = false;
                 } else {
                     if (fromShare) {
@@ -316,8 +316,8 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
                         DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.shortName, "1".equals(productlsBean.isHotProduct));
                     }
                     try {
-                        TrackingDataUtils.save(baseActivity, "1010010101", productlsBeen.get(position).productName +"|"+ productlsBeen.get(position).schemeId);
-                    }catch (Exception e){
+                        TrackingDataUtils.save(baseActivity, "1010010101", productlsBeen.get(position).productName + "|" + productlsBeen.get(position).schemeId);
+                    } catch (Exception e) {
 
                     }
                 }
@@ -625,6 +625,9 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
      * 开始初始化筛选条件
      */
     public void initFilterDate(final List<Series> filterDate) {
+        if (null == filterDate) {
+            return;
+        }
         final List dataList = BUtils.arrayListClone(filterDate);
 
         productProductfragmentProductserieslayout.setOnClickTextCallBack(new ProductSeriesLayout.OnClickTextCallBack() {

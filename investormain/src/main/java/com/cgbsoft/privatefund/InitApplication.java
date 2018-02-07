@@ -11,6 +11,8 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.utils.service.InitializeService;
+import com.growingio.android.sdk.collection.Configuration;
+import com.growingio.android.sdk.collection.GrowingIO;
 
 import java.util.List;
 
@@ -25,6 +27,14 @@ import rx.Observable;
  * Created by yangzonghui on 2017/5/16 20:20
  * Email:yangzonghui@simuyun.com
  *  
+import java.util.List;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+import qcloud.liveold.mvp.presenters.InitBusinessHelper;
+import qcloud.liveold.mvp.utils.SxbLogImpl;
+import rx.Observable;
+
  */
 public class InitApplication extends InvestorAppli {
     private Observable<Integer> logoutObservable;
@@ -33,6 +43,10 @@ public class InitApplication extends InvestorAppli {
     public void onCreate() {
         super.onCreate();
         InitializeService.startService(this);
+        GrowingIO.startWithConfiguration(this, new Configuration()
+                .useID()
+                .trackAllFragments()
+                .setChannel("guangwang"));
 //        Fabric.with(this, new Crashlytics());
 //        //初始化直播
 //        initLive();
