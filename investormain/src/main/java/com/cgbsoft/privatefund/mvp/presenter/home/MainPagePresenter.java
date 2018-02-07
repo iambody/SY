@@ -12,7 +12,9 @@ import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
@@ -86,7 +88,7 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                         String resultStr = jsonObject.getString("result");
                         AppInfStore.savePublicFundInf(getContext(), new Gson().fromJson(resultStr, PublicFundInf.class));
                         PublicFundInf p = AppManager.getPublicFundInf(getContext());
-
+                        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_RESGIST_LAY, 1);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

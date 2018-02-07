@@ -16,7 +16,6 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.widget.adapter.FragmentAdapter;
@@ -124,34 +123,9 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
                 videoVideolistIndicator.onPageScrollStateChanged(state);
             }
         });
-//        videoVideolistIndicator.setOnTouchListener(new onOperationScrollImpl());
     }
 //
-//    private int downXPostion;
-//    private int lastXPostion;
-//    class onOperationScrollImpl implements View.OnTouchListener {
-//        @Override
-//        public boolean onTouch(View v, MotionEvent event) {
-//            if (MotionEvent.ACTION_DOWN == event.getAction())
-//                downXPostion = (int) event.getX();
-//            if (MotionEvent.ACTION_MOVE == event.getAction()) {
-//                lastXPostion = (int) event.getX() - downXPostion;
-//                downXPostion = (int) event.getX();
-//            }
-//            if (MotionEvent.ACTION_UP == event.getAction()) {
-//                if (lastXPostion > 0) {
-//                    //向左滑动
-//                    Log.i("olmpjjaaaaa");
-//                } else {
-//                    //向右滑动
-//                    TrackingDataManger.homeOperateRight(baseActivity);
-//                }
-//            }
-//            return false;
-//        }
-//
-//
-//    }
+
 
     private boolean isInit;
 
@@ -202,7 +176,7 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
 
     @Override
     public void getSchoolAllDataError(String message) {
-        PromptManager.ShowCustomToast(baseActivity, message);
+//        PromptManager.ShowCustomToast(baseActivity, message);
     }
 
     /**
@@ -229,6 +203,10 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
          */
 
         public void FreashAp(List<VideoAllModel.VideoCategory> videoCategories) {
+            if (null == videoCategories) {
+                videoCategories = new ArrayList<>();
+            }
+
             this.categoryList = videoCategories;
             this.notifyDataSetChanged();
         }

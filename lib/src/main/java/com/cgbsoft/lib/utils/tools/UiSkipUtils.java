@@ -381,6 +381,7 @@ public class UiSkipUtils {
 
             case "04":
                 return "成长型";
+
             case "05":
                 return "进取型";
 

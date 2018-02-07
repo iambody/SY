@@ -159,4 +159,5 @@ public interface RxConstant {
     /*************************公募基金********************************/
     String REFRESH_PUBLIC_FUND_INFO = "refresh_public_fund_info";
     String MAIN_FRESH_PRIVATE_IDEXLAY = "mainfresh_private_index";
+    String REFRESH_PUBLIC_FUND_RESGIST_LAY = "refresh_public_fund_regist_lay";
 }
