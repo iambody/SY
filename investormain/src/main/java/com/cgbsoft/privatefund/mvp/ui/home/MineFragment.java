@@ -1042,31 +1042,31 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             return;
         }
         if (showAssert) {
-            if (null == credentialStateMedel.getCredentialState()) {
-                isClickBack = true;
-                getPresenter().verifyIndentityV3();
-            } else {
-                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
-                    //90：存量已有证件号已上传证件照待审核
-                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
-                        jumpGuidePage();
-                    } else {
+//            if (null == credentialStateMedel.getCredentialState()) {
+//                isClickBack = true;
+//                getPresenter().verifyIndentityV3();
+//            } else {
+//                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+//                    //90：存量已有证件号已上传证件照待审核
+//                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+//                        jumpGuidePage();
+//                    } else {
+//                        hideAssert();
+//                        showAssert = false;
+//                        AppInfStore.saveShowAssetStatus(getActivity(), false);
+//                    }
+//                    isClickBack = false;
+//                } else {
+//                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+//                        jumpCollect();
+//                    } else {
                         hideAssert();
                         showAssert = false;
-                        AppInfStore.saveShowAssetStatus(getActivity(), false);
-                    }
-                    isClickBack = false;
-                } else {
-                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
-                        jumpCollect();
-                    } else {
-                        hideAssert();
-                        showAssert = false;
-                        AppInfStore.saveShowAssetStatus(getActivity(), false);
-                    }
-                    isClickBack = false;
-                }
-            }
+//                        AppInfStore.saveShowAssetStatus(getActivity(), false);
+//                    }
+//                    isClickBack = false;
+//                }
+//            }
         } else {
             GestureManager.showAssertGestureManager(getActivity());
         }
