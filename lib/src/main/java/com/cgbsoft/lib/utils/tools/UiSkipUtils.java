@@ -363,11 +363,10 @@ public class UiSkipUtils {
 
     /**
      * 客户的风险测评
-     *
      * @param
      * @return
      */
-    public static String customRiskToStr(Context context) {
+    public static String customRiskToStr(Context context) {//
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(context.getApplicationContext());
         switch (publicFundInf.getCustrisk()) {
             case "01":

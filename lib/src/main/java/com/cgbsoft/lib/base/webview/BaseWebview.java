@@ -125,7 +125,7 @@ public class BaseWebview extends WebView {
                 return true;
             }
         } : cWebClient);
-        this.setWebContentsDebuggingEnabled(true);
+//        this.setWebContentsDebuggingEnabled(true);
     }
 
     //进度显示
