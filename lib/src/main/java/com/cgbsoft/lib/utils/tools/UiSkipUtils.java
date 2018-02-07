@@ -369,7 +369,7 @@ public class UiSkipUtils {
      */
     public static String customRiskToStr(Context context) {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(context.getApplicationContext());
-        switch (publicFundInf.getCustno()) {
+        switch (publicFundInf.getCustrisk()) {
             case "01":
                 return "保守型";
 
