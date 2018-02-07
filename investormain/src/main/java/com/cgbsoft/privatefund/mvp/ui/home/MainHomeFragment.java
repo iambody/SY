@@ -7,8 +7,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -16,7 +14,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -198,22 +195,20 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     //产品新增
     View home_product_view, main_home_level_lay, main_home_newlive_lay;
     //一些控制标识
-    boolean isLoading, bannerIsLeft, bannerIsRight;
+    boolean isLoading, bannerIsLeft, bannerIsRight, isRolling, isVisible;
     //一些数据&标示为
+    HomeEntity.Result homeData;
+    LiveInfBean homeliveInfBean;
     OperationAdapter operationAdapter;
-    Observable<Integer> publicFundInfObservable, registLayFresh;
-    private UnreadInfoNumber unreadInfoNumber;
-    private Observable<LiveInfBean> liveObservable;
-    private Observable<Integer> userLayObservable, bindAdviserObservable;
+    UnreadInfoNumber unreadInfoNumber;
+    Observable<LiveInfBean> liveObservable;
+    Observable<Integer> userLayObservable, bindAdviserObservable, publicFundInfObservable, registLayFresh;
 
-
-    private HomeEntity.Result homeData;
-    private LiveInfBean homeliveInfBean;
 
     private int downXPostion;
     private int lastXPostion;
-    private boolean isRolling;
-    protected boolean isVisible;
+    private float lastRotate = 0;
+
     private ImageView[] imageViews;
     private SensorManager sensorManager;
     private Sensor magneticSensor;
@@ -223,7 +218,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private static final float NS2S = 1.0f / 10000000.0f;
     private float timestamp;
     private float[] angle = {0f, 0f, 0f};
-
 
     @Override
     protected int layoutID() {
@@ -249,20 +243,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     protected void viewBeHide() {
         super.viewBeHide();
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (unreadInfoNumber != null) {
-            unreadInfoNumber.initUnreadInfoAndPosition();
-        }
-        try {
-            homeBannerview.startBanner();
-        } catch (Exception e) {
-
-        }
-    }
-
     private void initSensor() {
         sensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
 
@@ -279,7 +259,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         imageViews[2].setPivotY(imageViews[2].getHeight() / 22);
         imageViews[3].setPivotY(imageViews[3].getHeight() / 22);
     }
-
 
     @Override
     public void onHiddenChanged(boolean isVisibleToUser) {
@@ -917,6 +896,19 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (unreadInfoNumber != null) {
+            unreadInfoNumber.initUnreadInfoAndPosition();
+        }
+        try {
+            homeBannerview.startBanner();
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
     public void getUseriInfsucc(int type) {
         switch (type) {
             case 1:
@@ -960,9 +952,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void initRegistLay() {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
         if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustrisk()) || BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
-            viewHomePublicFundSkipLay.setVisibility(View.VISIBLE);
+            viewPublicFundRegist.setVisibility(View.VISIBLE);
         } else {
-            viewHomePublicFundSkipLay.setVisibility(View.GONE);
+            viewPublicFundRegist.setVisibility(View.GONE);
         }
 
     }
@@ -983,6 +975,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         mainhomeWebview.loadUrl("javascript:refresh()");
         //请求数据
         getPresenter().getHomeData();
+        getPresenter().getPublicFundRecommend();
         RxBus.get().post(RxConstant.REFRESH_LIVE_DATA, true);
     }
 
@@ -1031,34 +1024,55 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 }
                 DataStatistApiParam.homeliveclick();
                 break;
-            case R.id.view_home_product_focus://点击产品 先判断是否登录 和是否做过风险测评
 
-                if (AppManager.isVisitor(baseActivity)) {
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("insidegotologin", true);
-                    map.put("backgohome", true);
-                    NavigationUtils.startActivityByRouter(baseActivity, RouteConfig.GOTO_LOGIN, map);
-                    return;
-                } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {//需要风险测评
-                    gotoRiskevalust();
-                    return;
-                }
-                if (null != homeData && null != homeData.bank && null != homeData.bank.product && null != homeData.bank.product.content) {
-                    HomeEntity.bankData productlsBean = homeData.bank.product.content;
-                    ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
-//                    DataStatistApiParam.onStatisToCProductItemClick(productlsBean.productId, productlsBean.shortName, "1".equals(productlsBean.isHotProduct));
-                }
-                TrackingDataManger.homeProduct(baseActivity);
-                break;
-            case R.id.home_product_skip_bank:
-                NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
-                TrackingDataManger.homePrivateMore(baseActivity);
-                break;
         }
     }
 
+    /**
+     * 私募基金产品点击
+     */
+    @OnClick(R.id.view_home_product_focus)
+    public void onViewHomeProductClicked() {
+        if (AppManager.isVisitor(baseActivity)) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("insidegotologin", true);
+            map.put("backgohome", true);
+            NavigationUtils.startActivityByRouter(baseActivity, RouteConfig.GOTO_LOGIN, map);
+            return;
+        } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {//需要风险测评
+            gotoRiskevalust();
+            return;
+        }
+        if (null != homeData && null != homeData.bank && null != homeData.bank.product && null != homeData.bank.product.content) {
+            HomeEntity.bankData productlsBean = homeData.bank.product.content;
+            ProductNavigationUtils.startProductDetailActivity(baseActivity, productlsBean.schemeId, productlsBean.productName, 100);
+        }
+        TrackingDataManger.homeProduct(baseActivity);
+
+
+    }
+
+    /**
+     * 私募基金跳转到navagation
+     */
+    @OnClick(R.id.view_home_private_fund_skip_lay)
+    public void onViewHomePrivateFundSkipClicked() {
+        NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE);
+        TrackingDataManger.homePrivateMore(baseActivity);
+
+
+    }
+
+    /**
+     * 公募基金跳转到navagation
+     */
+    @OnClick(R.id.view_home_public_fund_skip_lay)
+    public void onViewPublicFundSkipClicked() {
+        NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
+    }
+
     private void gotoRiskevalust() {
-        DefaultDialog dialog = new DefaultDialog(baseActivity, "请先填写调查问卷", "取消", "确定") {
+        DefaultDialog dialog = new DefaultDialog(baseActivity, getResources().getString(R.string.fill_questionnaire), getResources().getString(R.string.cancle), getResources().getString(R.string.sure)) {
             @Override
             public void left() {
                 dismiss();
@@ -1079,7 +1093,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void onPause() {
         super.onPause();
         homeBannerview.endBanner();
-        LogUtils.Log("sssaa", "首页不可见");
     }
 
 
@@ -1091,7 +1104,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     /**
-     * 开始倒计时十秒
+     * 手动闭合
      */
     private void timeCountDown() {
         RxCountDown.countdown(ADVISERSHOWTIME).doOnSubscribe(new Action0() {
@@ -1103,7 +1116,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             @Override
             public void onCompleted() {
                 hindCard(200);
-
             }
 
             @Override
@@ -1118,8 +1130,34 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
         });
     }
+    /**
+     * 公募基金的注册按钮
+     */
+    @OnClick(R.id.view_public_fund_regist)
+    public void onViewClicked() {
+        UiSkipUtils.toPublicFundRegist(baseActivity);
 
-    private float lastRotate = 0;
+    }
+
+    /**
+     * 公募基金详情
+     */
+    @OnClick(R.id.view_home_public_fund_detial_lay)
+    public void publicFundDetail() {
+        //跳转到基金详情页面
+//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundcode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundcode()), false);
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publishFundRecommend.getFundName()), BStrUtils.nullToEmpty(publishFundRecommend.getFundcode())), false);
+
+
+    }
+    /**
+     * 公募基金转入
+     */
+    @OnClick(R.id.view_home_public_fund_shift)
+    public void publicFundShift() {
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundcode(), publishFundRecommend.getRisklevel());
+        //ssssss
+    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
