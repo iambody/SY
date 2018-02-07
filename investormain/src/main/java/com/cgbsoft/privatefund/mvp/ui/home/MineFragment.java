@@ -672,6 +672,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void showAssert() {
+        showPrivateAssert();
+        showPublicAssert();
+    }
+
+    private void hideAssert() {
+        hidePrivateAssert();
+        hidePublicAssert();
+    }
+
+    private void showPrivateAssert() {
         if (mineModel != null) {
             textViewShowAssert.setText(R.string.account_bank_hide_assert);
             MineModel.PrivateBank privateBank = mineModel.getBank();
@@ -682,10 +692,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), TextUtils.isEmpty(privateBank.getEquityRatio()) ? "0%" : privateBank.getEquityRatio().concat("%")));
             textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), TextUtils.isEmpty(privateBank.getDebtRatio()) ? "0%" : privateBank.getDebtRatio().concat("%")));
         }
-        showPublicAssert();
     }
 
-    private void hideAssert() {
+    private void showPublicAssert() {
+        if (financialAssertModel != null) {
+            fillPrivateShareData(financialAssertModel);
+            fillPublicFundData(financialAssertModel);
+        }
+    }
+
+    private void hidePrivateAssert() {
         if (mineModel != null) {
             MineModel.PrivateBank privateBank = mineModel.getBank();
             textViewShowAssert.setText(R.string.account_bank_show_assert);
@@ -694,14 +710,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
             textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
             textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
-        }
-        hidePublicAssert();
-    }
-
-    private void showPublicAssert() {
-        if (financialAssertModel != null) {
-            fillPrivateShareData(financialAssertModel);
-            fillPublicFundData(financialAssertModel);
         }
     }
 
@@ -788,6 +796,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         this.financialAssertModel = financialAssertModel;
         initPrivateShareMoneyData(financialAssertModel);
         initPublicFundData(financialAssertModel);
+        if (showAssert) {
+            showPublicAssert();
+        } else {
+            hidePublicAssert();
+        }
     }
 
     @Override
@@ -1340,9 +1353,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
 
         if (showAssert) {
-            showAssert();
+            showPrivateAssert();
         } else {
-            hideAssert();
+            hidePrivateAssert();
         }
     }
 
