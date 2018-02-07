@@ -270,6 +270,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private DaoUtils daoUtils;
     private String[] videos;
     private MineModel mineModel;
+    private FinancialAssertModel financialAssertModel;
     private boolean showAssert;
     private boolean isLoading;
     private static final long DEALAY = 500;
@@ -670,30 +671,50 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void showAssert() {
-        if (mineModel == null) {
-            return;
+        if (mineModel != null) {
+            textViewShowAssert.setText(R.string.account_bank_hide_assert);
+            MineModel.PrivateBank privateBank = mineModel.getBank();
+            textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), privateBank.getDurationUnit()));
+            textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
+            textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
+            textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
+            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), TextUtils.isEmpty(privateBank.getEquityRatio()) ? "0%" : privateBank.getEquityRatio().concat("%")));
+            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), TextUtils.isEmpty(privateBank.getDebtRatio()) ? "0%" : privateBank.getDebtRatio().concat("%")));
         }
-        textViewShowAssert.setText(R.string.account_bank_hide_assert);
-        MineModel.PrivateBank privateBank = mineModel.getBank();
-        textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), privateBank.getDurationUnit()));
-        textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
-        textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
-        textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
-        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), TextUtils.isEmpty(privateBank.getEquityRatio()) ? "0%" : privateBank.getEquityRatio().concat("%")));
-        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), TextUtils.isEmpty(privateBank.getDebtRatio()) ? "0%" : privateBank.getDebtRatio().concat("%")));
+        showPublicAssert();
     }
 
     private void hideAssert() {
-        if (mineModel == null) {
-            return;
+        if (mineModel != null) {
+            MineModel.PrivateBank privateBank = mineModel.getBank();
+            textViewShowAssert.setText(R.string.account_bank_show_assert);
+            ViewUtils.textViewFormatPasswordType(textViewAssertTotalValue);
+            ViewUtils.textViewFormatPasswordType(textViewGuquanValue);
+            ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
+            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
+            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
         }
-        MineModel.PrivateBank privateBank = mineModel.getBank();
-        textViewShowAssert.setText(R.string.account_bank_show_assert);
-        ViewUtils.textViewFormatPasswordType(textViewAssertTotalValue);
-        ViewUtils.textViewFormatPasswordType(textViewGuquanValue);
-        ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
-        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
-        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
+        hidePublicAssert();
+    }
+
+    private void showPublicAssert() {
+        if (financialAssertModel != null) {
+            fillPrivateShareData(financialAssertModel);
+            fillPublicFundData(financialAssertModel);
+        }
+    }
+
+    private void hidePublicAssert() {
+        if (financialAssertModel != null) {
+            textViewShowAssert.setText(R.string.account_bank_show_assert);
+            ViewUtils.textViewFormatPasswordType(tv_share_bao_subsist_assert);
+            ViewUtils.textViewFormatPasswordType(tv_share_bao_continue_income);
+            ViewUtils.textViewFormatPasswordType(tv_share_bao_yestoday_income);
+
+            ViewUtils.textViewFormatPasswordType(tv_public_fund_subsist_assert);
+            ViewUtils.textViewFormatPasswordType(tv_public_fund_continue_income);
+            ViewUtils.textViewFormatPasswordType(tv_public_fund_yestoday_income);
+        }
     }
 
     @Override
@@ -763,6 +784,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @Override
     public void requestFinancialAssertSuccess(FinancialAssertModel financialAssertModel) {
+        this.financialAssertModel = financialAssertModel;
         initPrivateShareMoneyData(financialAssertModel);
         initPublicFundData(financialAssertModel);
     }
@@ -790,15 +812,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (isExistPrivateShareMoney(financialAssertModel)) {
             ll_private_share_bao_empty.setVisibility(View.GONE);
             ll_private_share_bao_fill.setVisibility(View.VISIBLE);
-            tv_share_bao_subsist_assert.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getSurvivingAssets().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
-            tv_share_bao_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
-            tv_share_bao_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
-            tv_share_bao_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getSurvivingAssets()));
-            tv_share_bao_continue_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getAddincome()));
-            tv_share_bao_yestoday_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getYestincome()));
-            tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getSurvivingAssets())));
-            tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getAddincome())));
-            tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getYestincome())));
+            fillPrivateShareData(financialAssertModel);
         } else {
             ll_private_share_bao_empty.setVisibility(View.VISIBLE);
             ll_private_share_bao_fill.setVisibility(View.GONE);
@@ -810,20 +824,36 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         }
     }
 
+    private void fillPrivateShareData(FinancialAssertModel financialAssertModel) {
+        tv_share_bao_subsist_assert.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getSurvivingAssets().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+        tv_share_bao_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+        tv_share_bao_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+        tv_share_bao_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getSurvivingAssets()));
+        tv_share_bao_continue_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getAddincome()));
+        tv_share_bao_yestoday_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getYestincome()));
+        tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getSurvivingAssets())));
+        tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getAddincome())));
+        tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getYestincome())));
+    }
+
+    private void fillPublicFundData(FinancialAssertModel financialAssertModel) {
+        tv_public_fund_subsist_assert.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getSurvivingAssets().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+        tv_public_fund_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+        tv_public_fund_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+        tv_public_fund_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getGmInfo().getSurvivingAssets()));
+        tv_public_fund_continue_income.setText(ViewUtils.formateMoneyPattern((financialAssertModel.getGmInfo().getAddincome())));
+        tv_public_fund_yestoday_income.setText(ViewUtils.formateMoneyPattern((financialAssertModel.getGmInfo().getYestincome())));
+        tv_public_fund_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getSurvivingAssets())));
+        tv_public_fund_continue_income_desc.setText(String.format(getString(R.string.continue_income), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getAddincome())));
+        tv_public_fund_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getYestincome())));
+    }
+
     @SuppressLint("StringFormatInvalid")
     private void initPublicFundData(FinancialAssertModel financialAssertModel) {
         if (isExistPublicFundMoney(financialAssertModel)) {
             ll_public_fund_empty.setVisibility(View.GONE);
             ll_public_fund_fill.setVisibility(View.VISIBLE);
-            tv_public_fund_subsist_assert.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getSurvivingAssets().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
-            tv_public_fund_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
-            tv_public_fund_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
-            tv_public_fund_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getGmInfo().getSurvivingAssets()));
-            tv_public_fund_continue_income.setText(ViewUtils.formateMoneyPattern((financialAssertModel.getGmInfo().getAddincome())));
-            tv_public_fund_yestoday_income.setText(ViewUtils.formateMoneyPattern((financialAssertModel.getGmInfo().getYestincome())));
-            tv_public_fund_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getSurvivingAssets())));
-            tv_public_fund_continue_income_desc.setText(String.format(getString(R.string.continue_income), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getAddincome())));
-            tv_public_fund_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getYestincome())));
+            fillPublicFundData(financialAssertModel);
         } else {
             ll_public_fund_empty.setVisibility(View.VISIBLE);
             ll_public_fund_fill.setVisibility(View.GONE);
