@@ -16,6 +16,7 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
@@ -152,9 +153,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      * @param psw
      */
     private void starPay(String money,String psw){
-         getPresenter().sure(bean, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
+        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"正在绑定",false,false);
+
+        getPresenter().sure(bean, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
              @Override
              public void even(String result) {
+                 loadingDialog.dismiss();
                  BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result,BankListOfJZSupport.class);
 
                  if(PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())){
@@ -168,6 +172,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
              @Override
              public void field(String errorCode, String errorMsg) {
+                 loadingDialog.dismiss();
                  Log.e("Test"," 申购异常 "+errorMsg);
                  MToast.makeText(BuyPublicFundActivity.this," 支付失败",Toast.LENGTH_LONG);
              }

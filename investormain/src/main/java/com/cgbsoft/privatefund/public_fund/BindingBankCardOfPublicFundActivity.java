@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.public_fund;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
@@ -117,6 +119,13 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_get_verification_code: // 获取验证码
+
+                String phoneCode = mPhoneCode.getText().toString();
+
+                if(BStrUtils.isEmpty(phoneCode)) {
+                    MToast.makeText(this,"请输入手机号",Toast.LENGTH_LONG);
+                    return;
+                }
                 sendVerificationCode(getVerificationCode,60);
                 break;
 
@@ -261,9 +270,12 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             return;
         }
 
+        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"正在绑定",false,false);
+
         getPresenter().sureBind(bindingBankCardBean,payBankName,bankCode,phoneCode,verificationCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String s) {
+                loadingDialog.dismiss();
                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(s,BankListOfJZSupport.class);
                 if(bankListOfJZSupport != null){
                     String code = bankListOfJZSupport.getErrorCode();
@@ -284,9 +296,13 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
             @Override
             public void field(String errorCode, String errorMsg) {
-
+                MToast.makeText(BindingBankCardOfPublicFundActivity.this,"绑定失败",Toast.LENGTH_LONG);
+                Log.e("绑定页面"," 网络错误 "+errorMsg);
+                loadingDialog.dismiss();
             }
         });
+
+        loadingDialog.show();
     }
 
     @Override

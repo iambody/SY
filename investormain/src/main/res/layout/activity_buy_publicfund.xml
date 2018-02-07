@@ -59,6 +59,7 @@
             android:layout_height="32dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
+            android:background="@drawable/bank_icon"
             />
 
 
@@ -73,7 +74,7 @@
             android:layout_marginLeft="@dimen/ui_15_dip"
             android:textSize="@dimen/dimens_sp_16"
             android:textColor="@color/black"
-            android:text="招商银行"
+            android:text="银行"
             />
 
         <TextView
