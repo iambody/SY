@@ -1038,7 +1038,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void intercepterAssertGesturePassword() {
-        if (this.mineModel == null) {
+        if (this.mineModel == null && financialAssertModel == null) {
             return;
         }
         if (showAssert) {
