@@ -383,16 +383,20 @@ public class ViewUtils {
         }
     }
 
-    public static String formateMoneyPattern(String money) {
+    public static String formateMoneyPattern(String money, boolean isNeedFlag) {
+        String flag = "";
         if (!TextUtils.isEmpty(money)) {
+            if (isNeedFlag && (money.startsWith("+"))) {
+                flag = money.substring(0, 1);
+            }
             double moneyDouble = Double.parseDouble(money);
             DecimalFormat df = new DecimalFormat("#.00");
-            if (moneyDouble > 10000 * 10000) {
-                return df.format(moneyDouble/(10000 * 10000));
-            } else if (moneyDouble > 10000) {
-                return df.format(moneyDouble/(10000));
+            if (Math.abs(moneyDouble) > 10000 * 10000) {
+                return flag.concat(df.format(moneyDouble/(10000 * 10000)));
+            } else if (Math.abs(moneyDouble) > 10000) {
+                return flag.concat(df.format(moneyDouble/(10000)));
             } else {
-                return String.valueOf(moneyDouble);
+                return flag.concat(String.valueOf(moneyDouble));
             }
         }
         return "";
@@ -401,9 +405,9 @@ public class ViewUtils {
     public static String getMoneyUnit(String money) {
         if (!TextUtils.isEmpty(money)) {
             double moneyDouble = Double.parseDouble(money);
-            if (moneyDouble > 10000 * 10000) {
+            if (Math.abs(moneyDouble) > 10000 * 10000) {
                 return "亿";
-            } else if (moneyDouble > 10000) {
+            } else if (Math.abs(moneyDouble) > 10000) {
                 return "万";
             } else {
                 return "元";
@@ -422,6 +426,19 @@ public class ViewUtils {
             }
         }
         return targetValue;
+    }
+
+    public static void showTextByValue(Context context, TextView textView, String value) {
+        if (!TextUtils.isEmpty(value)) {
+            double myDoubleValue = Double.parseDouble(value);
+            if (myDoubleValue > 0) {
+                textView.setTextColor(ContextCompat.getColorStateList(context, R.color.increase_income_color));
+            } else if (myDoubleValue < 0) {
+                textView.setTextColor(ContextCompat.getColorStateList(context, R.color.decrease_income_color));
+            } else {
+                textView.setTextColor(ContextCompat.getColorStateList(context, R.color.black));
+            }
+        }
     }
 
     public static String productEncodyStr(String cardNumber) {
