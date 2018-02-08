@@ -48,7 +48,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     private String branchcode;
     private String fastredeemflag; // 1 快速赎回
     private String tano; // TA 代码
-    private String availbal; //
+    private String availbal = ""; //
     private boolean isFund; // 死否是私享宝
     private String issxb = "";
     private String transactionaccountid; //
@@ -104,7 +104,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         // 跳转到成功页面
         // UiSkipUtils.gotoRedeemResult(this,"","","","");
         input = (EditText) findViewById(R.id.ev_sell_money_input);
-        input.setHint(availbal + unit+"可转出");
+        if(!BStrUtils.isEmpty(availbal)){
+            input.setHint(availbal + unit+"可转出");
+        }
         sellFinsh = (Button) findViewById(R.id.bt_finsh);
         sellFinsh.setOnClickListener(this);
 
@@ -139,7 +141,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     MToast.makeText(this, "请输入卖出的基金数量", Toast.LENGTH_LONG);
                     return;
                 }
-               String  money = new DecimalFormat("0.00").format(new BigDecimal(inputText));
+                BigDecimal bigDecimal = new BigDecimal(inputText);
+                String  money = new DecimalFormat("0.00").format(bigDecimal);
+
                 PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, fundName, money + unit);
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                     @Override
@@ -152,7 +156,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 break;
 
             case R.id.bt_sell_all:
-                input.setText(availbal);
+                if(!BStrUtils.isEmpty(availbal)) input.setText(availbal);
                 break;
 
             case R.id.title_left:// 返回键
@@ -170,7 +174,6 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
      */
     private void starSell(String money, String payPassword) {
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"正在绑定",false,false);
-
         getPresenter().sureSell(fundcode, this.largeredemptionflag, this.transactionaccountid, branchcode, tano,
                 fastredeemflag, money, payPassword, new BasePublicFundPresenter.PreSenterCallBack<String>() {
                     @Override
@@ -201,6 +204,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                         MToast.makeText(SellPublicFundActivity.this, "支付失败", Toast.LENGTH_LONG);
                     }
                 });
+        loadingDialog.show();
     }
 
 

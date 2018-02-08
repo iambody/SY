@@ -95,7 +95,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             case R.id.bt_Confirm:
                 String money = buyInput.getText().toString();
                 if(BStrUtils.isEmpty(money)){
-                    Toast.makeText(this,"请输入金额",Toast.LENGTH_LONG).show();
+                    MToast.makeText(this,"请输入金额",Toast.LENGTH_LONG);
                     return;
                 }
                 if(bean == null) {
@@ -126,10 +126,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      * @param fundCode "210013" "004373" 调试数据
      */
     private void requestData(String fundCode){
+        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"加载中",false,false);
         getPresenter().getData(fundCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String o) {
                 Log.e("申购信息",""+o);
+                loadingDialog.dismiss();
                 bean = new Gson().fromJson(o,Bean.class);
                 bean.setFundCode(fundCode);
                 if(!BStrUtils.isEmpty(bean.getLimitOrderAmt())&&!"null".equals(bean.getLimitOrderAmt())){
@@ -144,9 +146,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
             @Override
             public void field(String errorCode, String errorMsg) {
+                loadingDialog.dismiss();
                 Log.e("申购信息",""+errorMsg);
             }
         });
+
+        loadingDialog.show();
     }
 
 
@@ -179,6 +184,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                  MToast.makeText(BuyPublicFundActivity.this," 支付失败",Toast.LENGTH_LONG);
              }
          });
+        loadingDialog.show();
     }
 
     public static  class Bean{

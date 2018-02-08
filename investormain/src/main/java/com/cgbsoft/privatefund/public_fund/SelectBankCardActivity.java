@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.google.gson.Gson;
 
@@ -90,9 +91,11 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
      * }
      */
     private void bindBankCardData() {
+        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"加载中",false,false);
         getPresenter().getBinidedBankList(new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
+                loadingDialog.dismiss();
                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result,BankListOfJZSupport.class);
                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                     bankOfJZSupportList.addAll(bankListOfJZSupport.getDatasets());
@@ -106,9 +109,11 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
 
             @Override
             public void field(String errorCode, String errorMsg) {
+                loadingDialog.dismiss();
                 Log.e("SellPublicFundActivity"," "+errorMsg);
             }
         });
+        loadingDialog.show();
     }
 
     static class SelectBankAdapter extends RecyclerView.Adapter<SelectBankAdapter.SelectBankViewHolder> {
