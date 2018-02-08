@@ -147,7 +147,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     private void initStockIndexView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.addItemDecoration(new HoriizontalItemDecoration(getActivity(), R.color.white, R.dimen.ui_40_dip));
+        recyclerView.addItemDecoration(new HoriizontalItemDecoration(getActivity(), R.color.white, R.dimen.ui_20_dip));
         recyclerView.setLayoutManager(linearLayoutManager);
         myHolderAdapter = new MyHolderAdapter(getActivity(), new ArrayList<>());
         recyclerView.setAdapter(myHolderAdapter);
