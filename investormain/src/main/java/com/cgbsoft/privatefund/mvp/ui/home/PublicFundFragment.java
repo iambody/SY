@@ -28,6 +28,10 @@ public class PublicFundFragment extends BaseFragment {
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         baseWebview.loadUrl(CwebNetConfig.publicFundHomeUrl);
+
+
+        String webPagepostion = "javascript:swiperPosition()";
+        baseWebview.loadUrl(webPagepostion);
     }
 
     @Override

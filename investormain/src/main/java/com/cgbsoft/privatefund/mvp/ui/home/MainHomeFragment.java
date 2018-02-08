@@ -243,6 +243,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     protected void viewBeHide() {
         super.viewBeHide();
     }
+
     private void initSensor() {
         sensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
 
@@ -739,7 +740,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             homeProductSecondDown.setTextSize(11);
             BStrUtils.setTv(homeProductSecondDown, term);
 
-
         }
         //第三个*******************拷贝过来的产品的一坨逻辑************************************
         String raised_amt = BStrUtils.getYi(bank.product.content.remainingAmount);
@@ -936,7 +936,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
         publishFundRecommend = publishFundRecommendBean;
         viewHomePublicFundLay.setVisibility(View.VISIBLE);
-        initRegistLay();
+//        initRegistLay();
         BStrUtils.setTv(viewHomePublicFundFundname, publishFundRecommendBean.getFundName());
         BStrUtils.setTv(viewHomePublicFundFunddes, publishFundRecommendBean.getFundDes());
         BStrUtils.setTv(viewHomePublicFundLeftvalues, publishFundRecommendBean.getLeftUpValue());
@@ -944,6 +944,11 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         BStrUtils.setTv(viewHomePublicFundRightvalues, publishFundRecommendBean.getRightUpValue());
         BStrUtils.setTv(viewHomePublicFundRightdes, publishFundRecommendBean.getRightDownDes());
 
+        boolean isRato = BStrUtils.homeIsRato(publishFundRecommendBean.getLeftUpValue());
+        if (isRato) {
+            SpannableString spannableString = SpannableUtils.setTextSize1(publishFundRecommendBean.getLeftUpValue(), publishFundRecommendBean.getLeftUpValue().length() - 1,publishFundRecommendBean.getLeftUpValue().length(), DimensionPixelUtil.dip2px(baseActivity, 15));
+            viewHomePublicFundLeftvalues.setText(spannableString);
+        }
     }
 
     /**
@@ -1130,6 +1135,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
         });
     }
+
     /**
      * 公募基金的注册按钮
      */
@@ -1150,6 +1156,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
 
     }
+
     /**
      * 公募基金转入
      */
@@ -1262,14 +1269,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
 //        Log.e("setRotate --- ", " r = " + r + " lastRotate = " + lastRotate + "----" + (lastRotate-r));
 //        for (float i = min; i < max; i = i + 1) {
-            imageViews[0].setPivotX(imageViews[0].getWidth() / 2);
-            imageViews[0].setRotation(r);
-            imageViews[1].setPivotX(imageViews[1].getWidth() / 2);
-            imageViews[1].setRotation(r);
-            imageViews[2].setPivotX(imageViews[2].getWidth() / 2);
-            imageViews[2].setRotation(r);
-            imageViews[3].setPivotX(imageViews[3].getWidth() / 2);
-            imageViews[3].setRotation(r);
+        imageViews[0].setPivotX(imageViews[0].getWidth() / 2);
+        imageViews[0].setRotation(r);
+        imageViews[1].setPivotX(imageViews[1].getWidth() / 2);
+        imageViews[1].setRotation(r);
+        imageViews[2].setPivotX(imageViews[2].getWidth() / 2);
+        imageViews[2].setRotation(r);
+        imageViews[3].setPivotX(imageViews[3].getWidth() / 2);
+        imageViews[3].setRotation(r);
 //        }
     }
 
