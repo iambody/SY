@@ -1055,7 +1055,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 //                        showAssert = false;
 //                        AppInfStore.saveShowAssetStatus(getActivity(), false);
 //                    }
-//                    isClickBack = false;
 //                } else {
 //                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
 //                        jumpCollect();

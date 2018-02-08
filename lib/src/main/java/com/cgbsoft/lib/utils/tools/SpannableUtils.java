@@ -46,7 +46,15 @@ public class SpannableUtils {
 
         return spannableString;
     }
+    public static SpannableString setTextSize1(String content, int startIndex, int endIndex, int fontSize) {
+        if (TextUtils.isEmpty(content) || fontSize <= 0 || startIndex >= endIndex || startIndex < 0 ) {
+            return null;
+        }
+        SpannableString spannableString = new SpannableString(content);
+        spannableString.setSpan(new AbsoluteSizeSpan(fontSize), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+        return spannableString;
+    }
     public static SpannableString setBackSize(String content,int startIndex,int fontSize){
        return setTextSize(content,startIndex,content.length()-1,fontSize);
     }
