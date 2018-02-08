@@ -195,7 +195,6 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 @Override
                 public void run() {
                     int time = (int) v.getTag(TIME);
-                    Log.e("testset", "  倒计时 " + time + "  " + maxTime);
                     if (time > 1) {
                         v.setTag(TIME, --time);
                         final int finalTime = time;

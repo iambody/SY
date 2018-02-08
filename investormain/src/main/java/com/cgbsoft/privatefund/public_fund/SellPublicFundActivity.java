@@ -104,7 +104,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         // 跳转到成功页面
         // UiSkipUtils.gotoRedeemResult(this,"","","","");
         input = (EditText) findViewById(R.id.ev_sell_money_input);
-        input.setHint("至少卖出" + limitMoney + unit);
+        input.setHint(availbal + unit+"可转出");
         sellFinsh = (Button) findViewById(R.id.bt_finsh);
         sellFinsh.setOnClickListener(this);
 
@@ -134,17 +134,17 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_finsh:
-                String inputText = new DecimalFormat("00.00").format(new BigDecimal(input.getText().toString()));
+                String inputText = input.getText() == null?"":input.getText().toString();
                 if (BStrUtils.isEmpty(inputText)) {
-                    Toast.makeText(this, "请输入卖出的基金数量", Toast.LENGTH_LONG).show();
+                    MToast.makeText(this, "请输入卖出的基金数量", Toast.LENGTH_LONG);
                     return;
                 }
-
-                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, fundName, inputText + unit);
+               String  money = new DecimalFormat("0.00").format(new BigDecimal(inputText));
+                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, fundName, money + unit);
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                     @Override
                     public void onInputFinish(String psw) {
-                        starSell(inputText, psw);
+                        starSell(money, psw);
                         payPasswordDialog.dismiss();
                     }
                 });

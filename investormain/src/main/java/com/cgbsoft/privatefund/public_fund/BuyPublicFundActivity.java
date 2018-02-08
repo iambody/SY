@@ -20,6 +20,9 @@ import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 /**
  * Created by wangpeng on 18-1-29.
  */
@@ -96,10 +99,11 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     return;
                 }
                 if(bean == null) {
-                    Log.e(this.getClass().getSimpleName()," 可以请求申购的数据出现了问题");
+                    Log.e(this.getClass().getSimpleName()," 可能请求申购的数据出现了问题");
                     return;
                 }
-                PayPasswordDialog  payPasswordDialog = new PayPasswordDialog(this,null,bean.getFundName(),money+unit);
+                String inputText = new DecimalFormat("0.00").format(new BigDecimal(money));
+                PayPasswordDialog  payPasswordDialog = new PayPasswordDialog(this,null,bean.getFundName(),inputText+unit);
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                         @Override
                         public void onInputFinish(String psw) {
