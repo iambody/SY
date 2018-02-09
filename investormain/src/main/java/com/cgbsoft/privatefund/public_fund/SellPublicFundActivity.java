@@ -173,7 +173,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
      * @param payPassword
      */
     private void starSell(String money, String payPassword) {
-        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"正在绑定",false,false);
+        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"正在交易",false,false);
         getPresenter().sureSell(fundcode, this.largeredemptionflag, this.transactionaccountid, branchcode, tano,
                 fastredeemflag, money, payPassword, new BasePublicFundPresenter.PreSenterCallBack<String>() {
                     @Override
@@ -201,7 +201,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     public void field(String errorCode, String errorMsg) {
                         loadingDialog.dismiss();
                         Log.e("赎回页面"," 网络异常 "+errorMsg);
-                        MToast.makeText(SellPublicFundActivity.this, "支付失败", Toast.LENGTH_LONG);
+                        MToast.makeText(SellPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG);
                     }
                 });
         loadingDialog.show();

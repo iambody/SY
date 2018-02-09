@@ -160,7 +160,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      * @param psw
      */
     private void starPay(String money,String psw){
-        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"正在绑定",false,false);
+        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"正在支付",false,false);
 
         getPresenter().sure(bean, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
              @Override
