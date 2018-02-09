@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
@@ -24,7 +25,7 @@ import java.util.List;
  */
 
 public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublicFundPresenter> {
-    public final static String BANK_NAME = "bankname";
+    public final static String BANK_NAME_ID= "banknameid";
     public final static String CHANNEL_ID = "channelid";
     public final static String CHANNEL_NAME = "channelname";
 
@@ -64,7 +65,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
         bankList.setAdapter(new SelectBankAdapter(bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
             @Override
             public void seclecBackCard(BankListOfJZSupport.BankOfJZSupport bankOfJZSupport) {
-                       getIntent().putExtra(BANK_NAME,"");
+                       getIntent().putExtra(BANK_NAME_ID,bankOfJZSupport.getBanknameid());
                        getIntent().putExtra(CHANNEL_ID,bankOfJZSupport.getChannelid());
                        getIntent().putExtra(CHANNEL_NAME,bankOfJZSupport.getFullname());
                        setResult(Activity.RESULT_OK,getIntent());
@@ -92,7 +93,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
      */
     private void bindBankCardData() {
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"加载中",false,false);
-        getPresenter().getBinidedBankList(new BasePublicFundPresenter.PreSenterCallBack<String>() {
+        getPresenter().getBinidedBankList(AppManager.getPublicFundInf(SelectBankCardActivity.this).getCustno(),new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
