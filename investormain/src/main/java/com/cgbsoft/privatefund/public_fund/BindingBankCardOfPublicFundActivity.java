@@ -2,14 +2,17 @@ package com.cgbsoft.privatefund.public_fund;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -24,6 +27,11 @@ import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,7 +46,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
     public final static int SELECT_BANK = 100;
 
-    private TextView mPayBankName; // 用于支付的银行名字
+    private TextView mPayBankName; // 用于银行名字
+    private AutoCompleteTextView mBankBranchName; // 用于支付的银行名字
     private EditText mPankcardCode; // 银行卡号
     private EditText mPhoneCode; // 手机号
     private EditText mVerificationCode; // 验证码
@@ -46,6 +55,10 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
     private boolean isSendVerificationCoded = false;
     private BindingBankCardBean bindingBankCardBean;
+
+
+    private ArrayAdapter adapter;
+    private List<String> branchBankNames = new ArrayList<>();
 
     @Override
     protected int layoutID() {
@@ -70,7 +83,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         // 如果data不为说明是从h5跳转过来，否者从原生页面跳转过来  (目前逻辑全部是不为空的 原生和h5都是有数据的@wyk)
         if (!BStrUtils.isEmpty(data)) {
             bindingBankCardBean = new Gson().fromJson(data, BindingBankCardBean.class);
-        } else {
+        } /*else {
             bindingBankCardBean = new BindingBankCardBean();
             bindingBankCardBean.setCustno(AppManager.getPublicFundInf(this).getCustno());
             bindingBankCardBean.setCertificateno(AppManager.getPublicFundInf(this).getCertificateno());
@@ -80,8 +93,9 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             //tod
 
 
-        }
+        }*/
         mPayBankName = (TextView) findViewById(R.id.tv_pay_bank_name);
+        mBankBranchName = (AutoCompleteTextView) findViewById(R.id.actv_bank_branch);
         mPankcardCode = (EditText) findViewById(R.id.ev_bankcard_code);
         mPhoneCode = (EditText) findViewById(R.id.ev_phone_number);
         mVerificationCode = (EditText) findViewById(R.id.ev_verification_code_input);
@@ -121,6 +135,42 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 sendVerificationCode(getVerificationCode, time / 1000,false);
             }
         }
+
+        adapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,branchBankNames);
+        mBankBranchName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if( null  ==  s || s.length() <2) return;
+                getPresenter().getBranchBankInfo(s.toString(),BStrUtils.nullToEmpty(bindingBankCardBean.getChannelid()), new BasePublicFundPresenter.PreSenterCallBack<String>() {
+                    @Override
+                    public void even(String result) {
+                        try {
+                            JSONObject jsonObject =  new JSONObject(result);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                      //  branchBankNames
+                    }
+
+                    @Override
+                    public void field(String errorCode, String errorMsg) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 

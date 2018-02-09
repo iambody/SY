@@ -208,6 +208,47 @@
             android:background="#E2E1E6" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rl_select_bankcard_branch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_70_dip"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_select_bankcard_branch"
+            android:layout_width="@dimen/ui_64_dip"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:text="银行支行"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_16" />
+
+        <AutoCompleteTextView
+            android:id="@+id/actv_bank_branch"
+            android:completionThreshold="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ui_30_dip"
+            android:layout_toRightOf="@+id/tv_select_bankcard_branch"
+            android:background="@null"
+            android:hint="请输入银行支行名字"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textColorHint="#A5A5A5"
+            android:textSize="@dimen/dimens_sp_16" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:background="#E2E1E6" />
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"

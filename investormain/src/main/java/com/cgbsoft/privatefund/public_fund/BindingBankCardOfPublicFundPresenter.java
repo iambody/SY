@@ -33,7 +33,7 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
     public void getBinidedBankList(PreSenterCallBack<String> preSenterCallBack) {
         Map<String, Object> parms = new HashMap<>();
         parms.put("trantype", "530335");
-        parms.put("custno", "175"); // TODO //证件类型（H5调取app指令的时候会传入）
+        parms.put("custno", "175"); // TODO //证件类型（H5调取app指令的时候会传入） BStrUtils.nullToEmpty(bindingBankCardBean.getCustno())
         parms.put("planflag", "");
 
         super.getFundDataFormJZ(parms, preSenterCallBack);
@@ -98,5 +98,14 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
         parms.put("certificateno", BStrUtils.isEmpty(certificateno)?"":certificateno);
 
         super.getFundDataFormJZ(parms, callBack);
+    }
+
+
+    public void getBranchBankInfo(String keyWords,String channelid,PreSenterCallBack preSenterCallBack){
+        Map parms = new HashMap();
+        parms.put("trantype", "520355");
+        parms.put("channelid", channelid);
+        parms.put("inbankname", keyWords);
+        super.getFundDataFormJZ(parms,preSenterCallBack);
     }
 }
