@@ -297,6 +297,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
         // 装配url数据
         toolbar.setVisibility(hasShowTitle ? View.GONE : View.VISIBLE);
+        mView.setVisibility(hasShowTitle ? View.GONE : View.VISIBLE);
         if (initPage && !TextUtils.isEmpty(pushMessageValue)) {
             mWebview.postDelayed(() -> {
                 String javascript = "javascript:Tools.init('" + pushMessageValue + "')";
