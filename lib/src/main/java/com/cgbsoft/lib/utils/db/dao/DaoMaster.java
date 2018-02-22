@@ -21,26 +21,26 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
-        HistorySearchBeanDao.createTable(db, ifNotExists);
+        DataStatisticsBeanDao.createTable(db, ifNotExists);
+        OtherInfoDao.createTable(db, ifNotExists);
+        ToBBeanDao.createTable(db, ifNotExists);
         ToCBeanDao.createTable(db, ifNotExists);
         TrackingDataBeanDao.createTable(db, ifNotExists);
-        OtherInfoDao.createTable(db, ifNotExists);
         UserInfoDao.createTable(db, ifNotExists);
         VideoInfoDao.createTable(db, ifNotExists);
-        ToBBeanDao.createTable(db, ifNotExists);
-        DataStatisticsBeanDao.createTable(db, ifNotExists);
+        HistorySearchBeanDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
-        HistorySearchBeanDao.dropTable(db, ifExists);
+        DataStatisticsBeanDao.dropTable(db, ifExists);
+        OtherInfoDao.dropTable(db, ifExists);
+        ToBBeanDao.dropTable(db, ifExists);
         ToCBeanDao.dropTable(db, ifExists);
         TrackingDataBeanDao.dropTable(db, ifExists);
-        OtherInfoDao.dropTable(db, ifExists);
         UserInfoDao.dropTable(db, ifExists);
         VideoInfoDao.dropTable(db, ifExists);
-        ToBBeanDao.dropTable(db, ifExists);
-        DataStatisticsBeanDao.dropTable(db, ifExists);
+        HistorySearchBeanDao.dropTable(db, ifExists);
     }
 
     /**
@@ -59,14 +59,14 @@ public class DaoMaster extends AbstractDaoMaster {
 
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
-        registerDaoClass(HistorySearchBeanDao.class);
+        registerDaoClass(DataStatisticsBeanDao.class);
+        registerDaoClass(OtherInfoDao.class);
+        registerDaoClass(ToBBeanDao.class);
         registerDaoClass(ToCBeanDao.class);
         registerDaoClass(TrackingDataBeanDao.class);
-        registerDaoClass(OtherInfoDao.class);
         registerDaoClass(UserInfoDao.class);
         registerDaoClass(VideoInfoDao.class);
-        registerDaoClass(ToBBeanDao.class);
-        registerDaoClass(DataStatisticsBeanDao.class);
+        registerDaoClass(HistorySearchBeanDao.class);
     }
 
     public DaoSession newSession() {
