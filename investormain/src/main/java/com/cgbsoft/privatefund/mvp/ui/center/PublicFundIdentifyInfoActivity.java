@@ -86,7 +86,7 @@ public class PublicFundIdentifyInfoActivity extends BaseActivity<PublicFundInfoP
 
     private String hintIndentifyNumber(String identifyNumber) {
         if (!TextUtils.isEmpty(identifyNumber) && identifyNumber.length() > 14) {
-            String hintStr = identifyNumber.substring(6, identifyNumber.length() - 4);
+            String hintStr = identifyNumber.substring(5, identifyNumber.length() - 4);
             return identifyNumber.replace(hintStr, ViewUtils.productEncodyStr(hintStr));
         }
         return identifyNumber;

@@ -81,7 +81,6 @@ import java.util.List;
 
 import app.mall.com.mvp.ui.MallAddressListActivity;
 import app.privatefund.com.vido.mvp.ui.video.model.VideoDownloadListModel;
-import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongContext;
@@ -834,7 +833,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             ll_private_share_bao_fill.setVisibility(View.GONE);
             PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(getActivity());
             if (publishFundRecommendBean != null) {
-                tv_increase_percent.setText(publishFundRecommendBean.getLeftUpValue());
+                ViewUtils.scaleUserAchievment(tv_increase_percent, publishFundRecommendBean.getLeftUpValue(),0.5f);
                 tv_server_increase.setText(publishFundRecommendBean.getLeftDownDes());
                 tv_increase_value.setText(publishFundRecommendBean.getRightUpValue());
                 tv_increase_value_desc.setText(publishFundRecommendBean.getRightDownDes());

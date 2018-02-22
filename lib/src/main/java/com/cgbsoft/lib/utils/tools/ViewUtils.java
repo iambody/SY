@@ -112,9 +112,11 @@ public class ViewUtils {
     }
 
     public static void scaleUserAchievment(TextView textView, String achievment, float relativeValue) {
-        SpannableString textSize = new SpannableString(achievment);
-        textSize.setSpan(new RelativeSizeSpan(relativeValue), achievment.length() - 1, achievment.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        textView.setText(textSize);
+        if (!TextUtils.isEmpty(achievment)) {
+            SpannableString textSize = new SpannableString(achievment);
+            textSize.setSpan(new RelativeSizeSpan(relativeValue), achievment.length() - 1, achievment.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            textView.setText(textSize);
+        }
     }
 
     public static void scaleUserAchievment(TextView textView, String achievment, int start, int end, float relativeValue) {

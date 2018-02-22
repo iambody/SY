@@ -100,10 +100,10 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
       if (!TextUtils.isEmpty(identifyNumber)) {
           char[] chars = identifyNumber.toCharArray();
           for (int i = 0; i < chars.length; i++) {
-              sb.append(chars[i]);
               if (i != 0 && i%4 == 0 && i != chars.length - 1) {
                   sb.append(" ");
               }
+              sb.append(chars[i]);
           }
           return sb.toString();
       }
