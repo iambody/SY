@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/search_base_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <include layout="@layout/acitivity_divide_online"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_bank_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
