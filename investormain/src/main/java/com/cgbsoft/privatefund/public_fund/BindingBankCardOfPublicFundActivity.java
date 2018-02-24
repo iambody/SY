@@ -1,20 +1,10 @@
 package com.cgbsoft.privatefund.public_fund;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,22 +22,14 @@ import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.privatefund.public_fund.passworddiglog.BankBranchBean;
-import com.cgbsoft.privatefund.utils.StringKit;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -63,9 +45,10 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     public static final String TAG_PARAMETER = "tag_parameter";
 
     public final static int SELECT_BANK = 100;
+    public final static int SELECT_BRANCH_BANK = 101;
 
     private TextView mPayBankName; // 用于银行名字
-    private AutoCompleteTextView mBankBranchName; // 用于支付的银行名字
+    private TextView mBankBranchName; // 用于支付的支行银行名字
     private EditText mPankcardCode; // 银行卡号
     private EditText mPhoneCode; // 手机号
     private EditText mVerificationCode; // 验证码
@@ -74,12 +57,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     private boolean isSendVerificationCoded = false;
     private BindingBankCardBean bindingBankCardBean;
 
-
-    private SearchAdapter<String> adapter;
-    private List<String> branchBankNames = new ArrayList<>();
     private TextView mAddressBank;
     private String cityName;
-    private ArrayList<BankBranchBean> bankListBranchs;
 
     @Override
     protected int layoutID() {
@@ -116,7 +95,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
         }*/
         mPayBankName = (TextView) findViewById(R.id.tv_pay_bank_name);
-        mBankBranchName = (AutoCompleteTextView) findViewById(R.id.actv_bank_branch);
+        mBankBranchName = (TextView) findViewById(R.id.tv_bank_branch);
         mPankcardCode = (EditText) findViewById(R.id.ev_bankcard_code);
         mPhoneCode = (EditText) findViewById(R.id.ev_phone_number);
         mVerificationCode = (EditText) findViewById(R.id.ev_verification_code_input);
@@ -146,9 +125,14 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         // 选择银行
         findViewById(R.id.rl_select_bankcard).setOnClickListener(this);
 
+        // 选择支行
+        mBankBranchName.setOnClickListener(this);
+
         // 返回键
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
         findViewById(R.id.title_left).setOnClickListener(this);
+
+
 
         // 上次退出页面时,验证码的时间点
         if (SPreference.getString(BindingBankCardOfPublicFundActivity.this, LAST_VERIFICATION_TIME) != null) {
@@ -164,44 +148,11 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             public void onClick(View v) {
                 if (null != bindingBankCardBean && null != bindingBankCardBean.getBanknameid()){
                     showAddressSelector();
-
                 }else {
                     MToast.makeText(BindingBankCardOfPublicFundActivity.this, "请先选择银行卡类型", Toast.LENGTH_LONG);
                 }
             }
         });
-
-
-
-        mBankBranchName.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                BankBranchBean bankBranchBean =  bankListBranchs.get(position);
-
-                bindingBankCardBean.setBankname(bankBranchBean.getParavalue());
-                bindingBankCardBean.setChannelname(bankBranchBean.getParavalue());
-                bindingBankCardBean.setParatype(bankBranchBean.getParatype());
-                Log.e("test", "选择了 " + position);
-            }
-        });
-        mBankBranchName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               BankBranchBean bankBranchBean =  bankListBranchs.get(position);
-
-                bindingBankCardBean.setBankname(bankBranchBean.getParavalue());
-                bindingBankCardBean.setChannelname(bankBranchBean.getParavalue());
-                bindingBankCardBean.setParatype(bankBranchBean.getParatype());
-                Log.e("test", "选择了 " + position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
     }
 
     private void showAddressSelector() {
@@ -239,8 +190,14 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                     List<Map<String, Object>> districtList = (List<Map<String, Object>>) cityObj.get("areas");
                     Map<String, Object> districtObj = districtList.get(grandSonPositionInt);
                     String districtName = (String) districtObj.get("s");
+
+                    String addressBank = province.concat(cityName).concat(districtName);
+                    if(!addressBank.equals(mAddressBank.getText())){
+                       mBankBranchName.setText("");
+                       mBankBranchName.setHint(mBankBranchName.getHint());
+                    }
                     mAddressBank.setText(province.concat(cityName).concat(districtName));
-                    loadBranchbankData(cityName);
+                  //  loadBranchbankData(cityName);
 
                 }
             }
@@ -248,47 +205,6 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         dialogAddress.show();
     }
 
-    private void loadBranchbankData(String cityName) {
-        getPresenter().getBranchBankInfo(cityName.concat("市"), BStrUtils.nullToEmpty(bindingBankCardBean.getBanknameid()), new BasePublicFundPresenter.PreSenterCallBack<String>() {
-            @Override
-            public void even(String result) {
-                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
-                if (bankListOfJZSupport != null) {
-                    String code = bankListOfJZSupport.getErrorCode();
-                    if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
-
-
-                        try {
-                            JSONObject jsonObject = new JSONObject(result);
-                            JSONArray datasets = jsonObject.getJSONArray("datasets").getJSONArray(0);
-                            Gson gson = new Gson();
-                            bankListBranchs = gson.fromJson(datasets.toString(), new TypeToken<ArrayList<BankBranchBean>>() {
-                            }.getType());
-
-                            branchBankNames.clear();
-
-                            for (int i = 0; i < bankListBranchs.size(); i++) {
-                                branchBankNames.add(bankListBranchs.get(i).getParavalue());
-                            }
-
-                            adapter = new SearchAdapter<String>(BindingBankCardOfPublicFundActivity.this, R.layout.simple_list_item, branchBankNames);
-                            mBankBranchName.setAdapter(adapter);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-            }
-
-            @Override
-            public void field(String errorCode, String errorMsg) {
-
-            }
-        });
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -305,6 +221,21 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 startActivityForResult(new Intent(this, SelectBankCardActivity.class), SELECT_BANK);
                 break;
 
+            case R.id.tv_bank_branch:// 选址支行
+                if(bindingBankCardBean == null || BStrUtils.isEmpty(bindingBankCardBean.getBanknameid())){
+                    MToast.makeText(this,"请先选择银行",Toast.LENGTH_LONG);
+                    return;
+                }
+
+                if(TextUtils.isEmpty(mAddressBank.getText()) ){
+                  MToast.makeText(this,"请先选择开户行地址",Toast.LENGTH_LONG);
+                  return;
+                }
+                Intent intent = new Intent(this, SelectBranchBankActivity.class);
+                intent.putExtra(SelectBranchBankActivity.CITY_NAME,cityName);
+                intent.putExtra(SelectBranchBankActivity.BANK_NAME_ID,bindingBankCardBean.getBanknameid());
+                startActivityForResult(intent, SELECT_BRANCH_BANK);
+                break;
             case R.id.title_left:// 返回键
                 finish();
                 break;
@@ -316,13 +247,25 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // 接收银行信息
         if (SELECT_BANK == requestCode && data != null) {
             mPayBankName.setText(data.getStringExtra(SelectBankCardActivity.CHANNEL_NAME));
             bindingBankCardBean.setChannelid(data.getStringExtra(SelectBankCardActivity.CHANNEL_ID));
             bindingBankCardBean.setBanknameid(data.getStringExtra(SelectBankCardActivity.BANK_NAME_ID));
-           if(bankListBranchs != null) bankListBranchs.clear();
-            mAddressBank.setText("");
-            mAddressBank.setHint("请选择开户行地址");
+           if(mAddressBank != null && !TextUtils.isEmpty(mAddressBank.getText())) {
+               mAddressBank.setText("");
+               mAddressBank.setHint("请选择开户行地址");
+               mBankBranchName.setText("");
+               mBankBranchName.setHint(mBankBranchName.getHint());
+           }
+        }
+
+        // 接收支行信息
+        if(data != null&&requestCode == SELECT_BRANCH_BANK){
+            bindingBankCardBean.setBankname(data.getStringExtra(SelectBranchBankActivity.CHANNEL_NAME));
+            bindingBankCardBean.setChannelname(data.getStringExtra(SelectBranchBankActivity.CHANNEL_NAME));
+            bindingBankCardBean.setParatype(data.getStringExtra(SelectBranchBankActivity.PARATYPE));
+            mBankBranchName.setText(bindingBankCardBean.getChannelname());
         }
 
     }

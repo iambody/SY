@@ -639,6 +639,10 @@
             android:name=".public_fund.SelectBankCardActivity"
             android:screenOrientation="portrait"
             />
+        <activity
+            android:name=".public_fund.SelectBranchBankActivity"
+            android:screenOrientation="portrait"
+            />
 
 
 

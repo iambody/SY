@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -1175,7 +1174,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             float z = event.values[2];
             // 根据三个方向上的加速度值得到总的加速度值a
             float a = (float) Math.sqrt(x * x + y * y + z * z);
-            System.out.println("a---------->" + a);
+           /* System.out.println("a---------->" + a);
             // 传感器从外界采集数据的时间间隔为10000微秒
             System.out.println("magneticSensor.getMinDelay()-------->"
                     + magneticSensor.getMinDelay());
@@ -1190,7 +1189,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             Log.d("jarlen", "x------------->" + x);
             Log.d("jarlen", "y------------>" + y);
             Log.d("jarlen", "z----------->" + z);
-
+*/
 
             if (Math.abs(x) < 5) {
                 if (Math.abs(lastRotate - (x * 5)) > 1)
@@ -1211,19 +1210,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             float y = event.values[1];
             float z = event.values[2];
             // 手机的磁场感应器从外部采集数据的时间间隔是10000微秒
-            System.out.println("magneticSensor.getMinDelay()-------->"
+          /*  System.out.println("magneticSensor.getMinDelay()-------->"
                     + magneticSensor.getMinDelay());
             // 磁场感应器的最大量程
             System.out.println("event.sensor.getMaximumRange()----------->"
                     + event.sensor.getMaximumRange());
-            System.out.println("x------------->" + x);
-            System.out.println("y------------->" + y);
-            System.out.println("z------------->" + z);
-
-            // Log.d("TAG","x------------->" + x);
-            // Log.d("TAG", "y------------>" + y);
-            // Log.d("TAG", "z----------->" + z);
-
+*/
             // showTextView.setText("x---------->" + x + "\ny-------------->" +
             // y + "\nz----------->" + z);
         } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
@@ -1244,14 +1236,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                 float angley = (float) Math.toDegrees(angle[1]);
 
                 float anglez = (float) Math.toDegrees(angle[2]);
-
+/*
                 System.out.println("anglex------------>" + anglex);
                 System.out.println("angley------------>" + angley);
                 System.out.println("anglez------------>" + anglez);
 
 
                 System.out.println("gyroscopeSensor.getMinDelay()----------->" +
-                        gyroscopeSensor.getMinDelay());
+                        gyroscopeSensor.getMinDelay());*/
             }
             //将当前时间赋值给timestamp
             timestamp = event.timestamp;
