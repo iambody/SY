@@ -165,6 +165,18 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 //    @BindView(R.id.health_record_look_all_text)
 //    TextView health_title_recodr_all;
 
+    @BindView(R.id.travel_order_look_all_text)
+    TextView travel_order_look_all;
+
+    @BindView(R.id.account_travel_to_look_server)
+    TextView account_travel_to_look_server;
+
+    @BindView(R.id.account_travel_no_bug_ll)
+    LinearLayout account_travel_no_bug_ll;
+
+    @BindView(R.id.account_travel_had_bug_ll)
+    LinearLayout account_travel_had_bug_ll;
+
     @BindView(R.id.account_health_on_bug_ll)
     LinearLayout health_had_no_data_ll;
 
@@ -852,6 +864,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.PRODUCT_PAGE);
     }
 
+    @OnClick(R.id.account_travel_to_look_server)
+    void gotoLookTravelActivity() {
+        // TODO 去旅游权益
+    }
+
     @OnClick(R.id.account_bank_go_relative_assert)
     void gotoRelativeAssetActivity() {
         if (null != credentialStateMedel) {
@@ -1102,6 +1119,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             initPrivateBank(mineModel);
             initOrderView(mineModel);
             initHealthView(mineModel);
+            initTravelView(mineModel);
 //            new Thread(runnable).start();
         }
     }
@@ -1180,6 +1198,21 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
        return CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) && CollectionUtils.isEmpty(mineModel.getHealthOrder().getContent());
     }
 
+    private boolean isEmptyTravelData() {
+        return CollectionUtils.isEmpty(mineModel.getTravelOrder().getContent());
+    }
+
+    private void initTravelView(MineModel mineModel) {
+        if (mineModel != null && mineModel.getTravelOrder() != null) {
+            account_travel_had_bug_ll.setVisibility(isEmptyTravelData() ? View.GONE : View.VISIBLE);
+            account_travel_no_bug_ll.setVisibility(isEmptyTravelData() ? View.VISIBLE : View.GONE);
+            travel_order_look_all.setVisibility(isEmptyTravelData() ? View.GONE : View.VISIBLE);
+            if (!isEmptyTravelData()) {
+                createTravelOrderItem(mineModel.getTravelOrder());
+            }
+        }
+    }
+
     private void initHealthView(MineModel mineModel) {
         if ((mineModel != null && mineModel.getHealthy() != null) || (mineModel != null && mineModel.getHealthOrder() != null)) {
             health_had_data_ll.setVisibility(isEmptyHealthData() ? View.GONE : View.VISIBLE);
@@ -1189,6 +1222,40 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 createHealthItem(mineModel.getHealthy());
                 createHealthOrderItem(mineModel.getHealthOrder());
             }
+        }
+    }
+
+    private void createTravelOrderItem(MineModel.TravelOrder travelOrder) {
+        account_travel_had_bug_ll.removeAllViews();
+        if (!CollectionUtils.isEmpty(travelOrder.getContent())) {
+            List<MineModel.TravelOrder.TravelOrderItem> travelOrderItems = travelOrder.getContent();
+            MineModel.TravelOrder.TravelOrderItem travelOrderItem = travelOrderItems.get(travelOrderItems.size() - 1);
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_travel, null);
+            TextView healthContent = (TextView) view.findViewById(R.id.travel_content);
+            TextView healthTime = (TextView) view.findViewById(R.id.travel_time);
+            String statusValue = chageStatusValue(travelOrderItem.getState());
+            healthContent.setText((!TextUtils.isEmpty(statusValue) ? "【".concat(statusValue).concat("】") : "").concat(travelOrderItem.getTitle()));
+            healthTime.setText((!TextUtils.isEmpty(travelOrderItem.getCreateTime()) && travelOrderItem.getCreateTime().length() > 10) ? travelOrderItem.getCreateTime().substring(0, 10) :  travelOrderItem.getCreateTime());
+            travel_order_look_all.setOnClickListener((View v) -> {
+                // TODO 去旅游订单列表页面
+//                String url = CwebNetConfig.mineHealthKnow;
+//                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+//                intent.putExtra(WebViewConstant.push_message_url, url);
+//                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
+//                intent.putExtra(WebViewConstant.right_message_index, true);
+//                startActivity(intent);
+//                DataStatistApiParam.operateMineHealthClick();
+                //
+            });
+            view.setOnClickListener(v -> {
+                // TODO 去旅游权益详情页面
+//                String url = CwebNetConfig.mineHealthOrderDetail;
+//                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+//                intent.putExtra(WebViewConstant.push_message_url, url + travelOrderItem.getOrderCode());
+//                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
+//                startActivity(intent);
+            });
+            health_had_data_ll.addView(view);
         }
     }
 
@@ -1264,39 +1331,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 health_had_data_ll.addView(view);
             }
     }
-
-//    private void createHealthItem(List<MineModel.HealthItem> list) {
-//        if (!CollectionUtils.isEmpty(list)) {
-//            health_had_data_ll.removeAllViews();
-//            for (int i = 0; i < list.size(); i++) {
-//                MineModel.HealthItem healthItem = list.get(i);
-//                TextView textView = new TextView(getActivity());
-//                textView.setPadding(DimensionPixelUtil.dip2px(getActivity(), 15), 0, 0, 0);
-//                textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-//                textView.setSingleLine(true);
-//                textView.setEllipsize(TextUtils.TruncateAt.END);
-//                textView.setBackgroundResource(R.drawable.selector_bg_btn_white);
-//                textView.setHeight(DimensionPixelUtil.dip2px(getActivity(), 60));
-//                textView.setText(getString(R.string.account_health_zixun_server_title).concat(healthItem.getTitle()));
-//                textView.setTextColor(Color.parseColor("#5a5a5a"));
-//                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-//                textView.setOnClickListener(v -> {
-//                    HashMap<String, Object> hashMap = new HashMap<>();
-//                    hashMap.put(WebViewConstant.push_message_url, healthItem.getUrl());
-////                    hashMap.put(WebViewConstant.push_message_title, healthItem.getTitle());
-//                    hashMap.put(WebViewConstant.push_message_title, getString(R.string.mine_zhuanti_detail));
-//                    NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTO_RIGHT_SHARE_ACTIVITY, hashMap);
-//                });
-//                health_had_data_ll.addView(textView);
-//                if (i != list.size() - 1) {
-//                    View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
-//                    ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
-//                    lineView.setLayoutParams(layoutParams);
-//                    health_had_data_ll.addView(lineView);
-//                }
-//            }
-//        }
-//    }
 
     //*******************************************
     DownloadManager downloadManager;

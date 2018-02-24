@@ -110,6 +110,7 @@
     <string name="look_more">查看更多</string>
     <string name="health_recode_discovery">健康咨询记录</string>
     <string name="health_order_recode">健康订单记录</string>
+    <string name="travel_order">旅游订单</string>
 
     <string name="permission_help">帮助</string>
     <string name="permission_help_text">私享云缺少必要权限：\n\n%s\n请点击"设置"-"权限"-打开所需权限。\n最后点击两次后退按钮，即可返回。</string>

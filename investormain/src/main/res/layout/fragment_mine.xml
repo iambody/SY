@@ -77,6 +77,8 @@
 
                 <include layout="@layout/fragment_mine_health" />
 
+                <include layout="@layout/fragment_mine_travel" />
+
                 <include layout="@layout/fragment_mine_video" />
 
                 <!--<include layout="@layout/view_footer" />-->

@@ -17,6 +17,8 @@ public class MineModel {
 
     private HealthOrder healthOrder;
 
+    private TravelOrder travelOrder;
+
     public MineUserInfo getMyInfo() {
         return myInfo;
     }
@@ -55,6 +57,14 @@ public class MineModel {
 
     public void setHealthOrder(HealthOrder healthOrder) {
         this.healthOrder = healthOrder;
+    }
+
+    public TravelOrder getTravelOrder() {
+        return travelOrder;
+    }
+
+    public void setTravelOrder(TravelOrder travelOrder) {
+        this.travelOrder = travelOrder;
     }
 
     public static class MineUserInfo {
@@ -396,5 +406,110 @@ public class MineModel {
         }
     }
 
+    public static class TravelOrder {
+
+        private List<TravelOrderItem> content;
+
+        public List<TravelOrderItem> getContent() {
+            return content;
+        }
+
+        public void setContent(List<TravelOrderItem> content) {
+            this.content = content;
+        }
+
+        public class TravelOrderItem {
+
+            private String orderedCount;
+
+            private String orderType;
+
+            private String orderCode;
+
+            private String couponId;
+
+            private String couponName;
+
+            private String state;
+
+            private String createTime;
+
+            private String title;
+
+            private String leaveDate;
+
+            public String getState() {
+                return state;
+            }
+
+            public void setState(String state) {
+                this.state = state;
+            }
+
+            public String getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(String createTime) {
+                this.createTime = createTime;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getLeaveDate() {
+                return leaveDate;
+            }
+
+            public void setLeaveDate(String leaveDate) {
+                this.leaveDate = leaveDate;
+            }
+
+            public String getOrderedCount() {
+                return orderedCount;
+            }
+
+            public void setOrderedCount(String orderedCount) {
+                this.orderedCount = orderedCount;
+            }
+
+            public String getOrderType() {
+                return orderType;
+            }
+
+            public void setOrderType(String orderType) {
+                this.orderType = orderType;
+            }
+
+            public String getOrderCode() {
+                return orderCode;
+            }
+
+            public void setOrderCode(String orderCode) {
+                this.orderCode = orderCode;
+            }
+
+            public String getCouponId() {
+                return couponId;
+            }
+
+            public void setCouponId(String couponId) {
+                this.couponId = couponId;
+            }
+
+            public String getCouponName() {
+                return couponName;
+            }
+
+            public void setCouponName(String couponName) {
+                this.couponName = couponName;
+            }
+        }
+    }
 }
 

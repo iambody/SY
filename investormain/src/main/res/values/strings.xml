@@ -196,6 +196,8 @@
     <string name="account_health_go_server">看健康项目</string>
     <string name="account_health_zixun_server_title">【咨询服务】</string>
     <string name="custom_server_telephone_number">400-188-8848</string>
+    <string name="account_travel_no_bugy">您还未使用过旅游权益，您可以：</string>
+    <string name="account_travel_go_server">看旅游权益</string>
     <string name="phone">电话</string>
     <string name="mms">短信</string>
     <string name="conversation">对话</string>
