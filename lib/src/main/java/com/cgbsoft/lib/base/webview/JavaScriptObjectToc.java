@@ -15,6 +15,8 @@ import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.webview.bean.JsCall;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.share.bean.ShareCommonBean;
+import com.cgbsoft.lib.share.dialog.CommonNewShareDialog;
 import com.cgbsoft.lib.share.dialog.CommonScreenDialog;
 import com.cgbsoft.lib.share.dialog.CommonSharePosterDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -143,7 +145,7 @@ public class JavaScriptObjectToc {
     }
 
     @JavascriptInterface
-    public void openCredentialsFolder(String param){
+    public void openCredentialsFolder(String param) {
         try {
             JSONObject ja = new JSONObject(param);
             JSONObject data = ja.getJSONObject("data");
@@ -155,14 +157,14 @@ public class JavaScriptObjectToc {
                     if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("credentialStateMedel", credentialStateMedel);
-                        NavigationUtils.startActivityByRouter(context,RouteConfig.CrenditralGuideActivity,bundle);
+                        NavigationUtils.startActivityByRouter(context, RouteConfig.CrenditralGuideActivity, bundle);
 //                        Intent intent = new Intent(context, CrenditralGuideActivity.class);
 //                        intent.putExtra("credentialStateMedel", credentialStateMedel);
 //                        startActivity(intent);
                     } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("credentialStateMedel", credentialStateMedel);
-                        NavigationUtils.startActivityByRouter(context,RouteConfig.UploadIndentityCradActivity,bundle);
+                        NavigationUtils.startActivityByRouter(context, RouteConfig.UploadIndentityCradActivity, bundle);
 
 //                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
 //                        intent.putExtra("credentialStateMedel", credentialStateMedel);
@@ -176,13 +178,13 @@ public class JavaScriptObjectToc {
                 } else {//  非大陆去证件列表
                     Bundle bundle = new Bundle();
                     bundle.putString("indentityCode", credentialStateMedel.getCustomerIdentity());
-                    NavigationUtils.startActivityByRouter(context,RouteConfig.CardCollectActivity,bundle);
+                    NavigationUtils.startActivityByRouter(context, RouteConfig.CardCollectActivity, bundle);
 //                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
 //                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
 //                    startActivity(intent);
                 }
             } else {//无身份
-                NavigationUtils.startActivityByRouter(context,RouteConfig.SelectIndentityActivity);
+                NavigationUtils.startActivityByRouter(context, RouteConfig.SelectIndentityActivity);
 //                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
 //                startActivity(intent);
             }
@@ -256,7 +258,13 @@ public class JavaScriptObjectToc {
         return "";
     }
 
-    ;
+    @JavascriptInterface
+    public void shareMyTrip(String datas) {
+        JsCall jscall = new Gson().fromJson(datas, JsCall.class);
+
+        shareTravelEquity(BStrUtils.nullToEmpty(jscall.getData()));
+
+    }
 
     private void requestGetMethodCallBack(String url, String params, String javascirptCallMethod) {
         System.out.println("---javascirptCallMethod=" + javascirptCallMethod);
@@ -474,5 +482,25 @@ public class JavaScriptObjectToc {
         return map;
     }
 
+    /**
+     * 分享旅游权益
+     *
+     * @param sharContext
+     */
+    public void shareTravelEquity(String sharContext) {
+        ShareCommonBean shareCommonBean = new ShareCommonBean();
+        shareCommonBean.setShareContent(sharContext);
+        CommonNewShareDialog commonNewShareDialog = new CommonNewShareDialog(context, CommonNewShareDialog.Tag_Style_NoteWxCopy, shareCommonBean, new CommonNewShareDialog.CommentShareListener() {
+            @Override
+            public void completShare(int shareType) {
 
+            }
+
+            @Override
+            public void cancleShare() {
+
+            }
+        });
+        commonNewShareDialog.show();
+    }
 }

@@ -255,7 +255,12 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
     public void onClick(View v) {
         if (R.id.sahre_wx_bt == v.getId()) {//微信
             clickShareTag = 0;
-            weChatShare(commonShareBean);
+            if (Tag_Style_NoteWxCopy != tagStyle) {//正常微信分享
+
+                weChatShare(commonShareBean);
+            } else {//旅游权益分享文字
+                weChatTxtShare(commonShareBean.getShareContent());
+            }
             CommonNewShareDialog.this.dismiss();
         } else if (R.id.sahre_circle_bt == v.getId()) {//朋友圈
             clickShareTag = 1;
@@ -270,6 +275,21 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
             copyNeteStr(dcontext, commonShareBean.getShareContent());
             CommonNewShareDialog.this.dismiss();
         }
+    }
+
+    /**
+     * 分享一段文字
+     * @param shareContent
+     */
+    private void weChatTxtShare(String shareContent) {
+        platform_wx = ShareSDK.getPlatform(Wechat.NAME);
+        Wechat.ShareParams sp = new Wechat.ShareParams();
+        sp.setText(shareContent);
+
+//      sp.setTitle("s");
+        sp.setShareType(Platform.SHARE_TEXT);
+        platform_wx.setPlatformActionListener(this);
+        platform_wx.share(sp);
     }
 
     public void copyNeteStr(Context context, String message) {
