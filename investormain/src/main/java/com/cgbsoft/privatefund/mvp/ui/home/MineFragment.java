@@ -866,7 +866,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_travel_to_look_server)
     void gotoLookTravelActivity() {
-        // TODO 去旅游权益
+        String url = CwebNetConfig.mineTravelIntroduce;
+        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_travel));
+        startActivity(intent);
     }
 
     @OnClick(R.id.account_bank_go_relative_assert)
@@ -1237,25 +1241,21 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             healthContent.setText((!TextUtils.isEmpty(statusValue) ? "【".concat(statusValue).concat("】") : "").concat(travelOrderItem.getTitle()));
             healthTime.setText((!TextUtils.isEmpty(travelOrderItem.getCreateTime()) && travelOrderItem.getCreateTime().length() > 10) ? travelOrderItem.getCreateTime().substring(0, 10) :  travelOrderItem.getCreateTime());
             travel_order_look_all.setOnClickListener((View v) -> {
-                // TODO 去旅游订单列表页面
-//                String url = CwebNetConfig.mineHealthKnow;
-//                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-//                intent.putExtra(WebViewConstant.push_message_url, url);
-//                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_list));
-//                intent.putExtra(WebViewConstant.right_message_index, true);
-//                startActivity(intent);
-//                DataStatistApiParam.operateMineHealthClick();
-                //
+                String url = CwebNetConfig.mineTravelOrderList;
+                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, url);
+                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_travel_order));
+                startActivity(intent);
+
             });
             view.setOnClickListener(v -> {
-                // TODO 去旅游权益详情页面
-//                String url = CwebNetConfig.mineHealthOrderDetail;
-//                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-//                intent.putExtra(WebViewConstant.push_message_url, url + travelOrderItem.getOrderCode());
-//                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
-//                startActivity(intent);
+                String url = CwebNetConfig.mineTravelOrderDetail;
+                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, url + travelOrderItem.getOrderCode());
+                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_travel_order_detail));
+                startActivity(intent);
             });
-            health_had_data_ll.addView(view);
+            account_travel_had_bug_ll.addView(view);
         }
     }
 

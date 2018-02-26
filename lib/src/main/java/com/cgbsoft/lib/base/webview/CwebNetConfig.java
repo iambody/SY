@@ -63,6 +63,12 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String mineHealthOrder;
     // 我的订单详情
     public static String mineHealthOrderDetail;
+    // 我的旅游订单列表
+    public static String mineTravelOrderList;
+    // 我的旅游订单详情
+    public static String mineTravelOrderDetail;
+    // 我的旅游权益介绍
+    public static String mineTravelIntroduce;
 
     // 资讯详情
     public static String discoveryDetail;
@@ -142,6 +148,9 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineHealthKnow = baseSxyParentUrl + "/biz/mine/mine_health.html";
         mineHealthOrder = baseSxyParentUrl + "/biz/mine/health_order.html";
         mineHealthOrderDetail = baseSxyParentUrl + "/biz/mine/health_order_detail.html?orderCode=";
+        mineTravelOrderList = baseSxyParentUrl + "/biz/mine/travel_order.html";
+        mineTravelOrderDetail = baseSxyParentUrl + "/biz/mine/travel_order_cancel.html?orderCode=";
+        mineTravelIntroduce = baseSxyParentUrl + "/biz/members/detail_tour.html";
 
 //        msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";// 博伦修改地址
         msgDetal = baseSxyParentUrl + "/biz/product/notice.html?id=";

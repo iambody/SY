@@ -12,7 +12,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/ui_15_dip"
-        android:paddingRight="@dimen/ui_10_dip"
+        android:paddingRight="@dimen/ui_15_dip"
         android:id="@+id/health_all_title_ll"
         android:gravity="center_vertical">
 
@@ -30,8 +30,8 @@
             android:text="查看更多"
             android:drawablePadding="10dp"
             android:id="@+id/travel_order_look_all_text"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/dimens_sp_14"/>
+            android:textColor="@color/color_595959"
+            android:textSize="@dimen/dimens_sp_15"/>
 
     </LinearLayout>
 
