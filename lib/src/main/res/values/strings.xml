@@ -124,5 +124,7 @@
     <string name="permission_phone_str">读取电话的状态权限\n</string>
     <string name="permission_location_str">访问范围性的定位权限\n</string>
     <string name="permission_extenge_str">照片、媒体内容和文件权限\n</string>
+    <string name="note">短信</string>
+    <string name="copy">复制</string>
 
 </resources>

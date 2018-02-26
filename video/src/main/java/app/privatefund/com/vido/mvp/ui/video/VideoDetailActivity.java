@@ -32,7 +32,7 @@ import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.mvp.model.video.VideoInfoModel;
 import com.cgbsoft.lib.share.bean.ShareCommonBean;
-import com.cgbsoft.lib.share.dialog.CommonShareDialog;
+import com.cgbsoft.lib.share.dialog.CommonNewShareDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.VideoStatus;
 import com.cgbsoft.lib.utils.damp.SpringEffect;
@@ -215,7 +215,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
     //加载时候的dialog
     private LoadingDialog mLoadingDialog;
     //C端分享的dialog
-    private CommonShareDialog commonShareDialog;
+    private CommonNewShareDialog commonShareDialog;
     //C端评论的列表Adapter
     private CommentAdapter commentAdapter;
     //C端需要的产品
@@ -1272,7 +1272,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
         if (null == videoAllInf || null == videoAllInf.rows) return;
         if (null != commonShareDialog) commonShareDialog = null;
         ShareCommonBean commonShareBean = new ShareCommonBean(videoAllInf.rows.videoName, videoAllInf.rows.videoSummary, videoAllInf.rows.shareUrl, "");
-        commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WxPyq, commonShareBean, null);
+        commonShareDialog = new CommonNewShareDialog(baseContext, CommonNewShareDialog.Tag_Style_WxPyq, commonShareBean, null);
         commonShareDialog.show();
 
         DataStatistApiParam.onStatisToCVideoDetailShareClick(videoInfoModel.videoName, videoInfoModel.categoryName);

@@ -19,21 +19,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
+            <TextView
+                android:id="@+id/sahre_note_bt"
+                style="@style/style_share_item"
+                android:drawableTop="@drawable/share_note"
+                android:text="@string/note"
+                android:visibility="gone"
+                />
             <TextView
                 android:id="@+id/sahre_wx_bt"
                 style="@style/style_share_item"
-                android:drawableTop="@drawable/wexin_share"
+                android:drawableTop="@drawable/share_wechat"
                 android:text="@string/weixin"
                  />
 
             <TextView
                 android:id="@+id/sahre_circle_bt"
                 style="@style/style_share_item"
-                android:drawableTop="@drawable/share_moents"
+                android:drawableTop="@drawable/share_pyq"
                 android:text="@string/pengyouquan"
                  />
-
+            <TextView
+                android:id="@+id/sahre_copy_bt"
+                style="@style/style_share_item"
+                android:drawableTop="@drawable/share_copy"
+                android:text="@string/copy"
+                android:visibility="gone"
+                />
         </LinearLayout>
 
         <TextView

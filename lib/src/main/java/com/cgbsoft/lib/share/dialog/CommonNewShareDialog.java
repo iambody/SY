@@ -1,6 +1,8 @@
 package com.cgbsoft.lib.share.dialog;
 
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -38,16 +40,20 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
     /**
      * 微信分享标识
      */
-    public static final int SHARE_WX = 101;
+    public static final int Tag_Style_WeiXin = 101;
     /**
      * 微信朋友圈分享标识
      */
-    public static final int SHARE_WXCIRCLE = 102;
-
+    public static final int Tag_Style_WxPyq = 102;
+    /**
+     * 短信 微信 复制  旅游权益的分享
+     */
+    public static final int Tag_Style_NoteWxCopy = 103;
     /**
      * 记载分享标识
      */
     private int tagStyle;
+
     /**
      * 上下文
      */
@@ -84,11 +90,16 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
      * 预留的回调接口进行动态的需求
      */
 
-    private ShareListener commentShareListener;
+    private CommentShareListener commentShareListener;
+
+    /**
+     * 点击的那个分享 0标识微信分享   1标识朋友圈分享
+     */
+    private int clickShareTag;
     private UserInfoDataEntity.UserInfo userInfo;
 
 
-    public CommonNewShareDialog(Context context, int tag_Style, ShareCommonBean commonShareBean, ShareListener commentShareListener) {
+    public CommonNewShareDialog(Context context, int tag_Style, ShareCommonBean commonShareBean, CommentShareListener commentShareListener) {
         super(context, R.style.share_new_comment_style);
         dcontext = context;
         tagStyle = tag_Style;
@@ -114,7 +125,7 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
         initBase();
     }
 
-    private TextView sahre_wx_bt, sahre_circle_bt, sahre_cancle_bt;
+    private TextView sahre_note_bt, sahre_wx_bt, sahre_circle_bt, sahre_cancle_bt, sahre_copy_bt;
 
     private void initBase() {
         //配置信息
@@ -123,19 +134,28 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
         wparams.height = ViewGroup.LayoutParams.MATCH_PARENT;
         wparams.gravity = Gravity.BOTTOM;
         getWindow().setAttributes(wparams);
+        sahre_note_bt = ViewHolders.get(baseView, R.id.sahre_note_bt);
         sahre_wx_bt = ViewHolders.get(baseView, R.id.sahre_wx_bt);
         sahre_circle_bt = ViewHolders.get(baseView, R.id.sahre_circle_bt);
         sahre_cancle_bt = ViewHolders.get(baseView, R.id.sahre_cancle_bt);
+        sahre_copy_bt = ViewHolders.get(baseView, R.id.sahre_copy_bt);
         sahre_wx_bt.setOnClickListener(this);
         sahre_circle_bt.setOnClickListener(this);
         sahre_cancle_bt.setOnClickListener(this);
+        sahre_note_bt.setOnClickListener(this);
+        sahre_copy_bt.setOnClickListener(this);
 
         switch (tagStyle) {
-            case SHARE_WX:
+            case Tag_Style_WeiXin:
                 sahre_circle_bt.setVisibility(View.GONE);
                 break;
-            case SHARE_WXCIRCLE:
+            case Tag_Style_WxPyq:
                 sahre_circle_bt.setVisibility(View.VISIBLE);
+                break;
+            case Tag_Style_NoteWxCopy:
+                sahre_circle_bt.setVisibility(View.GONE);
+                sahre_note_bt.setVisibility(View.VISIBLE);
+                sahre_copy_bt.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -197,7 +217,7 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
 
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-        if (null != commentShareListener) commentShareListener.completShare(tagStyle);
+        if (null != commentShareListener) commentShareListener.completShare(clickShareTag);
     }
 
     @Override
@@ -234,16 +254,43 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
     @Override
     public void onClick(View v) {
         if (R.id.sahre_wx_bt == v.getId()) {//微信
+            clickShareTag = 0;
             weChatShare(commonShareBean);
+            CommonNewShareDialog.this.dismiss();
         } else if (R.id.sahre_circle_bt == v.getId()) {//朋友圈
+            clickShareTag = 1;
             wxCircleShare(commonShareBean);
+            CommonNewShareDialog.this.dismiss();
         } else if (R.id.sahre_cancle_bt == v.getId()) {//取消
+            CommonNewShareDialog.this.dismiss();
+        } else if (R.id.sahre_note_bt == v.getId()) {//短信
+            sendMessageByIntent(dcontext, commonShareBean.getShareContent());
+            CommonNewShareDialog.this.dismiss();
+        } else if (R.id.sahre_copy_bt == v.getId()) {//复制
+            copyNeteStr(dcontext, commonShareBean.getShareContent());
             CommonNewShareDialog.this.dismiss();
         }
     }
 
-    public interface ShareListener {
-        //分享成功
+    public void copyNeteStr(Context context, String message) {
+
+        ClipboardManager cmb = (ClipboardManager) context
+                .getSystemService(Context.CLIPBOARD_SERVICE);
+        cmb.setText(BStrUtils.NullToStr1(message));
+        PromptManager.ShowCustomToast(context, "复制成功");
+    }
+
+    public void sendMessageByIntent(Context context, String message) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.putExtra("sms_body", message);
+        intent.setType("vnd.android-dir/mms-sms");
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent);
+        }
+    }
+
+    public interface CommentShareListener {
+        //分享成功 0标识微信好友分享  1标识朋友圈分享
         void completShare(int shareType);
 
         void cancleShare();

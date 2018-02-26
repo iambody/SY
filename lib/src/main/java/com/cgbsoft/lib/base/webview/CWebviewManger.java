@@ -28,6 +28,7 @@ import com.cgbsoft.lib.base.mvp.ui.QrMidActivity;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.share.bean.ShareCommonBean;
+import com.cgbsoft.lib.share.dialog.CommonNewShareDialog;
 import com.cgbsoft.lib.share.dialog.CommonShareDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -1054,7 +1055,7 @@ public class CWebviewManger {
         link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link.substring(0) : BaseWebNetConfig.baseParentUrl + link;
         ShareCommonBean shareCommonBean = new ShareCommonBean(mytitle, subTitle, link, "");
 //        if (isShowing) return;
-        CommonShareDialog commonShareDialog = new CommonShareDialog(context, isProductShare ? CommonShareDialog.Tag_Style_WeiXin : CommonShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonShareDialog.CommentShareListener() {
+        CommonNewShareDialog commonShareDialog = new CommonNewShareDialog(context, isProductShare ? CommonNewShareDialog.Tag_Style_WeiXin : CommonNewShareDialog.Tag_Style_WxPyq, shareCommonBean, new CommonNewShareDialog.CommentShareListener() {
             @Override
             public void completShare(int shareType) {
                 if (!BStrUtils.isEmpty(shareJsAction)) {

@@ -19,6 +19,7 @@ public class ShareCommonBean extends BaseShareBean {
 
     private boolean isNetLog;
 
+
     public ShareCommonBean() {
 
     }

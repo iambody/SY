@@ -7,8 +7,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -16,7 +14,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -310,7 +307,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-
+//        CommonNewShareDialog commonNewShareDialog = new CommonNewShareDialog(baseActivity, CommonNewShareDialog.Tag_Style_WxPyq, null, null);
+//        commonNewShareDialog.show();
+//***********
         if (AppManager.isVisitor(baseActivity)) {
             Intent intent = new Intent(baseActivity, LoginActivity.class);
             intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
@@ -1149,14 +1148,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         }
 //        Log.e("setRotate --- ", " r = " + r + " lastRotate = " + lastRotate + "----" + (lastRotate-r));
 //        for (float i = min; i < max; i = i + 1) {
-            imageViews[0].setPivotX(imageViews[0].getWidth() / 2);
-            imageViews[0].setRotation(r);
-            imageViews[1].setPivotX(imageViews[1].getWidth() / 2);
-            imageViews[1].setRotation(r);
-            imageViews[2].setPivotX(imageViews[2].getWidth() / 2);
-            imageViews[2].setRotation(r);
-            imageViews[3].setPivotX(imageViews[3].getWidth() / 2);
-            imageViews[3].setRotation(r);
+        imageViews[0].setPivotX(imageViews[0].getWidth() / 2);
+        imageViews[0].setRotation(r);
+        imageViews[1].setPivotX(imageViews[1].getWidth() / 2);
+        imageViews[1].setRotation(r);
+        imageViews[2].setPivotX(imageViews[2].getWidth() / 2);
+        imageViews[2].setRotation(r);
+        imageViews[3].setPivotX(imageViews[3].getWidth() / 2);
+        imageViews[3].setRotation(r);
 //        }
     }
 

@@ -12,7 +12,7 @@ import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.mvc.BaseMvcActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.share.bean.ShareCommonBean;
-import com.cgbsoft.lib.share.dialog.CommonShareDialog;
+import com.cgbsoft.lib.share.dialog.CommonNewShareDialog;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.chenenyu.router.annotation.Route;
 import com.github.barteksc.pdfviewer.PDFView;
@@ -57,7 +57,7 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
     //产品详情传进来的产品的详情
     private ProductlsBean productlsBean;
 
-    private CommonShareDialog commonShareDialog;
+    private CommonNewShareDialog commonShareDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -153,7 +153,7 @@ public class PdfActivity extends BaseMvcActivity implements OnPageChangeListener
 
         ShareCommonBean shareCommonBean = new ShareCommonBean(shareTitle, shareContent, shareUrl, null);
 
-        commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WeiXin, shareCommonBean, null);
+        commonShareDialog = new CommonNewShareDialog(baseContext, CommonNewShareDialog.Tag_Style_WeiXin, shareCommonBean, null);
         if (null != commonShareDialog && !commonShareDialog.isShowing()) commonShareDialog.show();
 
     }

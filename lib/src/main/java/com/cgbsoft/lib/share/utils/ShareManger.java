@@ -28,6 +28,8 @@ public class ShareManger implements PlatformActionListener {
     public static final int WXSHARE = 101;
     //朋友圈分享的标识
     public static final int CIRCLESHARE = 102;
+    //微信文本分享
+    public static final int WXTXT = 103;
 
     private static ShareManger shareManger;
 
@@ -130,7 +132,25 @@ public class ShareManger implements PlatformActionListener {
             case CIRCLESHARE://朋友圈分享
                 WxCircleShare(shareCommonBean);
                 break;
+            case WXTXT://微信文本
+                wXtxt(shareCommonBean);
+                break;
         }
+    }
+    /**
+     * 微信分享文本
+     *
+     * @param WxShareData
+     */
+    private void wXtxt(ShareCommonBean WxShareData) {
+        platform_wx = ShareSDK.getPlatform(Wechat.NAME);
+        Wechat.ShareParams sp = new Wechat.ShareParams();
+        sp.setText(WxShareData.getShareContent());
+
+//      sp.setTitle("s");
+        sp.setShareType(Platform.SHARE_TEXT);
+        platform_wx.setPlatformActionListener(this);
+        platform_wx.share(sp);
     }
 
     /**
