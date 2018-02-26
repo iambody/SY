@@ -246,8 +246,8 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
         conversation.setPortraitUrl(NetConfig.noticeRemoteLogin);
         UIConversation uiConversation;
 
+        conversation.setNotificationStatus(Conversation.ConversationNotificationStatus.NOTIFY);
         if (position < 0) {
-            conversation.setNotificationStatus(Conversation.ConversationNotificationStatus.NOTIFY);
             uiConversation = UIConversation.obtain(conversation, RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE));
             if (!CollectionUtils.isEmpty(cacheConversationList)) {
                 UIConversation conversation1 = cacheConversationList.get(0);
@@ -282,7 +282,6 @@ public class RongConversationListFragment extends UriFragment implements OnItemC
             RongConversationListFragment.this.mAdapter.notifyDataSetChanged();
         } else {
             uiConversation = (UIConversation) RongConversationListFragment.this.mAdapter.getItem(position);
-//            uiConversation.setNotificationStatus();
             uiConversation.updateConversation(conversation, RongConversationListFragment.this.getGatherState(ConversationType.PRIVATE));
             RongConversationListFragment.this.mAdapter.getView(position, RongConversationListFragment.this.mList.getChildAt(position - RongConversationListFragment.this.mList.getFirstVisiblePosition()), RongConversationListFragment.this.mList);
         }

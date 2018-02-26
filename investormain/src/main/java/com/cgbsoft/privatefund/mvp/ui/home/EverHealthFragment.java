@@ -207,6 +207,9 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
 
     @Override
     public boolean onBackPressed(Context context) {
+        if (currentFragment == null) {
+            return false;
+        }
         return currentFragment.onBackPressed(context);
     }
 

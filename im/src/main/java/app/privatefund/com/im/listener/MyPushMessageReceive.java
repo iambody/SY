@@ -50,6 +50,10 @@ public class MyPushMessageReceive extends PushMessageReceiver {
             return true;
         }
 
+          if (RongContext.getInstance() == null) {
+                return false;
+          }
+
             Uri uri = Uri.parse("rong://" + RongContext.getInstance().getPackageName()).buildUpon().appendPath("conversationList").build();
             Intent intent = Router.build(Uri.parse(RouteConfig.GOTO_WELCOME_ACTIVITY)).getIntent(context);
             intent.putExtra(WebViewConstant.PUSH_MESSAGE_OBJECT_NAME, pushNotificationMessage);
