@@ -573,8 +573,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         getPresenter().getPublicFundRecommend();
                     }
                     if (9 == publicFundInf) {
-                        if (null != viewHomePublicFundSkipLay)
-                            viewHomePublicFundSkipLay.setVisibility(View.GONE);
+                        if (null != viewPublicFundRegist)
+                            viewPublicFundRegist.setVisibility(View.GONE);
                     }
                 }
 
@@ -1151,7 +1151,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void publicFundDetail() {
         //跳转到基金详情页面
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundcode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundcode()), false);
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publishFundRecommend.getFundName()), BStrUtils.nullToEmpty(publishFundRecommend.getFundcode())), false);
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl,   BStrUtils.NullToStr(publishFundRecommend.getFundName()) , false);
 
 
     }
