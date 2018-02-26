@@ -149,7 +149,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineHealthOrder = baseSxyParentUrl + "/biz/mine/health_order.html";
         mineHealthOrderDetail = baseSxyParentUrl + "/biz/mine/health_order_detail.html?orderCode=";
         mineTravelOrderList = baseSxyParentUrl + "/biz/mine/travel_order.html";
-        mineTravelOrderDetail = baseSxyParentUrl + "/biz/mine/travel_order_cancel.html?orderCode=";
+        mineTravelOrderDetail = baseSxyParentUrl + "/biz/mine/travel_order_detail.html?orderCode=";
         mineTravelIntroduce = baseSxyParentUrl + "/biz/members/detail_tour.html";
 
 //        msgDetal = baseParentUrl + "/apptie/notice_toB.html?id=";// 博伦修改地址
