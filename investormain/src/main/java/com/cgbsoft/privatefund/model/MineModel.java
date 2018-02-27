@@ -428,6 +428,8 @@ public class MineModel {
 
             private String couponId;
 
+            private String rightId;
+
             private String couponName;
 
             private String state;
@@ -508,6 +510,14 @@ public class MineModel {
 
             public void setCouponName(String couponName) {
                 this.couponName = couponName;
+            }
+
+            public String getRightId() {
+                return rightId;
+            }
+
+            public void setRightId(String rightId) {
+                this.rightId = rightId;
             }
         }
     }

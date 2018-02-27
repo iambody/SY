@@ -866,11 +866,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_travel_to_look_server)
     void gotoLookTravelActivity() {
-        String url = CwebNetConfig.mineTravelIntroduce;
-        Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-        intent.putExtra(WebViewConstant.push_message_url, url);
-        intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_travel));
-        startActivity(intent);
+        if (mineModel != null && mineModel.getTravelOrder() != null) {
+            List<MineModel.TravelOrder.TravelOrderItem> list = mineModel.getTravelOrder().getContent();
+            MineModel.TravelOrder.TravelOrderItem item = list.get(0);
+            String url = CwebNetConfig.mineTravelIntroduce  + "?couponId=" + item.getCouponId() + "&rightId=" + item.getRightId();
+            Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+            intent.putExtra(WebViewConstant.push_message_url, url);
+            intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_travel));
+            startActivity(intent);
+        }
     }
 
     @OnClick(R.id.account_bank_go_relative_assert)
