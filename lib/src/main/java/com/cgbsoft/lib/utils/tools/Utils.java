@@ -27,6 +27,7 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
@@ -35,6 +36,7 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -670,6 +672,12 @@ public class Utils {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    // 是否白名单
+    public static boolean isWhiteUserFlag(Context context) {
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(context);
+        return TextUtils.equals("1", publicFundInf.getWhiteUserListFlg());
     }
 
     /**

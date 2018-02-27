@@ -47,6 +47,7 @@ import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.RoundImageView;
@@ -737,13 +738,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         initObserver();
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), imageViewMessagIcon, false);
-//        dynamicDisplayPublicFund();
     }
 
     // dynamic to display this view of public fund
     private void dynamicDisplayPublicFund() {
-        layoutPrivateShareBao.setVisibility(View.GONE);
-        layoutPublicFund.setVisibility(View.GONE);
+        layoutPrivateShareBao.setVisibility(Utils.isWhiteUserFlag(getContext()) ? View.VISIBLE : View.GONE);
+        layoutPublicFund.setVisibility(Utils.isWhiteUserFlag(getContext()) ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -753,6 +753,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (isLoading) {
             return;
         }
+        dynamicDisplayPublicFund();
 //        initRelativeStatus();
         isLoading = true;
         initVideoView();
@@ -836,7 +837,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         String custno = publicFundInf.getCustno();
         String isHaveBanckAccount = publicFundInf.getIsHaveCustBankAcct();
         String ristPingce = publicFundInf.getCustrisk();
-        ll_public_fund_create_account.setVisibility(TextUtils.isEmpty(custno) || (!TextUtils.equals("1", isHaveBanckAccount) || TextUtils.isEmpty(ristPingce)) ? View.VISIBLE : View.GONE);
+        ll_public_fund_create_account.setVisibility((Utils.isWhiteUserFlag(getContext())) && (TextUtils.isEmpty(custno) || (!TextUtils.equals("1", isHaveBanckAccount) || TextUtils.isEmpty(ristPingce))) ? View.VISIBLE : View.GONE);
         if (isExistPrivateShareMoney(financialAssertModel)) {
             ll_private_share_bao_empty.setVisibility(View.GONE);
             ll_private_share_bao_fill.setVisibility(View.VISIBLE);

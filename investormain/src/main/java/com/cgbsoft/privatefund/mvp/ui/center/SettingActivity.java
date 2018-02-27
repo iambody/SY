@@ -32,7 +32,6 @@ import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity;
-import com.cgbsoft.privatefund.public_fund.BindingBankCardOfPublicFundActivity;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
@@ -87,15 +86,14 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         daoUtils = new DaoUtils(baseContext, DaoUtils.W_OTHER);
         initView(savedInstanceState);
         showView();
-//        dynamicDisplayPublicFundView();
         DataStatistApiParam.intoSettingPage();
     }
 
     // dynamic to display this view of public fund
     private void dynamicDisplayPublicFundView() {
-        publicFundAccountStatus.setVisibility(View.GONE);
-        publicFundBankCarkInfo.setVisibility(View.GONE);
-        publicFundTradePasswordModify.setVisibility(View.GONE);
+        publicFundAccountStatus.setVisibility(Utils.isWhiteUserFlag(this) ? View.VISIBLE : View.GONE);
+        publicFundBankCarkInfo.setVisibility(Utils.isWhiteUserFlag(this) ? View.VISIBLE : View.GONE);
+        publicFundTradePasswordModify.setVisibility(Utils.isWhiteUserFlag(this) ? View.VISIBLE : View.GONE);
     }
 
     private void showView() {
@@ -185,6 +183,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
             changeGesturePsdLayout.setVisibility(View.GONE);
         }
         initPublicFund();
+         dynamicDisplayPublicFundView();
     }
 
     private void initPublicFund() {

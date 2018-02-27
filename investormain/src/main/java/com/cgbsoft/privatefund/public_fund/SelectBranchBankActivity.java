@@ -56,7 +56,7 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        searchTitle = findViewById(R.id.search_title_ed);
+        searchTitle = (ClearEditText)findViewById(R.id.search_title_ed);
         searchTitle.setHint("请输入支行关键字");
 
         bankList = (RecyclerView) findViewById(R.id.rv_bank_list);

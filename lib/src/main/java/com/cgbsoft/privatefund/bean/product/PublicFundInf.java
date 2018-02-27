@@ -10,6 +10,7 @@ public class PublicFundInf {
     private String isHaveCustBankAcct;//0：未绑卡1：已绑卡
     private String custrisk;//01：安逸型 02：保守型 03：稳健型 04：积极型 05：激进型 空表示无
 
+    private String whiteUserListFlg; // 是否白名单 1 是 0 否
 
     private String certificateno;//= 220301197912013513;//证件号
 
@@ -102,5 +103,13 @@ public class PublicFundInf {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getWhiteUserListFlg() {
+        return whiteUserListFlg;
+    }
+
+    public void setWhiteUserListFlg(String whiteUserListFlg) {
+        this.whiteUserListFlg = whiteUserListFlg;
     }
 }

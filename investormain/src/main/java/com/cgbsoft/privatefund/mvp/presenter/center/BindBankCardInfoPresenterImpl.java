@@ -8,13 +8,19 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.privatefund.bean.BindBankCardInfoBean;
+import com.cgbsoft.privatefund.model.MineActivitesModel;
 import com.cgbsoft.privatefund.mvp.contract.center.BindBankCardInfoContract;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author chenlong
@@ -45,13 +51,11 @@ public class BindBankCardInfoPresenterImpl extends BasePresenterImpl<BindBankCar
                         JSONArray jsonArray = jsonObject.getJSONArray("datasets");
                         jsonArray = jsonArray.getJSONArray(0);
                         if (jsonArray != null && jsonArray.length() > 0) {
-                            String[] perInfo = new String[3];
                             JSONObject dataJson = jsonArray.getJSONObject(0);
-                            perInfo[0] = dataJson.getString("bankname");
-                            perInfo[1] = dataJson.getString("depositacct");
-
-                            perInfo[2] = "储蓄卡";
-                            getView().requestInfoSuccess(perInfo);
+                            List<BindBankCardInfoBean> beanlist = new Gson().fromJson(dataJson.toString(), new TypeToken<List<BindBankCardInfoBean>>() {}.getType());
+//                            perInfo[0] = dataJson.getString("bankname");
+//                            perInfo[1] = dataJson.getString("depositacct");
+                            getView().requestInfoSuccess(beanlist);
                             return;
                         }
                     }

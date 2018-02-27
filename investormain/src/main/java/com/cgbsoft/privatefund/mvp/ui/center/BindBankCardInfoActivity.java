@@ -2,22 +2,29 @@ package com.cgbsoft.privatefund.mvp.ui.center;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.BindBankCardInfoBean;
 import com.cgbsoft.privatefund.mvp.contract.center.BindBankCardInfoContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.BindBankCardInfoPresenterImpl;
 import com.chenenyu.router.annotation.Route;
 
-import app.product.com.utils.ViewUtil;
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -31,13 +38,10 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
     ImageView back;
     @BindView(R.id.title_mid)
     TextView titleTV;
-    @BindView(R.id.bank_name)
-    TextView bank_name;
-    @BindView(R.id.bank_type)
-    TextView bank_type;
-    @BindView(R.id.bank_number)
-    TextView bank_number;
+    @BindView(R.id.list_view)
+    ListView listView;
 
+    private BindBankCardAdapter bindBankCardAdapter;
     private LoadingDialog mLoadingDialog;
 
     @OnClick(R.id.title_left)
@@ -55,7 +59,13 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.public_fund_setting_bankcard_info));
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
+        initListView();
         getPresenter().requestBindBankCardInfo();
+    }
+
+    private void initListView() {
+        bindBankCardAdapter = new BindBankCardAdapter();
+        listView.setAdapter(bindBankCardAdapter);
     }
 
     @Override
@@ -74,11 +84,9 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
     }
 
     @Override
-    public void requestInfoSuccess(String[] info) {
+    public void requestInfoSuccess(List<BindBankCardInfoBean> bindCardList) {
         hideLoadDialog();
-        bank_name.setText(info[0]);
-        bank_number.setText(hintLastBankCardNumber(info[1]));
-        bank_type.setText(hintLastBankCardNumber(info[2]));
+        bindBankCardAdapter.addData(bindCardList);
     }
 
     @Override
@@ -108,5 +116,64 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
           return sb.toString();
       }
       return identifyNumber;
+    }
+
+    public class BindBankCardAdapter extends BaseAdapter {
+
+        private List<BindBankCardInfoBean> data;
+
+        public BindBankCardAdapter() {
+            data = new ArrayList<>();
+        }
+
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return data.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public void addData(List<BindBankCardInfoBean> bindBankCardInfoBeans) {
+            this.data.clear();
+            if (!CollectionUtils.isEmpty(bindBankCardInfoBeans)) {
+                this.data.addAll(bindBankCardInfoBeans);
+            }
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = null;
+            BindBankCardInfoBean bindBankCardInfoBean = data.get(position);
+            ViewHolder holder;
+            if (convertView == null) {
+                view = LayoutInflater.from(BindBankCardInfoActivity.this).inflate(R.layout.bind_bank_card_list_item, parent, false);
+                holder = new ViewHolder();
+                holder.bank_name = (TextView) view.findViewById(R.id.bank_name);
+                holder.bank_type = (TextView) view.findViewById(R.id.bank_type);
+                holder.bank_number = (TextView) view.findViewById(R.id.bank_number);
+                view.setTag(holder);
+            } else {
+                view = convertView;
+                holder = (ViewHolder) view.getTag();
+            }
+            holder.bank_name.setText(bindBankCardInfoBean.getBankname());
+            holder.bank_number.setText(hintLastBankCardNumber(bindBankCardInfoBean.getDepositacct()));
+            return view;
+        }
+    }
+
+    class ViewHolder{
+        TextView bank_name;
+        TextView bank_type;
+        TextView bank_number;
     }
 }
