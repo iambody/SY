@@ -256,7 +256,6 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
         if (R.id.sahre_wx_bt == v.getId()) {//微信
             clickShareTag = 0;
             if (Tag_Style_NoteWxCopy != tagStyle) {//正常微信分享
-
                 weChatShare(commonShareBean);
             } else {//旅游权益分享文字
                 weChatTxtShare(commonShareBean.getShareContent());
