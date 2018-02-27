@@ -265,6 +265,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.private_bank_bottom_buttons)
     LinearLayout privateBackBottomButtons;
 
+    @BindView(R.id.layout_private_share_bao)
+    LinearLayout layoutPrivateShareBao;
+
+    @BindView(R.id.layout_public_fund)
+    LinearLayout layoutPublicFund;
+
     @BindView(R.id.viewpager)
     CustomViewPage viewPager;
 
@@ -731,6 +737,13 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         daoUtils = new DaoUtils(getActivity(), DaoUtils.W_VIDEO);
         initObserver();
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), imageViewMessagIcon, false);
+//        dynamicDisplayPublicFund();
+    }
+
+    // dynamic to display this view of public fund
+    private void dynamicDisplayPublicFund() {
+        layoutPrivateShareBao.setVisibility(View.GONE);
+        layoutPublicFund.setVisibility(View.GONE);
     }
 
     @Override

@@ -3,6 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/layout_private_share_bao"
     android:layout_marginBottom="@dimen/ui_10_dip">
 
     <TextView

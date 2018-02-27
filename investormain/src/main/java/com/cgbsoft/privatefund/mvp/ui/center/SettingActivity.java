@@ -73,7 +73,6 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     SettingItemNormal changeLoginPsd;
     @BindView(R.id.sin_about_app)
     SettingItemNormal aboutApp;
-
     private Observable<Boolean> switchButton;
     private Observable<Boolean> closeSetting;
     private DaoUtils daoUtils;
@@ -88,7 +87,15 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         daoUtils = new DaoUtils(baseContext, DaoUtils.W_OTHER);
         initView(savedInstanceState);
         showView();
+//        dynamicDisplayPublicFundView();
         DataStatistApiParam.intoSettingPage();
+    }
+
+    // dynamic to display this view of public fund
+    private void dynamicDisplayPublicFundView() {
+        publicFundAccountStatus.setVisibility(View.GONE);
+        publicFundBankCarkInfo.setVisibility(View.GONE);
+        publicFundTradePasswordModify.setVisibility(View.GONE);
     }
 
     private void showView() {
