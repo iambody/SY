@@ -51,10 +51,7 @@ public class BindBankCardInfoPresenterImpl extends BasePresenterImpl<BindBankCar
                         JSONArray jsonArray = jsonObject.getJSONArray("datasets");
                         jsonArray = jsonArray.getJSONArray(0);
                         if (jsonArray != null && jsonArray.length() > 0) {
-                            JSONObject dataJson = jsonArray.getJSONObject(0);
-                            List<BindBankCardInfoBean> beanlist = new Gson().fromJson(dataJson.toString(), new TypeToken<List<BindBankCardInfoBean>>() {}.getType());
-//                            perInfo[0] = dataJson.getString("bankname");
-//                            perInfo[1] = dataJson.getString("depositacct");
+                            List<BindBankCardInfoBean> beanlist = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<BindBankCardInfoBean>>() {}.getType());
                             getView().requestInfoSuccess(beanlist);
                             return;
                         }
