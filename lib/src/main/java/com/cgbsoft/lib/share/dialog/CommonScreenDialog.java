@@ -77,7 +77,7 @@ public class CommonScreenDialog extends Dialog implements PlatformActionListener
         this.dcontext = context;
         this.imagLocalPath = imagPath;
         this.commentScreenListener = screenListener;
-        ShareSDK.initSDK(dcontext);
+//        ShareSDK.initSDK(dcontext);
     }
 
     @Override

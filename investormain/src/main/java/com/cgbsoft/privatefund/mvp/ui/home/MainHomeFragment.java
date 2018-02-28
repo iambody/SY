@@ -30,6 +30,8 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.share.bean.ShareCommonBean;
+import com.cgbsoft.lib.share.utils.ShareManger;
 import com.cgbsoft.lib.utils.SkineColorManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -71,7 +73,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
-import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.product.com.utils.ProductNavigationUtils;
 import butterknife.BindView;
@@ -351,19 +352,22 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-
+        ShareCommonBean shareCommonBean=new ShareCommonBean();
+//        shareCommonBean.setShareContent();
+        ShareManger shareManger=  ShareManger.getInstance(baseActivity,shareCommonBean,null);
+        shareManger.goShareWx(ShareManger.WXMINIPROGRAM);
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRiskUrl, getResources().getString(R.string.public_fund_risk), false);
 //        UiSkipUtils.gotoPublicFundRisk(baseActivity);
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
-        if (AppManager.isVisitor(baseActivity)) {
-            Intent intent = new Intent(baseActivity, LoginActivity.class);
-            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-        } else {
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-        }
-        DataStatistApiParam.homeClickNew();
-        TrackingDataManger.homeNew(baseActivity);
+//        if (AppManager.isVisitor(baseActivity)) {
+//            Intent intent = new Intent(baseActivity, LoginActivity.class);
+//            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+//        } else {
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+//        }
+//        DataStatistApiParam.homeClickNew();
+//        TrackingDataManger.homeNew(baseActivity);
 
     }
 
