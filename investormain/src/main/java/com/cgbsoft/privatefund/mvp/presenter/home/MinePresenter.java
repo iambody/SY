@@ -8,6 +8,7 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
+import com.cgbsoft.privatefund.model.FinancialAssertModel;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.google.gson.Gson;
@@ -36,8 +37,7 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
                     Log.d("MinePresenter", "----" + s.toString());
                     JSONObject jsonObject = new JSONObject(s);
                     String result = jsonObject.getString("result");
-                    MineModel mineModel = new Gson().fromJson(result, new TypeToken<MineModel>() {
-                    }.getType());
+                    MineModel mineModel = new Gson().fromJson(result, new TypeToken<MineModel>() {}.getType());
                     if (result != null) {
                         getView().requestDataSuccess(mineModel);
                     } else {
@@ -52,6 +52,37 @@ public class MinePresenter extends BasePresenterImpl<MineContract.View> implemen
             @Override
             protected void onRxError(Throwable error) {
                 getView().requestDataFailure(error.getMessage());
+            }
+        }));
+    }
+
+    @Override
+    public void getMineFinacailAssert() {
+        addSubscription(ApiClient.getMineFinincialAssert(new HashMap()).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                Log.d("getMineFinincialAssert", "----" + s.toString());
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    if (result != null) {
+                        FinancialAssertModel mineModel = new Gson().fromJson(result.toString(), new TypeToken<FinancialAssertModel>() {}.getType());
+                        if (mineModel != null) {
+                            getView().requestFinancialAssertSuccess(mineModel);
+                        } else {
+                            getView().requestDataFailure("数据加载错误！");
+                        }
+                    } else {
+                        getView().requestDataFailure("数据加载错误！");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                getView().requestFinancialAssertFailure(error.getMessage());
             }
         }));
     }

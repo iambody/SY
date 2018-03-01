@@ -13,6 +13,10 @@ import com.cgbsoft.lib.base.mvp.model.TabBean;
 import com.cgbsoft.lib.base.mvp.ui.BasePageFragment;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
+import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
@@ -29,6 +33,7 @@ import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvc.ui.SearchBaseActivity;
 import app.product.com.mvp.ui.OnLineProductListFragment;
+import rx.Observable;
 
 /**
  * desc  ${DESC}
@@ -41,9 +46,12 @@ public class PrivateBanksFragment extends BasePageFragment {
     private final String PRODUCT_CODE = "2001";
     private final String INFOMATION_CODE = "2002";
     private final String VIDEO_CODE = "2003";
-//    private final String PUBLIC_FUND_CODE = "2004";
+    public final String PUBLIC_FUND_CODE = "2004";//公募基金新增加的code
+
+    private Observable<Integer> privateFundIdex, registLayFresh;
     private ImageView privatebank_title_right;
     private UnreadInfoNumber unreadInfoNumber;
+    private boolean isDoneFreash;
 
     @Override
     protected int titleLayoutId() {
@@ -52,8 +60,14 @@ public class PrivateBanksFragment extends BasePageFragment {
 
     @Override
     protected ArrayList<TabBean> list() {
+        isDoneFreash=true;
         ArrayList<NavigationBean> navigationBeans = NavigationUtils.getNavigationBeans(getActivity());
         ArrayList<TabBean> tabBeens = new ArrayList<>();
+        //新添加了白名单的逻辑处理
+        if (!BStrUtils.isEmpty(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg()) && "1".equals(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg())) {
+            tabBeens.add(new TabBean("公募基金", new PublicFundFragment(), Integer.parseInt(PUBLIC_FUND_CODE)));
+        }
+
         if (navigationBeans != null) {
             for (NavigationBean navigationBean : navigationBeans) {
                 if (navigationBean.getCode().equals(NAVIGATION_CODE)) {
@@ -64,10 +78,61 @@ public class PrivateBanksFragment extends BasePageFragment {
         return null;
     }
 
+
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         super.init(view, savedInstanceState);
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), privatebank_title_right, true);
+        privateFundIdex = RxBus.get().register(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, Integer.class);
+        privateFundIdex.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                switch (integer) {
+                    case 1:
+                        setCode(2001);
+                        break;
+                    case 2://公募 postion第一位置
+                        setCode(2004);
+                        break;
+                }
+
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+        if (null == registLayFresh) {
+            registLayFresh = RxBus.get().register(RxConstant.REFRESH_PUBLIC_FUND_RESGIST_LAY, Integer.class);
+            registLayFresh.subscribe(new RxSubscriber<Integer>() {
+                @Override
+                protected void onEvent(Integer publicFundIn) {
+                    if (!isDoneFreash) {
+                        inflaterData();
+                        isDoneFreash = true;
+                    }
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (null != privateFundIdex) {
+            RxBus.get().unregister(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, privateFundIdex);
+        }
+
+
+        if (null != registLayFresh) {
+            RxBus.get().unregister(RxConstant.REFRESH_PUBLIC_FUND_RESGIST_LAY, registLayFresh);
+        }
     }
 
     @Override
@@ -126,7 +191,7 @@ public class PrivateBanksFragment extends BasePageFragment {
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
                 case PRODUCT_CODE:
-                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new OnLineProductListFragment(), Integer.parseInt(secondNavigation.getCode()));
+                    TabBean tabBeen1 = new TabBean("私募基金", new OnLineProductListFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen1);
                     break;
                 case INFOMATION_CODE:
@@ -138,6 +203,7 @@ public class PrivateBanksFragment extends BasePageFragment {
                     tabBeens.add(tabBeen3);
                     break;
 //                case PUBLIC_FUND_CODE:
+//                case PRODUCT_CODE:
 //                    TabBean tabBeen4 = new TabBean(secondNavigation.getTitle(), new PublicFundFragment(), Integer.parseInt(secondNavigation.getCode()));
 //                    tabBeens.add(tabBeen4);
 //                    break;

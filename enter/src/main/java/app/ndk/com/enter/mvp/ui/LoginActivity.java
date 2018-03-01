@@ -64,7 +64,6 @@ import app.ndk.com.enter.mvp.contract.LoginContract;
 import app.ndk.com.enter.mvp.presenter.LoginPresenter;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.sharesdk.framework.ShareSDK;
 import io.rong.imkit.RongContext;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -177,7 +176,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         isVisitorBackHome = getIntent().getBooleanExtra(TAG_BACK_HOME, false);
         ialoginout = getIntent().getBooleanExtra("ialoginout", false);
         fromValidatePassword = getIntent().getBooleanExtra("fromValidatePassword", false);
-        ShareSDK.initSDK(baseContext);
+//        ShareSDK.initSDK(baseContext);
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
         getPresenter().getNavigation();

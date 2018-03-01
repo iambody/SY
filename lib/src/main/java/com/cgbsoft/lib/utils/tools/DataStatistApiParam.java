@@ -454,6 +454,14 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
     }
 
+    public static void existLogout() {
+        HashMap<String, String> data3 = new HashMap<>();
+        data3.put("grp", "2020");
+        data3.put("act", "20123");
+        data3.put("arg1", "退出账号");
+        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
+    }
+
     public static void onStaticToCLoginBack() {
         HashMap<String, String> data3 = new HashMap<>();
         data3.put("grp", "2002");
@@ -1066,13 +1074,6 @@ public class DataStatistApiParam {
         DataStatisticsUtils.push(BaseApplication.getContext(), data3, true);
     }
 
-    public static void existLogout() {
-        HashMap<String, String> data3 = new HashMap<>();
-        data3.put("grp", "2020");
-        data3.put("act", "20123");
-        data3.put("arg1", "退出账号");
-        DataStatisticsUtils.push(BaseApplication.getContext(), data3, false);
-    }
 
     /**
      * 点击帮助和反馈

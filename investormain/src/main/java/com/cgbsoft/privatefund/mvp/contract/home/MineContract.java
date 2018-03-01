@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.contract.home;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
+import com.cgbsoft.privatefund.model.FinancialAssertModel;
 import com.cgbsoft.privatefund.model.MineModel;
 
 /**
@@ -13,6 +14,8 @@ public interface MineContract {
     interface Presenter extends BasePresenter{
 
         void getMineData();
+
+        void getMineFinacailAssert();
     }
 
     interface View extends BaseView{
@@ -20,6 +23,10 @@ public interface MineContract {
         void requestDataSuccess(MineModel mineModel);
 
         void requestDataFailure(String errMsg);
+
+        void requestFinancialAssertSuccess(FinancialAssertModel financialAssertModel);
+
+        void requestFinancialAssertFailure(String msg);
 
         /**
          *

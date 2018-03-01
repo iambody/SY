@@ -11,6 +11,8 @@ import com.cgbsoft.lib.contant.AppinfConstant;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
+import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.bean.video.VideoAllModel;
 import com.google.gson.Gson;
 
@@ -119,6 +121,7 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 是否有新的资源版本
+     *
      * @param context
      * @return
      */
@@ -372,17 +375,32 @@ public class AppManager implements AppinfConstant {
 
     /**
      * 获取权限
+     *
      * @param context
      * @return
      */
     public static String getCustomRole(Context context) {
         return getUserInfo(context).getToC().getCustomerRole();
     }
+
     /**
-     *  获取用户的等级
+     * 获取用户的等级
      */
     public static String getCustomType(Context context) {
         return getUserInfo(context).getToC().getCustomerType();
     }
 
+    /**
+     * 将获取公募信息
+     */
+    public static PublicFundInf getPublicFundInf(Context context) {
+        return AppInfStore.getPublicFundInf(context);
+    }
+
+    /**
+     * 获取公募首页推荐位
+     */
+    public static PublishFundRecommendBean getPubliFundRecommend(Context context) {
+        return  AppInfStore.getPublicFundRecommend(context);
+    }
 }

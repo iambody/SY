@@ -57,7 +57,7 @@ public class HealthBespeakPresenter extends BasePresenterImpl<HealthBespeakContr
 
     @Override
     public void getValidateCode(String phoneNumber) {
-        addSubscription(ApiClient.bespeakHealthValidatePhone(ApiBusParam.getBespeakHealthValidateParams(phoneNumber)).subscribe(new RxSubscriber<String>(){
+        addSubscription(ApiClient.mesageValidateCode(phoneNumber, "1").subscribe(new RxSubscriber<String>(){
             @Override
             protected void onEvent(String s) {
                 Log.d("HealthBespeakPresenter", s);

@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
@@ -20,17 +21,22 @@ import com.cgbsoft.lib.share.dialog.CommonNewShareDialog;
 import com.cgbsoft.lib.share.dialog.CommonScreenDialog;
 import com.cgbsoft.lib.share.dialog.CommonSharePosterDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.poster.ElevenPoster;
 import com.cgbsoft.lib.utils.poster.ScreenShot;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
+import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
+import com.chenenyu.router.Router;
 import com.google.gson.Gson;
 import com.tencent.smtt.sdk.WebView;
 
@@ -145,7 +151,7 @@ public class JavaScriptObjectToc {
     }
 
     @JavascriptInterface
-    public void openCredentialsFolder(String param) {
+    public void openCredentialsFolder(String param){
         try {
             JSONObject ja = new JSONObject(param);
             JSONObject data = ja.getJSONObject("data");
@@ -157,14 +163,14 @@ public class JavaScriptObjectToc {
                     if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("credentialStateMedel", credentialStateMedel);
-                        NavigationUtils.startActivityByRouter(context, RouteConfig.CrenditralGuideActivity, bundle);
+                        NavigationUtils.startActivityByRouter(context,RouteConfig.CrenditralGuideActivity,bundle);
 //                        Intent intent = new Intent(context, CrenditralGuideActivity.class);
 //                        intent.putExtra("credentialStateMedel", credentialStateMedel);
 //                        startActivity(intent);
                     } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("credentialStateMedel", credentialStateMedel);
-                        NavigationUtils.startActivityByRouter(context, RouteConfig.UploadIndentityCradActivity, bundle);
+                        NavigationUtils.startActivityByRouter(context,RouteConfig.UploadIndentityCradActivity,bundle);
 
 //                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
 //                        intent.putExtra("credentialStateMedel", credentialStateMedel);
@@ -178,13 +184,13 @@ public class JavaScriptObjectToc {
                 } else {//  非大陆去证件列表
                     Bundle bundle = new Bundle();
                     bundle.putString("indentityCode", credentialStateMedel.getCustomerIdentity());
-                    NavigationUtils.startActivityByRouter(context, RouteConfig.CardCollectActivity, bundle);
+                    NavigationUtils.startActivityByRouter(context,RouteConfig.CardCollectActivity,bundle);
 //                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
 //                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
 //                    startActivity(intent);
                 }
             } else {//无身份
-                NavigationUtils.startActivityByRouter(context, RouteConfig.SelectIndentityActivity);
+                NavigationUtils.startActivityByRouter(context,RouteConfig.SelectIndentityActivity);
 //                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
 //                startActivity(intent);
             }
@@ -337,6 +343,33 @@ public class JavaScriptObjectToc {
         }
     }
 
+    /**
+     * 申购页面
+     *
+     * @param jsonObj
+     */
+    @JavascriptInterface
+    public void subscribeFund(String jsonObj) {
+        if (!BStrUtils.isEmpty(jsonObj)) {
+            try {
+                JSONObject object = new JSONObject(jsonObj);
+                if (object.has("data")) {
+                    String data = object.getString("data");
+                    if (!BStrUtils.isEmpty(data)) {
+                        JSONObject obj = new JSONObject(data);
+                        String fundCode = obj.getString("fundcode");
+                        String riskLevel = obj.getString("risklevel");
+                        UiSkipUtils.toBuyPublicFundFromNative((Activity) context, fundCode, riskLevel);
+
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
     private void requestPostMethod(String url, String params, String javascirptCallMethod) {
         ThreadUtils.runOnMainThread(new Runnable() {
             @Override
@@ -483,6 +516,129 @@ public class JavaScriptObjectToc {
     }
 
     /**
+     * 打开绑卡
+     */
+    @JavascriptInterface
+    public void bindBankCard(String jsonstr) {
+        try {
+            JSONObject object = new JSONObject(jsonstr);
+            String data = object.getString("data");
+            String callback = object.getString("callback");
+            webView.loadUrl(String.format("javascript:%s()", callback));
+            RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("tag_parameter", data);
+            NavigationUtils.startActivityByRouter(context, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
+            RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
+            ((Activity) context).finish();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //    同步用户信息
+    @JavascriptInterface
+    public void syncAccountInfo(String jsonstr) {
+
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
+        if (!BStrUtils.isEmpty(jsonstr)) {
+            try {
+                JSONObject object = new JSONObject(jsonstr);
+                if (object.has("data")) {
+                    String result = object.getString("data");
+                    if (!BStrUtils.isEmpty(result)) {
+                        JSONObject obj = new JSONObject(result);
+                        PublicFundInf publicFundInf = AppManager.getPublicFundInf(context.getApplicationContext());
+                        if (obj.has("custno") && !BStrUtils.isEmpty(obj.getString("custno"))) {
+                            publicFundInf.setCustno(obj.getString("custno"));
+                            if (obj.has("type")) {
+                                publicFundInf.setType(obj.getString("type"));
+                            }
+                            AppInfStore.savePublicFundInf(context, publicFundInf);
+                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+                        }
+                        if (obj.has("custrisk") && !BStrUtils.isEmpty(obj.getString("custrisk"))) {
+                            publicFundInf.setCustrisk(obj.getString("custrisk"));
+                            if (obj.has("type")) {
+                                publicFundInf.setType(obj.getString("type"));
+                            }
+                            AppInfStore.savePublicFundInf(context, publicFundInf);
+                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+                        }
+
+                        if (obj.has("custRisk") && !BStrUtils.isEmpty(obj.getString("custRisk"))) {
+                            publicFundInf.setCustrisk(obj.getString("custRisk"));
+                            if (obj.has("type")) {
+                                publicFundInf.setType(obj.getString("type"));
+                            }
+//                            AppInfStore.savePublicFundInf(context, publicFundInf);
+                            RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
+                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+                        }
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //完成开户流程
+    @JavascriptInterface
+    public void finishOpeningFundAccount(String jsostr) {
+        try {
+            JSONObject object = new JSONObject(jsostr);
+            String callBack = object.getString("callback");
+            webView.loadUrl(String.format("javascript:%s()", callBack));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 9);
+        Router.build(RouteConfig.GOTOCMAINHONE).go(context);
+
+    }
+
+    //开户
+    @JavascriptInterface
+    public void openFundAccount(String jsostr) {
+        Log.i("sss", jsostr);
+
+        //跳转到开户页面*************************
+        UiSkipUtils.toPublicFundRegist((Activity) context);
+
+    }
+
+    /**
+     * 赎回结果页 点击确定 直接回到首页
+     *
+     * @param jsostr
+     */
+    @JavascriptInterface
+    public void destroyWebview(String jsostr) {
+//        Router.build(RouteConfig.GOTOCMAINHONE).go(context);
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
+        ((Activity) context).finish();
+    }
+
+    @JavascriptInterface
+    public void redeemFund(String jsostr) {
+        try {
+            JSONObject object = new JSONObject(jsostr);
+            if (object.has("data")) {
+                String data = object.getString("data");
+                //跳转到赎回*************************
+                UiSkipUtils.gotoRedeemFund((Activity) context, data);
+            }
+        } catch (Exception e) {
+        }
+
+
+    }
+
+    /**
      * 分享旅游权益
      *
      * @param sharContext
@@ -503,4 +659,5 @@ public class JavaScriptObjectToc {
         });
         commonNewShareDialog.show();
     }
+
 }

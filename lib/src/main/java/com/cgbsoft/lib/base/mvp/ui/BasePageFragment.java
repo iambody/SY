@@ -36,7 +36,7 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
     XTabLayout tabLayout;
 
     @BindView(R2.id.viewpager)
-    ViewPager viewPager;
+    protected ViewPager viewPager;
     @BindView(R2.id.status_replace)
     View statusReplace;
 
@@ -64,6 +64,10 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
         statusReplace.setLayoutParams(layoutParams);
         LayoutInflater.from(getContext()).inflate(titleLayoutId(), title_layout, true);
         bindTitle(title_layout);
+        inflaterData();
+    }
+
+    protected void inflaterData() {
         if (list() != null) {
             for (TabBean tabBean : list()) {
                 XTabLayout.Tab tab = tabLayout.newTab();
@@ -84,17 +88,17 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
                     field.setAccessible(true);
                     final View viewTab = (View) field.get(tab);
                     if (viewTab == null) return;
-                    viewTab.setTag(1,tabBean.getTabName());
+                    viewTab.setTag(1, tabBean.getTabName());
                     BaseFragment fragment = (BaseFragment) tabBean.getFragment();
-                    viewTab.setTag(2,fragment);
+                    viewTab.setTag(2, fragment);
                     viewTab.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             String tabName = (String) viewTab.getTag(1);
                             BaseFragment fragment = (BaseFragment) viewTab.getTag(2);
-                            LogUtils.Log("aaa","tabName==="+tabName);
+                            LogUtils.Log("aaa", "tabName===" + tabName);
                             //这里就可以根据业务需求处理点击事件了。
-                            clickTabButton(tabName,fragment);
+                            clickTabButton(tabName, fragment);
                         }
                     });
                 } catch (Exception e) {
@@ -137,12 +141,14 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
 
     /**
      * 点击尚品按钮
+     *
      * @param tabName
      */
     protected void clickTabButton(String tabName) {
 
     }
-    protected void clickTabButton(String tabName,BaseFragment fragment) {
+
+    protected void clickTabButton(String tabName, BaseFragment fragment) {
 
     }
 
@@ -173,12 +179,12 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
     @Override
     protected void viewBeHide() {
         super.viewBeHide();
-        LogUtils.Log("aaa","viewBeHide===----");
+        LogUtils.Log("aaa", "viewBeHide===----");
     }
 
     @Override
     protected void viewBeShow() {
         super.viewBeShow();
-        LogUtils.Log("aaa","viewBeShow===----");
+        LogUtils.Log("aaa", "viewBeShow===----");
     }
 }

@@ -379,11 +379,12 @@ public class BStrUtils {
         for (int i = 0; i < c.length; i++) {
             Matcher matcher = p.matcher(String.valueOf(c[i]));
             if (matcher.matches()) {
-                return beginPostionDigit(str) +getNumbers(str).length() - 1;
+                return beginPostionDigit(str) + getNumbers(str).length() - 1;
             }
         }
         return 0;
     }
+
     //截取数字
     public static String getNumbers(String content) {
         Pattern pattern = Pattern.compile("\\d+");
@@ -393,6 +394,7 @@ public class BStrUtils {
         }
         return "";
     }
+
     /**
      * 是否包含数字的位置
      */
@@ -408,5 +410,9 @@ public class BStrUtils {
         return 0;
     }
 
-
+    public static boolean homeIsRato(String rato) {
+        if (BStrUtils.isEmpty(rato)) return false;
+        if (rato.endsWith("%"))return true;
+        return  false;
+    }
 }

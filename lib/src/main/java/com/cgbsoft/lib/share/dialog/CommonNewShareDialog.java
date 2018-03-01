@@ -22,6 +22,7 @@ import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
+import com.mob.MobSDK;
 
 import java.util.HashMap;
 
@@ -105,7 +106,9 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
         tagStyle = tag_Style;
         this.commonShareBean = commonShareBean;
         this.commentShareListener = commentShareListener;
-        ShareSDK.initSDK(dcontext);
+//        ShareSDK.initSDK(dcontext);
+
+        MobSDK.init(dcontext);
         userInfo = AppManager.getUserInfo(dcontext);
         try {
             TrackingDataManger.shareIn(dcontext, commonShareBean.getShareTitle());
@@ -248,7 +251,7 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
      * 当关闭时候要关闭分享资源
      */
     private void closeShareSdk() {
-        ShareSDK.stopSDK(dcontext);
+//        ShareSDK.stopSDK(dcontext);
     }
 
     @Override
@@ -256,7 +259,6 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
         if (R.id.sahre_wx_bt == v.getId()) {//微信
             clickShareTag = 0;
             if (Tag_Style_NoteWxCopy != tagStyle) {//正常微信分享
-
                 weChatShare(commonShareBean);
             } else {//旅游权益分享文字
                 weChatTxtShare(commonShareBean.getShareContent());

@@ -8,6 +8,7 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.mob.MobSDK;
 
 import java.util.HashMap;
 
@@ -30,6 +31,9 @@ public class ShareManger implements PlatformActionListener {
     public static final int CIRCLESHARE = 102;
     //微信文本分享
     public static final int WXTXT = 103;
+    //小程序
+    public static final int WXMINIPROGRAM = 104;
+//    Platform.SHARE_WXMINIPROGRAM
 
     private static ShareManger shareManger;
 
@@ -117,7 +121,8 @@ public class ShareManger implements PlatformActionListener {
      */
     private ShareManger(Context wxContextx) {
         this.wxContext = wxContextx;
-        ShareSDK.initSDK(wxContext);
+//        ShareSDK.initSDK(wxContext);
+        MobSDK.init(wxContext);
     }
 
 
@@ -132,25 +137,47 @@ public class ShareManger implements PlatformActionListener {
             case CIRCLESHARE://朋友圈分享
                 WxCircleShare(shareCommonBean);
                 break;
-            case WXTXT://微信文本
-                wXtxt(shareCommonBean);
+            case WXMINIPROGRAM://小程序
+                WxMiniprogram();
                 break;
         }
     }
-    /**
-     * 微信分享文本
-     *
-     * @param WxShareData
-     */
-    private void wXtxt(ShareCommonBean WxShareData) {
-        platform_wx = ShareSDK.getPlatform(Wechat.NAME);
-        Wechat.ShareParams sp = new Wechat.ShareParams();
-        sp.setText(WxShareData.getShareContent());
 
-//      sp.setTitle("s");
-        sp.setShareType(Platform.SHARE_TEXT);
+    private void WxMiniprogram() {
+        if (!Utils.isWeixinAvilible(wxContext)) {//没有安装微信
+            PromptManager.ShowCustomToast(wxContext, wxContext.getResources().getString(R.string.pleaseinstanllweixin));
+            return;
+        }
+
+        HashMap<String, Object
+                > map = new HashMap<>();
+        map.put("Id", "4");
+        map.put("SortId", "4");
+        map.put("AppId", "wx1622f3ec2d611b59");
+        map.put("AppSecret", "81eb3bce61b825bab4d95bbade40153c");
+        map.put("userName", "gh_da3da530187d");
+        map.put("ShareByAppClient", "true");
+        map.put("path", "pages/detailI/detailI?id=30ed55786ff041ba92c083ce2f086b2f&category=6");
+        map.put("Enable", "true");
+        ShareSDK.setPlatformDevInfo(Wechat.NAME, map);
+
+        Platform platform_wx = ShareSDK.getPlatform(Wechat.NAME);
+        Platform.ShareParams shareParams = new  Platform.ShareParams();
+        shareParams.setText("测试");
+        shareParams.setTitle("测试的呀");
+        shareParams.setImageUrl( Constant.SHARE_LOG);
+        shareParams.setUrl("www.baidu.com");
+        shareParams.setSiteUrl("www.baidu.com");
+//        shareParams.setImageData(ResourcesManager.getInstace(MobSDK.getContext()).getImageBmp());
+//        shareParams.setImageUrl(ResourcesManager.getInstace(MobSDK.getContext()).getImageUrl());
+
+        shareParams.setShareType(Platform.SHARE_WXMINIPROGRAM);
+
+
         platform_wx.setPlatformActionListener(this);
-        platform_wx.share(sp);
+        platform_wx.share(shareParams);
+
+
     }
 
     /**
@@ -203,7 +230,7 @@ public class ShareManger implements PlatformActionListener {
      * 手动注销
      */
     public static void unbindShare() {
-        ShareSDK.stopSDK();
+//        ShareSDK.stopSDK();
     }
 
 

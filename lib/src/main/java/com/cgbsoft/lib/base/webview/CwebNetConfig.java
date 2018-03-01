@@ -106,7 +106,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
     //会员
     public static String membercenter;
     public static String qrcoderesult;
-//会员规则
+    //会员规则
     public static String adviserrules;
 
     // 头条号
@@ -114,7 +114,23 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
     //贵宾卡兑换
     public static String vipCardExchange;
-
+    //国内公募基注册的
+    public static String publicFundRegistUrl;
+    //公募基金详情
+    public static String publicFundDetailUrl;
+    //公募基金首页
+    public static String publicFundHomeUrl;
+    // 私享宝详情
+    public static String publicShareBaoDetail;
+    // 我的公募基金列表
+    public static String minePublicFund;
+    //公募基金的风险测评
+    public static String publicFundRiskUrl;
+    //赎回结果页
+    public static String publicFundRedeemResult;
+    public static String publicFundBuyResult;
+   //私享宝详情页
+    public static  String sxbFundDetailUrl;
     static {
         initApi();
         initSxyUrl();
@@ -183,11 +199,24 @@ public class CwebNetConfig extends BaseWebNetConfig {
         qrcoderesult = baseSxyParentUrl + "/biz/adviser/assets_report.html?";
 //        touTiaoHao = baseSxyParentUrl + "/biz/product/new_detail_toc.html";
 
-        adviserrules = baseSxyParentUrl +"/biz/members/rules.html";
+        adviserrules = baseSxyParentUrl + "/biz/members/rules.html";
         touTiaoHao = baseSxyParentUrl + "/biz/product/new_detail_toc.html?id=";
         vipCardExchange = baseSxyParentUrl + "/biz/yundous/rechargeCard.html";
 
 
+        //公募基金相关******************
+        publicFundRegistUrl = baseSxyParentUrl + "/biz/publicfund/account.html";
+        publicFundDetailUrl = baseSxyParentUrl + "/biz/publicfund/detail.html";
+        publicFundHomeUrl = baseSxyParentUrl + "/biz/publicfund/fundIndex.html";
+        publicShareBaoDetail = baseSxyParentUrl + "/biz/publicfund/profile.html";
+        minePublicFund = baseSxyParentUrl + "/biz/publicfund/myfund.html";
+        publicFundBuyResult = baseSxyParentUrl + "/biz/publicfund/result4subscription.html";
+        //开户
+        publicFundRiskUrl = baseSxyParentUrl + "/biz/publicfund/assessment.html";
+        //首页跳转到私享宝详情页
+        sxbFundDetailUrl = baseSxyParentUrl + "/biz/publicfund/profile.html";
 
+        //赎回成功后 跳转的赎回结果页
+        publicFundRedeemResult = baseSxyParentUrl + "/biz/publicfund/redemption_end.html";
     }
 }

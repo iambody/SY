@@ -112,7 +112,7 @@ public class SharePosterManger implements PlatformActionListener {
      */
     private SharePosterManger(Context wxContextx) {
         this.wxContext = wxContextx;
-        ShareSDK.initSDK(wxContext);
+//        Mob.initSDK(wxContext);
     }
 
 
@@ -170,7 +170,7 @@ public class SharePosterManger implements PlatformActionListener {
      * 手动注销
      */
     public static void unbindShare() {
-        ShareSDK.stopSDK();
+//        ShareSDK.stopSDK();
     }
 
 }

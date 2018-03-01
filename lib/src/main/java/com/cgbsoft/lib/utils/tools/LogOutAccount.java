@@ -7,6 +7,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 
 import java.util.HashMap;
 
@@ -35,12 +36,14 @@ public class LogOutAccount {
             AppInfStore.saveRongTokenExpired(context, 0);
             ((InvestorAppli) InvestorAppli.getContext()).setRequestCustom(false);
             AppInfStore.saveUserAccount(context, null);
+            AppInfStore.savePublicFundInf(context, new PublicFundInf());
             AppInfStore.saveIsVisitor(context, true);
             HashMap<String, Object> map = new HashMap<>();
             map.put("ialoginout", true);
             map.put("fromValidatePassword", needExitApp);
 //            NavigationUtils.startActivityByRouter(context, "enter_loginactivity",map, Intent.FLAG_ACTIVITY_CLEAR_TASK);
             NavigationUtils.startActivityByRouter(context, "enter_loginactivity", map);
+            RxBus.get().post(RxConstant.MAIN_PAGE_KILL, 1);
             ((Activity) context).finish();
 
             //退出时清空融云token en

@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.mvp.ui.home;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
@@ -40,16 +42,22 @@ import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.UiSkipUtils;
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
+import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.RoundImageView;
 import com.cgbsoft.lib.widget.RoundProgressbar;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
-import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
+import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
+import com.cgbsoft.privatefund.model.FinancialAssertModel;
 import com.cgbsoft.privatefund.model.MineModel;
 import com.cgbsoft.privatefund.mvp.contract.home.MineContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MinePresenter;
@@ -195,11 +203,86 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @BindView(R.id.account_order_all_text)
     TextView account_order_all_text;
 
+    @BindView(R.id.ll_public_fund_create_account)
+    LinearLayout ll_public_fund_create_account;
+
+    @BindView(R.id.tv_increase_percent)
+    TextView tv_increase_percent;
+
+    @BindView(R.id.tv_server_increase)
+    TextView tv_server_increase;
+
+    @BindView(R.id.tv_increase_value)
+    TextView tv_increase_value;
+
+    @BindView(R.id.tv_increase_value_desc)
+    TextView tv_increase_value_desc;
+
+    @BindView(R.id.tv_now_transfer)
+    TextView tv_now_transfer;
+
+    @BindView(R.id.tv_share_bao_subsist_assert)
+    TextView tv_share_bao_subsist_assert;
+
+    @BindView(R.id.tv_share_bao_continue_income)
+    TextView tv_share_bao_continue_income;
+
+    @BindView(R.id.tv_share_bao_yestoday_income)
+    TextView tv_share_bao_yestoday_income;
+
+    @BindView(R.id.tv_look_public_fund_product)
+    TextView tv_look_public_fund_product;
+
+    @BindView(R.id.tv_public_fund_subsist_assert)
+    TextView tv_public_fund_subsist_assert;
+
+    @BindView(R.id.tv_public_fund_continue_income)
+    TextView tv_public_fund_continue_income;
+
+    @BindView(R.id.tv_public_fund_yestoday_income)
+    TextView tv_public_fund_yestoday_income;
+
+    @BindView(R.id.tv_share_bao_subsist_assert_desc)
+    TextView tv_share_bao_subsist_assert_desc;
+
+    @BindView(R.id.tv_share_bao_continue_income_desc)
+    TextView tv_share_bao_continue_income_desc;
+
+    @BindView(R.id.tv_share_bao_yestoday_income_desc)
+    TextView tv_share_bao_yestoday_income_desc;
+
+    @BindView(R.id.tv_public_fund_subsist_assert_desc)
+    TextView tv_public_fund_subsist_assert_desc;
+
+    @BindView(R.id.tv_public_fund_continue_income_desc)
+    TextView tv_public_fund_continue_income_desc;
+
+    @BindView(R.id.tv_public_fund_yestoday_income_desc)
+    TextView tv_public_fund_yestoday_income_desc;
+
+    @BindView(R.id.ll_private_share_bao_empty)
+    LinearLayout ll_private_share_bao_empty;
+
+    @BindView(R.id.ll_private_share_bao_fill)
+    LinearLayout ll_private_share_bao_fill;
+
+    @BindView(R.id.ll_public_fund_empty)
+    LinearLayout ll_public_fund_empty;
+
+    @BindView(R.id.ll_public_fund_fill)
+    LinearLayout ll_public_fund_fill;
+
     @BindView(R.id.tab_layout)
     XTabLayout xTabLayout;
 
     @BindView(R.id.private_bank_bottom_buttons)
     LinearLayout privateBackBottomButtons;
+
+    @BindView(R.id.layout_private_share_bao)
+    LinearLayout layoutPrivateShareBao;
+
+    @BindView(R.id.layout_public_fund)
+    LinearLayout layoutPublicFund;
 
     @BindView(R.id.viewpager)
     CustomViewPage viewPager;
@@ -207,6 +290,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private DaoUtils daoUtils;
     private String[] videos;
     private MineModel mineModel;
+    private FinancialAssertModel financialAssertModel;
     private boolean showAssert;
     private boolean isLoading;
     private static final long DEALAY = 500;
@@ -438,8 +522,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 //                }
 //            }
 //        }
-
-
     }
 
     private void gotoDetial() {
@@ -447,7 +529,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
         startActivity(intent1);
     }
-
 
     private void initObserver() {
         swtichAssetObservable = RxBus.get().register(RxConstant.SWITCH_ASSERT_SHOW, Boolean.class);
@@ -610,30 +691,58 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void showAssert() {
-        if (mineModel == null) {
-            return;
-        }
-        textViewShowAssert.setText(R.string.account_bank_hide_assert);
-        MineModel.PrivateBank privateBank = mineModel.getBank();
-        textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), privateBank.getDurationUnit()));
-        textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
-        textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
-        textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
-        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), TextUtils.isEmpty(privateBank.getEquityRatio()) ? "0%" : privateBank.getEquityRatio().concat("%")));
-        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), TextUtils.isEmpty(privateBank.getDebtRatio()) ? "0%" : privateBank.getDebtRatio().concat("%")));
+        showPrivateAssert();
+        showPublicAssert();
     }
 
     private void hideAssert() {
-        if (mineModel == null) {
-            return;
+        hidePrivateAssert();
+        hidePublicAssert();
+    }
+
+    private void showPrivateAssert() {
+        if (mineModel != null) {
+            textViewShowAssert.setText(R.string.account_bank_hide_assert);
+            MineModel.PrivateBank privateBank = mineModel.getBank();
+            textViewAssertTotalText.setText(String.format(getString(R.string.account_bank_cunxun_assert), privateBank.getDurationUnit()));
+            textViewAssertTotalValue.setText(mineModel.getBank().getDurationAmt());
+            textViewGuquanValue.setText(mineModel.getBank().getEquityAmt());
+            textViewzhaiquanValue.setText(mineModel.getBank().getDebtAmt());
+            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), TextUtils.isEmpty(privateBank.getEquityRatio()) ? "0%" : privateBank.getEquityRatio().concat("%")));
+            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), TextUtils.isEmpty(privateBank.getDebtRatio()) ? "0%" : privateBank.getDebtRatio().concat("%")));
         }
-        MineModel.PrivateBank privateBank = mineModel.getBank();
-        textViewShowAssert.setText(R.string.account_bank_show_assert);
-        ViewUtils.textViewFormatPasswordType(textViewAssertTotalValue);
-        ViewUtils.textViewFormatPasswordType(textViewGuquanValue);
-        ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
-        textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
-        textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
+    }
+
+    private void showPublicAssert() {
+        if (financialAssertModel != null) {
+            fillPrivateShareData(financialAssertModel);
+            fillPublicFundData(financialAssertModel);
+        }
+    }
+
+    private void hidePrivateAssert() {
+        if (mineModel != null) {
+            MineModel.PrivateBank privateBank = mineModel.getBank();
+            textViewShowAssert.setText(R.string.account_bank_show_assert);
+            ViewUtils.textViewFormatPasswordType(textViewAssertTotalValue);
+            ViewUtils.textViewFormatPasswordType(textViewGuquanValue);
+            ViewUtils.textViewFormatPasswordType(textViewzhaiquanValue);
+            textViewGuquanText.setText(String.format(getString(R.string.account_bank_guquan_assert), privateBank.getEquityUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
+            textViewzhaiquanText.setText(String.format(getString(R.string.account_bank_zhaiquan_assert), privateBank.getDebtUnit(), ViewUtils.PASSWROD_TYPE_START_FOUR));
+        }
+    }
+
+    private void hidePublicAssert() {
+        if (financialAssertModel != null) {
+            textViewShowAssert.setText(R.string.account_bank_show_assert);
+            ViewUtils.textViewFormatPasswordType(tv_share_bao_subsist_assert);
+            ViewUtils.textViewFormatPasswordType(tv_share_bao_continue_income);
+            ViewUtils.textViewFormatPasswordType(tv_share_bao_yestoday_income);
+
+            ViewUtils.textViewFormatPasswordType(tv_public_fund_subsist_assert);
+            ViewUtils.textViewFormatPasswordType(tv_public_fund_continue_income);
+            ViewUtils.textViewFormatPasswordType(tv_public_fund_yestoday_income);
+        }
     }
 
     @Override
@@ -643,6 +752,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), imageViewMessagIcon, false);
     }
 
+    // dynamic to display this view of public fund
+    private void dynamicDisplayPublicFund() {
+        layoutPrivateShareBao.setVisibility(Utils.isWhiteUserFlag(getContext()) ? View.VISIBLE : View.GONE);
+        layoutPublicFund.setVisibility(Utils.isWhiteUserFlag(getContext()) ? View.VISIBLE : View.GONE);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -650,6 +765,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (isLoading) {
             return;
         }
+        dynamicDisplayPublicFund();
 //        initRelativeStatus();
         isLoading = true;
         initVideoView();
@@ -657,6 +773,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         getPresenter().verifyIndentityV3();
         if (unreadInfoNumber != null) {
             unreadInfoNumber.initUnreadInfoAndPosition();
+        }
+        if (!AppManager.isVisitor(getActivity())) {
+            getPresenter().getMineFinacailAssert();
         }
     }
 
@@ -699,6 +818,94 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     @Override
+    public void requestFinancialAssertSuccess(FinancialAssertModel financialAssertModel) {
+        this.financialAssertModel = financialAssertModel;
+        initPrivateShareMoneyData(financialAssertModel);
+        initPublicFundData(financialAssertModel);
+        textViewShowAssert.setVisibility((!isNullPrivateBank(mineModel) || isExistPrivateShareMoney(financialAssertModel) || isExistPublicFundMoney(financialAssertModel)) ? View.VISIBLE : View.GONE);
+        if (showAssert) {
+            showPublicAssert();
+        } else {
+            hidePublicAssert();
+        }
+    }
+
+    @Override
+    public void requestFinancialAssertFailure(String msg) {
+        MToast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean isExistPrivateShareMoney(FinancialAssertModel financialAssertModel) {
+        return financialAssertModel != null && financialAssertModel.getSxbInfo() != null && TextUtils.equals("1", financialAssertModel.getSxbInfo().isBuyIn());
+    }
+
+    private boolean isExistPublicFundMoney(FinancialAssertModel financialAssertModel) {
+        return financialAssertModel != null && financialAssertModel.getGmInfo() != null && TextUtils.equals("1", financialAssertModel.getGmInfo().isBuyIn());
+    }
+
+    @SuppressLint("StringFormatInvalid")
+    private void initPrivateShareMoneyData(FinancialAssertModel financialAssertModel) {
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(getActivity());
+        String custno = publicFundInf.getCustno();
+        String isHaveBanckAccount = publicFundInf.getIsHaveCustBankAcct();
+        String ristPingce = publicFundInf.getCustrisk();
+        ll_public_fund_create_account.setVisibility((Utils.isWhiteUserFlag(getContext())) && (TextUtils.isEmpty(custno) || (!TextUtils.equals("1", isHaveBanckAccount) || TextUtils.isEmpty(ristPingce))) ? View.VISIBLE : View.GONE);
+        if (isExistPrivateShareMoney(financialAssertModel)) {
+            ll_private_share_bao_empty.setVisibility(View.GONE);
+            ll_private_share_bao_fill.setVisibility(View.VISIBLE);
+            fillPrivateShareData(financialAssertModel);
+        } else {
+            ll_private_share_bao_empty.setVisibility(View.VISIBLE);
+            ll_private_share_bao_fill.setVisibility(View.GONE);
+            PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(getActivity());
+            if (publishFundRecommendBean != null) {
+                ViewUtils.scaleUserAchievment(tv_increase_percent, publishFundRecommendBean.getLeftUpValue(),0.5f);
+                tv_server_increase.setText(publishFundRecommendBean.getLeftDownDes());
+                tv_increase_value.setText(publishFundRecommendBean.getRightUpValue());
+                tv_increase_value_desc.setText(publishFundRecommendBean.getRightDownDes());
+            }
+        }
+    }
+
+    private void fillPrivateShareData(FinancialAssertModel financialAssertModel) {
+        ViewUtils.showTextByValue(getContext(), tv_share_bao_continue_income, financialAssertModel.getSxbInfo().getAddincome());
+        ViewUtils.showTextByValue(getContext(), tv_share_bao_yestoday_income, financialAssertModel.getSxbInfo().getYestincome());
+//        tv_share_bao_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+//        tv_share_bao_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+        tv_share_bao_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getSurvivingAssets(), false));
+        tv_share_bao_continue_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getAddincome(), true));
+        tv_share_bao_yestoday_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getYestincome(), true));
+        tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getSurvivingAssets())));
+        tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getAddincome())));
+        tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getYestincome())));
+    }
+
+    private void fillPublicFundData(FinancialAssertModel financialAssertModel) {
+        ViewUtils.showTextByValue(getContext(), tv_public_fund_continue_income, financialAssertModel.getGmInfo().getAddincome());
+        ViewUtils.showTextByValue(getContext(), tv_public_fund_yestoday_income, financialAssertModel.getGmInfo().getYestincome());
+//        tv_public_fund_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+//        tv_public_fund_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+        tv_public_fund_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getGmInfo().getSurvivingAssets(), false));
+        tv_public_fund_continue_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getGmInfo().getAddincome(), true));
+        tv_public_fund_yestoday_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getGmInfo().getYestincome(), true));
+        tv_public_fund_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getSurvivingAssets())));
+        tv_public_fund_continue_income_desc.setText(String.format(getString(R.string.continue_income), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getAddincome())));
+        tv_public_fund_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getYestincome())));
+    }
+
+    @SuppressLint("StringFormatInvalid")
+    private void initPublicFundData(FinancialAssertModel financialAssertModel) {
+        if (isExistPublicFundMoney(financialAssertModel)) {
+            ll_public_fund_empty.setVisibility(View.GONE);
+            ll_public_fund_fill.setVisibility(View.VISIBLE);
+            fillPublicFundData(financialAssertModel);
+        } else {
+            ll_public_fund_empty.setVisibility(View.VISIBLE);
+            ll_public_fund_fill.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
     }
@@ -723,6 +930,22 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         NavigationUtils.startActivityByRouter(getActivity(), RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY, LEVER_NAME, (mineModel != null && mineModel.getMyInfo() != null) ? mineModel.getMyInfo().getMemberLevel() : "");
     }
 
+    @OnClick(R.id.ll_private_share_bao_fill)
+    void gotoPrivateShareBaoDetail() {
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicShareBaoDetail, getString(R.string.private_share_bao), false);
+    }
+
+    @OnClick(R.id.ll_public_fund_fill)
+    void gotoMinePublicFund() {
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.minePublicFund, getString(R.string.public_fund), false);
+    }
+
+    @OnClick(R.id.tv_look_public_fund_product)
+    void gotoLookPublicFundProduct() {
+//        NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.PUBLIC_FUND_PAGE);
+        NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
+    }
+
     @OnClick(R.id.account_info_level_ll)
     void gotoPersonInfoctivity() {
         gotoMemberArea();
@@ -731,6 +954,24 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.user_leaguar_update_desc)
     void gotoLeaguarActivity() {
         gotoMemberArea();
+    }
+
+    @OnClick(R.id.ll_public_fund_create_account)
+    void gotoCreatePublicFundAccount() {
+        UiSkipUtils.toPublicFundRegist(getActivity());
+    }
+
+    @OnClick(R.id.tv_now_transfer)
+    void gotoNowTransferPrivateShare() {
+        PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundcode(), publicFundInf.getRisklevel());
+    }
+
+    @OnClick(R.id.ll_private_share_bao_empty)
+    void gotoSxbDetail() {
+        PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
+        if(null==publicFundInf)return;
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publicFundInf.getFundName()), BStrUtils.nullToEmpty(publicFundInf.getFundcode())), false);
     }
 
     @OnClick(R.id.account_info_caifu_value_ll)
@@ -825,35 +1066,34 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void intercepterAssertGesturePassword() {
-        if (this.mineModel == null) {
+        if (this.mineModel == null && financialAssertModel == null) {
             return;
         }
         if (showAssert) {
-            if (null == credentialStateMedel.getCredentialState()) {
-                isClickBack = true;
-                getPresenter().verifyIndentityV3();
-            } else {
-                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
-                    //90：存量已有证件号已上传证件照待审核
-                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
-                        jumpGuidePage();
-                    } else {
+//            if (null == credentialStateMedel.getCredentialState()) {
+//                isClickBack = true;
+//                getPresenter().verifyIndentityV3();
+//            } else {
+//                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
+//                    //90：存量已有证件号已上传证件照待审核
+//                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
+//                        jumpGuidePage();
+//                    } else {
+//                        hideAssert();
+//                        showAssert = false;
+//                        AppInfStore.saveShowAssetStatus(getActivity(), false);
+//                    }
+//                } else {
+//                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+//                        jumpCollect();
+//                    } else {
                         hideAssert();
                         showAssert = false;
-                        AppInfStore.saveShowAssetStatus(getActivity(), false);
-                    }
-                    isClickBack = false;
-                } else {
-                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
-                        jumpCollect();
-                    } else {
-                        hideAssert();
-                        showAssert = false;
-                        AppInfStore.saveShowAssetStatus(getActivity(), false);
-                    }
-                    isClickBack = false;
-                }
-            }
+//                        AppInfStore.saveShowAssetStatus(getActivity(), false);
+//                    }
+//                    isClickBack = false;
+//                }
+//            }
         } else {
             GestureManager.showAssertGestureManager(getActivity());
         }
@@ -1149,21 +1389,21 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         boolean isNullPrivateBank = isNullPrivateBank(mineModel);
         linearLayoutBankNoData.setVisibility(isNullPrivateBank ? View.VISIBLE : View.GONE);
         linearLayoutBankHadData.setVisibility(isNullPrivateBank ? View.GONE : View.VISIBLE);
-        textViewShowAssert.setVisibility(isNullPrivateBank ? View.GONE : View.VISIBLE);
+        textViewShowAssert.setVisibility((!isNullPrivateBank || isExistPrivateShareMoney(financialAssertModel) || isExistPublicFundMoney(financialAssertModel)) ? View.VISIBLE : View.GONE);
         if (!TextUtils.isEmpty(mineModel.getBank().getDebtRatio())) {
             float zhaiQuanValue = Float.parseFloat(mineModel.getBank().getDebtRatio());
             roundProgressbar.setProgress((int) zhaiQuanValue);
         }
 
         if (showAssert) {
-            showAssert();
+            showPrivateAssert();
         } else {
-            hideAssert();
+            hidePrivateAssert();
         }
     }
 
     private boolean isNullPrivateBank(MineModel mineModel) {
-        if (mineModel.getBank() == null ||
+        if (mineModel == null || mineModel.getBank() == null ||
                 ((TextUtils.isEmpty(mineModel.getBank().getDebtAmt()) || "0".equals(mineModel.getBank().getDebtAmt())) &&
                         (TextUtils.isEmpty(mineModel.getBank().getEquityAmt()) || "0".equals(mineModel.getBank().getEquityAmt())))) {
             return true;
@@ -1202,7 +1442,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private boolean isEmptyHealthData() {
-       return CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) && CollectionUtils.isEmpty(mineModel.getHealthOrder().getContent());
+        return CollectionUtils.isEmpty(mineModel.getHealthy().getContent()) && CollectionUtils.isEmpty(mineModel.getHealthOrder().getContent());
     }
 
     private boolean isEmptyTravelData() {
@@ -1263,7 +1503,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     }
 
     private void createHealthItem(MineModel.Health health) {
-           health_had_data_ll.removeAllViews();
+        health_had_data_ll.removeAllViews();
         if (!CollectionUtils.isEmpty(health.getContent())) {
             List<MineModel.HealthItem> healthList = health.getContent();
             MineModel.HealthItem healthItem = healthList.get(healthList.size() - 1);
@@ -1299,11 +1539,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void createHealthOrderItem(MineModel.HealthOrder healthOrder) {
         if (!CollectionUtils.isEmpty(healthOrder.getContent())) {
             List<MineModel.HealthOrder.HealthOrderItem> healthList = healthOrder.getContent();
-                View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
-                ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
-                lineView.setPadding(10,0, 0, 0);
-                lineView.setLayoutParams(layoutParams);
-                health_had_data_ll.addView(lineView);
+            View lineView = LayoutInflater.from(getActivity()).inflate(R.layout.acitivity_divide_online, null);
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1);
+            lineView.setPadding(10, 0, 0, 0);
+            lineView.setLayoutParams(layoutParams);
+            health_had_data_ll.addView(lineView);
 
                 MineModel.HealthOrder.HealthOrderItem healthOrderItem = healthList.get(healthList.size() - 1);
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_health, null);

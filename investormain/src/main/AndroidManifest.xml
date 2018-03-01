@@ -160,7 +160,7 @@
             android:value="${UMENG_APPKEY_VALUE}" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" />
+            android:value="5983d8c365b6d632a2000c06" />
         <!--
         umeng
             正式Key:5983d8c365b6d632a2000c06
@@ -443,6 +443,18 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" />
 
+        <activity
+            android:name=".mvp.ui.center.BindBankCardInfoActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".mvp.ui.center.PublicFundIdentifyInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.ui.center.PublicFundTradePwdModifyActivity"
+            android:screenOrientation="portrait" />
+
         <!-- <activity -->
         <!-- android:name="com.cgbsoft.privatefund.widget.CloudMenuActivity" -->
         <!-- android:theme="@style/transcutestyle" -->
@@ -607,6 +619,32 @@
             android:process=":QALSERVICE" />
 
         <activity android:name=".mvp.ui.home.SplashMovieActivity" />
+
+
+
+         <!-- 公募基金  -->
+        <activity
+            android:name=".public_fund.SellPublicFundActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".public_fund.BuyPublicFundActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".public_fund.BindingBankCardOfPublicFundActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".public_fund.SelectBankCardActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".public_fund.SelectBranchBankActivity"
+            android:screenOrientation="portrait"
+            />
+
+
 
         <meta-data
             android:name="io.fabric.ApiKey"

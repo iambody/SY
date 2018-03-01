@@ -155,6 +155,9 @@ public interface RxConstant {
     String COMPIANCE_FACE_BACK = "compliance_face_back";
 
     //活体验身页面直接意外返回通知身份证详情页
-    String COMPIANCE_LIVING_BACK="compliance_living_back";
-
+    String COMPIANCE_LIVING_BACK = "compliance_living_back";
+    /*************************公募基金********************************/
+    String REFRESH_PUBLIC_FUND_INFO = "refresh_public_fund_info";
+    String MAIN_FRESH_PRIVATE_IDEXLAY = "mainfresh_private_index";
+    String REFRESH_PUBLIC_FUND_RESGIST_LAY = "refresh_public_fund_regist_lay";
 }

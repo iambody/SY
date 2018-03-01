@@ -28,6 +28,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
 import com.cgbsoft.lib.widget.FlowLayoutView;
 import com.cgbsoft.lib.widget.RoundImageView;
+import com.mob.MobSDK;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -194,7 +195,8 @@ public class CommonSharePosterDialog extends Dialog implements PlatformActionLis
         Tag_Style = tag_Style;
         imageSharePath = imagPath;
         this.commentShareListener = commentShareListener;
-        ShareSDK.initSDK(Dcontext);
+//        ShareSDK.initSDK(Dcontext);
+        MobSDK.init(Dcontext);
         userInfo = AppManager.getUserInfo(Dcontext);
 //     根据需求分享理财是名片
         IsCanShare = !BStrUtils.isEmpty(userInfo.realName) && userInfo.isAdvisers.endsWith("y") && AppManager.isAdViser(Dcontext);
@@ -364,7 +366,7 @@ public class CommonSharePosterDialog extends Dialog implements PlatformActionLis
      * 当关闭时候要关闭分享资源
      */
     private void CloseShareSdk() {
-        ShareSDK.stopSDK(Dcontext);
+//        ShareSDK.stopSDK(Dcontext);
     }
 
 

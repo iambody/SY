@@ -159,6 +159,7 @@ public class MyTaskActivity extends BaseActivity<MyTaskPresenter> implements MyT
         dayTaskBean.setStatus("-1");
         dayTaskBean.setTaskName("列表头部");
         list.add(0, dayTaskBean);
+        adapter.deleteAllData();
         adapter.refAllData(list);
         fragmentVideoschoolNoresultLay.setVisibility(View.GONE);
         rcv_commui_task.setVisibility(View.VISIBLE);

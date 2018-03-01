@@ -115,4 +115,14 @@ public class RouteConfig {
     public static final String UploadIndentityCradActivity = "UploadIndentityCradActivity";
     public static final String CrenditralGuideActivity = "CrenditralGuideActivity";
 
+    //公募基金身份信息
+    public static final String GOTO_PUBLIC_FUND_INFO_ACTIVITY="public_fund_info_activity";
+    public static final String GOTO_BIND_BANK_CARD_ACTIVITY_INFO="bind_bank_card_info_activity";
+    public static final String GOTO_PUBLIC_FUND_TRADE_PWD_MODIFY_ACTIVITY="public_fund_trade_pwd_modify_activity";
+    public static final String GOTO_PUBLIC_FUND_BIND_BANKCARD_ACTIVITY="goto_public_fund_bind_bankcard_activity";
+
+    //跳转到公募基金的申购页面
+    public static final String GOTO_PUBLIC_FUND_BUY="public_fund_buy_activity";
+    public static final String GOTO_PUBLIC_FUND_BIND_BANK_CARD="BindingBankCardOfPublicFund";
+    public static final String  GOTO_PUBLIC_FUND_REDEMPTION="public_fund_redemption";
 }

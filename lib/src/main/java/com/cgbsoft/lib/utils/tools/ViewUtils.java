@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -17,6 +18,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.TextureView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,9 +29,11 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.R;
 import com.readystatesoftware.viewbadger.BadgeView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author chenlong on 16/9/5.
@@ -78,6 +82,7 @@ public class ViewUtils {
     public static void textViewFormatPasswordType(TextView textView) {
         String values = textView.getText().toString();
         values = values.replace(values, PASSWROD_TYPE_START_SIX);
+        textView.setTextColor(ContextCompat.getColorStateList(textView.getContext(), R.color.black));
         textView.setText(values);
     }
 
@@ -107,9 +112,11 @@ public class ViewUtils {
     }
 
     public static void scaleUserAchievment(TextView textView, String achievment, float relativeValue) {
-        SpannableString textSize = new SpannableString(achievment);
-        textSize.setSpan(new RelativeSizeSpan(relativeValue), achievment.length() - 1, achievment.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        textView.setText(textSize);
+        if (!TextUtils.isEmpty(achievment)) {
+            SpannableString textSize = new SpannableString(achievment);
+            textSize.setSpan(new RelativeSizeSpan(relativeValue), achievment.length() - 1, achievment.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            textView.setText(textSize);
+        }
     }
 
     public static void scaleUserAchievment(TextView textView, String achievment, int start, int end, float relativeValue) {
@@ -376,5 +383,85 @@ public class ViewUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static String formateMoneyPattern(String money, boolean isNeedFlag) {
+        String flag = "";
+        if (!TextUtils.isEmpty(money)) {
+            if (isNeedFlag && (money.startsWith("+"))) {
+                flag = money.substring(0, 1);
+            }
+            double moneyDouble = Double.parseDouble(money);
+            DecimalFormat df = new DecimalFormat("#.00");
+            if (Math.abs(moneyDouble) > 10000 * 10000) {
+                return flag.concat(df.format(moneyDouble/(10000 * 10000)));
+            } else if (Math.abs(moneyDouble) > 10000) {
+                return flag.concat(df.format(moneyDouble/(10000)));
+            } else {
+                return flag.concat(String.valueOf(moneyDouble));
+            }
+        }
+        return "";
+    }
+
+    public static String getMoneyUnit(String money) {
+        if (!TextUtils.isEmpty(money)) {
+            double moneyDouble = Double.parseDouble(money);
+            if (Math.abs(moneyDouble) > 10000 * 10000) {
+                return "亿";
+            } else if (Math.abs(moneyDouble) > 10000) {
+                return "万";
+            } else {
+                return "元";
+            }
+        }
+        return "元";
+    }
+
+    public static String formatNumberPatter(String targetValue, int unitNumber) {
+        String partten = "%." + unitNumber + "f";
+        if (!TextUtils.isEmpty(targetValue)) {
+            try {
+                return String.format(partten, Float.parseFloat(targetValue));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return targetValue;
+    }
+
+    public static void showTextByValue(Context context, TextView textView, String value) {
+        if (!TextUtils.isEmpty(value)) {
+            double myDoubleValue = Double.parseDouble(value);
+            if (myDoubleValue > 0) {
+                textView.setTextColor(ContextCompat.getColorStateList(context, R.color.increase_income_color));
+            } else if (myDoubleValue < 0) {
+                textView.setTextColor(ContextCompat.getColorStateList(context, R.color.decrease_income_color));
+            } else {
+                textView.setTextColor(ContextCompat.getColorStateList(context, R.color.black));
+            }
+        }
+    }
+
+    public static String productEncodyStr(String cardNumber) {
+        StringBuffer sb = new StringBuffer();
+        if (!TextUtils.isEmpty(cardNumber)) {
+            char[] bs = cardNumber.toCharArray();
+            int i = 0;
+            while (i++ < bs.length) {
+                sb.append("*");
+            }
+            return sb.toString();
+        }
+        return "";
+    }
+
+    public static boolean checkIdNumberRegex(String idNumber) {
+        return Pattern.matches("^([0-9]{17}[0-9Xx])|([0-9]{15})$", idNumber);
+    }
+
+    public static boolean checkPhoneNumberRegex(String phoneNumber) {
+        String mobileRegex = "^1(3|4|5|7|8)\\d{9}$";
+        return phoneNumber.matches(mobileRegex);
     }
 }
