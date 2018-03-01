@@ -352,9 +352,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-        ShareCommonBean shareCommonBean=new ShareCommonBean();
+        ShareCommonBean shareCommonBean = new ShareCommonBean();
 //        shareCommonBean.setShareContent();
-        ShareManger shareManger=  ShareManger.getInstance(baseActivity,shareCommonBean,null);
+        ShareManger shareManger = ShareManger.getInstance(baseActivity, shareCommonBean, null);
         shareManger.goShareWx(ShareManger.WXMINIPROGRAM);
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRiskUrl, getResources().getString(R.string.public_fund_risk), false);
 //        UiSkipUtils.gotoPublicFundRisk(baseActivity);
@@ -949,7 +949,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         boolean isRato = BStrUtils.homeIsRato(publishFundRecommendBean.getLeftUpValue());
         if (isRato) {
-            SpannableString spannableString = SpannableUtils.setTextSize1(publishFundRecommendBean.getLeftUpValue(), publishFundRecommendBean.getLeftUpValue().length() - 1,publishFundRecommendBean.getLeftUpValue().length(), DimensionPixelUtil.dip2px(baseActivity, 15));
+            SpannableString spannableString = SpannableUtils.setTextSize1(publishFundRecommendBean.getLeftUpValue(), publishFundRecommendBean.getLeftUpValue().length() - 1, publishFundRecommendBean.getLeftUpValue().length(), DimensionPixelUtil.dip2px(baseActivity, 15));
             viewHomePublicFundLeftvalues.setText(spannableString);
         }
     }
@@ -958,12 +958,24 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      * 刷新注册布局
      */
     public void initRegistLay() {
+
+
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
-        if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustrisk()) || BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
-            viewPublicFundRegist.setVisibility(View.VISIBLE);
+
+        //新添加了白名单的逻辑处理
+        if (!BStrUtils.isEmpty(publicFundInf.getWhiteUserListFlg()) && "1".equals(publicFundInf.getWhiteUserListFlg())) {
+            //在白名单内 需要显示
+            if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustrisk()) || BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
+                viewPublicFundRegist.setVisibility(View.VISIBLE);
+            } else {
+                viewPublicFundRegist.setVisibility(View.GONE);
+            }
         } else {
-            viewPublicFundRegist.setVisibility(View.GONE);
+            //不在白名单内  不需要显示
+            viewHomePublicFundLay.setVisibility(View.GONE);
+            return;
         }
+
 
     }
 
@@ -1155,7 +1167,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void publicFundDetail() {
         //跳转到基金详情页面
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundcode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundcode()), false);
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl,   BStrUtils.NullToStr(publishFundRecommend.getFundName()) , false);
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, BStrUtils.NullToStr(publishFundRecommend.getFundName()), false);
 
 
     }
