@@ -1,15 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-
-    compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-
-        minSdkVersion 17
-        targetSdkVersion 22
-
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
@@ -34,6 +31,6 @@ dependencies {
     }
     compile 'com.andkulikov:transitionseverywhere:1.7.0'
     compile 'com.danikula:videocache:2.7.0'
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile "com.android.support:appcompat-v7:${android_need_version}"
     compile project(':lib')
 }

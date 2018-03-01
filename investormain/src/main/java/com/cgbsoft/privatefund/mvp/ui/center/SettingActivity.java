@@ -27,6 +27,8 @@ import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
+import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.mvp.contract.center.SettingContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.SettingPresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.FeedbackActivity;
@@ -34,6 +36,11 @@ import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.umeng.analytics.MobclickAgent;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -51,6 +58,12 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     ImageView ivBack;
     @BindView(R.id.title_mid)
     TextView titleTV;
+    @BindView(R.id.sin_public_fund_account_status)
+    SettingItemNormal publicFundAccountStatus;
+    @BindView(R.id.sin_public_fund_bankcard)
+    SettingItemNormal publicFundBankCarkInfo;
+    @BindView(R.id.sin_public_fund_trade_password)
+    SettingItemNormal publicFundTradePasswordModify;
     @BindView(R.id.sit_gesture_switch)
     SettingItemNormal gestureSwitch;
     @BindView(R.id.sin_change_gesture_psd)
@@ -59,7 +72,6 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
     SettingItemNormal changeLoginPsd;
     @BindView(R.id.sin_about_app)
     SettingItemNormal aboutApp;
-
     private Observable<Boolean> switchButton;
     private Observable<Boolean> closeSetting;
     private DaoUtils daoUtils;
@@ -75,6 +87,13 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         initView(savedInstanceState);
         showView();
         DataStatistApiParam.intoSettingPage();
+    }
+
+    // dynamic to display this view of public fund
+    private void dynamicDisplayPublicFundView() {
+        publicFundAccountStatus.setVisibility(Utils.isWhiteUserFlag(this) ? View.VISIBLE : View.GONE);
+        publicFundBankCarkInfo.setVisibility(Utils.isWhiteUserFlag(this) ? View.VISIBLE : View.GONE);
+        publicFundTradePasswordModify.setVisibility(Utils.isWhiteUserFlag(this) ? View.VISIBLE : View.GONE);
     }
 
     private void showView() {
@@ -163,6 +182,66 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         } else {
             changeGesturePsdLayout.setVisibility(View.GONE);
         }
+        initPublicFund();
+         dynamicDisplayPublicFundView();
+    }
+
+    private void initPublicFund() {
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
+        boolean existAccount = !TextUtils.isEmpty(publicFundInf.getCustno());
+        boolean bindCard = TextUtils.equals("1", publicFundInf.getIsHaveCustBankAcct());
+        publicFundAccountStatus.setTitle(existAccount ? getString(R.string.public_fund_setting_account_info) : getString(R.string.public_fund_setting_account_create));
+        publicFundBankCarkInfo.setTitle(bindCard ? getString(R.string.public_fund_setting_bankcard_info) : getString(R.string.public_fund_setting_bind_bankcard));
+        publicFundTradePasswordModify.setTitle(getString(R.string.public_fund_setting_modify_public_fund_password));
+        publicFundBankCarkInfo.setVisibility(existAccount ? View.VISIBLE : View.GONE);
+        publicFundTradePasswordModify.setVisibility(existAccount ? View.VISIBLE : View.GONE);
+    }
+
+    @OnClick(R.id.sin_public_fund_account_status)
+    void gotoCreatePublicFundAccount() {
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
+        if (TextUtils.isEmpty(publicFundInf.getCustno())) {
+            NavigationUtils.gotoWebActivity(this, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+        } else {
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_INFO_ACTIVITY);
+        }
+    }
+
+    @OnClick(R.id.sin_public_fund_bankcard)
+    void gotoPublicFundBankCard() {
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
+        boolean bindCard = TextUtils.equals("1", publicFundInf.getIsHaveCustBankAcct());
+        if (bindCard) {
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_BIND_BANK_CARD_ACTIVITY_INFO);
+        } else {
+            PublicFundInf publicFundInf1 = AppManager.getPublicFundInf(this);
+            PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(this);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("trantype", "bgAddCard");
+                jsonObject.put("custno", publicFundInf1.getCustno());
+                jsonObject.put("authenticateflag", "1");
+                jsonObject.put("certificateno", publishFundRecommendBean.getCertificateno());
+                jsonObject.put("certificatetype", publishFundRecommendBean.getCertificatetype());
+                jsonObject.put("depositacct", publishFundRecommendBean.getDepositacct());
+                jsonObject.put("depositacctname", publishFundRecommendBean.getDepositacctname());
+                jsonObject.put("depositname", publishFundRecommendBean.getDepositacctname());
+                jsonObject.put("depositcity", "");
+                jsonObject.put("depositprov", "");
+                jsonObject.put("operorg", "9999");
+                jsonObject.put("tpasswd", "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("tag_parameter", jsonObject.toString());
+            NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
+        }
+    }
+
+    @OnClick(R.id.sin_public_fund_trade_password)
+    void gotoPublicFundTradePasswordModify() {
+        NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_TRADE_PWD_MODIFY_ACTIVITY);
     }
 
     private void turnOffGesturePsd() {

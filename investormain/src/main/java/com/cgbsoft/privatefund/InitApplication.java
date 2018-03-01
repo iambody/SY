@@ -13,6 +13,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.utils.service.InitializeService;
 import com.growingio.android.sdk.collection.Configuration;
 import com.growingio.android.sdk.collection.GrowingIO;
+import com.mob.MobSDK;
 
 import java.util.List;
 
@@ -47,6 +48,8 @@ public class InitApplication extends InvestorAppli {
                 .useID()
                 .trackAllFragments()
                 .setChannel("guangwang"));
+//        ShareSDK.initSDK(baseContext);
+        MobSDK.init(this);
 //        Fabric.with(this, new Crashlytics());
 //        //初始化直播
 //        initLive();

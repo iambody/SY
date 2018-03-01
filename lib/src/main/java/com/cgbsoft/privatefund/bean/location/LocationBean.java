@@ -3,8 +3,8 @@ package com.cgbsoft.privatefund.bean.location;
 import com.cgbsoft.lib.base.model.bean.BaseBean;
 
 /**
- * desc  ${DESC}
- * author wangyongkui  wangyongkui@simuyun.com
+ * desc
+ * author
  * 日期 2017/6/9-16:44
  */
 public class LocationBean extends BaseBean {

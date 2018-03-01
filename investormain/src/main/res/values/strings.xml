@@ -146,6 +146,7 @@
     <string name="datum_manage_risk_type_pingheng">平衡性</string>
     <string name="datum_manage_relative_statues">未关联</string>
     <string name="setting_title">设置</string>
+    <string name="public_fund_account_info">公墓基金账号信息</string>
 
     <!-- 投资账号-->
     <string name="real_name">真实姓名</string>
@@ -299,4 +300,15 @@
     </string-array>
     <string name="asset_statements" translatable="false">[{\n  \"relation\": [\"delegate_permission/common.handle_all_urls\"],\n  \"target\": {\n    \"namespace\": \"web\",\n    \"site\": \"http://app.simuyun.com\",\n  }\n}]</string>
     <string name="dangan">档案</string>
+    <string name="publish_fund">公募基金</string>
+    <string name="public_fund_regist">公募基金开户</string>
+    <string name="fill_questionnaire">请先填写调查问卷</string>
+    <string name="live_no_start">直播暂未开始</string>
+    <string name="set_call_jurisdiction">请到设置允许拨打电话权限</string>
+    <string name="broadcast">开播</string>
+    <string name="live_notice">直播预告</string>
+    <string name="live_process">正在直播</string>
+    <string name="live_nume_look">人正在观看</string>
+    <string name="calculate">亿</string>
+    <string name="total_worth">累计净值</string>
 </resources>

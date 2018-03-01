@@ -65,12 +65,13 @@ public class DiscoveryPresenter extends BasePresenterImpl<DiscoverContract.View>
                     getView().requestStockIndexSuccess(dataList);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    getView().reqeustStockIndexFailure(e.getMessage());
                 }
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                getView().requestFirstDataFailure(error.getMessage());
+                getView().reqeustStockIndexFailure(error.getMessage());
             }
         }));
     }

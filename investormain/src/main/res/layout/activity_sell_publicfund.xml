@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/title_normal_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+   <!-- <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        >
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/delate_nor"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"
+            android:text="卖基金"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E1E6"
+        />
+-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:id="@+id/tv_sell_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:textSize="@dimen/dimens_sp_16"
+            android:textColor="@color/black"
+            android:layout_centerInParent="true"
+            android:text="卖出份额"
+            />
+
+
+
+        <Button
+            android:id="@+id/bt_sell_all"
+            android:layout_width="86dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ui_15_dip"
+            android:background="@color/app_golden"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/dimens_sp_14"
+            android:text="全部"
+           />
+
+
+        <EditText
+            android:id="@+id/ev_sell_money_input"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_sell_money"
+            android:layout_toLeftOf="@+id/bt_sell_all"
+            android:layout_marginLeft="@dimen/ui_30_dip"
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:textColor="@color/black"
+            android:hint="卖出份额"
+            android:inputType="numberDecimal"
+            android:textSize="@dimen/dimens_sp_16"
+            android:singleLine="true"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ui_15_dip"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:textColor="#595959"
+        android:text="卖出至原银行卡"
+        android:textSize="@dimen/dimens_sp_15"
+        />
+
+    <Button
+        android:id="@+id/bt_finsh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/ui_15_dip"
+        android:layout_marginRight="@dimen/ui_15_dip"
+        android:layout_marginTop="@dimen/ui_40_dip"
+        android:background="@drawable/sellfund_button"
+        />
+
+</LinearLayout>

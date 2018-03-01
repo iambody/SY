@@ -74,7 +74,7 @@ public class WxAuthorManger {
      * 可以溢出sdk依赖
      */
     public static void unbinAuthor() {
-        ShareSDK.stopSDK();
+//        ShareSDK.stopSDK();
     }
 
    static Handler mHandler = new Handler() {

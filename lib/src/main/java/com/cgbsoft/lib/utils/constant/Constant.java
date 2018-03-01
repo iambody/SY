@@ -209,7 +209,6 @@ public interface Constant {
             put("200", "服务完成");
         }
     };
-
     //分享时候的外网log地址
     public static final String SHARE_LOG="https://upload.simuyun.com/live/106985cc-749d-449e-aaf0-2adfef274469.png";//"http://www.simuyun.com/images/simuyunlogo.png";
 

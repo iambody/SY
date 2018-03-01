@@ -83,7 +83,6 @@ public class ApiClient {
 
     /**
      * map转换为json 用于生成RequestBody用于V2接口是使用
-     *
      * @param map
      * @return
      */
@@ -160,9 +159,10 @@ public class ApiClient {
     /**
      * 新数据统计
      */
-    public static Observable<CommonEntity.Result> pushTrackingData(JSONObject json){
+    public static Observable<CommonEntity.Result> pushTrackingData(JSONObject json) {
         return OKHTTP.getInstance().getRequestManager().pushTrackingData(formatRequestBody(json)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
+
     /**
      * 数据统计
      *
@@ -178,7 +178,7 @@ public class ApiClient {
     /**
      * 测试环境埋点统计
      */
-    public static Observable<String> testPushDataStatistics(String json){
+    public static Observable<String> testPushDataStatistics(String json) {
         Map<String, String> map = new HashMap<>();
         map.put("contents", json);
         return OKHTTP.getInstance().getRequestManager(NetConfig.T_SERVER_DS).pushDataStatistics(checkNull(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
@@ -384,10 +384,14 @@ public class ApiClient {
      * @return
      */
     public static Observable<String> sendCode(String phone, int which) {
-        Map<String, String> map = new HashMap<>();
-        map.put("phone", phone);
-        map.put("checkPhoneDuplicate", String.valueOf(which));
-        return OKHTTP.getInstance().getRequestManager().sendCode(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
+        JSONObject object = new JSONObject();
+        try {
+            object.put("phone", phone);
+            object.put("checkPhoneDuplicate", String.valueOf(which));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return OKHTTP.getInstance().getRequestManager().sendCode(jsonToBody(object)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     public static Observable<String> sendTestCode(String phone, int which) {
@@ -1433,10 +1437,17 @@ public class ApiClient {
     }
 
     /**
-     * 预约健康手机验证
+     * 手机验证
      */
-    public static Observable<String> bespeakHealthValidatePhone(HashMap hashMap) {
-        return OKHTTP.getInstance().getRequestManager().bespeakHealthInfoValidate(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    public static Observable<String> mesageValidateCode(String phone, String duplicate) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("phone", phone);
+            object.put("checkPhoneDuplicate", duplicate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return OKHTTP.getInstance().getRequestManager().sendCode(jsonToBody(object)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.handleResult());
     }
 
     /**
@@ -1461,10 +1472,17 @@ public class ApiClient {
     }
 
     /**
-     * 资讯列表数据
+     * 我的数据
      */
     public static Observable<String> getMineData(HashMap hashMap) {
         return OKHTTP.getInstance().getRequestManager().getMineData(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 我的金融资产
+     */
+    public static Observable<String> getMineFinincialAssert(HashMap hashMap) {
+        return OKHTTP.getInstance().getRequestManager().getMineFinincailAssert(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1503,9 +1521,10 @@ public class ApiClient {
 
     /**
      * 获取埋点配置文件
+     *
      * @return
      */
-    public static Observable<String> getTrackingConfig(){
+    public static Observable<String> getTrackingConfig() {
         return OKHTTP.getInstance().getRequestManager().getTrackingConfig().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
@@ -1664,12 +1683,11 @@ public class ApiClient {
     }
 
 
-    public static Observable<String> getLivingCount(){
+    public static Observable<String> getLivingCount() {
         return OKHTTP.getInstance().getRequestManager().getLivingCount().compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
-     *
      * @param indentityCode
      * @return
      */
@@ -1694,29 +1712,31 @@ public class ApiClient {
 
     /**
      * 上传其他证件 + 照片
+     *
      * @param remoteParams
      * @param customerCode
      * @param credentialCode
      * @return
      */
-    public static Observable<String> uploadOtherRemotePath(List<String> remoteParams, String customerCode, String credentialCode,String remotePersonParam) {
+    public static Observable<String> uploadOtherRemotePath(List<String> remoteParams, String customerCode, String credentialCode, String remotePersonParam) {
         Map<String, String> params = new HashMap<>();
         params.put("customerCode", customerCode);
         params.put("credentialCode", credentialCode);
-        params.put("faceImage",remotePersonParam);
-        params.put("type","10");
+        params.put("faceImage", remotePersonParam);
+        params.put("type", "10");
         return OKHTTP.getInstance().getRequestManager().uploadOtherPath(uploadRemotePathUse(remoteParams, params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
 
     /**
      * 获取证件详情
+     *
      * @param credentialCode
      * @return
      */
-    public static Observable<String> getCredentialDetial(String credentialCode){
-        Map<String,String> params = new HashMap<>();
-        params.put("id",credentialCode);
+    public static Observable<String> getCredentialDetial(String credentialCode) {
+        Map<String, String> params = new HashMap<>();
+        params.put("id", credentialCode);
         return OKHTTP.getInstance().getRequestManager().getCredentialDetial(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
@@ -1747,7 +1767,7 @@ public class ApiClient {
      *
      * @return
      */
-    public static Observable<String> getLivingQueryDataResult(  List<String>  imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type, String sex, String birthday,String errorCode,String faceMsg) {
+    public static Observable<String> getLivingQueryDataResult(List<String> imageUrl, String cardNum, String cardName, String cardValidity, String orderNo, String faceCode, String credentialCode, String customerCode, String type, String sex, String birthday, String errorCode, String faceMsg) {
         Map<String, Object> params = new HashMap<>();
 //        params.put("imageUrl", imageUrl);
         params.put("number", cardNum);
@@ -1761,16 +1781,16 @@ public class ApiClient {
         params.put("type", type);
         params.put("sex", sex);
         params.put("birthday", birthday);
-        params.put("errorCode",errorCode);
-        params.put("faceMsg",faceMsg);
-        return OKHTTP.getInstance().getRequestManager().queryDataResult(uploadRemotePathUse(imageUrl,params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        params.put("errorCode", errorCode);
+        params.put("faceMsg", faceMsg);
+        return OKHTTP.getInstance().getRequestManager().queryDataResult(uploadRemotePathUse(imageUrl, params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
     /**
      * 活体公用检测锁的通知server的接口
      */
-    public static Observable<String> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name, String credentialCode, String customerCode,String errorCode,String faceMsg) {
+    public static Observable<String> getLivingQueryCommntDataResult(String orderNo, String faceCode, String number, String name, String credentialCode, String customerCode, String errorCode, String faceMsg) {
         Map<String, String> params = new HashMap<>();
         params.put("orderNo", orderNo);
         params.put("faceCode", faceCode);
@@ -1778,8 +1798,8 @@ public class ApiClient {
         params.put("name", name);
         params.put("credentialCode", credentialCode);
         params.put("customerCode", customerCode);
-        params.put("errorCode",errorCode);
-        params.put("faceMsg",faceMsg);
+        params.put("errorCode", errorCode);
+        params.put("faceMsg", faceMsg);
         return OKHTTP.getInstance().getRequestManager().queryComontDataResult(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
@@ -1808,12 +1828,71 @@ public class ApiClient {
 
     /**
      * person对比
+     *
      * @return
      */
     public static Observable<String> getPersonCompare(String remotPath) {
         Map<String, Object> params = new HashMap<>();
         params.put("url", remotPath);
         return OKHTTP.getInstance().getRequestManager().getPersonCompare(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取首页公募基金的推荐位
+     *
+     * @param
+     * @param
+     */
+    public static Observable<String> getHomePublicFundRecommend() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("trantype", "YT003");
+        return OKHTTP.getInstance().getRequestManager().getHomeRecommend(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 获取公募的信息
+     */
+    public static Observable<String> getPublicFundInf() {
+        Map<String, Object> params = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().getPublicFudInf(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+    /**
+     * 获取金证发的信息
+     */
+    public static Observable<String> getPublicFundFormProxy(Map<String, Object> params) {
+        if (params == null) params = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 直接请求金正接口
+     */
+    public static Observable<String> directRequestJzServer(HashMap<String, Object> hashMap) {
+
+        return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+    /**
+     * 获取申购时候的配置信息
+     */
+    public static Observable<String> getPublicFundConfig(String fundCode) {
+
+
+
+        JSONObject js = new JSONObject();
+        try {
+            js.put("fundcode", fundCode);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Map<String, String> params = new HashMap<>();
+        if (!TextUtils.isEmpty(js.toString()))
+            params.put("param", js.toString());
+        return OKHTTP.getInstance().getRequestManager().getFundPayConfig(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
 
@@ -1834,7 +1913,7 @@ public class ApiClient {
                 } else {
                     objImg.put("name", "backImage");
                 }
-                objImg.put("url", null==path?"":path);
+                objImg.put("url", null == path ? "" : path);
                 jsonArray.put(objImg);
             }
             jsonObject.put("imageUrl", jsonArray);

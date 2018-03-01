@@ -100,6 +100,7 @@ import rx.functions.Action1;
 
 @Route(RouteConfig.GOTOCMAINHONE)
 public class MainPageActivity extends BaseActivity<MainPagePresenter> implements BottomNavigationBar.BottomClickListener, MainPageContract.View, LoginView, ProfileView {
+    private static final String FRAGMENTS_TAG = "android:support:fragments";
     private FragmentManager mFragmentManager;
     private Fragment mContentFragment;
 
@@ -118,21 +119,17 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private Observable<ConversationBean> startConverstationObservable;
     private Observable<Boolean> hasReadResultObservable;
     private boolean isOnlyClose;
-    private int currentResId;
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
-    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable;
+    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable, publicFundInfObservable;
     private Observable<Boolean> liveRefreshObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
     private boolean hasLive = false;
     private int code;
     private InvestorAppli initApplication;
-//    private int[] guideIds = new int[]{R.drawable.guide_one, R.drawable.guide_two, R.drawable.guide_three, R.drawable.guide_four, R.drawable.guide_five};
-//    private int[] guideIdsH = new int[]{R.drawable.guide_one_h, R.drawable.guide_two_h, R.drawable.guide_three_h, R.drawable.guide_four_h, R.drawable.guide_five_h};
-    private int guideindex = 0;
-    private static final String FRAGMENTS_TAG = "android:support:fragments";
+
     private PackageIconUtils packageIconUtils;
 
     private Observable<Boolean> downDamicSoObservable;
@@ -169,6 +166,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onResume() {
         super.onResume();
+
         zipResourceDownload.initDownDialog();
         MobclickAgent.onResume(this);       //统计时长
         baseWebview.loadUrls(CwebNetConfig.pageInit);
@@ -182,30 +180,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             switchID = R.id.nav_right_second;
             switchFragment(MainTabManager.getInstance().getFragmentByIndex(switchID, code));
         }
-//
+        if (!AppManager.isVisitor(baseContext)) {
+            getPresenter().loadPublicFundInf();
+        }
         getPresenter().loadRedPacket();
 
     }
 
     @Override
     protected void init(Bundle savedInstanceState) {
-//
         if (null != savedInstanceState) {
 
         }
 
-        //把welcomeActivity的初始化移动到主页面@陈龙
-        RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
-//        File file = new File(Environment.getExternalStorageDirectory(), "111/armeabi-v7a");
-//        LogUtils.Log("aaa","file.getAbsolutePath()==="+file.getAbsolutePath());
-//        int result = SoFileUtils.loadSoFile(this, file.getAbsolutePath());
-//        if (-1 == result) {
-//            return;
-//        }
-//        if (0 == result) {
-//            SoFileUtils.loadSoToApp(this);
-//        }
-//        LogUtils.Log("aaa", "----init");
         StatusBarUtil.translucentStatusBar(this);
         initApplication = (InitApplication) getApplication();
         initApplication.setMainpage(true);
@@ -217,7 +204,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         zipResourceDownload = new ZipResourceDownload(this);
 
-//        initActionPoint();
 
         transaction.add(R.id.fl_main_content, mContentFragment);
 
@@ -229,7 +215,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
         RongConnect.initRongTokenConnect(AppManager.getUserId(getApplicationContext()));
 
-//        initPlatformCustomer();
 
         showInfoDialog();
 
@@ -243,14 +228,18 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             autoSign();
             initDayTask();
             initRongInterface();
+//            getPresenter().loadPublicFundInf();
         }
         RxBus.get().post(RxConstant.LOGIN_KILL, 1);
         // 推送过来的跳转
         jumpPushMessage();
 
         initLogo();
+
         zipResourceDownload.initZipResource();
+
         TrackingDataManger.gohome(baseContext);
+
     }
 
     private void initLogo() {
@@ -745,6 +734,25 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 }
             });
         }
+        //公募用户信息
+        if (null == publicFundInfObservable) {
+            publicFundInfObservable = RxBus.get().register(RxConstant.REFRESH_PUBLIC_FUND_INFO, Integer.class);
+            publicFundInfObservable.subscribe(new RxSubscriber<Integer>() {
+                @Override
+                protected void onEvent(Integer publicFundInf) {
+                    if (10 == publicFundInf) {
+                        //刷新
+                        getPresenter().loadPublicFundInf();
+                    }
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+
+                }
+            });
+        }
+
 //        //刷新webview的信息配置
 //        freshWebObservable= RxBus.get().register(RxConstant.MAIN_FRESH_WEB_CONFIG, Integer.class);
 //        freshWebObservable.subscribe(new RxSubscriber<Integer>() {
@@ -876,7 +884,11 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             RxBus.get().unregister(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, hasReadResultObservable);
             hasReadResultObservable = null;
         }
+        if (null != publicFundInfObservable) {
+            RxBus.get().unregister(RxConstant.REFRESH_PUBLIC_FUND_INFO, publicFundInfObservable);
+            publicFundInfObservable = null;
 
+        }
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
         zipResourceDownload.closeDilaog();

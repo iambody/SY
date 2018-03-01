@@ -17,8 +17,8 @@ public class NetConfig {
     public static String START_APPEND = "https://";
 
     //        private static String START_APP = "https://app";
-//    public static String START_APP = "https://t3-app";//sim
-    public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+//    public static String START_APP = "https://d8-app";//sim
+        public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
@@ -43,6 +43,8 @@ public class NetConfig {
     public final static String AUTH_URL_V3 = "auth/v3";
     public final static String API_NOV2_URL = "api/";
     public final static String TRACKING_V2 = "ubc/v2";
+    //公募基金的v2新路径
+    public final static String PUBLIC_FUND_API_V2 = "publicfund/v2";
 
     static {
         if (!TextUtils.isEmpty(AppManager.getSelectAddress(InvestorAppli.getContext()))) {
@@ -301,6 +303,7 @@ public class NetConfig {
     // 腾讯视频内容校验文件
     public final static String TENCENT_VIDEO_URL = "http://1251892263.vod2.myqcloud.com/9dbfd9a6vodgzp1251892263/14f16f914564972818450529832/wW2YHIkwbNoA.mp4";
 
+
     static class TRACKDATA {
         final static String TRACKING = TRACKING_V2 + "/track/app";
         final static String CONFIG = TRACKING_V2 + "/track/config";
@@ -392,7 +395,7 @@ public class NetConfig {
         final static String DISCOVERY_LIST_PAGE = API_URL + "/information/list";
 
         // 股票指数
-        final static String DISCOVERY_STOCK_INDEX =  "/api/stockindex";
+        final static String DISCOVERY_STOCK_INDEX = "/api/stockindex";
     }
 
     /**
@@ -428,6 +431,19 @@ public class NetConfig {
         static final String GET_INDENTITY_LIST_ADD = AUTH_URL_V2 + "/subcredentials";
         static final String GET_LIVING_STATE = AUTH_URL_V3 + "/credential/livingbody/history";
     }
+
+    /**
+     * 公募基金的API
+     */
+    static class PUBLIC_FUND {
+        static final String HOME_RECOMMEND = PUBLIC_FUND_API_V2 + "/kz/sixiangbao";
+        static final String PRIVATE_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/userinfo";
+        final static String MINE_FININCIAL_ASSERT = PUBLIC_FUND_API_V2 + "/kz/userfund";
+        final static String DIRECT_JZ_URL = PUBLIC_FUND_API_V2 + "/kz/proxy";
+        static final String PUBLIBC_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/proxy";
+        static final String BUY_CONFIG = PUBLIC_FUND_API_V2 + "/kz/fundbuyinginfo";//申购配置信息
+    }
+
 
     public static class SoDown {
         public static final String DOWN_RUL = UPLOAD_FILE + "android_so/armeabi-v7a.zip";

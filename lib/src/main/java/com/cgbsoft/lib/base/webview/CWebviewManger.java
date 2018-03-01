@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
@@ -49,6 +50,7 @@ import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.MD5Utils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
+import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.MToast;
@@ -409,7 +411,32 @@ public class CWebviewManger {
         } else if (action.contains("penLargeImage")) {
             //分享截屏的图片
             gotoLargeImage(action);
+        } else if (action.contains("subscribeFund")) {
+            //跳转到去申购页面
+        } else if (action.contains("redeemFund")) {
+            //赎回指令
+        } else if (action.contains("openFundAccount")) {
+            //开户指令
+//            openFundAccount(action);
         }
+//        else if (action.contains("redeemFund")) {// 赎回指令
+//            publicFundredeemFund(action);
+//
+//        }
+    }
+
+    /**
+     * 赎回指令
+     *
+     * @param action
+     */
+    private void publicFundredeemFund(String action) {
+        UiSkipUtils.gotoRedeemFund(context, action);
+    }
+
+    private void openFundAccount(String action) {
+        Log.i("sss", action);
+        Log.i("sss", action);
     }
 
     private void gotoLargeImage(String url) {
@@ -432,32 +459,6 @@ public class CWebviewManger {
      * @param action
      */
     private void sharePoster(String action) {
-//        String path = ScreenShot.GetandSaveCurrentImage(context);
-//        CommonScreenDialog commonScreenDialog=new CommonScreenDialog(context, path, new CommonScreenDialog.CommentScreenListener() {
-//            @Override
-//            public void completShare() {
-//
-//            }
-//
-//            @Override
-//            public void cancleShare() {
-//
-//            }
-//        });
-//        commonScreenDialog.show();
-
-//        CommonSharePosterDialog commonSharePosterDialog = new CommonSharePosterDialog(context, CommonSharePosterDialog.Tag_Style_WxPyq, path, new CommonSharePosterDialog.CommentShareListener() {
-//            @Override
-//            public void completShare(int shareType) {
-//
-//            }
-//
-//            @Override
-//            public void cancleShare() {
-//
-//            }
-//        });
-//        commonSharePosterDialog.show();
     }
 
     private void showPayItem(String action) {

@@ -91,6 +91,11 @@ public class WebViewConstant {
          * 尊享私行
          */
         public static final int PRIVATE_BANK_PAGE = 20;
+
+        /**
+         * 尊享私行
+         */
+        public static final int PRIVATE_BANK_PAGE_PRIVATE = 201;
         /**
          * 产品
          */
@@ -103,6 +108,10 @@ public class WebViewConstant {
          * 学院
          */
         public static final int VIDEO_PAGE = 2003;
+        /**
+         * 公募基金
+         */
+        public static final int PUBLIC_FUND_PAGE = 2004;
         /**
          * 乐享生活
          */

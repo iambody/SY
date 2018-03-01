@@ -187,7 +187,7 @@ interface RequestManager {
      */
     @FormUrlEncoded
     @POST(NetConfig.USER.SENDCODE_URL)
-    Observable<BaseResult<String>> sendCode(@FieldMap Map<String, String> paramsMap);
+    Observable<BaseResult<String>> sendCode(@Body RequestBody paramsMap);
 
     @FormUrlEncoded
     @POST(NetConfig.USER.SENDCODE_URL)
@@ -747,9 +747,9 @@ interface RequestManager {
     @POST(NetConfig.Health.HEALTH_FREE_BESPEAK_URL)
     Observable<ResponseBody> bespeakHealth(@Body RequestBody responseBody);
 
-    // 预约健康检 短信验证
-    @POST(NetConfig.Health.HEALTH_INFO_VALIDATE_URL)
-    Observable<ResponseBody> bespeakHealthInfoValidate(@Body RequestBody responseBody);
+    // 短信验证
+    @POST(NetConfig.USER.SENDCODE_URL)
+    Observable<ResponseBody> messageValidateCodeValid(@Body RequestBody responseBody);
 
     // 资讯首页数据
     @GET(NetConfig.Discovery.DISCOVERY_FIRST_PAGE)
@@ -766,6 +766,10 @@ interface RequestManager {
     // 我的
     @GET(NetConfig.Mine.GET_MINE)
     Observable<ResponseBody> getMineData(@QueryMap Map<String, String> paramsMap);
+
+    // 我的金融资产
+    @GET(NetConfig.PUBLIC_FUND.MINE_FININCIAL_ASSERT)
+    Observable<ResponseBody> getMineFinincailAssert(@QueryMap Map<String, String> paramsMap);
 
     // 我的活动
     @GET(NetConfig.Mine.ACTIVITES)
@@ -880,7 +884,7 @@ interface RequestManager {
     Observable<ResponseBody> uploadOtherPath(@Body RequestBody requestBody);
 
     @GET(NetConfig.Indentity.CREDENTIALS_DETILS)
-    Observable<ResponseBody> getCredentialDetial(@QueryMap Map<String,String> params);
+    Observable<ResponseBody> getCredentialDetial(@QueryMap Map<String, String> params);
 
     @GET(NetConfig.Indentity.GET_INDENTITY_LIST_ADD)
     Observable<BaseResult<CardListEntity.Result>> getCardListAdd(@QueryMap Map<String, String> programObject);
@@ -908,7 +912,8 @@ interface RequestManager {
      * 活体检测结果通知处理
      */
     @POST(NetConfig.Compliance.COMPLIANCE_BEAN_RESULT)
-    Observable<ResponseBody > queryDataResult(@Body RequestBody requestBody);
+    Observable<ResponseBody> queryDataResult(@Body RequestBody requestBody);
+
     /**
      * 活体检测公用锁的通知接口
      */
@@ -926,11 +931,12 @@ interface RequestManager {
      */
     @POST(NetConfig.Compliance.COMPLIANCE_OCR)
     Observable<BaseResult<IdentityCard>> getOcrResult(@Body RequestBody responseBody);
+
     /**
      * person对比
      */
     @GET(NetConfig.Compliance.COMPLIANCE_PERSON_COMPARE)
-    Observable<ResponseBody>getPersonCompare(@QueryMap Map<String, String> programObject);
+    Observable<ResponseBody> getPersonCompare(@QueryMap Map<String, String> programObject);
 
     /**
      * 通用的Get请求接口
@@ -954,5 +960,29 @@ interface RequestManager {
 
     @GET(NetConfig.TRACKDATA.CONFIG)
     Observable<ResponseBody> getTrackingConfig();
-//sss
+
+    /**
+     * 公募首页推荐位
+     */
+    @GET(NetConfig.PUBLIC_FUND.HOME_RECOMMEND)
+    Observable<ResponseBody> getHomeRecommend(@QueryMap Map<String, String> paramsMap);
+
+    /**
+     * 公募信息
+     */
+    @GET(NetConfig.PUBLIC_FUND.PRIVATE_FUND_INF)
+    Observable<ResponseBody> getPublicFudInf(@QueryMap Map<String, String> paramsMap);
+
+    /**
+     * 直接请求金正接口
+     */
+    @POST(NetConfig.PUBLIC_FUND.DIRECT_JZ_URL)
+    Observable<ResponseBody> directJZServer(@Body RequestBody responseBody);
+
+    /**
+     * 获取申购页面的配置信息
+     */
+    @GET(NetConfig.PUBLIC_FUND.BUY_CONFIG)
+    Observable<ResponseBody> getFundPayConfig(@QueryMap Map<String, String> paramsMap);
+
 }

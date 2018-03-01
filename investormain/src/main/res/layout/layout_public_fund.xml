@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layout_public_fund"
+    android:layout_marginBottom="@dimen/ui_10_dip">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/private_assert_title"
+        android:text="@string/public_fund"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ll_public_fund_empty">
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center_horizontal"
+                 style="@style/mine_item_desc_text"
+                 android:text="@string/public_fund_no_assert"
+                 android:gravity="center"/>
+
+             <TextView
+                 android:layout_width="match_parent"
+                 android:layout_height="44dp"
+                 android:layout_marginTop="15dp"
+                 android:layout_marginLeft="@dimen/ui_10_dip"
+                 android:layout_marginRight="@dimen/ui_10_dip"
+                 android:id="@+id/tv_look_public_fund_product"
+                 android:background="@drawable/selector_bg_btn_white_with_golden_boade"
+                 android:text="@string/look_public_fund_product"
+                 android:gravity="center"
+                 android:textColor="@color/app_golden"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:paddingLeft="10dp"
+        android:paddingRight="15dp"
+        android:layout_marginTop="@dimen/ui_15_dip"
+        android:id="@+id/ll_public_fund_fill">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_public_fund_subsist_assert_desc"
+                style="@style/private_share_bao_assert_title"
+                android:text="@string/subsist_assert"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_public_fund_subsist_assert"
+                android:maxLines="1"
+                style="@style/private_share_bao_assert_number"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_public_fund_continue_income_desc"
+                style="@style/private_share_bao_assert_title"
+                android:text="@string/continue_income"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:id="@+id/tv_public_fund_continue_income"
+                style="@style/private_share_bao_assert_number"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_public_fund_yestoday_income_desc"
+                style="@style/private_share_bao_assert_title"
+                android:text="@string/yestoday_income"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:id="@+id/tv_public_fund_yestoday_income"
+                style="@style/private_assert_number_golden"/>
+        </LinearLayout>
+    </LinearLayout>
+  </FrameLayout>
+</LinearLayout>

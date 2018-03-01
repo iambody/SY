@@ -3,6 +3,7 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
+//        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -32,6 +33,7 @@ allprojects {
             dirs file(rootDir.absolutePath+'/ocrlib/libs'),file(rootDir.absolutePath+'/mall/libs')
 //            dirs project(':ocrlib').file('libs'),project(':mall').file('libs')
         }
+//        google()
     }
 }
 
