@@ -89,13 +89,6 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         DataStatistApiParam.intoSettingPage();
     }
 
-    // dynamic to display this view of public fund
-    private void dynamicDisplayPublicFundView() {
-        publicFundAccountStatus.setVisibility(Utils.isWhiteUserFlag(this) ? View.VISIBLE : View.GONE);
-        publicFundBankCarkInfo.setVisibility(Utils.isWhiteUserFlag(this) ? View.VISIBLE : View.GONE);
-        publicFundTradePasswordModify.setVisibility(Utils.isWhiteUserFlag(this) ? View.VISIBLE : View.GONE);
-    }
-
     private void showView() {
         switchButton = RxBus.get().register(RxConstant.SET_PAGE_SWITCH_BUTTON, Boolean.class);
         switchButton.subscribe(new RxSubscriber<Boolean>() {
@@ -183,18 +176,19 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
             changeGesturePsdLayout.setVisibility(View.GONE);
         }
         initPublicFund();
-         dynamicDisplayPublicFundView();
     }
 
     private void initPublicFund() {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
         boolean existAccount = !TextUtils.isEmpty(publicFundInf.getCustno());
         boolean bindCard = TextUtils.equals("1", publicFundInf.getIsHaveCustBankAcct());
+        boolean isWhiteFlag = Utils.isWhiteUserFlag(this);
         publicFundAccountStatus.setTitle(existAccount ? getString(R.string.public_fund_setting_account_info) : getString(R.string.public_fund_setting_account_create));
         publicFundBankCarkInfo.setTitle(bindCard ? getString(R.string.public_fund_setting_bankcard_info) : getString(R.string.public_fund_setting_bind_bankcard));
         publicFundTradePasswordModify.setTitle(getString(R.string.public_fund_setting_modify_public_fund_password));
-        publicFundBankCarkInfo.setVisibility(existAccount ? View.VISIBLE : View.GONE);
-        publicFundTradePasswordModify.setVisibility(existAccount ? View.VISIBLE : View.GONE);
+        publicFundAccountStatus.setVisibility(isWhiteFlag ? View.VISIBLE : View.GONE);
+        publicFundBankCarkInfo.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
+        publicFundTradePasswordModify.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
     }
 
     @OnClick(R.id.sin_public_fund_account_status)
