@@ -21,8 +21,10 @@ import com.cgbsoft.lib.share.dialog.CommonNewShareDialog;
 import com.cgbsoft.lib.share.dialog.CommonScreenDialog;
 import com.cgbsoft.lib.share.dialog.CommonSharePosterDialog;
 import com.cgbsoft.lib.utils.cache.SPreference;
+import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.net.CNetConfig;
 import com.cgbsoft.lib.utils.poster.ElevenPoster;
 import com.cgbsoft.lib.utils.poster.ScreenShot;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -112,6 +114,7 @@ public class JavaScriptObjectToc {
         }
     }
 
+
     /**
      * 重新加载url的 对象接口
      *
@@ -147,7 +150,22 @@ public class JavaScriptObjectToc {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
+    @JavascriptInterface
+    public void openWebview(String param) {
+        try {
+            JSONObject ja = new JSONObject(param);
+            String url = ja.getString("URL");
+            String title = ja.getString("title");
+            System.out.println("---chenlong=" + BaseWebNetConfig.baseSxyParentUrl + url);
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put(WebViewConstant.push_message_url, BaseWebNetConfig.baseSxyParentUrl + url);
+            hashMap.put(WebViewConstant.push_message_title, title);
+            NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @JavascriptInterface

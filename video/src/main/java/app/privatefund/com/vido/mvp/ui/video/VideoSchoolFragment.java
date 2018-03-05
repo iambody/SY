@@ -280,7 +280,6 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     @Override
     protected void viewBeShow() {
         super.viewBeShow();
-        TrackingDataManger.privateBanckVideoShow(baseActivity);
         isvisible = true;
     }
 

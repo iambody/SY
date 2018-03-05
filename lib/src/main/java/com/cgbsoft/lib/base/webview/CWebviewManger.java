@@ -418,6 +418,7 @@ public class CWebviewManger {
         } else if (action.contains("openFundAccount")) {
             //开户指令
 //            openFundAccount(action);
+        } else if (action.contains("openWebview")) {
         }
 //        else if (action.contains("redeemFund")) {// 赎回指令
 //            publicFundredeemFund(action);
