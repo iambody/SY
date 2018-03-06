@@ -136,6 +136,7 @@ public class BindBankCardInfoPresenterImpl extends BasePresenterImpl<BindBankCar
                     e.printStackTrace();
                     getView().requestSubbranckBankFailure(e.getMessage());
                 }
+                getView().requestInfoFailure("查询银行信息失败");
             }
 
             @Override

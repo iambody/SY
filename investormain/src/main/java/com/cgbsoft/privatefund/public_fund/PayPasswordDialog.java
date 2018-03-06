@@ -1,6 +1,5 @@
 package com.cgbsoft.privatefund.public_fund;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -38,6 +37,13 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
         bindViews();
     }
 
+    /**
+     * 隐藏摘要和钱的展示
+     */
+    public void hindSummaryAndMoney() {
+//        findViewById(R.id.tv_summary).setVisibility(View.INVISIBLE);
+        findViewById(R.id.tv_money).setVisibility(View.INVISIBLE);
+    }
 
     /**
      *  实例化view

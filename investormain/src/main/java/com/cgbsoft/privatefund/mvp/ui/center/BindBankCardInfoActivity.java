@@ -5,31 +5,40 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
+import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.BindBankCardInfoBean;
 import com.cgbsoft.privatefund.bean.DataDictionary;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
+import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.mvp.contract.center.BindBankCardInfoContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.BindBankCardInfoPresenterImpl;
 import com.cgbsoft.privatefund.public_fund.PayPasswordDialog;
 import com.chenenyu.router.annotation.Route;
-import com.solo.library.ISlide;
-import com.solo.library.OnClickSlideItemListener;
-import com.solo.library.SlideBaseAdapter;
-import com.solo.library.SlideTouchView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,7 +55,9 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
     @BindView(R.id.title_mid)
     TextView titleTV;
     @BindView(R.id.list_view)
-    ListView listView;
+    SwipeMenuListView listView;
+    @BindView(R.id.tv_add_bind_card)
+    TextView addBindCard;
 
     private BindBankCardAdapter bindBankCardAdapter;
     private LoadingDialog mLoadingDialog;
@@ -75,32 +86,29 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
     private void initListView() {
         bindBankCardAdapter = new BindBankCardAdapter();
         listView.setAdapter(bindBankCardAdapter);
-        bindBankCardAdapter.setupListView(listView);
-        bindBankCardAdapter.setOnClickSlideItemListener(new OnClickSlideItemListener() {
-            @Override
-            public void onItemClick(ISlide iSlide, View view, int i) {
-
-            }
-
-            @Override
-            public void onClick(ISlide iSlide, View view, final int i) {
-                if (view.getId() == R.id.unbind_card) {
-                    PayPasswordDialog payPasswordDialog = new PayPasswordDialog(BindBankCardInfoActivity.this, null, null, null);
-                    payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
-                        @Override
-                        public void onInputFinish(String psw) {
-                            iSlide.close();
-                            deleteIndex = i;
-                            payPasswordDialog.dismiss();
-                            BindBankCardInfoBean bindBankCardInfoBean = (BindBankCardInfoBean) bindBankCardAdapter.getItem(i);
-                            PublicFundInf publicFundInf = AppManager.getPublicFundInf(BindBankCardInfoActivity.this);
-                            String custno = publicFundInf.getCustno();
-                            getPresenter().unBindUserCard(bindBankCardInfoBean.getChannelid(), custno, bindBankCardInfoBean.getDepositacct(), "chss");
-                        }
-                    });
-                    payPasswordDialog.show();
-                }
-            }
+        SwipeMenuCreator creator = menu -> {
+            SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
+            deleteItem.setWidth(DimensionPixelUtil.dp2px(BindBankCardInfoActivity.this, 60));
+            deleteItem.setIcon(R.drawable.icon_unbind_card_info);
+            menu.addMenuItem(deleteItem);
+        };
+        listView.setSwipeDirection(SwipeMenuListView.DIRECTION_LEFT);
+        listView.setMenuCreator(creator);
+        listView.setOnMenuItemClickListener((position, menu, index) -> {
+          if (index == 0) {
+              PayPasswordDialog payPasswordDialog = new PayPasswordDialog(BindBankCardInfoActivity.this, "请输入你的交易密码", "解绑银行卡需要交易密码", " ");
+              payPasswordDialog.setmPassWordInputListener(psw -> {
+                  deleteIndex = position;
+                  payPasswordDialog.dismiss();
+                  BindBankCardInfoBean bindBankCardInfoBean = (BindBankCardInfoBean) bindBankCardAdapter.getItem(position);
+                  PublicFundInf publicFundInf = AppManager.getPublicFundInf(BindBankCardInfoActivity.this);
+                  String custno = publicFundInf.getCustno();
+                  getPresenter().unBindUserCard(bindBankCardInfoBean.getChannelid(), custno, bindBankCardInfoBean.getDepositacct(), psw);
+              });
+              payPasswordDialog.show();
+              payPasswordDialog.hindSummaryAndMoney();
+          }
+            return false;
         });
     }
 
@@ -123,6 +131,33 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
     public void requestInfoSuccess(List<BindBankCardInfoBean> bindCardList) {
         hideLoadDialog();
         bindBankCardAdapter.addData(bindCardList);
+    }
+
+    @OnClick(R.id.tv_add_bind_card)
+    void gotoAddBindBankCard() {
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
+        PublicFundInf publicFundInf1 = AppManager.getPublicFundInf(this);
+        PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(this);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("trantype", "bgAddCard");
+            jsonObject.put("custno", publicFundInf1.getCustno());
+            jsonObject.put("authenticateflag", "1");
+            jsonObject.put("certificateno", publishFundRecommendBean.getCertificateno());
+            jsonObject.put("certificatetype", publishFundRecommendBean.getCertificatetype());
+            jsonObject.put("depositacct", publishFundRecommendBean.getDepositacct());
+            jsonObject.put("depositacctname", publishFundRecommendBean.getDepositacctname());
+            jsonObject.put("depositname", publishFundRecommendBean.getDepositacctname());
+            jsonObject.put("depositcity", "");
+            jsonObject.put("depositprov", "");
+            jsonObject.put("operorg", "9999");
+            jsonObject.put("tpasswd", "");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("tag_parameter", jsonObject.toString());
+        NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
     }
 
     @Override
@@ -180,17 +215,12 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
       return identifyNumber;
     }
 
-    public class BindBankCardAdapter extends SlideBaseAdapter {
+    public class BindBankCardAdapter extends BaseAdapter {
 
         private List<BindBankCardInfoBean> data;
 
         public BindBankCardAdapter() {
             data = new ArrayList<>();
-        }
-
-        @Override
-        public int[] getBindOnClickViewsIds() {
-            return new int[]{R.id.unbind_card};
         }
 
         @Override
@@ -225,23 +255,20 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = null;
+            View view;
             BindBankCardInfoBean bindBankCardInfoBean = data.get(position);
             ViewHolder holder;
             if (convertView == null) {
                 view = LayoutInflater.from(BindBankCardInfoActivity.this).inflate(R.layout.bind_bank_card_list_item, parent, false);
                 holder = new ViewHolder();
-                holder.mSlideTouchView = (SlideTouchView) view.findViewById(R.id.mSlideTouchView);
                 holder.bank_name = (TextView) view.findViewById(R.id.bank_name);
                 holder.bank_type = (TextView) view.findViewById(R.id.bank_type);
                 holder.bank_number = (TextView) view.findViewById(R.id.bank_number);
                 view.setTag(holder);
-                bindSlideState(holder.mSlideTouchView);
             } else {
                 view = convertView;
                 holder = (ViewHolder) view.getTag();
             }
-            bindSlidePosition(holder.mSlideTouchView, position);
             String simpleBankName = findNameByChannelId(bindBankCardInfoBean.getChannelid());
             holder.bank_name.setText(TextUtils.isEmpty(simpleBankName) ? bindBankCardInfoBean.getBankname(): simpleBankName);
             holder.bank_number.setText(hintLastBankCardNumber(bindBankCardInfoBean.getDepositacct()));
@@ -261,7 +288,6 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
     }
 
     class ViewHolder{
-        SlideTouchView mSlideTouchView;
         TextView bank_name;
         TextView bank_type;
         TextView bank_number;
