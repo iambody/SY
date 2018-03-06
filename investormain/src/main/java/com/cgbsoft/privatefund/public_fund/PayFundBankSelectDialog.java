@@ -53,7 +53,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
 
 
     private void initView() {
-        bankList = findViewById(R.id.rl_bank_list);
+        bankList = (RecyclerView) findViewById(R.id.rl_bank_list);
     }
 
     private void bindViews() {
@@ -128,9 +128,9 @@ public class PayFundBankSelectDialog extends BaseDialog {
 
         public MyViewHolder(View itemView, SelectListener selectListener) {
             super(itemView);
-            bankIcon = itemView.findViewById(R.id.iv_back_icon);
-            bankName = itemView.findViewById(R.id.tv_back_name);
-            selectState = itemView.findViewById(R.id.iv_select_state);
+            bankIcon = (ImageView) itemView.findViewById(R.id.iv_back_icon);
+            bankName = (TextView) itemView.findViewById(R.id.tv_back_name);
+            selectState = (ImageView) itemView.findViewById(R.id.iv_select_state);
 
             this.selectListener = selectListener;
 
