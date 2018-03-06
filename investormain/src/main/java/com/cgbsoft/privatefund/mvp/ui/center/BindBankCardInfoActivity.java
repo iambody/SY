@@ -116,7 +116,6 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
                   getPresenter().unBindUserCard(bindBankCardInfoBean.getChannelid(), custno, bindBankCardInfoBean.getDepositacct(), psw);
               });
               payPasswordDialog.show();
-              payPasswordDialog.hindSummaryAndMoney();
           }
             return false;
         });

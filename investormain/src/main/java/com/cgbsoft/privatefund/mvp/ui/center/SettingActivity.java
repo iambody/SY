@@ -186,12 +186,9 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         publicFundAccountStatus.setTitle(existAccount ? getString(R.string.public_fund_setting_account_info) : getString(R.string.public_fund_setting_account_create));
         publicFundBankCarkInfo.setTitle(bindCard ? getString(R.string.public_fund_setting_bankcard_info) : getString(R.string.public_fund_setting_bind_bankcard));
         publicFundTradePasswordModify.setTitle(getString(R.string.public_fund_setting_modify_public_fund_password));
-//        publicFundAccountStatus.setVisibility(isWhiteFlag ? View.VISIBLE : View.GONE);
-//        publicFundBankCarkInfo.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
-//        publicFundTradePasswordModify.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
-        publicFundAccountStatus.setVisibility(View.VISIBLE);
-        publicFundBankCarkInfo.setVisibility(View.VISIBLE);
-        publicFundTradePasswordModify.setVisibility(View.VISIBLE);
+        publicFundAccountStatus.setVisibility(isWhiteFlag ? View.VISIBLE : View.GONE);
+        publicFundBankCarkInfo.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
+        publicFundTradePasswordModify.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
     }
 
     @OnClick(R.id.sin_public_fund_account_status)
