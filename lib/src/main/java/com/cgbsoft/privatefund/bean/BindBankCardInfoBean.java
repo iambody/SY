@@ -11,6 +11,10 @@ public class BindBankCardInfoBean {
 
     private String depositacct;
 
+    private String icon;
+
+    private String background;
+
     public String getDepositacct() {
         return depositacct;
     }
@@ -33,5 +37,21 @@ public class BindBankCardInfoBean {
 
     public void setChannelid(String channelid) {
         this.channelid = channelid;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 }

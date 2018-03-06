@@ -9,6 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/icon_bank_card_bg">
+        
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="@dimen/ui_26_dip"
+            android:layout_marginTop="@dimen/ui_26_dip"
+            android:id="@+id/bank_icon"/>
 
         <TextView
             android:id="@+id/bank_name"

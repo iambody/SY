@@ -135,7 +135,7 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
         bindBankCardAdapter.addData(bindCardList);
     }
 
-    void gotoAddBindBankCard() {
+    private void gotoAddBindBankCard() {
         PublicFundInf publicFundInf1 = AppManager.getPublicFundInf(this);
         PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(this);
         JSONObject jsonObject = new JSONObject();
@@ -242,6 +242,7 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
             this.data.clear();
             if (!CollectionUtils.isEmpty(bindBankCardInfoBeans)) {
                 this.data.addAll(bindBankCardInfoBeans);
+                this.data.add(new BindBankCardInfoBean());
             }
             notifyDataSetChanged();
         }
