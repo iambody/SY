@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/bank_icon_background"
         android:background="@drawable/icon_bank_card_bg">
         
         <ImageView
@@ -15,16 +16,18 @@
             android:layout_height="32dp"
             android:layout_marginStart="@dimen/ui_26_dip"
             android:layout_marginTop="@dimen/ui_26_dip"
+            android:src="@drawable/play"
             android:id="@+id/bank_icon"/>
 
         <TextView
             android:id="@+id/bank_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
+            android:layout_marginLeft="15dp"
             android:layout_marginRight="60dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/ui_26_dip"
             android:ellipsize="end"
+            android:layout_toRightOf="@id/bank_icon"
             android:maxLines="3"
             android:text="招商银行"
             android:textColor="@color/white"
@@ -47,8 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/bank_name"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
+            android:layout_below="@id/bank_name"
+            android:layout_marginTop="20dp"
             android:text="**** **** **** 8908"
             android:textColor="@color/white"
             android:textSize="@dimen/dimens_sp_18" />

@@ -11,8 +11,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.GifRequestBuilder;
@@ -21,7 +23,10 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.cgbsoft.lib.utils.tools.Utils;
 
 import java.io.File;
@@ -91,6 +96,16 @@ public class Imageload {
      */
     public static void displayListener(Context context, Object res, ImageView imageView, RequestListener requestListener) {
         baseListener(getDrawableTypeRequest(imageWith(context), res), imageView, requestListener);
+    }
+
+    public static void displayListenr(Context context, Object res, RelativeLayout relativeLayout) {
+        Glide.with(context).load(res)
+                .into(new ViewTarget<View, GlideDrawable>(relativeLayout) {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource,  GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        this.view.setBackground(resource.getCurrent());
+                    }
+                });
     }
 
     /**

@@ -16,9 +16,11 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.bumptech.glide.Glide;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
@@ -43,6 +45,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imageloader.core.ImageLoader;
 
 /**
  * @auther chenlong
@@ -279,6 +282,8 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
                     holder.bank_name = (TextView) view.findViewById(R.id.bank_name);
                     holder.bank_type = (TextView) view.findViewById(R.id.bank_type);
                     holder.bank_number = (TextView) view.findViewById(R.id.bank_number);
+                    holder.bankIcon = (ImageView) view.findViewById(R.id.bank_icon);
+                    holder.relativeLayout = (RelativeLayout) view.findViewById(R.id.bank_icon_background);
                     view.setTag(holder);
                 } else {
                     view = convertView;
@@ -287,6 +292,8 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
                 String simpleBankName = findNameByChannelId(bindBankCardInfoBean.getChannelid());
                 holder.bank_name.setText(TextUtils.isEmpty(simpleBankName) ? bindBankCardInfoBean.getBankname(): simpleBankName);
                 holder.bank_number.setText(hintLastBankCardNumber(bindBankCardInfoBean.getDepositacct()));
+                Imageload.display(BindBankCardInfoActivity.this, bindBankCardInfoBean.getIcon(), holder.bankIcon);
+                Imageload.displayListenr(BindBankCardInfoActivity.this, bindBankCardInfoBean.getBackground(), holder.relativeLayout);
             } else if (getItemViewType(position) == BUTTON) {
                 ButtonViewHolder holder;
                 if (convertView == null) {
@@ -320,6 +327,8 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
         TextView bank_name;
         TextView bank_type;
         TextView bank_number;
+        ImageView bankIcon;
+        RelativeLayout relativeLayout;
     }
 
     class ButtonViewHolder {
