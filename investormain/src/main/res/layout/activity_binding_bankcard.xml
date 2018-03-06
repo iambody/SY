@@ -24,6 +24,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/rl_step_flow"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ui_80_dip"
                 android:background="@color/white">
@@ -403,6 +404,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/rl_verification_root"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ui_70_dip"
                 android:background="@color/white">

@@ -49,6 +49,7 @@ public class BankListOfJZSupport {
         private String isopenplaninfo; //是否开通了定投标志 1 代表支持定投
         private int showseq; //展示顺序
 
+
         public String getBanknameid() {
             return banknameid;
         }

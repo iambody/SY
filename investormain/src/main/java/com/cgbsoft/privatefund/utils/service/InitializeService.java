@@ -83,7 +83,7 @@ public class InitializeService extends IntentService {
         initIm();//初始化融云
         initGreenDao();//初始化数据库
 //        initX5();//初始化x5内核
-        initMob();//初始化友盟统计
+   //     initMob();//初始化友盟统计
         initFabric();//初始化fabric
         initLearCanary();//初始化内检测
 

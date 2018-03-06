@@ -979,6 +979,15 @@ interface RequestManager {
     @POST(NetConfig.PUBLIC_FUND.DIRECT_JZ_URL)
     Observable<ResponseBody> directJZServer(@Body RequestBody responseBody);
 
+
+    /**
+     * 直接请求金正接口
+     */
+    @FormUrlEncoded
+    @POST(NetConfig.PUBLIC_FUND.NEW_BANKCORD_INFO)
+    Observable<ResponseBody> postNewBankCordInfo(@FieldMap Map<String, String> paramsMap);
+
+
     /**
      * 获取申购页面的配置信息
      */

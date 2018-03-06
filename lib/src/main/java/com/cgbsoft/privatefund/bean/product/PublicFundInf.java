@@ -106,7 +106,7 @@ public class PublicFundInf {
     }
 
     public String getWhiteUserListFlg() {
-        return whiteUserListFlg;
+        return "1";
     }
 
     public void setWhiteUserListFlg(String whiteUserListFlg) {

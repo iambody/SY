@@ -1874,6 +1874,14 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
+    /**
+     * 获取刚新绑定卡的信息
+     */
+    public static Observable<String> postNewBankCordInfo(HashMap<String, String> hashMap) {
+
+        return OKHTTP.getInstance().getRequestManager().postNewBankCordInfo(createProgram(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
 
     /**
      * 获取申购时候的配置信息

@@ -16,7 +16,7 @@ import java.util.Map;
 
 /**
  * Created by wangpeng on 18-1-29.
- *
+ * <p>
  * 买公募基金的Presenter
  */
 
@@ -29,49 +29,90 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
 
 
     /**
-     * 支付
-     * @param pwd
-     */
-    public void pay(String pwd,PayOfBuyPublicBean payOfBuyPublicBean){
-
-    }
-
-    /**
-     *  解析从H5传来的数据数据
-     * @param string
-     * @return
-     */
-    public PayOfBuyPublicBean parseDataFormH5(String string){
-         buyPublicFundModle.setDataFormH5(string);
-         return buyPublicFundModle.getDataFormH5();
-    }
-
-
-
-
-
-    /**
-     * 获取申购需要数据
+     *  请求支付网点字典
      *
      */
-    public void getData(String fundCode, BasePublicFundPresenter.PreSenterCallBack callBack){
-        ApiClient.getPublicFundConfig(fundCode).subscribe(new RxSubscriber<String>() {
+    public void requestDictionary(BasePublicFundPresenter.PreSenterCallBack callBack) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("trantype", "520020");
+        hashMap.put("dictitem", "110080");
+        addSubscription(ApiClient.directRequestJzServer(hashMap).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                 parseResultFormServer(s,callBack);
+                parseResultFormServer(s, callBack);
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                if(error instanceof ApiException && callBack!=null){
-                    callBack.field(((ApiException) error).getCode(),error.getMessage());
+                if (error instanceof ApiException && callBack != null) {
+                    callBack.field(((ApiException) error).getCode(), error.getMessage());
+                }
+                error.printStackTrace();
+            }
+        }));
+    }
+
+    /**
+     * 解析从H5传来的数据数据
+     *
+     * @param string
+     * @return
+     */
+    public PayOfBuyPublicBean parseDataFormH5(String string) {
+        buyPublicFundModle.setDataFormH5(string);
+        return buyPublicFundModle.getDataFormH5();
+    }
+
+
+    /**
+     * 获取申购需要数据
+     */
+    public void getData(String fundCode, BasePublicFundPresenter.PreSenterCallBack callBack) {
+        ApiClient.getPublicFundConfig(fundCode).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                parseResultFormServer(s, callBack);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                if (error instanceof ApiException && callBack != null) {
+                    callBack.field(((ApiException) error).getCode(), error.getMessage());
                 }
                 error.printStackTrace();
             }
         });
     }
 
-    public void sure(BuyPublicFundActivity.Bean bean,String money,String paswd,PreSenterCallBack preSenterCallBack){
+
+    public void getNewBindedBankCord(String custno, String bankCordNum, BasePublicFundPresenter.PreSenterCallBack callBack) {
+        HashMap hashMap = new HashMap<>();
+
+        hashMap.put("trantype", "520102");
+        hashMap.put("custno", custno); // 客户号
+        hashMap.put("isall", ""); // TODo 传2还是传空
+        hashMap.put("depositacct", bankCordNum); // 客户号
+
+        ApiClient.postNewBankCordInfo(hashMap).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                parseResultFormServer(s, callBack);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                if (error instanceof ApiException && callBack != null) {
+                    callBack.field(((ApiException) error).getCode(), error.getMessage());
+                }
+                error.printStackTrace();
+
+            }
+
+        });
+
+}
+
+    public void sure(BuyPublicFundActivity.Bean bean, BuyPublicFundActivity.BankCardInfo bankCardInfo, String money, String paswd, PreSenterCallBack preSenterCallBack) {
          /* trantype: 'orderAndPay',
                 custno: '155', //客户号
                 fundcode: 'DC0011', //基金代码（H5调取app指令的时候会传入）
@@ -97,40 +138,40 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
                 riskwarnflag: '1' //已经阅读风险提示标志，传死1即可
                 highriskwarnflag:'1' 买最高风险等级产品
 */
-        Map<String,Object> parms = new HashMap<>();
-        parms.put("trantype","orderAndPay");
-        parms.put("fundcode",bean.getFundCode());
-        parms.put("fundname",bean.getFundName());
-        parms.put("fundtype",bean.getFundtype());
-        parms.put("sharetype",bean.getSharetype());
-        parms.put("tano",bean.getTano());
+        Map<String, Object> parms = new HashMap<>();
+        parms.put("trantype", "orderAndPay");
+        parms.put("fundcode", bean.getFundCode());
+        parms.put("fundname", bean.getFundName());
+        parms.put("fundtype", bean.getFundtype());
+        parms.put("sharetype", bean.getSharetype());
+        parms.put("tano", bean.getTano());
 
 
         parms.put("certificatetype", AppManager.getPublicFundInf(getContext()).getCertificatetype());
         parms.put("certificateno", AppManager.getPublicFundInf(getContext()).getCertificateno());
         parms.put("depositacctname", AppManager.getPublicFundInf(getContext()).getDepositacctname());
-        parms.put("custno", bean.getUserBankCardInfo().getCustno());
+        parms.put("custno", bankCardInfo.getCustno());
 
-        parms.put("buyflag",bean.getBuyflag());
-
-
-        parms.put("depositacct", bean.getUserBankCardInfo().getDepositacct());
-        parms.put("mobiletelno",AppManager.getPublicFundInf(getContext()).getMobileno());
-        parms.put("transactionaccountid",bean.getUserBankCardInfo().getTransactionaccountid());
-        parms.put("channelid",bean.getUserBankCardInfo().getChannelid());
-        parms.put("moneyaccount",bean.getUserBankCardInfo().getMoneyaccount());
-        parms.put("paycenterid",bean.getUserBankCardInfo().getPaycenterid());
-        parms.put("branchcode",bean.getUserBankCardInfo().getBranchcode());
-        parms.put("riskwarnflag","1");
-        parms.put("highriskwarnflag","1");
-        parms.put("callbackurl","");
-        parms.put("businesscode", BStrUtils.isEmpty(bean.getBusinesscode())?"22":bean.getBusinesscode());
+        parms.put("buyflag", bean.getBuyflag());
 
 
-        parms.put("applicationamt",money); // 认申购金额
-        parms.put("tpasswd",paswd); // 交易密码
+        parms.put("depositacct", bankCardInfo.getDepositacct());
+        parms.put("mobiletelno", AppManager.getPublicFundInf(getContext()).getMobileno());
+        parms.put("transactionaccountid",bankCardInfo.getTransactionaccountid());
+        parms.put("channelid", bankCardInfo.getChannelid());
+        parms.put("moneyaccount",bankCardInfo.getMoneyaccount());
+        parms.put("paycenterid", bankCardInfo.getPaycenterid());
+        parms.put("branchcode",bankCardInfo.getBranchcode());
+        parms.put("riskwarnflag", "1");
+        parms.put("highriskwarnflag", "1");
+        parms.put("callbackurl", "");
+        parms.put("businesscode", BStrUtils.isEmpty(bean.getBusinesscode()) ? "22" : bean.getBusinesscode());
 
-        super.getFundDataFormJZ(parms,preSenterCallBack);
+
+        parms.put("applicationamt", money); // 认申购金额
+        parms.put("tpasswd", paswd); // 交易密码
+
+        super.getFundDataFormJZ(parms, preSenterCallBack);
     }
 
 }
