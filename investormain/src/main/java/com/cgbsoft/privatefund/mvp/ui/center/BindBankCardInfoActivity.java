@@ -56,13 +56,13 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
     TextView titleTV;
     @BindView(R.id.list_view)
     SwipeMenuListView listView;
-    @BindView(R.id.tv_add_bind_card)
-    TextView addBindCard;
 
     private BindBankCardAdapter bindBankCardAdapter;
     private LoadingDialog mLoadingDialog;
     private List<DataDictionary> dataDictionaryList;
     private int deleteIndex;
+    private static final int CONTENT = 0;
+    private static final int BUTTON = 1;
 
     @OnClick(R.id.title_left)
     public void clickBack() {
@@ -87,16 +87,18 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
         bindBankCardAdapter = new BindBankCardAdapter();
         listView.setAdapter(bindBankCardAdapter);
         SwipeMenuCreator creator = menu -> {
-            SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
-            deleteItem.setWidth(DimensionPixelUtil.dp2px(BindBankCardInfoActivity.this, 60));
-            deleteItem.setIcon(R.drawable.icon_unbind_card_info);
-            menu.addMenuItem(deleteItem);
+            if (menu.getViewType() == CONTENT) {
+                SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
+                deleteItem.setWidth(DimensionPixelUtil.dp2px(BindBankCardInfoActivity.this, 60));
+                deleteItem.setIcon(R.drawable.icon_unbind_card_info);
+                menu.addMenuItem(deleteItem);
+            }
         };
         listView.setSwipeDirection(SwipeMenuListView.DIRECTION_LEFT);
         listView.setMenuCreator(creator);
         listView.setOnMenuItemClickListener((position, menu, index) -> {
           if (index == 0) {
-              PayPasswordDialog payPasswordDialog = new PayPasswordDialog(BindBankCardInfoActivity.this, "请输入你的交易密码", "解绑银行卡需要交易密码", " ");
+              PayPasswordDialog payPasswordDialog = new PayPasswordDialog(BindBankCardInfoActivity.this, "请输入你的交易密码", "解绑银行卡需要交易密码", "");
               payPasswordDialog.setmPassWordInputListener(psw -> {
                   deleteIndex = position;
                   payPasswordDialog.dismiss();
@@ -133,9 +135,7 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
         bindBankCardAdapter.addData(bindCardList);
     }
 
-    @OnClick(R.id.tv_add_bind_card)
     void gotoAddBindBankCard() {
-        PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
         PublicFundInf publicFundInf1 = AppManager.getPublicFundInf(this);
         PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(this);
         JSONObject jsonObject = new JSONObject();
@@ -246,6 +246,19 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
             notifyDataSetChanged();
         }
 
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (data.size() - 1 == position) {
+                return BUTTON;
+            }
+            return CONTENT;
+        }
+
         public void removeData(int postion) {
             if (!CollectionUtils.isEmpty(data)) {
                 data.remove(postion);
@@ -255,23 +268,38 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view;
+            View view = null;
             BindBankCardInfoBean bindBankCardInfoBean = data.get(position);
-            ViewHolder holder;
-            if (convertView == null) {
-                view = LayoutInflater.from(BindBankCardInfoActivity.this).inflate(R.layout.bind_bank_card_list_item, parent, false);
-                holder = new ViewHolder();
-                holder.bank_name = (TextView) view.findViewById(R.id.bank_name);
-                holder.bank_type = (TextView) view.findViewById(R.id.bank_type);
-                holder.bank_number = (TextView) view.findViewById(R.id.bank_number);
-                view.setTag(holder);
-            } else {
-                view = convertView;
-                holder = (ViewHolder) view.getTag();
+            if (getItemViewType(position) == CONTENT)  {
+                ViewHolder holder;
+                if (convertView == null) {
+                    view = LayoutInflater.from(BindBankCardInfoActivity.this).inflate(R.layout.bind_bank_card_list_item, parent, false);
+                    holder = new ViewHolder();
+                    holder.bank_name = (TextView) view.findViewById(R.id.bank_name);
+                    holder.bank_type = (TextView) view.findViewById(R.id.bank_type);
+                    holder.bank_number = (TextView) view.findViewById(R.id.bank_number);
+                    view.setTag(holder);
+                } else {
+                    view = convertView;
+                    holder = (ViewHolder) view.getTag();
+                }
+                String simpleBankName = findNameByChannelId(bindBankCardInfoBean.getChannelid());
+                holder.bank_name.setText(TextUtils.isEmpty(simpleBankName) ? bindBankCardInfoBean.getBankname(): simpleBankName);
+                holder.bank_number.setText(hintLastBankCardNumber(bindBankCardInfoBean.getDepositacct()));
+            } else if (getItemViewType(position) == BUTTON) {
+                ButtonViewHolder holder;
+                if (convertView == null) {
+                    view = LayoutInflater.from(BindBankCardInfoActivity.this).inflate(R.layout.list_item_add_bindcard, parent, false);
+                    holder = new ButtonViewHolder();
+                    holder.addBindCard = (TextView) view.findViewById(R.id.tv_add_bind_card);
+                    holder.addBindCard.setOnClickListener(v -> {
+                        gotoAddBindBankCard();
+                    });
+                    view.setTag(holder);
+                } else {
+                    view = convertView;
+                }
             }
-            String simpleBankName = findNameByChannelId(bindBankCardInfoBean.getChannelid());
-            holder.bank_name.setText(TextUtils.isEmpty(simpleBankName) ? bindBankCardInfoBean.getBankname(): simpleBankName);
-            holder.bank_number.setText(hintLastBankCardNumber(bindBankCardInfoBean.getDepositacct()));
             return view;
         }
 
@@ -293,4 +321,7 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
         TextView bank_number;
     }
 
+    class ButtonViewHolder {
+        TextView addBindCard;
+    }
 }

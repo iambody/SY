@@ -11,22 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:layout_marginTop="20dp"
+        android:paddingTop="20dp"
         android:dividerHeight="20dp"
         android:divider="@color/app_bg"
         android:id="@+id/list_view"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:gravity="center"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:id="@+id/tv_add_bind_card"
-        android:visibility="visible"
-        android:textColor="@color/white"
-        android:background="@drawable/selector_bg_btn_white_with_golden_bg"
-        android:text="@string/bind_new_card"/>
-
 </LinearLayout>

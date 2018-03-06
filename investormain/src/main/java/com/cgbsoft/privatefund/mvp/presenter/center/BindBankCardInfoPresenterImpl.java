@@ -37,7 +37,7 @@ public class BindBankCardInfoPresenterImpl extends BasePresenterImpl<BindBankCar
         String cusno = AppManager.getPublicFundInf(getContext()) != null ? AppManager.getPublicFundInf(getContext()).getCustno() : "";
         hashMap.put("trantype", "520012");
         hashMap.put("custno", cusno);
-        hashMap.put("signstatus", ""); // TODO
+        hashMap.put("signstatus", "");
         addSubscription(ApiClient.directRequestJzServer(hashMap).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
