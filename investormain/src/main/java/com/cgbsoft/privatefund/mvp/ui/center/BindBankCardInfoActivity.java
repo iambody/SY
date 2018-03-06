@@ -101,11 +101,16 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
         listView.setMenuCreator(creator);
         listView.setOnMenuItemClickListener((position, menu, index) -> {
           if (index == 0) {
-              PayPasswordDialog payPasswordDialog = new PayPasswordDialog(BindBankCardInfoActivity.this, "请输入你的交易密码", "解绑银行卡需要交易密码", "");
+              if (bindBankCardAdapter.getCount() == 2) {
+                  Toast.makeText(getApplicationContext(), "至少保留一张银行卡！", Toast.LENGTH_SHORT).show();
+                  return false;
+              }
+              BindBankCardInfoBean bindBankCardInfoBean = (BindBankCardInfoBean)bindBankCardAdapter.getItem(position);
+              String simpleBankName = findNameByChannelId(bindBankCardInfoBean.getChannelid());
+              PayPasswordDialog payPasswordDialog = new PayPasswordDialog(BindBankCardInfoActivity.this, "请输入你的交易密码", simpleBankName, hintLastBankCardNumber(bindBankCardInfoBean.getDepositacct()));
               payPasswordDialog.setmPassWordInputListener(psw -> {
                   deleteIndex = position;
                   payPasswordDialog.dismiss();
-                  BindBankCardInfoBean bindBankCardInfoBean = (BindBankCardInfoBean) bindBankCardAdapter.getItem(position);
                   PublicFundInf publicFundInf = AppManager.getPublicFundInf(BindBankCardInfoActivity.this);
                   String custno = publicFundInf.getCustno();
                   getPresenter().unBindUserCard(bindBankCardInfoBean.getChannelid(), custno, bindBankCardInfoBean.getDepositacct(), psw);
@@ -310,17 +315,17 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
             }
             return view;
         }
+    }
 
-        private String findNameByChannelId(String channelId) {
-            if (!CollectionUtils.isEmpty(dataDictionaryList)) {
-                for (DataDictionary dataDictionary : dataDictionaryList) {
-                    if (TextUtils.equals(channelId, dataDictionary.getSubitem())) {
-                        return dataDictionary.getSubitemname();
-                    }
+    private String findNameByChannelId(String channelId) {
+        if (!CollectionUtils.isEmpty(dataDictionaryList)) {
+            for (DataDictionary dataDictionary : dataDictionaryList) {
+                if (TextUtils.equals(channelId, dataDictionary.getSubitem())) {
+                    return dataDictionary.getSubitemname();
                 }
             }
-            return "";
         }
+        return "";
     }
 
     class ViewHolder{
