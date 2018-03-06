@@ -48,5 +48,5 @@ Thumbs.db
 /*.hprof
 
 fastDep.properties
-libs
+#libs
 .gitignore

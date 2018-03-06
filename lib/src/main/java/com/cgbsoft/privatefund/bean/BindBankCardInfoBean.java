@@ -7,6 +7,8 @@ public class BindBankCardInfoBean {
 
     private String bankname;
 
+    private String channelid;
+
     private String depositacct;
 
     public String getDepositacct() {
@@ -23,5 +25,13 @@ public class BindBankCardInfoBean {
 
     public void setBankname(String bankname) {
         this.bankname = bankname;
+    }
+
+    public String getChannelid() {
+        return channelid;
+    }
+
+    public void setChannelid(String channelid) {
+        this.channelid = channelid;
     }
 }

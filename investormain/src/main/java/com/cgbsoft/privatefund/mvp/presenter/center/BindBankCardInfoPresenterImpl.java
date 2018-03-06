@@ -9,7 +9,7 @@ import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.bean.BindBankCardInfoBean;
-import com.cgbsoft.privatefund.model.MineActivitesModel;
+import com.cgbsoft.privatefund.bean.DataDictionary;
 import com.cgbsoft.privatefund.mvp.contract.center.BindBankCardInfoContract;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,7 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,14 +27,12 @@ import java.util.List;
 
 public class BindBankCardInfoPresenterImpl extends BasePresenterImpl<BindBankCardInfoContract.BindBankCardInfoView> implements BindBankCardInfoContract.BindBankCardInfoPresenter {
 
-
     public BindBankCardInfoPresenterImpl(@NonNull Context context, @NonNull BindBankCardInfoContract.BindBankCardInfoView view) {
         super(context, view);
     }
 
     @Override
     public void requestBindBankCardInfo() {
-        getView().showLoadDialog();
         HashMap<String, Object> hashMap = new HashMap<>();
         String cusno = AppManager.getPublicFundInf(getContext()) != null ? AppManager.getPublicFundInf(getContext()).getCustno() : "";
         hashMap.put("trantype", "520012");
@@ -49,6 +46,7 @@ public class BindBankCardInfoPresenterImpl extends BasePresenterImpl<BindBankCar
                     jsonObject = jsonObject.getJSONObject("result");
                     if (jsonObject != null) {
                         JSONArray jsonArray = jsonObject.getJSONArray("datasets");
+                        Log.i("requestBindBankCardInfo", jsonArray.toString());
                         jsonArray = jsonArray.getJSONArray(0);
                         if (jsonArray != null && jsonArray.length() > 0) {
                             List<BindBankCardInfoBean> beanlist = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<BindBankCardInfoBean>>() {}.getType());
@@ -69,6 +67,81 @@ public class BindBankCardInfoPresenterImpl extends BasePresenterImpl<BindBankCar
                 getView().requestInfoFailure(error.getMessage());
             }
         }));
+    }
 
+    @Override
+    public void unBindUserCard(String channelid, String custno, String depositacct, String tpasswd) {
+        getView().showLoadDialog();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("trantype", "520261");
+        hashMap.put("channelid", channelid);
+        hashMap.put("custno", custno);
+        hashMap.put("depositacct", depositacct);
+        hashMap.put("tpasswd", tpasswd);
+        addSubscription(ApiClient.directRequestJzServer(hashMap).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    jsonObject = jsonObject.getJSONObject("result");
+                    if (jsonObject != null) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("datasets");
+                        Log.i("unBindUserCard", jsonArray.toString());
+                        jsonArray = jsonArray.getJSONArray(0);
+//                        if (jsonArray != null && jsonArray.length() > 0) {
+//                            JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+//                            String appNo = jsonObject1.getString("appsheetserialno");
+//                            return;
+//                        }
+                        getView().unBindCardSuccess();
+                        return;
+                    }
+                    getView().unBindCardFailure("解绑银行卡失败！");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    getView().unBindCardFailure(e.getMessage());
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                getView().unBindCardFailure(error.getMessage());
+            }
+        }));
+    }
+
+    @Override
+    public void requsetSubbranchBankInfo() {
+        getView().showLoadDialog();
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("trantype", "520020");
+        hashMap.put("dictitem", "110080");
+        addSubscription(ApiClient.directRequestJzServer(hashMap).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    jsonObject = jsonObject.getJSONObject("result");
+                    if (jsonObject != null) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("datasets");
+                        Log.i("SubbranchBankInfo", jsonArray.toString());
+                        jsonArray = jsonArray.getJSONArray(0);
+                        if (jsonArray != null && jsonArray.length() > 0) {
+                            List<DataDictionary> dataList = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<DataDictionary>>() {}.getType());
+                            getView().requestSubbranchBankSuccess(dataList);
+                            return;
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    getView().requestSubbranckBankFailure(e.getMessage());
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                getView().requestSubbranckBankFailure(error.getMessage());
+            }
+        }));
     }
 }
