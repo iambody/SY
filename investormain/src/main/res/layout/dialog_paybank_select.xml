@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="440dp"
+    android:background="@android:color/white"
+    >
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      >
+
+      <ImageView
+          android:id="@+id/iv_dismiss"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_centerVertical="true"
+          android:layout_marginLeft="@dimen/ui_15_dip"
+          android:background="@drawable/icon_dismiss"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:textSize="@dimen/dimens_sp_18"
+          android:textColor="@color/black"
+          android:text="请选择支付方式"
+          />
+
+  </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rl_bank_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <LinearLayout
+        android:id="@+id/ll_add_new_bankcord"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:src="@drawable/bank_icon"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:textSize="@dimen/dimens_sp_16"
+            android:textColor="@color/black"
+            android:text="使用新卡支付"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E1E6" />
+</LinearLayout>
