@@ -58,15 +58,18 @@ public class PayFundBankSelectDialog extends BaseDialog {
 
     private void bindViews() {
         bankList.setLayoutManager(new LinearLayoutManager(getContext()));
-        bankList.setAdapter(new MyAdapter(bankCardInfos));
+        bankList.setAdapter(new MyAdapter(bankCardInfos, new SelectListener() {
+            @Override
+            public void select(int index) {
+                PayFundBankSelectDialog.this.selectListener.select(index);
+                PayFundBankSelectDialog.this.dismiss();
+            }
+        }));
+
 
         findViewById(R.id.iv_dismiss).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selectListener != null){
-                    int select = ((MyAdapter)(bankList.getAdapter())).getSelectIndex();
-                    if(select >= 0) selectListener.select(select);
-                }
                 PayFundBankSelectDialog.this.dismiss();
             }
         });
@@ -74,8 +77,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
         findViewById(R.id.ll_add_new_bankcord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(selectListener != null) selectListener.select(-2);
+                if (selectListener != null) selectListener.select(-2);
                 PayFundBankSelectDialog.this.dismiss();
             }
         });
@@ -85,9 +87,11 @@ public class PayFundBankSelectDialog extends BaseDialog {
     private static class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         private List<BuyPublicFundActivity.BankCardInfo> list;
         private int lastSelectIndex = -1;
+        private SelectListener selectListener;
 
-        public MyAdapter(List<BuyPublicFundActivity.BankCardInfo> list) {
+        public MyAdapter(List<BuyPublicFundActivity.BankCardInfo> list, SelectListener selectListener) {
             this.list = list;
+            this.selectListener = selectListener;
         }
 
 
@@ -98,7 +102,10 @@ public class PayFundBankSelectDialog extends BaseDialog {
                 @Override
                 public void select(int index) {
                     lastSelectIndex = index;
-                    notifyDataSetChanged();
+                    if (selectListener != null) {
+                        if (lastSelectIndex >= 0)
+                            MyAdapter.this.selectListener.select(lastSelectIndex);
+                    }
                 }
             });
         }
@@ -137,7 +144,8 @@ public class PayFundBankSelectDialog extends BaseDialog {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (MyViewHolder.this.selectListener != null) MyViewHolder.this.selectListener.select(index);
+                    if (MyViewHolder.this.selectListener != null)
+                        MyViewHolder.this.selectListener.select(index);
                 }
             });
 
