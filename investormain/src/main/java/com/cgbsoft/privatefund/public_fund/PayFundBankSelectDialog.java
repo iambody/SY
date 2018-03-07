@@ -28,11 +28,12 @@ public class PayFundBankSelectDialog extends BaseDialog {
     private List<BuyPublicFundActivity.BankCardInfo> bankCardInfos;
     private RecyclerView bankList;
     private SelectListener selectListener;
-
-    public PayFundBankSelectDialog(Context context, List<BuyPublicFundActivity.BankCardInfo> bankCardInfos, SelectListener selectListener) {
+    private String currectBankCodeNum = "";
+    public PayFundBankSelectDialog(Context context,String currectBankCodeNum,List<BuyPublicFundActivity.BankCardInfo> bankCardInfos, SelectListener selectListener) {
         super(context, R.style.dialog_alpha);
         this.bankCardInfos = bankCardInfos;
         this.selectListener = selectListener;
+        this.currectBankCodeNum = currectBankCodeNum;
     }
 
 
@@ -58,7 +59,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
 
     private void bindViews() {
         bankList.setLayoutManager(new LinearLayoutManager(getContext()));
-        bankList.setAdapter(new MyAdapter(bankCardInfos, new SelectListener() {
+        bankList.setAdapter(new MyAdapter(currectBankCodeNum,bankCardInfos, new SelectListener() {
             @Override
             public void select(int index) {
                 PayFundBankSelectDialog.this.selectListener.select(index);
@@ -77,7 +78,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
         findViewById(R.id.ll_add_new_bankcord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectListener != null) selectListener.select(-2);
+                if(selectListener != null) selectListener.select(-2);
                 PayFundBankSelectDialog.this.dismiss();
             }
         });
@@ -86,12 +87,12 @@ public class PayFundBankSelectDialog extends BaseDialog {
 
     private static class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         private List<BuyPublicFundActivity.BankCardInfo> list;
-        private int lastSelectIndex = -1;
         private SelectListener selectListener;
-
-        public MyAdapter(List<BuyPublicFundActivity.BankCardInfo> list, SelectListener selectListener) {
+        private String currectBankNum = "";
+        public MyAdapter(String currectBankNum,List<BuyPublicFundActivity.BankCardInfo> list, SelectListener selectListener) {
             this.list = list;
             this.selectListener = selectListener;
+            this.currectBankNum = currectBankNum;
         }
 
 
@@ -101,28 +102,19 @@ public class PayFundBankSelectDialog extends BaseDialog {
             return new MyViewHolder(view, new SelectListener() {
                 @Override
                 public void select(int index) {
-                    lastSelectIndex = index;
-                    if (selectListener != null) {
-                        if (lastSelectIndex >= 0)
-                            MyAdapter.this.selectListener.select(lastSelectIndex);
-                    }
+                    if (selectListener != null) MyAdapter.this.selectListener.select(index);
                 }
             });
         }
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.bindData(list, position, lastSelectIndex);
+            holder.bindData(list, position,currectBankNum);
         }
 
         @Override
         public int getItemCount() {
             return list == null ? 0 : list.size();
-        }
-
-
-        public int getSelectIndex() {
-            return lastSelectIndex;
         }
     }
 
@@ -152,22 +144,23 @@ public class PayFundBankSelectDialog extends BaseDialog {
         }
 
 
-        public void bindData(List<BuyPublicFundActivity.BankCardInfo> selectListener, int postion, int selectIndex) {
+        public void bindData(List<BuyPublicFundActivity.BankCardInfo> selectListener, int postion, String curBankNum) {
             index = postion;
             BuyPublicFundActivity.BankCardInfo bankCardInfo = selectListener.get(postion);
 
             String bankCoade = bankCardInfo.getDepositacct();
+            if(curBankNum.trim().equals(bankCoade.trim())){
+                selectState.setVisibility(View.VISIBLE);
+                selectState.setBackgroundResource(R.drawable.icon_paybank_selected);
+            }else {
+                selectState.setVisibility(View.GONE);
+            }
+
             if (bankCoade.length() > 4) {
                 bankCoade = bankCoade.substring(bankCoade.length() - 4);
             }
             bankName.setText(bankCardInfo.getBankname() + "(" + bankCoade + ")");
             bankIcon.setBackgroundResource(R.drawable.bank_icon);
-            if (postion == selectIndex) {
-                selectState.setVisibility(View.VISIBLE);
-                selectState.setBackgroundResource(R.drawable.icon_paybank_selected);
-            } else {
-                selectState.setVisibility(View.GONE);
-            }
         }
     }
 

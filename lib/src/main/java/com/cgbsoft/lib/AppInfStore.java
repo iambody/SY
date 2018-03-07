@@ -581,11 +581,16 @@ public class AppInfStore implements AppinfConstant {
      * 获取公募信息
      */
     public static PublicFundInf getPublicFundInf(Context context) {
-        SharedPreferences sp = getBasePreference(context);
-        String result = sp.getString(PUBLIC_FUND_INF, "");
+        String result = getPublicFundInfo(context);
         if (BStrUtils.isEmpty(result)) return null;
         return new Gson().fromJson(result, PublicFundInf.class);
 
+    }
+
+    public static String getPublicFundInfo(Context context){
+        SharedPreferences sp = getBasePreference(context);
+        String result = sp.getString(PUBLIC_FUND_INF, "");
+        return result;
     }
 
     /**
