@@ -203,17 +203,14 @@
 
 
 
-                <EditText
-                    android:id="@+id/ev_cusno_name"
+                <TextView
+                    android:id="@+id/tv_cusno_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/ui_30_dip"
                     android:layout_toRightOf="@+id/tv_name"
-                    android:background="@null"
-                    android:hint="请输入姓名"
                     android:textColor="@color/black"
-                    android:textColorHint="#A5A5A5"
                     android:textSize="@dimen/dimens_sp_16" />
 
 
@@ -375,7 +372,6 @@
                     android:inputType="number"
                     android:textColor="@color/black"
                     android:textColorHint="#A5A5A5"
-                    android:cursorVisible="false"
                     android:textSize="@dimen/dimens_sp_16" />
 
                 <View
@@ -490,13 +486,17 @@
 
             <Button
                 android:id="@+id/bt_Confirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="345dp"
+                android:layout_height="@dimen/ui_44_dip"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="@dimen/ui_15_dip"
                 android:layout_marginRight="@dimen/ui_15_dip"
                 android:layout_marginTop="@dimen/ui_30_dip"
-                android:background="@drawable/bind_bankcard_button" />
+                android:textSize="@dimen/dimens_sp_18"
+                android:textColor="@color/white"
+                android:background="@color/app_golden"
+                />
+       <!--     android:background="@drawable/bind_bankcard_button"-->
         </LinearLayout>
     </ScrollView>
 

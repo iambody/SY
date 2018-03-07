@@ -464,19 +464,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 "depositacctname": "能星辰",
                 "channelid": "Z001"*/
 
-
-
-       /*  "moneyaccount": "295",
-                 "channelid": "Z004",
-                 "paycenterid": "0330",
-                 "depositacctname": "陈龙5",
-                 "depositcard": " ",
-                 "bankname": "中国建设银行股份有限公司阜阳鼓楼支行",
-                 "depositprov": " ",
-                 "depositcity": " ",
-                 "depositacct": "6217000010093363177",
-                 "transactionaccountid": "Z004A00000303"*/
-
         private String moneyaccount = ""; // /交易账户id（从银行卡列表信息中获取
         private String transactionaccountid = ""; // 账户号
         private String bankname = ""; // 名字
