@@ -42,14 +42,6 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
     }
 
     /**
-     * 隐藏摘要和钱的展示
-     */
-    public void hindSummaryAndMoney() {
-//        findViewById(R.id.tv_summary).setVisibility(View.INVISIBLE);
-        findViewById(R.id.tv_money).setVisibility(View.INVISIBLE);
-    }
-
-    /**
      *  实例化view
      */
     private void initView() {

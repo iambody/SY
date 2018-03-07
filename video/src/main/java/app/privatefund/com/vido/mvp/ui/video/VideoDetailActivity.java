@@ -305,7 +305,6 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         FloatVideoService.stopService();
         UserAction.initUserAction(this.getApplicationContext());
-        TrackingDataManger.videoDetailEnter(this);
     }
 
     public int getsize() {
@@ -659,6 +658,7 @@ public class VideoDetailActivity extends BaseActivity<VideoDetailPresenter> impl
 
         if (videoInfoModel != null) {
             DataStatistApiParam.openVideoDetailActivityClick(videoInfoModel.videoName, (model != null && !TextUtils.isEmpty(model.categoryName)) ? model.categoryName : "全部");
+            TrackingDataManger.videoDetailEnter(this, videoInfoModel.videoName);
         }
     }
 

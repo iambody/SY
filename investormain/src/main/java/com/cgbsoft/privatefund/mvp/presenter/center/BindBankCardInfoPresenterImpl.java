@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.mvp.presenter.center;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.cgbsoft.lib.AppManager;
@@ -85,18 +86,15 @@ public class BindBankCardInfoPresenterImpl extends BasePresenterImpl<BindBankCar
                     JSONObject jsonObject = new JSONObject(s);
                     jsonObject = jsonObject.getJSONObject("result");
                     if (jsonObject != null) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("datasets");
-                        Log.i("unBindUserCard", jsonArray.toString());
-                        jsonArray = jsonArray.getJSONArray(0);
-//                        if (jsonArray != null && jsonArray.length() > 0) {
-//                            JSONObject jsonObject1 = jsonArray.getJSONObject(0);
-//                            String appNo = jsonObject1.getString("appsheetserialno");
-//                            return;
-//                        }
-                        getView().unBindCardSuccess();
-                        return;
+                        Log.i("unBindUserCard", jsonObject.toString());
+                        String errorCode = jsonObject.optString("errorCode");
+                        String erroMessage = jsonObject.optString("errorMessage");
+                        if (TextUtils.equals(errorCode, "0000")) {
+                            getView().unBindCardSuccess();
+                        } else {
+                            getView().unBindCardFailure(erroMessage);
+                        }
                     }
-                    getView().unBindCardFailure("解绑银行卡失败！");
                 } catch (JSONException e) {
                     e.printStackTrace();
                     getView().unBindCardFailure(e.getMessage());

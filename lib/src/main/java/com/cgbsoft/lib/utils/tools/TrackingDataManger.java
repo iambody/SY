@@ -365,8 +365,8 @@ public class TrackingDataManger {
     /**
      * 视频详情进入
      */
-    public static void videoDetailEnter(Context context) {
-        TrackingDataUtils.save(context, "1065001001", "视频详情");
+    public static void videoDetailEnter(Context context, String videoName) {
+        TrackingDataUtils.save(context, "1065001001", videoName);
     }
 
     /**
