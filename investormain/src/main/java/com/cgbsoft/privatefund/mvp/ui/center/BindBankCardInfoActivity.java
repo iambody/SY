@@ -95,12 +95,12 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
         listView.setOnMenuItemClickListener((position, menu, index) -> {
           if (index == 0) {
               if (bindBankCardAdapter.getCount() == 2) {
-                  Toast.makeText(getApplicationContext(), "至少保留一张银行卡！", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(getApplicationContext(), "至少绑定一张银行卡！", Toast.LENGTH_SHORT).show();
                   return false;
               }
               BindBankCardInfoBean bindBankCardInfoBean = (BindBankCardInfoBean)bindBankCardAdapter.getItem(position);
               String simpleBankName = findNameByChannelId(bindBankCardInfoBean.getChannelid());
-              PayPasswordDialog payPasswordDialog = new PayPasswordDialog(BindBankCardInfoActivity.this, "请输入你的交易密码", simpleBankName, hintLastBankCardNumber(bindBankCardInfoBean.getDepositacct()));
+              PayPasswordDialog payPasswordDialog = new PayPasswordDialog(BindBankCardInfoActivity.this, "请输入您的交易密码", simpleBankName, hintLastBankCardNumber(bindBankCardInfoBean.getDepositacct()));
               payPasswordDialog.setmPassWordInputListener(psw -> {
                   deleteIndex = position;
                   payPasswordDialog.dismiss();
@@ -108,6 +108,7 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
                   String custno = publicFundInf.getCustno();
                   getPresenter().unBindUserCard(bindBankCardInfoBean.getChannelid(), custno, bindBankCardInfoBean.getDepositacct(), psw);
               });
+              payPasswordDialog.setWidtherDialog(true);
               payPasswordDialog.show();
           }
             return false;
