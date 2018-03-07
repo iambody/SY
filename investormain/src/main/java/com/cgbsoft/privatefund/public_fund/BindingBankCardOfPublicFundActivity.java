@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
@@ -67,6 +69,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     private TextView mAddressBank;
     private String cityName;
 
+    private int style;// 1 为赠卡风格 其它数字为开户流程风格
     @Override
     protected int layoutID() {
         return R.layout.activity_binding_bankcard;
@@ -86,20 +89,6 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 "operorg":"9999",
                 "tpasswd":"123456"*/
 
-        String data = getIntent().getStringExtra(TAG_PARAMETER);
-        // 如果data不为说明是从h5跳转过来，否者从原生页面跳转过来  (目前逻辑全部是不为空的 原生和h5都是有数据的@wyk)
-
-        int style = getIntent().getIntExtra("Style", 0);
-        if (style == 1) {
-            findViewById(R.id.rl_step_flow).setVisibility(View.GONE);
-            View view = findViewById(R.id.rl_verification_root);
-            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) view.getLayoutParams();
-            lp.setMargins(0, DimensionPixelUtil.dip2px(this, 10), 0, 0);
-        }
-
-        if (!BStrUtils.isEmpty(data)) {
-            bindingBankCardBean = new Gson().fromJson(data, BindingBankCardBean.class);
-        }
         mPayBankName = (TextView) findViewById(R.id.tv_pay_bank_name);
         mBankBranchName = (TextView) findViewById(R.id.tv_bank_branch);
         mPankcardCode = (EditText) findViewById(R.id.ev_bankcard_code);
@@ -107,6 +96,30 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         mVerificationCode = (EditText) findViewById(R.id.ev_verification_code_input);
         getVerificationCode = (Button) findViewById(R.id.bt_get_verification_code);
         mAddressBank = (TextView) findViewById(R.id.actv_bank_city);
+
+
+
+        style = getIntent().getIntExtra("Style", 0);
+        String data = getIntent().getStringExtra(TAG_PARAMETER);
+        if(style == 1) data = AppInfStore.getPublicFundInfo(this.getApplicationContext());
+
+        if (!BStrUtils.isEmpty(data)) {
+            bindingBankCardBean = new Gson().fromJson(data, BindingBankCardBean.class);
+        }
+
+        if (style == 1) {
+            findViewById(R.id.rl_step_flow).setVisibility(View.GONE);
+            View view = findViewById(R.id.rl_phonenum_root);
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) view.getLayoutParams();
+            lp.setMargins(0, DimensionPixelUtil.dip2px(this, 10), 0, 0);
+
+            findViewById(R.id.rl_cusno_name).setVisibility(View.VISIBLE);
+            ((ViewGroup)mPankcardCode.getParent()).getChildAt(2).setVisibility(View.GONE);
+        }else {
+            findViewById(R.id.rl_cusno_name).setVisibility(View.GONE);
+            ((ViewGroup)mPankcardCode.getParent()).getChildAt(2).setVisibility(View.VISIBLE);
+        }
+
 
 
         bindView();
@@ -122,7 +135,11 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
      */
     private void bindView() {
         // 该表标题
-        ((TextView) findViewById(R.id.title_mid)).setText("绑定银行卡");
+        if(style == 1){
+            ((TextView) findViewById(R.id.title_mid)).setText("使用新卡支付");
+        }else {
+            ((TextView) findViewById(R.id.title_mid)).setText("绑定银行卡");
+        }
         // 获取验证码按钮
         findViewById(R.id.bt_get_verification_code).setOnClickListener(this);
         // 确认购买
@@ -371,6 +388,15 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
      * 完成绑定
      */
     private void finshBanding() {
+        if(style == 1){
+           EditText editText =  (EditText)findViewById(R.id.ev_cusno_name);
+            String cusnoName = editText.getText().toString();
+            if (BStrUtils.isEmpty(cusnoName)) {
+                MToast.makeText(this, "客户姓名不能为空", Toast.LENGTH_LONG);
+                return;
+            }
+        }
+
         String phoneCode = mPhoneCode.getText().toString();
         if (BStrUtils.isEmpty(phoneCode)) {
             MToast.makeText(this, "手机号不能为空", Toast.LENGTH_LONG);
