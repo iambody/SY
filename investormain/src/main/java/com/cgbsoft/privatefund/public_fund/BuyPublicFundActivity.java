@@ -135,12 +135,17 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 new PayFundBankSelectDialog(this, bean.getBankCardInfoList(), new PayFundBankSelectDialog.SelectListener() {
                     @Override
                     public void select(int index) {
-                        Log.e(this.getClass().getSimpleName(),"选择银行卡"+ index);
-                        if(index == -2){
+                        Log.e(this.getClass().getSimpleName(), "选择银行卡" + index);
+                        if (index == -2) {
                             Activity activity = BuyPublicFundActivity.this;
-                            Intent intent = new Intent(activity,BindingBankCardOfPublicFundActivity.class);
-                            intent.putExtra("Style",1);
-                            activity.startActivityForResult(intent,PayFundBankSelectDialog.REQUESTCODE);
+                            Intent intent = new Intent(activity, BindingBankCardOfPublicFundActivity.class);
+                            intent.putExtra("Style", 1);
+                            activity.startActivityForResult(intent, PayFundBankSelectDialog.REQUESTCODE);
+                        } else if (index >= 0) {
+                            BankCardInfo bankCardInfo = bean.getBankCardInfoList().get(index);
+                            if (bankCardInfo == null) return;
+                            currectPayBank = bankCardInfo;
+                            showBankView();
                         }
                     }
                 }).show();
@@ -204,7 +209,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 bean = new Gson().fromJson(o, Bean.class);
                 bean.setFundCode(fundCode);
                 currectPayBank = bean.getBankCardInfoList().get(0);
-                if(currectPayBank == null) return;
+                if (currectPayBank == null) return;
                 showBankView();
             }
 
@@ -221,22 +226,23 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     /**
      * 显示支付银行
      */
-    Map<String,String> dictionaryTable = null;
+    Map<String, String> dictionaryTable = null;
+
     private void showBankView() {
         if (bean == null || channlidDictionarys == null) return;
-        if(loadingDialog != null) loadingDialog.dismiss();
+        if (loadingDialog != null) loadingDialog.dismiss();
         if (!BStrUtils.isEmpty(bean.getLimitOrderAmt()) && !"null".equals(bean.getLimitOrderAmt())) {
             buyInput.setHint("最低买入" + bean.getLimitOrderAmt() + unit);
         }
 
-        if(dictionaryTable == null) {
+        if (dictionaryTable == null) {
             dictionaryTable = new HashMap<>();
-            for(DataDictionary dataDictionary : channlidDictionarys){
-                dictionaryTable.put(dataDictionary.getSubitem(),dataDictionary.getSubitemname());
+            for (DataDictionary dataDictionary : channlidDictionarys) {
+                dictionaryTable.put(dataDictionary.getSubitem(), dataDictionary.getSubitemname());
             }
-            for(BankCardInfo bankCardInfo : bean.getBankCardInfoList()){
+            for (BankCardInfo bankCardInfo : bean.getBankCardInfoList()) {
                 String bankName = dictionaryTable.get(bankCardInfo.getChannelid());
-                if(!TextUtils.isEmpty(bankName)) bankCardInfo.setBankname(bankName);
+                if (!TextUtils.isEmpty(bankName)) bankCardInfo.setBankname(bankName);
             }
 
         }
@@ -288,12 +294,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         if (data != null && requestCode == PayFundBankSelectDialog.REQUESTCODE && resultCode == Activity.RESULT_OK) {
             //TODO 发起请求
             BankCardInfo bankCordInfo = (BankCardInfo) data.getExtras().get("bankCordInfo");
-            if(bankCordInfo == null) return;
+            if (bankCordInfo == null) return;
 
             bankCordInfo.setCustno(currectPayBank.getCustno());
             String bankName = dictionaryTable.get(bankCordInfo.getChannelid());
-            if(!TextUtils.isEmpty(bankName)) bankCordInfo.setBankname(bankName);
-            if(bean != null) bean.getBankCardInfoList().add(0,bankCordInfo);
+            if (!TextUtils.isEmpty(bankName)) bankCordInfo.setBankname(bankName);
+            if (bean != null) bean.getBankCardInfoList().add(0, bankCordInfo);
             currectPayBank = bankCordInfo;
             showBankView();
         }

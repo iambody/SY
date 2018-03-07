@@ -99,7 +99,7 @@ android {
         }
     }
     productFlavors{
- //       guanwang{}
+        guanwang{}
 //        huawei{}
 //        qihu360{}
 //        tengxun{}
