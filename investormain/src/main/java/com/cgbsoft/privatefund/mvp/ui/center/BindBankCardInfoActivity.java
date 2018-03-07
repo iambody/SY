@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.center;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,11 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.bumptech.glide.Glide;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -33,6 +32,9 @@ import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.mvp.contract.center.BindBankCardInfoContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.BindBankCardInfoPresenterImpl;
+import com.cgbsoft.privatefund.public_fund.BindingBankCardOfPublicFundActivity;
+import com.cgbsoft.privatefund.public_fund.BuyPublicFundActivity;
+import com.cgbsoft.privatefund.public_fund.PayFundBankSelectDialog;
 import com.cgbsoft.privatefund.public_fund.PayPasswordDialog;
 import com.chenenyu.router.annotation.Route;
 
@@ -45,7 +47,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imageloader.core.ImageLoader;
 
 /**
  * @auther chenlong
@@ -143,28 +144,9 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
     }
 
     private void gotoAddBindBankCard() {
-        PublicFundInf publicFundInf1 = AppManager.getPublicFundInf(this);
-        PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(this);
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("trantype", "bgAddCard");
-            jsonObject.put("custno", publicFundInf1.getCustno());
-            jsonObject.put("authenticateflag", "1");
-            jsonObject.put("certificateno", publishFundRecommendBean.getCertificateno());
-            jsonObject.put("certificatetype", publishFundRecommendBean.getCertificatetype());
-            jsonObject.put("depositacct", publishFundRecommendBean.getDepositacct());
-            jsonObject.put("depositacctname", publishFundRecommendBean.getDepositacctname());
-            jsonObject.put("depositname", publishFundRecommendBean.getDepositacctname());
-            jsonObject.put("depositcity", "");
-            jsonObject.put("depositprov", "");
-            jsonObject.put("operorg", "9999");
-            jsonObject.put("tpasswd", "");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("tag_parameter", jsonObject.toString());
-        NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
+        Intent intent = new Intent(this,BindingBankCardOfPublicFundActivity.class);
+        intent.putExtra("Style",1);
+        startActivityForResult(intent, PayFundBankSelectDialog.REQUESTCODE);
     }
 
     @Override
