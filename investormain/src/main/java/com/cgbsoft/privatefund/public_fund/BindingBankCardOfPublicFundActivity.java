@@ -436,28 +436,28 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 if (bankListOfJZSupport != null) {
                     String code = bankListOfJZSupport.getErrorCode();
                     if (PublicFundContant.REQEUST_SUCCESS.equals(code)) { // 成功
+                        if(style == 1){
+                            JSONObject jsonObject = null;
+                            List<BuyPublicFundActivity.BankCardInfo> bankListBranchs = null;
+                            try {
+                                jsonObject = new JSONObject(s);
+                                JSONArray datasets = jsonObject.getJSONArray("datasets").getJSONArray(0);
+                                Gson gson = new Gson();
+                                bankListBranchs = gson.fromJson(datasets.toString(), new TypeToken<ArrayList<BuyPublicFundActivity.BankCardInfo>>(){}.getType());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
-                        MToast.makeText(BindingBankCardOfPublicFundActivity.this, "绑定成功", Toast.LENGTH_LONG);
-                        // 去风险测评页面
-                        UiSkipUtils.gotoPublicFundRisk(BindingBankCardOfPublicFundActivity.this);
-                        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
-
-
-                        JSONObject jsonObject = null;
-                        List<BuyPublicFundActivity.BankCardInfo> bankListBranchs = null;
-                        try {
-                            jsonObject = new JSONObject(s);
-                            JSONArray datasets = jsonObject.getJSONArray("datasets").getJSONArray(0);
-                            Gson gson = new Gson();
-                            bankListBranchs = gson.fromJson(datasets.toString(), new TypeToken<ArrayList<BuyPublicFundActivity.BankCardInfo>>(){}.getType());
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                            Bundle bundle =  new Bundle();
+                            bundle.putSerializable("bankCordInfo",bankListBranchs.get(0));
+                            getIntent().putExtras(bundle);
+                            BindingBankCardOfPublicFundActivity.this.setResult(Activity.RESULT_OK, getIntent());
+                        }else {
+                            // 去风险测评页面
+                            UiSkipUtils.gotoPublicFundRisk(BindingBankCardOfPublicFundActivity.this);
+                            RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
                         }
-
-                        Bundle bundle =  new Bundle();
-                        bundle.putSerializable("bankCordInfo",bankListBranchs.get(0));
-                        getIntent().putExtras(bundle);
-                        BindingBankCardOfPublicFundActivity.this.setResult(Activity.RESULT_OK, getIntent());
+                        MToast.makeText(BindingBankCardOfPublicFundActivity.this, "绑定成功", Toast.LENGTH_LONG);
                         finish();
                     } else if (PublicFundContant.REQEUSTING.equals(code)) {
                         MToast.makeText(BindingBankCardOfPublicFundActivity.this, "处理中", Toast.LENGTH_LONG);
