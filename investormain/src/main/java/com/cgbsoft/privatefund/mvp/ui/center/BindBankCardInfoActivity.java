@@ -108,6 +108,7 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
                   String custno = publicFundInf.getCustno();
                   getPresenter().unBindUserCard(bindBankCardInfoBean.getChannelid(), custno, bindBankCardInfoBean.getDepositacct(), psw);
               });
+              payPasswordDialog.setWidtherDialog(true);
               payPasswordDialog.show();
           }
             return false;

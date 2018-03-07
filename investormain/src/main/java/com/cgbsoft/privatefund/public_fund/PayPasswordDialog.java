@@ -18,6 +18,7 @@ import com.cgbsoft.privatefund.public_fund.passworddiglog.CustomPasswordView;
 public class PayPasswordDialog extends BaseDialog implements View.OnClickListener {
     private String title,summary, money;
     private PassWordInputListener mPassWordInputListener;
+    private boolean isWidtherDialog;
 
     private CustomPasswordView passwordInput;
     private TextView close;
@@ -28,11 +29,14 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
         this.money = money;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dilog_pay_password);
+        if (!isWidtherDialog) {
+            setContentView(R.layout.dilog_pay_password);
+        } else {
+            setContentView(R.layout.dilog_width_password);
+        }
         initView();
         bindViews();
     }
@@ -84,7 +88,13 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
         getWindow().setAttributes(lp);
     }
 
+    public boolean isWidtherDialog() {
+        return isWidtherDialog;
+    }
 
+    public void setWidtherDialog(boolean widtherDialog) {
+        isWidtherDialog = widtherDialog;
+    }
 
     @Override
     public void onClick(View v) {
