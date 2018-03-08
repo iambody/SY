@@ -139,7 +139,8 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                         if (index == -2) {
                             Activity activity = BuyPublicFundActivity.this;
                             Intent intent = new Intent(activity, BindingBankCardOfPublicFundActivity.class);
-                            intent.putExtra("Style", 1);
+                            intent.putExtra(BindingBankCardOfPublicFundActivity.STYLE, 1);
+                            intent.putExtra(BindingBankCardOfPublicFundActivity.TITLE,"使用新卡支付");
                             activity.startActivityForResult(intent, PayFundBankSelectDialog.REQUESTCODE);
                         } else if (index >= 0) {
                             BankCardInfo bankCardInfo = bean.getBankCardInfoList().get(index);

@@ -50,6 +50,8 @@ import java.util.TimerTask;
 @Route(RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD)
 public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBankCardOfPublicFundPresenter> implements View.OnClickListener {
     public static final String TAG_PARAMETER = "tag_parameter";
+    public static final String STYLE = "Style";
+    public static final String TITLE = "title";
 
     public final static int SELECT_BANK = 100;
     public final static int SELECT_BRANCH_BANK = 101;
@@ -97,7 +99,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         mAddressBank = (TextView) findViewById(R.id.actv_bank_city);
 
 
-        style = getIntent().getIntExtra("Style", 0);
+        style = getIntent().getIntExtra(STYLE, 0);
         String data = getIntent().getStringExtra(TAG_PARAMETER);
         if (style == 1) data = AppInfStore.getPublicFundInfo(this.getApplicationContext());
 
@@ -134,15 +136,18 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
      */
     private void bindView() {
         // 该表标题
-        if (style == 1) {
-            ((TextView) findViewById(R.id.title_mid)).setText("使用新卡支付");
-            ((TextView) findViewById(R.id.bt_Confirm)).setText("完成");
-
-
-        } else {
+        if (TextUtils.isEmpty(getIntent().getStringExtra(TITLE))) {
             ((TextView) findViewById(R.id.title_mid)).setText("绑定银行卡");
+        } else {
+            ((TextView) findViewById(R.id.title_mid)).setText(getIntent().getStringExtra(TITLE));
+        }
+
+        if (style == 1) {
+            ((TextView) findViewById(R.id.bt_Confirm)).setText("完成");
+        } else {
             ((TextView) findViewById(R.id.bt_Confirm)).setText("完成开户");
         }
+
         // 获取验证码按钮
         findViewById(R.id.bt_get_verification_code).setOnClickListener(this);
         // 确认购买
@@ -439,7 +444,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 loadingDialog.dismiss();
                 String datasets = "";
                 String code = "";
-                String message= "";
+                String message = "";
                 try {
                     JSONObject result = new JSONObject(s);
                     code = result.getString("errorCode");
@@ -466,10 +471,10 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                     finish();
                 } else if (PublicFundContant.REQEUSTING.equals(code)) {
                     MToast.makeText(BindingBankCardOfPublicFundActivity.this, "处理中", Toast.LENGTH_LONG);
-                }else if("1106".equals(code)){
+                } else if ("1106".equals(code)) {
                     MToast.makeText(BindingBankCardOfPublicFundActivity.this, "请输入正确的验证码", Toast.LENGTH_LONG);
                 } else {
-                    MToast.makeText(BindingBankCardOfPublicFundActivity.this,message, Toast.LENGTH_LONG);
+                    MToast.makeText(BindingBankCardOfPublicFundActivity.this, message, Toast.LENGTH_LONG);
                 }
             }
 
