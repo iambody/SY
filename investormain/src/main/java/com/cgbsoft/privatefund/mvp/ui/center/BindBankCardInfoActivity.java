@@ -31,7 +31,6 @@ import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.mvp.contract.center.BindBankCardInfoContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.BindBankCardInfoPresenterImpl;
 import com.cgbsoft.privatefund.public_fund.BindingBankCardOfPublicFundActivity;
-import com.cgbsoft.privatefund.public_fund.BuyPublicFundActivity;
 import com.cgbsoft.privatefund.public_fund.PayFundBankSelectDialog;
 import com.cgbsoft.privatefund.public_fund.PayPasswordDialog;
 import com.chenenyu.router.annotation.Route;
@@ -140,7 +139,7 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
 
     private void gotoAddBindBankCard() {
         Intent intent = new Intent(this,BindingBankCardOfPublicFundActivity.class);
-        intent.putExtra("Style",1);
+        intent.putExtra(BindingBankCardOfPublicFundActivity.STYLE,1);
         startActivityForResult(intent, PayFundBankSelectDialog.REQUESTCODE);
     }
 
