@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.ui.center;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -30,6 +31,7 @@ import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.mvp.contract.center.BindBankCardInfoContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.BindBankCardInfoPresenterImpl;
 import com.cgbsoft.privatefund.public_fund.BindingBankCardOfPublicFundActivity;
+import com.cgbsoft.privatefund.public_fund.BuyPublicFundActivity;
 import com.cgbsoft.privatefund.public_fund.PayFundBankSelectDialog;
 import com.cgbsoft.privatefund.public_fund.PayPasswordDialog;
 import com.chenenyu.router.annotation.Route;
@@ -155,6 +157,17 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
             bindBankCardAdapter.removeData(deleteIndex);
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PayFundBankSelectDialog.REQUESTCODE &&
+                resultCode == Activity.RESULT_OK) {
+            showLoadDialog();
+            getPresenter().requestBindBankCardInfo();
+        }
+    }
+
 
     @Override
     public void unBindCardFailure(String errorMsg) {
