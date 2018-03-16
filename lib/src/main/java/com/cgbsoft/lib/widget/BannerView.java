@@ -230,6 +230,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
                 notifyDataSetChanged();
 
                 if (1 == listView.size() || 0 == listView.size()) {
+                    
                 } else if (0 == (targetVp.getCurrentItem() + 1) % views.size()) {
                     targetVp.setCurrentItem(selectedBanner + 1);
                 } else {
@@ -308,7 +309,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
 
     private void myPageSelected(int position) {
         if (changeViewCallback != null) {
-            changeViewCallback.getCurrentPageIndex( position % bannerList.size());
+            changeViewCallback.getCurrentPageIndex(position % bannerList.size());
         }
     }
 

@@ -152,6 +152,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     TextView homeProductThreeUp;
     @BindView(R.id.home_product_three_down)
     TextView homeProductThreeDown;
+    @BindView(R.id.main_home_live_level_div)
+    ImageView mainHomeLiveLevelDiv;
+
     //等级
     @BindView(R.id.view_home_member)
     TextView viewHomeMember;
@@ -203,17 +206,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     Observable<LiveInfBean> liveObservable;
     Observable<Integer> userLayObservable, bindAdviserObservable, publicFundInfObservable, registLayFresh;
 
-
-    private int downXPostion;
-    private int lastXPostion;
     private float lastRotate = 0;
-
     private ImageView[] imageViews;
     private SensorManager sensorManager;
     private Sensor magneticSensor;
     private Sensor accelerometerSensor;
     private Sensor gyroscopeSensor;
-
     private static final float NS2S = 1.0f / 10000000.0f;
     private float timestamp;
     private float[] angle = {0f, 0f, 0f};
@@ -231,6 +229,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initCache();
         getPresenter().getHomeData();
         getPresenter().getPublicFundRecommend();
+
+
     }
 
     @Override
@@ -351,13 +351,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-//        ShareCommonBean shareCommonBean = new ShareCommonBean();
-////        shareCommonBean.setShareContent();
-//        ShareManger shareManger = ShareManger.getInstance(baseActivity, shareCommonBean, null);
-//        shareManger.goShareWx(ShareManger.WXMINIPROGRAM);
-//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRiskUrl, getResources().getString(R.string.public_fund_risk), false);
-//        UiSkipUtils.gotoPublicFundRisk(baseActivity);
-//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
+//        Snackbar.make(fb, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
         if (AppManager.isVisitor(baseActivity)) {
             Intent intent = new Intent(baseActivity, LoginActivity.class);
             intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
@@ -532,6 +526,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                     case 0://预告
 //                        //新版直播
+                        mainHomeLiveLevelDiv.setVisibility(View.VISIBLE);
                         main_home_newlive_lay.setVisibility(View.VISIBLE);
                         homeNewliveForeshowLay.setVisibility(View.VISIBLE);
                         viewNewliveMengBg.setVisibility(View.VISIBLE);
@@ -543,6 +538,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
                         break;
                     case 1://直播中
                         //新版直播
+                        mainHomeLiveLevelDiv.setVisibility(View.VISIBLE);
                         main_home_newlive_lay.setVisibility(View.VISIBLE);
                         homeNewliveForeshowLay.setVisibility(View.GONE);
                         homeNewliveNowLay.setVisibility(View.VISIBLE);
@@ -554,7 +550,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
                         break;
                     case 2://无直播
-
+                        mainHomeLiveLevelDiv.setVisibility(View.GONE);
                         main_home_newlive_lay.setVisibility(View.GONE);
                         break;
                 }
@@ -588,13 +584,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             });
         }
         //开户的布局显示隐藏
-
         if (null == registLayFresh) {
             registLayFresh = RxBus.get().register(RxConstant.REFRESH_PUBLIC_FUND_RESGIST_LAY, Integer.class);
             registLayFresh.subscribe(new RxSubscriber<Integer>() {
                 @Override
                 protected void onEvent(Integer publicFundInf) {
-                    initRegistLay();
+                    initPublicFundLay();
                 }
 
                 @Override
@@ -935,10 +930,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private void initPublicFundData(boolean isCache, PublishFundRecommendBean publishFundRecommendBean) {
 
         publishFundRecommend = publishFundRecommendBean;
-//        viewHomePublicFundLay.setVisibility(View.VISIBLE);
-
-
-        initRegistLay();
+        initPublicFundLay();
         BStrUtils.setTv(viewHomePublicFundFundname, publishFundRecommendBean.getFundName());
         BStrUtils.setTv(viewHomePublicFundFunddes, publishFundRecommendBean.getFundDes());
         BStrUtils.setTv(viewHomePublicFundLeftvalues, publishFundRecommendBean.getLeftUpValue());
@@ -954,13 +946,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     /**
-     * 刷新注册布局
+     * 刷新公募布局
      */
-    public void initRegistLay() {
-
-
+    public void initPublicFundLay() {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(baseActivity.getApplicationContext());
-
         //新添加了白名单的逻辑处理
         if (!BStrUtils.isEmpty(publicFundInf.getWhiteUserListFlg()) && "1".equals(publicFundInf.getWhiteUserListFlg())) {
             viewHomePublicFundLay.setVisibility(View.VISIBLE);
@@ -991,9 +980,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onRefresh() {
         isLoading = false;
-        //刷新webview
         mainhomeWebview.loadUrl("javascript:refresh()");
-        //请求数据
         getPresenter().getHomeData();
         getPresenter().getPublicFundRecommend();
         RxBus.get().post(RxConstant.REFRESH_LIVE_DATA, true);

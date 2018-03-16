@@ -12,6 +12,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.webview.bean.JsCall;
 import com.cgbsoft.lib.contant.Contant;
@@ -20,11 +21,10 @@ import com.cgbsoft.lib.share.bean.ShareCommonBean;
 import com.cgbsoft.lib.share.dialog.CommonNewShareDialog;
 import com.cgbsoft.lib.share.dialog.CommonScreenDialog;
 import com.cgbsoft.lib.share.dialog.CommonSharePosterDialog;
+import com.cgbsoft.lib.share.utils.ShareManger;
 import com.cgbsoft.lib.utils.cache.SPreference;
-import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.net.CNetConfig;
 import com.cgbsoft.lib.utils.poster.ElevenPoster;
 import com.cgbsoft.lib.utils.poster.ScreenShot;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -37,6 +37,8 @@ import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
+import com.cgbsoft.privatefund.bean.UserInf;
+import com.cgbsoft.privatefund.bean.commui.JsShareBean;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.chenenyu.router.Router;
 import com.google.gson.Gson;
@@ -169,7 +171,7 @@ public class JavaScriptObjectToc {
     }
 
     @JavascriptInterface
-    public void openCredentialsFolder(String param){
+    public void openCredentialsFolder(String param) {
         try {
             JSONObject ja = new JSONObject(param);
             JSONObject data = ja.getJSONObject("data");
@@ -181,14 +183,14 @@ public class JavaScriptObjectToc {
                     if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("credentialStateMedel", credentialStateMedel);
-                        NavigationUtils.startActivityByRouter(context,RouteConfig.CrenditralGuideActivity,bundle);
+                        NavigationUtils.startActivityByRouter(context, RouteConfig.CrenditralGuideActivity, bundle);
 //                        Intent intent = new Intent(context, CrenditralGuideActivity.class);
 //                        intent.putExtra("credentialStateMedel", credentialStateMedel);
 //                        startActivity(intent);
                     } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("credentialStateMedel", credentialStateMedel);
-                        NavigationUtils.startActivityByRouter(context,RouteConfig.UploadIndentityCradActivity,bundle);
+                        NavigationUtils.startActivityByRouter(context, RouteConfig.UploadIndentityCradActivity, bundle);
 
 //                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
 //                        intent.putExtra("credentialStateMedel", credentialStateMedel);
@@ -202,13 +204,13 @@ public class JavaScriptObjectToc {
                 } else {//  非大陆去证件列表
                     Bundle bundle = new Bundle();
                     bundle.putString("indentityCode", credentialStateMedel.getCustomerIdentity());
-                    NavigationUtils.startActivityByRouter(context,RouteConfig.CardCollectActivity,bundle);
+                    NavigationUtils.startActivityByRouter(context, RouteConfig.CardCollectActivity, bundle);
 //                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
 //                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
 //                    startActivity(intent);
                 }
             } else {//无身份
-                NavigationUtils.startActivityByRouter(context,RouteConfig.SelectIndentityActivity);
+                NavigationUtils.startActivityByRouter(context, RouteConfig.SelectIndentityActivity);
 //                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
 //                startActivity(intent);
             }
@@ -623,10 +625,8 @@ public class JavaScriptObjectToc {
     @JavascriptInterface
     public void openFundAccount(String jsostr) {
         Log.i("sss", jsostr);
-
         //跳转到开户页面*************************
         UiSkipUtils.toPublicFundRegist((Activity) context);
-
     }
 
     /**
@@ -652,8 +652,6 @@ public class JavaScriptObjectToc {
             }
         } catch (Exception e) {
         }
-
-
     }
 
     /**
@@ -678,4 +676,87 @@ public class JavaScriptObjectToc {
         commonNewShareDialog.show();
     }
 
+    /**
+     * 公共分享框架
+     */
+    public void commonShareOrder(String jsonstr) {
+        JSONObject object = null;
+        try {
+            object = new JSONObject(jsonstr);
+            String data = object.getString("data");
+            String callback = object.getString("callback");
+            if (BStrUtils.isEmpty(data)) return;
+            JsShareBean jsShareBean = new Gson().fromJson(data, JsShareBean.class);
+            if (null == jsShareBean.getResource()) return;
+            shareResultListenr shareResultListenr = new shareResultListenr(jsShareBean.getTyp());
+            switch (jsShareBean.getTyp()) {//1:html（default）, 2:image, 3:miniprogram, 4:text, 5:video, 6:audio
+                case "1":
+                    ShareManger.getInstance(context, new ShareCommonBean(jsShareBean.getResource().getTitle(), jsShareBean.getResource().getConten(), jsShareBean.getResource().getPageURL(), jsShareBean.getResource().getImage()), shareResultListenr).goShareWx(ShareManger.WXSHARE);
+                    break;
+                case "2":
+                    Bitmap bitmap = null; //需要确保分享的bitmap部位null
+                    ShareManger.getInstance(context, new ShareCommonBean(bitmap), shareResultListenr);
+                    break;
+                case "3":
+                    ShareManger.getInstance(context, new ShareCommonBean(jsShareBean.getResource().getTitle(), jsShareBean.getResource().getConten(), jsShareBean.getResource().getPageURL(), jsShareBean.getResource().getImage()), shareResultListenr).goShareWx(ShareManger.WXMINIPROGRAM);
+                    break;
+                case "4"://文本
+                    ShareManger.getInstance(context, new ShareCommonBean(jsShareBean.getResource().getTitle(), jsShareBean.getResource().getConten(), jsShareBean.getResource().getPageURL(), jsShareBean.getResource().getImage()), shareResultListenr).goShareWx(ShareManger.CIRCLETXT);
+                    break;
+                case "5"://视频
+                    ShareManger.getInstance(context, new ShareCommonBean(jsShareBean.getResource().getTitle(), jsShareBean.getResource().getConten(), jsShareBean.getResource().getPageURL(), jsShareBean.getResource().getImage()), shareResultListenr).goShareWx(ShareManger.CIRCLEVIDEO);
+
+                    break;
+                case "6"://音频
+                    ShareManger.getInstance(context, new ShareCommonBean(jsShareBean.getResource().getTitle(), jsShareBean.getResource().getConten(), jsShareBean.getResource().getPageURL(), jsShareBean.getResource().getImage()), shareResultListenr).goShareWx(ShareManger.CIRCLMUSICE);
+
+                    break;
+                default:
+                    ShareManger.getInstance(context, new ShareCommonBean(jsShareBean.getResource().getTitle(), jsShareBean.getResource().getConten(), jsShareBean.getResource().getPageURL(), jsShareBean.getResource().getImage()), shareResultListenr).goShareWx(ShareManger.WXSHARE);
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 公用分享时候的回调  不需要可以直接初始化时候职位null
+     */
+    class shareResultListenr implements com.cgbsoft.lib.share.utils.ShareManger.ShareResultListenr {
+        private String type;//1:html（default）, 2:image, 3:miniprogram, 4:text, 5:video, 6:audio
+
+        public shareResultListenr(String type) {
+            this.type = type;
+        }
+
+        @Override
+        public void completShare() {
+            //某种类型需要分享成功时候的回调
+
+        }
+
+        @Override
+        public void errorShare() {
+
+        }
+
+        @Override
+        public void cancelShare() {
+
+        }
+    }
+
+
+    @JavascriptInterface
+    public void getUserInfo(String jsostr) {
+        if (BStrUtils.isEmpty(jsostr)) return;
+        JsCall jscall = new Gson().fromJson(jsostr, JsCall.class);
+        Context rContext = context instanceof Activity ? context.getApplicationContext() : context;
+        UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(rContext);
+        UserInf userInf = new Gson().fromJson(new Gson().toJson(userInfo), UserInf.class);
+
+        if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
+            webView.loadUrl(String.format("javascript:%s(%s)", jscall.getCallback(), new Gson().toJson(userInf)));
+    }
 }

@@ -1,5 +1,6 @@
 package com.cgbsoft.lib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
@@ -587,7 +588,7 @@ public class AppInfStore implements AppinfConstant {
 
     }
 
-    public static String getPublicFundInfo(Context context){
+    public static String getPublicFundInfo(Context context) {
         SharedPreferences sp = getBasePreference(context);
         String result = sp.getString(PUBLIC_FUND_INF, "");
         return result;
@@ -612,5 +613,34 @@ public class AppInfStore implements AppinfConstant {
         String result = sp.getString(PUBIC_FUND_CACAHEA, "");
         if (BStrUtils.isEmpty(result)) return null;
         return new Gson().fromJson(result, PublishFundRecommendBean.class);
+    }
+
+    /**
+     * 保存用户的上一次手机号
+     */
+    public static void saveLatestPhone(Context context, String latestPhone) {//LATEST_PHONE_NUMBER
+        SharedPreferences sp = getBasePreference(getContext(context));
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString(LATEST_PHONE_NUMBER, latestPhone);
+        ed.commit();
+
+    }
+
+    /**
+     * 获取用户上一次登录的手机
+     */
+    public static String getLatestPhone(Context context) {
+        SharedPreferences sp = getBasePreference(context);
+        String result = sp.getString(LATEST_PHONE_NUMBER, "");
+        if (BStrUtils.isEmpty(result)) return null;
+        return result;
+    }
+
+    /**
+     * 获取上下文
+     */
+    public static Context getContext(Context xc) {
+        if (xc instanceof Activity) return ((Activity) xc).getApplication();
+        return xc;
     }
 }

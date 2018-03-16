@@ -114,17 +114,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     //是否点击了游客模式的按钮
     boolean isVisitorLoginClick, isVisitorBackHome;
     boolean fromValidatePassword;
-
     private LoadingDialog mLoadingDialog;
     private int identity;
     private boolean isUsernameInput, isPasswordInput;
     private final int USERNAME_KEY = 1, PASSWORD_KEY = 2;
-    //    private UMShareAPI mUMShareAPI;
     private WeiChatLoginDialog mCustomDialog;
     private WeiChatLoginDialog.Builder mCustomBuilder;
     //公钥直接存内存中
     private String publicKey;
-
     private LocationManger locationManger;
     private ShakeListener mShakeListener;
 
@@ -154,7 +151,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     protected void before() {
         super.before();
-//        setIsNeedGoneNavigationBar(true);//不显示导航条
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 //            透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -176,7 +172,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         isVisitorBackHome = getIntent().getBooleanExtra(TAG_BACK_HOME, false);
         ialoginout = getIntent().getBooleanExtra("ialoginout", false);
         fromValidatePassword = getIntent().getBooleanExtra("fromValidatePassword", false);
-//        ShareSDK.initSDK(baseContext);
+
         UserInfoDataEntity.UserInfo userInfo = SPreference.getUserInfoData(getApplicationContext());
         String loginName = AppManager.getUserAccount(this);
         getPresenter().getNavigation();
@@ -198,10 +194,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         mCustomDialog = new WeiChatLoginDialog(this);
         mCustomBuilder = mCustomDialog.new Builder().setCanceledOnClickBack(true).setCanceledOnTouchOutside(true)
                 .setTitle(getString(R.string.la_wxlogin_str)).setNegativeButton("", (dialog, which) -> dialog.dismiss());
-       /*产品经理需求 不要首次进来就弹出框*/
-//        if (!SPreference.isVisableProtocol(getApplicationContext()))
-//            new ProtocolDialog(this, 0, null);
-        //开始获取公钥publicKey
         getPresenter().toGetPublicKey();
         initLocation();
         //如果是正常进来的就偷偷加载游客信息
@@ -212,7 +204,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
         initRxObservable();
         initShakeListener();
-
 
         et_al_username.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -240,6 +231,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             protected void onRxError(Throwable error) {
             }
         });
+
+        if (!BStrUtils.isEmpty(AppManager.getLatestPhoneNum(baseContext))) {
+            BStrUtils.setTv1(et_al_username,AppManager.getLatestPhoneNum(baseContext));
+
+
+        }
     }
 
     private Observable<Integer> killSelfRxObservable;

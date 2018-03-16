@@ -43,12 +43,20 @@
                             app:layout_scrollFlags="scroll|enterAlways" />
                     </RelativeLayout>
                     <!-- Banner*** -->
+
                     <!-- 直播预报的布局 -->
                     <include
                         android:id="@+id/main_home_newlive_lay"
                         layout="@layout/view_home_live_new_lay"
                         android:visibility="gone" />
                     <!-- 直播预报的布局************ -->
+                    <ImageView
+                        android:id="@+id/main_home_live_level_div"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ui_15_dip"
+                        android:background="@color/app_bg"
+                        android:visibility="gone"
+                        />
                     <!-- 会员等级的布局 -->
                     <include
                         android:id="@+id/main_home_level_lay"

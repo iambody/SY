@@ -5,6 +5,8 @@ package com.cgbsoft.lib.share.bean;
  * 日期 17/3/31-18:51
  */
 
+import android.graphics.Bitmap;
+
 /**
  * desc  分享时候需要传递的bean
  * author wangyongkui  wangyongkui@simuyun.com
@@ -18,6 +20,8 @@ public class ShareCommonBean extends BaseShareBean {
     private String ShareUrl;
 
     private boolean isNetLog;
+
+    private Bitmap poster;
 
 
     public ShareCommonBean() {
@@ -73,4 +77,15 @@ public class ShareCommonBean extends BaseShareBean {
         ShareUrl = shareUrl;
     }
 
+    public Bitmap getPoster() {
+        return poster;
+    }
+
+    public void setPoster(Bitmap poster) {
+        this.poster = poster;
+    }
+
+    public ShareCommonBean(Bitmap poster) {
+        this.poster = poster;
+    }
 }

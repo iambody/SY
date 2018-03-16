@@ -61,6 +61,11 @@ public class FloatView extends LinearLayout {
         wmParams = new WindowManager.LayoutParams();
         //设置你要添加控件的类型，TYPE_ALERT需要申明权限，TOast不需要，在某些定制系统中会禁止悬浮框显示，所以最后用TYPE_TOAST
         wmParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            mWinParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+//        } else {
+//            mWinParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+//        }
         //设置控件在坐标计算规则，相当于屏幕左上角
         wmParams.gravity = Gravity.LEFT | Gravity.TOP;
         wmParams.format = PixelFormat.RGBA_8888;
