@@ -1,10 +1,12 @@
 package com.cgbsoft.privatefund.bean;
 
+import java.io.Serializable;
+
 /**
  * desc 剔除TOB TOC的数据
  * author wangyongkui
  */
-public class UserInf {
+public class UserInf implements Serializable {
     public String userNewId;
     public String birthday;
     public String sex;

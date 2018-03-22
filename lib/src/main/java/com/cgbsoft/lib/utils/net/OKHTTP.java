@@ -196,7 +196,6 @@ public class OKHTTP {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-
         requestManager = retrofit.create(RequestManager.class);
     }
 

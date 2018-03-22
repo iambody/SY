@@ -755,7 +755,9 @@ public class JavaScriptObjectToc {
         Context rContext = context instanceof Activity ? context.getApplicationContext() : context;
         UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(rContext);
         UserInf userInf = new Gson().fromJson(new Gson().toJson(userInfo), UserInf.class);
-
+//        Map<String, String> map = new HashMap<>(1, 1);
+//        JSONObject object=new Gson().fromJson(new Gson().toJson(userInf),JSONObject.class);new Gson().toJson(userInf)
+//          webView.loadUrl("javascript:Command.aaaa()");
         if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
             webView.loadUrl(String.format("javascript:%s(%s)", jscall.getCallback(), new Gson().toJson(userInf)));
     }

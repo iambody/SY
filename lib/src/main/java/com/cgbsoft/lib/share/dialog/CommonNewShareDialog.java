@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
@@ -17,6 +18,7 @@ import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.share.bean.ShareCommonBean;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.Utils;
@@ -76,7 +78,7 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
      * 基础view
      */
     private View baseView;
-
+    private LinearLayout share_lay;
     /**
      * 朋友圈分享对象
      */
@@ -142,6 +144,7 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
         sahre_circle_bt = ViewHolders.get(baseView, R.id.sahre_circle_bt);
         sahre_cancle_bt = ViewHolders.get(baseView, R.id.sahre_cancle_bt);
         sahre_copy_bt = ViewHolders.get(baseView, R.id.sahre_copy_bt);
+        share_lay= ViewHolders.get(baseView, R.id.share_lay);
         sahre_wx_bt.setOnClickListener(this);
         sahre_circle_bt.setOnClickListener(this);
         sahre_cancle_bt.setOnClickListener(this);
@@ -154,12 +157,16 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
                 break;
             case Tag_Style_WxPyq:
                 sahre_circle_bt.setVisibility(View.VISIBLE);
+                //todo 两个时候需要留边距
+//                LinearLayout.LayoutParams leftLayoutParams=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+//                leftLayoutParams.;//pa(DimensionPixelUtil.dip2px(dcontext,30),0,0,0);
+//                share_lay.setLayoutParams(leftLayoutParams);
+                share_lay.setPadding(DimensionPixelUtil.dip2px(dcontext,30),0,DimensionPixelUtil.dip2px(dcontext,30),0);
                 break;
             case Tag_Style_NoteWxCopy:
                 sahre_circle_bt.setVisibility(View.GONE);
                 sahre_note_bt.setVisibility(View.VISIBLE);
                 sahre_copy_bt.setVisibility(View.VISIBLE);
-                break;
         }
     }
 
@@ -281,6 +288,7 @@ public class CommonNewShareDialog extends BaseDialog implements PlatformActionLi
 
     /**
      * 分享一段文字
+     *
      * @param shareContent
      */
     private void weChatTxtShare(String shareContent) {

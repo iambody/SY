@@ -30,6 +30,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.share.dialog.CommonNewShareDialog;
 import com.cgbsoft.lib.utils.SkineColorManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -71,7 +72,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
-import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.product.com.utils.ProductNavigationUtils;
 import butterknife.BindView;
@@ -352,15 +352,19 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
 //        Snackbar.make(fb, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
-        if (AppManager.isVisitor(baseActivity)) {
-            Intent intent = new Intent(baseActivity, LoginActivity.class);
-            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-        } else {
-            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-        }
-        DataStatistApiParam.homeClickNew();
-        TrackingDataManger.homeNew(baseActivity);
+
+        CommonNewShareDialog shareDialog=new CommonNewShareDialog(baseActivity,CommonNewShareDialog.Tag_Style_WxPyq,null,null);
+        shareDialog.show();
+
+//        if (AppManager.isVisitor(baseActivity)) {
+//            Intent intent = new Intent(baseActivity, LoginActivity.class);
+//            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+//        } else {
+//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+//        }
+//        DataStatistApiParam.homeClickNew();
+//        TrackingDataManger.homeNew(baseActivity);
 
     }
 
