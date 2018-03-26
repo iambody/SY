@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/title_bar_id"
         layout="@layout/title_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,112 +18,83 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sin_change_login_psd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:setting_item_title="@string/setting_item_change_pwd"
-                >
-            </com.cgbsoft.lib.widget.SettingItemNormal>
+                app:setting_item_title="@string/setting_item_change_pwd" />
 
             <com.cgbsoft.lib.widget.SettingItemNormal
-                android:id="@+id/sin_public_fund_account_status"
+                android:id="@+id/sin_public_fund"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:setting_item_title="@string/public_fund_setting_account_create"
-                />
-
-            <com.cgbsoft.lib.widget.SettingItemNormal
-                android:id="@+id/sin_public_fund_bankcard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:setting_item_title="@string/public_fund_setting_bind_bankcard"
-                />
-
-            <com.cgbsoft.lib.widget.SettingItemNormal
-                android:id="@+id/sin_public_fund_trade_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:setting_item_title="@string/public_fund_setting_modify_public_fund_password"
-                />
+                app:setting_item_title="@string/setting_item_public_fund" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <com.cgbsoft.lib.widget.SettingItemNormal
-                android:id="@+id/sit_gesture_switch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:setting_item_show_switchbutton="true"
-                app:setting_item_title="@string/setting_item_gesture_pwd"
-                >
-            </com.cgbsoft.lib.widget.SettingItemNormal>
 
-            <Button
-                android:id="@+id/view_switch_clickarea"
-                android:layout_width="100dp"
-                android:layout_height="70dp"
-                android:background="@color/transparent"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                />
+                <com.cgbsoft.lib.widget.SettingItemNormal
+                    android:id="@+id/sit_gesture_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:setting_item_show_switchbutton="true"
+                    app:setting_item_title="@string/setting_item_gesture_pwd" />
+
+                <Button
+                    android:id="@+id/view_switch_clickarea"
+                    android:layout_width="100dp"
+                    android:layout_height="70dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/transparent" />
             </RelativeLayout>
+
             <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sin_change_gesture_psd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:setting_item_title="@string/setting_item_change_gesture_pwd"
-                >
-            </com.cgbsoft.lib.widget.SettingItemNormal>
+                app:setting_item_title="@string/setting_item_change_gesture_pwd" />
 
             <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sin_common_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:setting_item_title="@string/setting_item_common_question"
-                >
-            </com.cgbsoft.lib.widget.SettingItemNormal>
+                app:setting_item_title="@string/setting_item_common_question" />
 
             <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sin_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:setting_item_title="@string/setting_item_feedback"
-                >
-            </com.cgbsoft.lib.widget.SettingItemNormal>
+                app:setting_item_title="@string/setting_item_feedback" />
 
             <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sin_recommend_friend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:setting_item_title="@string/setting_item_recommend"
-                >
-            </com.cgbsoft.lib.widget.SettingItemNormal>
+                app:setting_item_title="@string/setting_item_recommend" />
 
             <com.cgbsoft.lib.widget.SettingItemNormal
                 android:id="@+id/sin_about_app"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:setting_item_title="@string/setting_item_about_app"
-                >
-            </com.cgbsoft.lib.widget.SettingItemNormal>
+                app:setting_item_title="@string/setting_item_about_app" />
 
             <Button
+                android:id="@+id/exit_login_out"
+                style="@style/button_style"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/exit_login_out"
+                android:layout_marginBottom="@dimen/ui_40_dip"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="@dimen/ui_40_dip"
-                android:layout_marginBottom="@dimen/ui_40_dip"
+                android:background="@drawable/shape_button_elegant"
                 android:text="退出登录"
                 android:textColor="@color/white"
-                style="@style/button_style"
-                android:textSize="@dimen/dimens_sp_16"
-                android:background="@drawable/shape_button_elegant"/>
+                android:textSize="@dimen/dimens_sp_16" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

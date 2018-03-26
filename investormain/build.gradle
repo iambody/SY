@@ -18,6 +18,7 @@ def releaseTime() {
 def releaseDesc() {
     return "sixiangyun"
 }
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -71,7 +72,7 @@ android {
         }
 
         ndk {
-            abiFilters  "armeabi-v7a" //,"armeabi","x86_64","x86"
+            abiFilters "armeabi-v7a" //,"armeabi","x86_64","x86"
         }
     }
 
@@ -98,8 +99,8 @@ android {
             }
         }
     }
-    productFlavors{
-        guanwang{}
+    productFlavors {
+        guanwang {}
 //        huawei{}
 //        qihu360{}
 //        tengxun{}
@@ -110,7 +111,7 @@ android {
 //        mumayi{}
     }
     productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE : name]
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
     buildTypes {
         debug {
@@ -124,7 +125,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
             signingConfig signingConfigs.debug
-            manifestPlaceholders = [UMENG_APPKEY_VALUE:rootProject.ext.umengKey]
+            manifestPlaceholders = [UMENG_APPKEY_VALUE: rootProject.ext.umengKey]
         }
 
         release {
@@ -140,7 +141,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
             signingConfig signingConfigs.release
-            manifestPlaceholders = [UMENG_APPKEY_VALUE:rootProject.ext.umengKey]
+            manifestPlaceholders = [UMENG_APPKEY_VALUE: rootProject.ext.umengKey]
         }
     }
 
@@ -156,6 +157,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -201,7 +203,7 @@ dependencies {
         transitive = true;
     }
 
-        compile files('libs/gradle-1.24.0.jar')
+    compile files('libs/gradle-1.24.0.jar')
     compile project(':ocrlib')
 
     compile 'com.squareup.picasso:picasso:2.5.2'

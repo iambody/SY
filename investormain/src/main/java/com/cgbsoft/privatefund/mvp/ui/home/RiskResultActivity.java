@@ -155,6 +155,8 @@ public class RiskResultActivity extends BaseActivity {
             case 5:
                 image.setBackgroundResource(R.drawable.ic_risk_result_radical);
                 break;
+            default:
+                break;
         }
 
         resultinfo.setText(getString(R.string.risk_result_info) + str);
@@ -193,6 +195,8 @@ public class RiskResultActivity extends BaseActivity {
                 break;
             case 5:
                 image.setBackgroundResource(R.drawable.ic_risk_result_radical);
+                break;
+            default:
                 break;
         }
         resultinfo.setText(getString(R.string.risk_result_info) + str);

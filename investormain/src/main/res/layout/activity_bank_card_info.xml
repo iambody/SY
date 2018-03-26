@@ -11,8 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:paddingTop="20dp"
-        android:dividerHeight="20dp"
         android:divider="@color/app_bg"
         android:id="@+id/list_view"/>
 </LinearLayout>

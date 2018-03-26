@@ -83,6 +83,8 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
     private void initListView() {
         bindBankCardAdapter = new BindBankCardAdapter();
         listView.setAdapter(bindBankCardAdapter);
+
+        /*  注释侧滑删除逻辑
         SwipeMenuCreator creator = menu -> {
             if (menu.getViewType() == CONTENT) {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(getApplicationContext());
@@ -114,6 +116,7 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
           }
             return false;
         });
+        */
     }
 
     @Override

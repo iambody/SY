@@ -102,11 +102,10 @@
     <!-- SD卡读取权限，用户写入离线定位数据 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
-
-    <!-- 添加应用自身的灯塔appkey，如0I000LT6GW1YGCP7-->
-    <!--<meta-data-->
-    <!--android:name="APPKEY_DENGTA"-->
-    <!--android:value="XXXXXXXXXXXXXXXX" />-->
+    <!-- 添加应用自身的灯塔appkey，如0I000LT6GW1YGCP7 -->
+    <!-- <meta-data -->
+    <!-- android:name="APPKEY_DENGTA" -->
+    <!-- android:value="XXXXXXXXXXXXXXXX" /> -->
     <!-- DNS接收网络切换广播 -->
     <receiver
         android:name="com.tencent.msdk.dns.HttpDnsCache$ConnectivityChangeReceiver"
@@ -123,7 +122,8 @@
         android:normalScreens="true"
         android:smallScreens="true"
         android:xlargeScreens="true" />
-    <!-- android:icon="@drawable/sxy_logo"-->
+
+    <!-- android:icon="@drawable/sxy_logo" -->
     <application
         android:name=".InitApplication"
         android:allowBackup="true"
@@ -205,33 +205,33 @@
         <activity
             android:name="app.ndk.com.enter.mvp.ui.start.WelcomeActivity"
             android:screenOrientation="portrait"
-
             android:theme="@style/WelcomeStyle"
             tools:replace="android:theme">
-            <!--  要是需要loge切换的话需要把下边的filter屏蔽掉 然后把下边的两个组件打开-->
 
-          <!--  <intent-filter>
+            <!-- 要是需要loge切换的话需要把下边的filter屏蔽掉 然后把下边的两个组件打开 -->
+
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
 
             <intent-filter>
-                <data android:scheme="growing.18625968b7277671"/>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-            </intent-filter>
+                <data android:scheme="growing.18625968b7277671" />
 
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
         </activity>
-        <!-- name：组件名字 -->
-        <!-- enabled：该组件是否启动 -->
-        <!-- icon：组件图标 -->
-        <!-- label：组件标签说明 -->
-        <!-- targetActivity：组件的类 -->
-         <activity-alias
-            android:name=".MainActivity0"
-            android:enabled="true"
-            android:icon="@drawable/sxy_logo"
+
+        <activity-alias
+            android:name=".MainActivity1"
+            android:enabled="false"
+            android:icon="@drawable/autumnlog"
             android:label="@string/app_name_customer"
             android:targetActivity="app.ndk.com.enter.mvp.ui.start.WelcomeActivity">
             <intent-filter>
@@ -239,11 +239,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity-alias>
+        </activity-alias> <!-- name：组件名字 -->
+        <!-- enabled：该组件是否启动 -->
+        <!-- icon：组件图标 -->
+        <!-- label：组件标签说明 -->
+        <!-- targetActivity：组件的类 -->
         <activity-alias
-            android:name=".MainActivity1"
-            android:enabled="false"
-            android:icon="@drawable/autumnlog"
+            android:name=".MainActivity0"
+            android:enabled="true"
+            android:icon="@drawable/sxy_logo"
             android:label="@string/app_name_customer"
             android:targetActivity="app.ndk.com.enter.mvp.ui.start.WelcomeActivity">
             <intent-filter>
@@ -257,13 +261,12 @@
             android:name=".mvp.ui.home.MainPageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
-            <action android:name="android.andyidea.second"/>
+                <action android:name="android.andyidea.second" />
                 <!-- 附加信息 -->
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
         <!-- 权限管理 -->
         <!-- <activity -->
@@ -442,15 +445,12 @@
             android:name=".widget.SelectAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" />
-
         <activity
             android:name=".mvp.ui.center.BindBankCardInfoActivity"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.center.PublicFundIdentifyInfoActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".mvp.ui.center.PublicFundTradePwdModifyActivity"
             android:screenOrientation="portrait" />
@@ -472,8 +472,7 @@
             </intent-filter>
         </receiver>
         -->
-        <service android:name="com.cgbsoft.privatefund.utils.service.InitializeService" />
-
+        <service android:name=".utils.service.InitializeService" />
         <service android:name="app.privatefund.com.vido.service.FloatVideoService">
             <intent-filter>
                 <action android:name="com.cgbsoft.privatefund.service.player" />
@@ -620,31 +619,22 @@
 
         <activity android:name=".mvp.ui.home.SplashMovieActivity" />
 
-
-
-         <!-- 公募基金  -->
+        <!-- 公募基金 -->
         <activity
             android:name=".public_fund.SellPublicFundActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".public_fund.BuyPublicFundActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".public_fund.BindingBankCardOfPublicFundActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".public_fund.SelectBankCardActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".public_fund.SelectBranchBankActivity"
-            android:screenOrientation="portrait"
-            />
-
-
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -668,7 +658,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".mvp.ui.home.CrenditralGuideActivity"></activity>
+        <activity android:name=".mvp.ui.home.CrenditralGuideActivity" />
+        <activity android:name=".mvp.ui.center.PublicFundSettingActivity"></activity>
     </application>
 
 </manifest>

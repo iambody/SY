@@ -118,6 +118,7 @@
     <string name="privatebank_title_str">搜索产品名称,投资标的,基金管理人</string>
     <string name="zunixanghuiyuan">私享云尊享会员</string>
     <!-- 设置页面用到 -->
+    <string name="setting_item_public_fund">公募基金交易账户</string>
     <string name="setting_item_change_pwd">修改登录密码</string>
     <string name="setting_item_gesture_pwd">手势密码</string>
     <string name="setting_item_change_gesture_pwd">修改手势密码</string>
