@@ -150,4 +150,7 @@ public interface AppinfConstant {
     String PUBIC_FUND_CACAHEA="publicfundcache";
     //公募基金的信息
     String PUBLIC_FUND_INF="publicfundinf";
+
+    //latest的手机号
+    String LATEST_PHONE_NUMBER="latestphonenumber";
 }

@@ -138,6 +138,8 @@
     <color name="stock_green">#559A06</color>
 
     <color name="line_20">#33000000</color>
+
+    <color name="line_201">#99000000</color>
     <!-- 黑色10%透明度 -->
     <color name="line_10">#19000000</color>
     <color name="line_gary">#E2E1E6</color>

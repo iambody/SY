@@ -310,6 +310,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     public static final String LEVER_NAME = "lever_name_value";
     public boolean isClickBack;
     private Observable<Integer> refreshCredentialObservable;
+    private Observable<Integer> refreshPublicFundInfoObservable;
     private String stateCode;
     private String stateName;
     private String livingState;
@@ -562,6 +563,19 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
         });
 
+        refreshPublicFundInfoObservable = RxBus.get().register(RxConstant.REFRESH_PUBLIC_FUND_RESGIST_LAY, Integer.class);
+        refreshPublicFundInfoObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer publicFundInf) {
+                dynamicDisplayPublicFund();
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
         switchGroupObservable = RxBus.get().register(RxConstant.SWITCH_GROUP_SHOW, String.class);
         switchGroupObservable.subscribe(new RxSubscriber<String>() {
             @Override
@@ -765,8 +779,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (isLoading) {
             return;
         }
-        dynamicDisplayPublicFund();
 //        initRelativeStatus();
+        dynamicDisplayPublicFund();
         isLoading = true;
         initVideoView();
         getPresenter().getMineData();
@@ -1760,6 +1774,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
         if (null != refreshCredentialObservable) {
             RxBus.get().unregister(RxConstant.REFRESH_CREDENTIAL_INFO, refreshCredentialObservable);
+        }
+
+        if (null != refreshPublicFundInfoObservable) {
+            RxBus.get().unregister(RxConstant.REFRESH_PUBLIC_FUND_RESGIST_LAY, refreshPublicFundInfoObservable);
         }
     }
 

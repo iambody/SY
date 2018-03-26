@@ -1,5 +1,6 @@
 package com.cgbsoft.lib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
@@ -401,6 +402,13 @@ public class AppManager implements AppinfConstant {
      * 获取公募首页推荐位
      */
     public static PublishFundRecommendBean getPubliFundRecommend(Context context) {
-        return  AppInfStore.getPublicFundRecommend(context);
+        return AppInfStore.getPublicFundRecommend(context);
+    }
+
+    /**
+     * 获取上一次登录手机号
+     */
+    public static String getLatestPhoneNum(Context context) {
+        return AppInfStore.getLatestPhone(context instanceof Activity ? ((Activity) context).getApplication() : context);
     }
 }

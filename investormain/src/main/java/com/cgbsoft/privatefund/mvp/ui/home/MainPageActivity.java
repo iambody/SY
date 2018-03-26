@@ -182,6 +182,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
         if (!AppManager.isVisitor(baseContext)) {
             getPresenter().loadPublicFundInf();
+
         }
         getPresenter().loadRedPacket();
 
@@ -229,6 +230,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             initDayTask();
             initRongInterface();
 //            getPresenter().loadPublicFundInf();
+            AppInfStore.saveLatestPhone(baseContext,AppManager.getUserInfo(baseContext).getPhoneNum());
         }
         RxBus.get().post(RxConstant.LOGIN_KILL, 1);
         // 推送过来的跳转
