@@ -169,4 +169,6 @@
     <string name="residue_limit">剩余额度</string>
     <string name="public_fund_risk">风险测评</string>
     <string name="bind_new_card">绑定新卡</string>
+    <string name="public_bankcard_select_up_notes">可能会由于支付渠道发生调整，导致个别银行暂时无法使用或者限额有所调整，请以实际交易为准。</string>
+
 </resources>

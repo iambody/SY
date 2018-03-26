@@ -25,7 +25,7 @@ import java.util.List;
  */
 
 public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublicFundPresenter> {
-    public final static String BANK_NAME_ID= "banknameid";
+    public final static String BANK_NAME_ID = "banknameid";
     public final static String CHANNEL_ID = "channelid";
     public final static String CHANNEL_NAME = "channelname";
 
@@ -65,11 +65,11 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
         bankList.setAdapter(new SelectBankAdapter(bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
             @Override
             public void seclecBackCard(BankListOfJZSupport.BankOfJZSupport bankOfJZSupport) {
-                       getIntent().putExtra(BANK_NAME_ID,bankOfJZSupport.getBanknameid());
-                       getIntent().putExtra(CHANNEL_ID,bankOfJZSupport.getChannelid());
-                       getIntent().putExtra(CHANNEL_NAME,bankOfJZSupport.getFullname());
-                       setResult(Activity.RESULT_OK,getIntent());
-                       finish();
+                getIntent().putExtra(BANK_NAME_ID, bankOfJZSupport.getBanknameid());
+                getIntent().putExtra(CHANNEL_ID, bankOfJZSupport.getChannelid());
+                getIntent().putExtra(CHANNEL_NAME, bankOfJZSupport.getFullname());
+                setResult(Activity.RESULT_OK, getIntent());
+                finish();
             }
         }));
 
@@ -78,7 +78,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
 
     @Override
     protected BindingBankCardOfPublicFundPresenter createPresenter() {
-        return new BindingBankCardOfPublicFundPresenter(this,null);
+        return new BindingBankCardOfPublicFundPresenter(this, null);
     }
 
 
@@ -92,12 +92,12 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
      * }
      */
     private void bindBankCardData() {
-        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"加载中",false,false);
-        getPresenter().getBinidedBankList(AppManager.getPublicFundInf(SelectBankCardActivity.this).getCustno(),new BasePublicFundPresenter.PreSenterCallBack<String>() {
+        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "加载中", false, false);
+        getPresenter().getBinidedBankList(AppManager.getPublicFundInf(SelectBankCardActivity.this).getCustno(), new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
-                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result,BankListOfJZSupport.class);
+                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                     bankOfJZSupportList.addAll(bankListOfJZSupport.getDatasets());
                     bankList.getAdapter().notifyDataSetChanged();
@@ -111,35 +111,79 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
             @Override
             public void field(String errorCode, String errorMsg) {
                 loadingDialog.dismiss();
-                Log.e("SellPublicFundActivity"," "+errorMsg);
+                Log.e("SellPublicFundActivity", " " + errorMsg);
             }
         });
         loadingDialog.show();
     }
 
-    static class SelectBankAdapter extends RecyclerView.Adapter<SelectBankAdapter.SelectBankViewHolder> {
+    static class SelectBankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private List<BankListOfJZSupport.BankOfJZSupport> bankCardList;
         private SelectBankCardLinsterer linsterer;
+        //Header和Footer,以及对应的Type
+//        private View mHeaderView;
+//        private View mFooterView;
+        private int TYPE_HEADER = -1;
+        private int TYPE_FOOTER = -2;
+
+//        //一些辅助的方法
+//        public int getHeaderCount() {
+//            return isHasHeader() ? 1 : 0;
+//        }
+
+//        private boolean isHasHeader() {
+//            return mHeaderView != null;
+//        }
+
+        private boolean isHasFooter() {
+            return true;
+        }
+
 
         public SelectBankAdapter(List<BankListOfJZSupport.BankOfJZSupport> bankCardList, SelectBankCardLinsterer linsterer) {
             this.bankCardList = bankCardList;
             this.linsterer = linsterer;
+
         }
 
         @Override
-        public SelectBankViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_select_bankcard, parent, false);
-            return new SelectBankViewHolder(view, linsterer);
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if (TYPE_FOOTER == viewType) {
+                View viewFoot = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_publicfund_banckls_foot, parent, false);
+                return new SelectBankFootViewHolder(viewFoot);
+            } else {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_select_bankcard, parent, false);
+                return new SelectBankViewHolder(view, linsterer);
+            }
         }
 
         @Override
-        public void onBindViewHolder(SelectBankViewHolder holder, int position) {
-            holder.bindView(bankCardList.get(position));
+        public int getItemViewType(int position) {
+            //pos超出
+            if (isHasFooter() && position == getItemCount() - 1)
+                return TYPE_FOOTER;
+
+            return super.getItemViewType(position);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if(position != getItemCount() - 1)
+                ((SelectBankViewHolder)holder).bindView(bankCardList.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return bankCardList == null ? 0 : bankCardList.size();
+            if (null == bankCardList) return 0;
+
+
+            int pos = bankCardList.size();
+//            if (isHasHeader())
+//                pos++;
+            if (isHasFooter())
+                pos++;
+
+            return pos;
         }
 
 
@@ -150,7 +194,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
 
             public SelectBankViewHolder(View itemView, final SelectBankCardLinsterer linsterer) {
                 super(itemView);
-                bankName = (TextView)itemView.findViewById(R.id.tv_bank_name);
+                bankName = (TextView) itemView.findViewById(R.id.tv_bank_name);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -166,6 +210,11 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
 
         }
 
+        static class SelectBankFootViewHolder extends RecyclerView.ViewHolder {
+            public SelectBankFootViewHolder(View itemView) {
+                super(itemView);
+            }
+        }
 
         interface SelectBankCardLinsterer {
             void seclecBackCard(BankListOfJZSupport.BankOfJZSupport bankOfJZSupport);

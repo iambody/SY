@@ -237,7 +237,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
 
         }
-    }
+
+
+
+}
 
     private Observable<Integer> killSelfRxObservable;
 
@@ -407,6 +410,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         intent.putExtra(IDS_KEY, identity);
         startActivity(intent);
 //        finish();
+
     }
 
     //游客登录成功

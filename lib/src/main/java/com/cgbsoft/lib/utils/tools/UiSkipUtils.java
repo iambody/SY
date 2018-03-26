@@ -93,27 +93,27 @@ public class UiSkipUtils {
      *
      * @param activity
      */
-    public static void toPublicFundRegist(Activity activity) {
+    public static void toPublicFundRegist(Activity activity ) {
 
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(activity.getApplicationContext());
         String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
         if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustrisk())) {//未开户
             //没风险测评=》跳转到公共的页面
-            DefaultDialog dialog = new DefaultDialog(activity, "您还未开户，马上去开户吧～", "取消", "确定") {
-                @Override
-                public void left() {
-                    dismiss();
-                }
-
-                @Override
-                public void right() {
+//            DefaultDialog dialog = new DefaultDialog(activity, "您还未开户，马上去开户吧～", "取消", "确定") {
+//                @Override
+//                public void left() {
+//                    dismiss();
+//                }
+//
+//                @Override
+//                public void right() {
 
                     //没开户=》跳转到开户页面ton
                     NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRegistUrl, "公募基金开户", false);
-                    dismiss();
-                }
-            };
-            dialog.show();
+//                    dismiss();
+//                }
+//            };
+//            dialog.show();
 
         } else if (!BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()))) {
 
