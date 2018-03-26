@@ -121,6 +121,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
     private static class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView bankIcon;
         public TextView bankName;
+        public TextView bankLimit;
         public ImageView selectState;
         private SelectListener selectListener;
         private int index;
@@ -129,6 +130,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
             super(itemView);
             bankIcon = (ImageView) itemView.findViewById(R.id.iv_back_icon);
             bankName = (TextView) itemView.findViewById(R.id.tv_back_name);
+            bankLimit = (TextView) itemView.findViewById(R.id.tv_bank_limit);
             selectState = (ImageView) itemView.findViewById(R.id.iv_select_state);
 
             this.selectListener = selectListener;
@@ -159,8 +161,14 @@ public class PayFundBankSelectDialog extends BaseDialog {
             if (bankCoade.length() > 4) {
                 bankCoade = bankCoade.substring(bankCoade.length() - 4);
             }
-            bankName.setText(bankCardInfo.getBankname() + "(" + bankCoade + ")");
+            bankName.setText(bankCardInfo.getBankShortName() + "(" + bankCoade + ")");
+            bankLimit.setText(bankCardInfo.getBankLimit());
             bankIcon.setBackgroundResource(R.drawable.bank_icon);
+            if("0".equals(bankCardInfo.getBankEnableStatus())){
+                itemView.findViewById(R.id.tv_not_useable).setVisibility(View.VISIBLE);
+            }else {
+                itemView.findViewById(R.id.tv_not_useable).setVisibility(View.GONE);
+            }
         }
     }
 

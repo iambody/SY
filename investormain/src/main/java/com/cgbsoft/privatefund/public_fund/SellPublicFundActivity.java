@@ -49,7 +49,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     private String fastredeemflag; // 1 快速赎回
     private String tano; // TA 代码
     private String availbal = ""; //
-    private boolean isFund; // 死否是私享宝
+    private boolean isFund; // 是否私享宝
     private String issxb = "";
     private String transactionaccountid; //
     private String limitMoney = ""; //
@@ -59,6 +59,20 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         return R.layout.activity_sell_publicfund;
     }
 
+    /**
+     *  {
+        branchcode:branchcode,//份额托管网点编号(必填 String)[H5调取app指令的时候会传入]
+        custno:custno,//客户号(必填 String)[H5调取app指令的时候会传入]
+        fundcode:fundcode,//基金代码(必填 String)[H5调取app指令的时候会传入]
+        largeredemptionflag:largeredemptionflag,//巨额赎回标志0-放弃超额部分 1-继续赎回[110051](必填 String)[固定传1]
+        tano:tano,//TA 代码 (必填 String)[H5调取app指令的时候会传入]
+        transactionaccountid:transactionaccountid,//交易账号(必填 String)[H5调取app指令的时候会传入]
+        fundname:fundname,
+        availbal:availbal,
+        issxb:(code == '210013') ? '0':'1'
+        }
+     *
+     */
     @Override
     protected void init(Bundle savedInstanceState) {
         String data = getIntent().getStringExtra(Tag_PARAM);
@@ -82,18 +96,6 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-       /* {
-            branchcode:branchcode,//份额托管网点编号(必填 String)[H5调取app指令的时候会传入]
-                    custno:custno,//客户号(必填 String)[H5调取app指令的时候会传入]
-                fundcode:fundcode,//基金代码(必填 String)[H5调取app指令的时候会传入]
-                largeredemptionflag:largeredemptionflag,//巨额赎回标志0-放弃超额部分 1-继续赎回[110051](必填 String)[固定传1]
-                tano:tano,//TA 代码 (必填 String)[H5调取app指令的时候会传入]
-                transactionaccountid:transactionaccountid,//交易账号(必填 String)[H5调取app指令的时候会传入]
-                fundname:fundname,
-                availbal:availbal,
-                issxb:(code == '210013') ? '0':'1'
-        }*/
         prompt = (TextView) findViewById(R.id.tv_prompt);
         if (!isFund) {
             unit = "元";
@@ -111,7 +113,16 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         sellFinsh.setOnClickListener(this);
 
         // 该表标题
-        ((TextView) findViewById(R.id.title_mid)).setText("卖基金");
+        if(isFund){
+            ((TextView) findViewById(R.id.title_mid)).setText("卖出");
+            findViewById(R.id.rl_fundinfo).setVisibility(View.VISIBLE);
+            ((TextView)findViewById(R.id.tv_fundname)).setText(fundName);
+            ((TextView)findViewById(R.id.tv_fundcode)).setText(fundcode);
+        }else {
+            ((TextView) findViewById(R.id.title_mid)).setText("盈泰钱包");
+            findViewById(R.id.rl_fundinfo).setVisibility(View.GONE);
+        }
+
         // 返回键
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
         findViewById(R.id.title_left).setOnClickListener(this);
@@ -119,10 +130,10 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         // 卖出全部
         findViewById(R.id.bt_sell_all).setOnClickListener(this);
 
-        if (!BStrUtils.isEmpty(fastredeemflag)) {//
-            prompt.setText("本转出为快速到账(一般两小时内)，不享受转出当天收益");
+        if (!BStrUtils.isEmpty(fastredeemflag)) {
+            prompt.setText("转出至尾号为 "+"$$$$" +" 的招商银行卡。\n\r\r ·本转出为快速到账（一般两小时内），不享受转出 当天收益，以实际到账时间为准。\n\r\r ·单次转出限额20万；单日转出限额20万。");
         } else {
-            prompt.setText("卖出至原银行卡");
+            prompt.setText("卖出至尾号为 "+"$$$$"+" 的招商银行卡，具体到账时间以银行到账时间为准。");
         }
     }
 

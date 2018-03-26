@@ -42,7 +42,7 @@ public class CustomPasswordView extends LinearLayout implements PasswordView {
     @ColorInt
     private int mTextColor = getResources().getColor(android.R.color.black);
     private int mTextSize = DEFAULT_TEXTSIZE;
-    private int mLineWidth = 10;  // 线宽
+    private int mLineWidth = 1;  // 线宽
     private int mLineColor; // 分割线颜色
     private int mBackGroudColor; //  背景颜色
     private Drawable mLineDrawable; // 分割线图片
@@ -87,7 +87,7 @@ public class CustomPasswordView extends LinearLayout implements PasswordView {
 
     private void initAttrs(Context context, AttributeSet attrs, int defStyleAttr) {
         this.mTextSize = (int) DimensionPixelUtil.px2dip(context, 16);
-        mLineWidth = (int) DimensionPixelUtil.px2dip(context, mLineWidth);
+        mLineWidth = (int) DimensionPixelUtil.dip2px(context, mLineWidth);
         mLineColor = DEFAULT_LINECOLOR;
         mBackGroudColor = DEFAULT_GRIDCOLOR;
         mLineDrawable = new ColorDrawable(mLineColor);

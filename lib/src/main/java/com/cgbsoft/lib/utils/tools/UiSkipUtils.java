@@ -159,7 +159,7 @@ public class UiSkipUtils {
     /**
      * 原生跳转到公募基金申购页面
      */
-    public static void toBuyPublicFundFromNative(Activity activity, String fundCode, String risklevel) {
+    public static void toBuyPublicFundFromNative(Activity activity, String fundCode,String fundName, String risklevel) {
         //需要先判断是否注册绑卡
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(activity.getApplicationContext());
         String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
@@ -226,6 +226,7 @@ public class UiSkipUtils {
 
             HashMap<String, Object> maps = new HashMap<>();
             maps.put("tag_fund_code", fundCode);
+            maps.put("tag_fund_name", fundName);
             maps.put("tag_fund_risk_level", risklevel);
             NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_BUY, maps);
 
