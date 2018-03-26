@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/private_assert_title"
+        android:textStyle="bold"
         android:text="@string/private_fund"/>
 
     <FrameLayout

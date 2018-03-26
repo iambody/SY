@@ -1,158 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/layout_private_share_bao"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/layout_private_share_bao"
-    android:layout_marginBottom="@dimen/ui_10_dip">
+    android:layout_marginBottom="@dimen/ui_10_dip"
+    android:orientation="vertical">
 
     <TextView
+        style="@style/private_assert_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/private_assert_title"
-        android:text="@string/private_share_bao"/>
+        android:textStyle="bold"
+        android:text="@string/private_share_bao" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
+            android:id="@+id/ll_private_share_bao_empty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/ll_private_share_bao_empty">
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/ui_23_dip">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/tv_increase_percent"
+                        style="@style/private_share_bao_increase_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/tv_server_increase"
+                        style="@style/private_share_bao_increase_value_desc"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/ui_23_dip"
-                        android:orientation="vertical">
+                        android:text="@string/serven_increase_percent" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/private_share_bao_increase_value"
-                            android:id="@+id/tv_increase_percent"/>
+                </LinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/private_share_bao_increase_value_desc"
-                            android:id="@+id/tv_server_increase"
-                            android:text="@string/serven_increase_percent"
-                            />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/ui_23_dip">
 
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_increase_value"
+                        style="@style/private_share_bao_increase_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/tv_increase_value_desc"
+                        style="@style/private_share_bao_increase_value_desc"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingLeft="@dimen/ui_23_dip"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/private_share_bao_increase_value"
-                            android:id="@+id/tv_increase_value"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tv_increase_value_desc"
-                            style="@style/private_share_bao_increase_value_desc"
-                            android:text="@string/wan_fen_increase_value"
-                            />
-                    </LinearLayout>
+                        android:text="@string/wan_fen_increase_value" />
+                </LinearLayout>
             </LinearLayout>
-        <TextView
+
+            <TextView
+                android:id="@+id/tv_now_transfer"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/selector_bg_btn_white_with_golden_bg"
+                android:gravity="center"
+                android:text="@string/now_transfer"
+                android:textColor="@color/white"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_private_share_bao_fill"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:id="@+id/tv_now_transfer"
-            android:visibility="visible"
-            android:textColor="@color/white"
-            android:background="@drawable/selector_bg_btn_white_with_golden_bg"
-            android:text="@string/now_transfer"/>
-        </LinearLayout>
-
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:id="@+id/ll_private_share_bao_fill"
-        android:layout_marginTop="@dimen/ui_15_dip"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/ui_15_dip"
+            android:orientation="horizontal"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:visibility="gone">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                style="@style/private_share_bao_assert_title"
-                android:id="@+id/tv_share_bao_subsist_assert_desc"
-                android:text="@string/subsist_assert"/>
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tv_share_bao_subsist_assert_desc"
+                    style="@style/private_share_bao_assert_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/subsist_assert" />
+
+                <TextView
+                    android:id="@+id/tv_share_bao_subsist_assert"
+                    style="@style/private_share_bao_assert_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_share_bao_subsist_assert"
-                style="@style/private_share_bao_assert_number"/>
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tv_share_bao_continue_income_desc"
+                    style="@style/private_share_bao_assert_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/continue_income" />
+
+                <TextView
+                    android:id="@+id/tv_share_bao_continue_income"
+                    style="@style/private_share_bao_assert_number"
+                    android:layout_below="@+id/tv_share_bao_continue_income_desc"
+                    android:layout_alignLeft="@+id/tv_share_bao_continue_income_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="17dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_share_bao_yestoday_income_desc"
+                    style="@style/private_share_bao_assert_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yestoday_income" />
+
+                <TextView
+                    android:id="@+id/tv_share_bao_yestoday_income"
+                    style="@style/private_assert_number_golden"
+                    android:layout_width="wrap_content"
+                    android:layout_below="@id/tv_share_bao_yestoday_income_desc"
+                    android:layout_alignLeft="@id/tv_share_bao_yestoday_income_desc"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_share_bao_continue_income_desc"
-                style="@style/private_share_bao_assert_title"
-                android:text="@string/continue_income"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_share_bao_continue_income"
-                style="@style/private_share_bao_assert_number"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/private_share_bao_assert_title"
-                android:id="@+id/tv_share_bao_yestoday_income_desc"
-                android:text="@string/yestoday_income"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_share_bao_yestoday_income"
-                style="@style/private_assert_number_golden"/>
-        </LinearLayout>
-    </LinearLayout>
-  </FrameLayout>
+    </FrameLayout>
 </LinearLayout>

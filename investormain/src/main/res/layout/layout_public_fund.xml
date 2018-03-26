@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/private_assert_title"
+        android:textStyle="bold"
         android:text="@string/public_fund"/>
 
     <FrameLayout
@@ -47,9 +48,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="gone"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp"
+        android:paddingLeft="17dp"
+        android:paddingRight="17dp"
+        android:layout_marginBottom="13dp"
         android:layout_marginTop="@dimen/ui_15_dip"
         android:id="@+id/ll_public_fund_fill">
         <LinearLayout
@@ -74,9 +75,10 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
@@ -90,15 +92,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
+                android:layout_below="@id/tv_public_fund_continue_income_desc"
+                android:layout_alignLeft="@id/tv_public_fund_continue_income_desc"
                 android:id="@+id/tv_public_fund_continue_income"
                 style="@style/private_share_bao_assert_number"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:gravity="right"
             android:orientation="vertical">
 
             <TextView
@@ -112,9 +117,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
+                android:layout_below="@id/tv_public_fund_yestoday_income_desc"
+                android:layout_alignLeft="@id/tv_public_fund_yestoday_income_desc"
                 android:id="@+id/tv_public_fund_yestoday_income"
                 style="@style/private_assert_number_golden"/>
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
   </FrameLayout>
 </LinearLayout>
