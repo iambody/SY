@@ -66,10 +66,8 @@ public class PrivateBanksFragment extends BasePageFragment {
         isDoneFreash=true;
         ArrayList<NavigationBean> navigationBeans = NavigationUtils.getNavigationBeans(getActivity());
         ArrayList<TabBean> tabBeens = new ArrayList<>();
+
         //新添加了白名单的逻辑处理
-        if (!BStrUtils.isEmpty(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg()) && "1".equals(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg())) {
-            tabBeens.add(new TabBean("公募基金", new PublicFundFragment(), Integer.parseInt(PUBLIC_FUND_CODE)));
-        }
 
         if (navigationBeans != null) {
             for (NavigationBean navigationBean : navigationBeans) {
@@ -78,6 +76,8 @@ public class PrivateBanksFragment extends BasePageFragment {
                 }
             }
         }
+
+
         return null;
     }
 
@@ -211,6 +211,10 @@ public class PrivateBanksFragment extends BasePageFragment {
 //                    tabBeens.add(tabBeen4);
 //                    break;
             }
+        }
+
+        if (!BStrUtils.isEmpty(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg()) && "1".equals(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg())) {
+            tabBeens.add(1,new TabBean("公募基金", new PublicFundFragment(), Integer.parseInt(PUBLIC_FUND_CODE)));
         }
         return tabBeens;
     }

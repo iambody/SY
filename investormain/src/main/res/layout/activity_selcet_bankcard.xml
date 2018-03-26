@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    >
-
+    android:background="@color/app_bg"
+    android:orientation="vertical">
 
 
     <include
@@ -16,13 +13,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-   <!-- <include layout="@layout/title_public_fund"/>-->
+    <!-- <include layout="@layout/title_public_fund"/>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/ui_5_dip"
+        android:paddingBottom="@dimen/ui_10_dip"
+        android:paddingLeft="@dimen/ui_10_dip"
+        android:paddingRight="@dimen/ui_10_dip"
+        android:layout_marginBottom="@dimen/ui_10_dip"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:text="@string/public_bankcard_select_up_notes" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_bank_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:background="@color/white">
 
     </android.support.v7.widget.RecyclerView>
 

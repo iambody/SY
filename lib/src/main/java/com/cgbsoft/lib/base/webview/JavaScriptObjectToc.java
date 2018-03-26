@@ -626,7 +626,7 @@ public class JavaScriptObjectToc {
     public void openFundAccount(String jsostr) {
         Log.i("sss", jsostr);
         //跳转到开户页面*************************
-        UiSkipUtils.toPublicFundRegist((Activity) context);
+        UiSkipUtils.toPublicFundRegist((Activity) context );
     }
 
     /**
@@ -759,6 +759,6 @@ public class JavaScriptObjectToc {
 //        JSONObject object=new Gson().fromJson(new Gson().toJson(userInf),JSONObject.class);new Gson().toJson(userInf)
 //          webView.loadUrl("javascript:Command.aaaa()");
         if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
-            webView.loadUrl(String.format("javascript:%s(%s)", jscall.getCallback(), new Gson().toJson(userInf)));
+            webView.loadUrl(String.format("javascript:%s(\'%s\')", jscall.getCallback(), new Gson().toJson(userInf)));
     }
 }
