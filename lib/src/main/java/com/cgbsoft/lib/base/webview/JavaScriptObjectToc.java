@@ -165,6 +165,7 @@ public class JavaScriptObjectToc {
             hashMap.put(WebViewConstant.push_message_url, BaseWebNetConfig.baseSxyParentUrl + url);
             hashMap.put(WebViewConstant.push_message_title, title);
             NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

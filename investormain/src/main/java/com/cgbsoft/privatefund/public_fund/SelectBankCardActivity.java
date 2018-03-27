@@ -1,6 +1,7 @@
 package com.cgbsoft.privatefund.public_fund;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,16 +64,16 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         bankList.setLayoutManager(linearLayoutManager);
-        bankList.setAdapter(new SelectBankAdapter(bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
-            @Override
-            public void seclecBackCard(BankListOfJZSupport.BankOfJZSupport bankOfJZSupport) {
-                getIntent().putExtra(BANK_NAME_ID, bankOfJZSupport.getBanknameid());
-                getIntent().putExtra(CHANNEL_ID, bankOfJZSupport.getChannelid());
-                getIntent().putExtra(CHANNEL_NAME, bankOfJZSupport.getFullname());
-                setResult(Activity.RESULT_OK, getIntent());
-                finish();
-            }
-        }));
+//        bankList.setAdapter(new SelectBankAdapter(baseContext,bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
+//            @Override
+//            public void seclecBackCard(BankListOfJZSupport.BankOfJZSupport bankOfJZSupport) {
+//                getIntent().putExtra(BANK_NAME_ID, bankOfJZSupport.getBanknameid());
+//                getIntent().putExtra(CHANNEL_ID, bankOfJZSupport.getChannelid());
+//                getIntent().putExtra(CHANNEL_NAME, bankOfJZSupport.getFullname());
+//                setResult(Activity.RESULT_OK, getIntent());
+//                finish();
+//            }
+//        }));
 
         bindBankCardData();
     }
@@ -100,7 +102,17 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                     bankOfJZSupportList.addAll(bankListOfJZSupport.getDatasets());
-                    bankList.getAdapter().notifyDataSetChanged();
+//                    bankList.getAdapter().notifyDataSetChanged();
+                    bankList.setAdapter(new SelectBankAdapter(baseContext,bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
+                        @Override
+                        public void seclecBackCard(BankListOfJZSupport.BankOfJZSupport bankOfJZSupport) {
+                            getIntent().putExtra(BANK_NAME_ID, bankOfJZSupport.getBanknameid());
+                            getIntent().putExtra(CHANNEL_ID, bankOfJZSupport.getChannelid());
+                            getIntent().putExtra(CHANNEL_NAME, bankOfJZSupport.getFullname());
+                            setResult(Activity.RESULT_OK, getIntent());
+                            finish();
+                        }
+                    }));
                 } else if (PublicFundContant.REQEUSTING.equals(bankListOfJZSupport.getErrorCode())) {// 处理中
                     Toast.makeText(SelectBankCardActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
                 } else {
@@ -120,37 +132,39 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
     static class SelectBankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private List<BankListOfJZSupport.BankOfJZSupport> bankCardList;
         private SelectBankCardLinsterer linsterer;
-        //Header和Footer,以及对应的Type
-//        private View mHeaderView;
-//        private View mFooterView;
+        //Header和Footer,以及对应的Type  for 防止改需求 把head相关的也预备
+
+        private View mHeaderView;
+        private View mFooterView;
         private int TYPE_HEADER = -1;
         private int TYPE_FOOTER = -2;
 
-//        //一些辅助的方法
-//        public int getHeaderCount() {
-//            return isHasHeader() ? 1 : 0;
-//        }
+        //一些辅助的方法
+        public int getHeaderCount() {
+            return isHasHeader() ? 1 : 0;
+        }
 
-//        private boolean isHasHeader() {
-//            return mHeaderView != null;
-//        }
+        private boolean isHasHeader() {
+            return mHeaderView != null;
+        }
 
         private boolean isHasFooter() {
-            return true;
+            return mFooterView != null;
         }
 
 
-        public SelectBankAdapter(List<BankListOfJZSupport.BankOfJZSupport> bankCardList, SelectBankCardLinsterer linsterer) {
+        public SelectBankAdapter(Context context,List<BankListOfJZSupport.BankOfJZSupport> bankCardList, SelectBankCardLinsterer linsterer) {
             this.bankCardList = bankCardList;
             this.linsterer = linsterer;
-
+            mFooterView= LayoutInflater.from(context).inflate(R.layout.item_publicfund_banckls_foot,null);
+            LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            mFooterView.setLayoutParams(params);
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             if (TYPE_FOOTER == viewType) {
-                View viewFoot = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_publicfund_banckls_foot, parent, false);
-                return new SelectBankFootViewHolder(viewFoot);
+                return new SelectBankFootViewHolder(mFooterView);
             } else {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_select_bankcard, parent, false);
                 return new SelectBankViewHolder(view, linsterer);
@@ -168,8 +182,8 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if(position != getItemCount() - 1)
-                ((SelectBankViewHolder)holder).bindView(bankCardList.get(position));
+            if (position != getItemCount() - 1)
+                ((SelectBankViewHolder) holder).bindView(bankCardList.get(position));
         }
 
         @Override
