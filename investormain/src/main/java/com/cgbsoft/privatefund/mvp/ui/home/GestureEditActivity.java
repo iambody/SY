@@ -67,9 +67,6 @@ public class GestureEditActivity extends BaseActivity<ModifyUserInfoPresenter> i
     @BindView(R.id.lock_indicator)
     LockIndicator mLockIndicator;
 
-//    @BindView(R.id.gesture_top_right)
-//    TextView titleNoSet;
-
     private boolean isFromShowAssert;
     private String isFromGroupAssert;
 

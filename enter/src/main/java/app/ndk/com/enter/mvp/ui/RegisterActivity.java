@@ -251,6 +251,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
         AppInfStore.saveIsVisitor(baseContext, false);
         //开始跳转
         Router.build(RouteConfig.GOTOCMAINHONE).go(RegisterActivity.this);
+
         RxBus.get().post(RxConstant.LOGIN_KILL, 1);
         finish();
     }

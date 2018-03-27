@@ -47,8 +47,6 @@ import rx.Observable;
  */
 @Route(RouteConfig.GOTOCSETTINGACTIVITY)
 public class SettingActivity extends BaseActivity<SettingPresenterImpl> implements SettingContract.SettingView {
-    //    @BindView(R.id.toolbar)
-//    protected Toolbar toolbar;
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.title_mid)
@@ -114,7 +112,6 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
                 finish();
             }
         });
-//        setSupportActionBar(toolbar);
 //        toolbar.setNavigationIcon(com.cgbsoft.lib.R.drawable.ic_back_black_24dp);
 //        toolbar.setNavigationOnClickListener(v -> finish());
 //        gestureSwitch.setSwitchButtonChangeListener((buttonView, isChecked) -> {
@@ -184,8 +181,6 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
 
     private void turnOnGesturePsd() {
         NavigationUtils.startActivityByRouter(baseContext, RouteConfig.SET_GESTURE_PASSWORD);
-//        String valuse = "1".equals(AppManager.getUserInfo(baseContext).getToC().getGestureSwitch()) ? "2" : "1";
-//        DataStatistApiParam.onSwitchGesturePassword(valuse);
     }
 
     @Override
@@ -207,10 +202,8 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         DataStatistApiParam.clickGesture();
         boolean gestureFlag = AppManager.getGestureFlag(baseContext);
         if (gestureFlag) {
-//            DataStatistApiParam.switchGestureClick("关");
             NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.VALIDATE_GESTURE_PASSWORD, "PARAM_CLOSE_PASSWORD", true);
         } else {
-//            DataStatistApiParam.switchGestureClick("开");
             NavigationUtils.startActivityByRouter(SettingActivity.this, RouteConfig.SET_GESTURE_PASSWORD, "PARAM_FROM_SET_GESTURE", true);
         }
     }
@@ -261,7 +254,6 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         DataStatistApiParam.clickFeedBack();
         Intent intent = new Intent(this, FeedbackActivity.class);
         startActivity(intent);
-//        NavigationUtils.startActivityByRouter(baseContext, "investornmain_feedbackctivity");
     }
 
     /**
@@ -274,9 +266,6 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
         intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.recommendFriends);
         intent.putExtra(WebViewConstant.push_message_title, getResources().getString(R.string.setting_item_recommend));
         startActivity(intent);
-//        Intent intent = new Intent(this, PersonalInformationActivity.class);
-//        startActivity(intent);
-//        NavigationUtils.startActivityByRouter(baseContext,RouteConfig.GOTOC_PERSONAL_INFORMATION_ACTIVITY);
     }
 
     @Override
