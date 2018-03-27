@@ -39,10 +39,11 @@
         android:layout_width="match_parent"
         />
 
+    <include layout="@layout/layout_private_fund"/>
+
     <include layout="@layout/layout_private_share_bao"/>
 
     <include layout="@layout/layout_public_fund"/>
 
-    <include layout="@layout/layout_private_fund"/>
 
 </LinearLayout>

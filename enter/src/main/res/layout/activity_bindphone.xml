@@ -55,6 +55,7 @@
                 android:layout_marginRight="20dp"
                 android:text="@string/ab_jump_next_str"
                 android:textColor="@color/black"
+                android:visibility="gone"
                 android:textSize="@dimen/dimens_sp_16" />
 
 

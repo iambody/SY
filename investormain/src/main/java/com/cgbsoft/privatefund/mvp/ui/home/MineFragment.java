@@ -308,6 +308,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private UnreadInfoNumber unreadInfoNumber;
 
     public static final String LEVER_NAME = "lever_name_value";
+    private static final String INDENTITU_CODE = "indentityCode";
     public boolean isClickBack;
     private Observable<Integer> refreshCredentialObservable;
     private Observable<Integer> refreshPublicFundInfoObservable;
@@ -527,7 +528,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private void gotoDetial() {
         Intent intent1 = new Intent(getActivity(), CardCollectActivity.class);
-        intent1.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+        intent1.putExtra(INDENTITU_CODE, credentialStateMedel.getCustomerIdentity());
         startActivity(intent1);
     }
 
@@ -558,7 +559,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
 
             @Override
-            protected void onRxError(Throwable error) {
+            protected void onRxError(Throwable error) { //ignored
 
             }
         });
@@ -571,7 +572,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
 
             @Override
-            protected void onRxError(Throwable error) {
+            protected void onRxError(Throwable error) { //ignored
 
             }
         });
@@ -684,12 +685,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     replenishCards();
                 } else {  //已通过 核身成功
                     Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                    intent.putExtra(INDENTITU_CODE, credentialStateMedel.getCustomerIdentity());
                     startActivity(intent);
                 }
             } else {//  非大陆去证件列表
                 Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                intent.putExtra(INDENTITU_CODE, credentialStateMedel.getCustomerIdentity());
                 startActivity(intent);
             }
         } else {//无身份
@@ -700,7 +701,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     private void jumpCollect() {
         Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-        intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+        intent.putExtra(INDENTITU_CODE, credentialStateMedel.getCustomerIdentity());
         startActivity(intent);
     }
 
@@ -1717,7 +1718,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
+            public void onPageScrollStateChanged(int state) { //ignored
             }
         });
 
