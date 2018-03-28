@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 import com.cgbsoft.privatefund.R;
 
@@ -29,7 +31,8 @@ public class PayFundBankSelectDialog extends BaseDialog {
     private RecyclerView bankList;
     private SelectListener selectListener;
     private String currectBankCodeNum = "";
-    public PayFundBankSelectDialog(Context context,String currectBankCodeNum,List<BuyPublicFundActivity.BankCardInfo> bankCardInfos, SelectListener selectListener) {
+
+    public PayFundBankSelectDialog(Context context, String currectBankCodeNum, List<BuyPublicFundActivity.BankCardInfo> bankCardInfos, SelectListener selectListener) {
         super(context, R.style.dialog_alpha);
         this.bankCardInfos = bankCardInfos;
         this.selectListener = selectListener;
@@ -59,14 +62,13 @@ public class PayFundBankSelectDialog extends BaseDialog {
 
     private void bindViews() {
         bankList.setLayoutManager(new LinearLayoutManager(getContext()));
-        bankList.setAdapter(new MyAdapter(currectBankCodeNum,bankCardInfos, new SelectListener() {
+        bankList.setAdapter(new MyAdapter(currectBankCodeNum, bankCardInfos, new SelectListener() {
             @Override
             public void select(int index) {
                 PayFundBankSelectDialog.this.selectListener.select(index);
                 PayFundBankSelectDialog.this.dismiss();
             }
         }));
-
 
         findViewById(R.id.iv_dismiss).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,21 +77,24 @@ public class PayFundBankSelectDialog extends BaseDialog {
             }
         });
 
-        findViewById(R.id.ll_add_new_bankcord).setOnClickListener(new View.OnClickListener() {
+      /*  findViewById(R.id.ll_add_new_bankcord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(selectListener != null) selectListener.select(-2);
+                if (selectListener != null) selectListener.select(-2);
                 PayFundBankSelectDialog.this.dismiss();
             }
-        });
+        });*/
     }
 
 
-    private static class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
+    private static class MyAdapter extends RecyclerView.Adapter {
         private List<BuyPublicFundActivity.BankCardInfo> list;
         private SelectListener selectListener;
         private String currectBankNum = "";
-        public MyAdapter(String currectBankNum,List<BuyPublicFundActivity.BankCardInfo> list, SelectListener selectListener) {
+
+        private static int FOOT = 2;
+
+        public MyAdapter(String currectBankNum, List<BuyPublicFundActivity.BankCardInfo> list, SelectListener selectListener) {
             this.list = list;
             this.selectListener = selectListener;
             this.currectBankNum = currectBankNum;
@@ -97,7 +102,9 @@ public class PayFundBankSelectDialog extends BaseDialog {
 
 
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if (viewType == FOOT) return FootViewHolder.creat(parent.getContext(),MyAdapter.this.selectListener);
+
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_paybank_list, parent, false);
             return new MyViewHolder(view, new SelectListener() {
                 @Override
@@ -107,20 +114,101 @@ public class PayFundBankSelectDialog extends BaseDialog {
             });
         }
 
+
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-            holder.bindData(list, position,currectBankNum);
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if(getItemViewType(position) != FOOT) ((MyViewHolder) holder).bindData(list, position, currectBankNum);
         }
 
         @Override
         public int getItemCount() {
-            return list == null ? 0 : list.size();
+            return list == null ? 1 : list.size() + 1;
+        }
+
+
+        @Override
+        public int getItemViewType(int position) {
+            return (position == getItemCount() - 1) ? FOOT : -FOOT;
+        }
+    }
+
+
+    private static class FootViewHolder extends RecyclerView.ViewHolder {
+
+        public static FootViewHolder creat(Context context, SelectListener selectListener) {
+            LinearLayout linearLayout = new LinearLayout(context);
+            linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Utils.convertDipOrPx(context, 70)));
+            linearLayout.setGravity(Gravity.CENTER_VERTICAL);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(Utils.convertDipOrPx(context,26), Utils.convertDipOrPx(context,19));
+            layoutParams.setMargins(Utils.convertDipOrPx(context, 15), 0, 0, 0);
+            ImageView icon = new ImageView(context);
+            icon.setBackgroundResource(R.drawable.bank_icon);
+            linearLayout.addView(icon, layoutParams);
+
+            LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            textLayoutParams.setMargins(Utils.convertDipOrPx(context, 10), 0, 0, 0);
+            TextView text = new TextView(context);
+            text.setText("使用新卡支付");
+            text.setTextColor(context.getResources().getColor(R.color.black));
+            text.setTextSize(16);
+            linearLayout.addView(text, textLayoutParams);
+            return new FootViewHolder(linearLayout,selectListener);
+        }
+
+        /*
+             public FootViewHolder(Context context){
+
+                 this(linearLayout);
+             *//*    LinearLayout
+
+                    super();
+
+               <LinearLayout
+            android:id="@+id/ll_add_new_bankcord"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:src="@drawable/bank_icon" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:text="使用新卡支付"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_16" />
+
+    </LinearLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E2E1E6" />*//*
+        }
+        */
+        public FootViewHolder(View itemView, final SelectListener selectListener) {
+            super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (selectListener != null)
+                        selectListener.select(-2);
+                }
+            });
         }
     }
 
     private static class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView bankIcon;
         public TextView bankName;
+        public TextView bankLimit;
         public ImageView selectState;
         private SelectListener selectListener;
         private int index;
@@ -129,6 +217,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
             super(itemView);
             bankIcon = (ImageView) itemView.findViewById(R.id.iv_back_icon);
             bankName = (TextView) itemView.findViewById(R.id.tv_back_name);
+            bankLimit = (TextView) itemView.findViewById(R.id.tv_bank_limit);
             selectState = (ImageView) itemView.findViewById(R.id.iv_select_state);
 
             this.selectListener = selectListener;
@@ -149,18 +238,24 @@ public class PayFundBankSelectDialog extends BaseDialog {
             BuyPublicFundActivity.BankCardInfo bankCardInfo = selectListener.get(postion);
 
             String bankCoade = bankCardInfo.getDepositacct();
-            if(curBankNum.trim().equals(bankCoade.trim())){
+            if (curBankNum.trim().equals(bankCoade.trim())) {
                 selectState.setVisibility(View.VISIBLE);
                 selectState.setBackgroundResource(R.drawable.icon_paybank_selected);
-            }else {
+            } else {
                 selectState.setVisibility(View.GONE);
             }
 
             if (bankCoade.length() > 4) {
                 bankCoade = bankCoade.substring(bankCoade.length() - 4);
             }
-            bankName.setText(bankCardInfo.getBankname() + "(" + bankCoade + ")");
+            bankName.setText(bankCardInfo.getBankShortName() + "(" + bankCoade + ")");
+            bankLimit.setText(bankCardInfo.getBankLimit());
             bankIcon.setBackgroundResource(R.drawable.bank_icon);
+            if ("0".equals(bankCardInfo.getBankEnableStatus())) {
+                itemView.findViewById(R.id.tv_not_useable).setVisibility(View.VISIBLE);
+            } else {
+                itemView.findViewById(R.id.tv_not_useable).setVisibility(View.GONE);
+            }
         }
     }
 

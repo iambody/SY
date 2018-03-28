@@ -128,6 +128,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String publicFundRiskUrl;
     //赎回结果页
     public static String publicFundRedeemResult;
+    public static String publicFundBuyOrSell;
     public static String publicFundBuyResult;
    //私享宝详情页
     public static  String sxbFundDetailUrl;
@@ -154,6 +155,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
         mineTouGu = baseParentUrl + "/myAdviser/index.html";
         noBindUserInfo = baseParentUrl + "/settings/assets_basis.html";
         invistorCertify = baseParentUrl + "/settings/assets_report.html";
+
     }
 
     public static void initSxyUrl() {
@@ -218,5 +220,7 @@ public class CwebNetConfig extends BaseWebNetConfig {
 
         //赎回成功后 跳转的赎回结果页
         publicFundRedeemResult = baseSxyParentUrl + "/biz/publicfund/redemption_end.html";
+        // 盈泰钱包的赎回和购买结果页
+        publicFundBuyOrSell = baseSxyParentUrl+"/biz/publicfund/deal_prompt.html";
     }
 }

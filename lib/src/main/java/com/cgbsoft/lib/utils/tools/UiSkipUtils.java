@@ -93,27 +93,27 @@ public class UiSkipUtils {
      *
      * @param activity
      */
-    public static void toPublicFundRegist(Activity activity) {
+    public static void toPublicFundRegist(Activity activity ) {
 
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(activity.getApplicationContext());
         String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
         if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustrisk())) {//未开户
             //没风险测评=》跳转到公共的页面
-            DefaultDialog dialog = new DefaultDialog(activity, "您还未开户，马上去开户吧～", "取消", "确定") {
-                @Override
-                public void left() {
-                    dismiss();
-                }
-
-                @Override
-                public void right() {
+//            DefaultDialog dialog = new DefaultDialog(activity, "您还未开户，马上去开户吧～", "取消", "确定") {
+//                @Override
+//                public void left() {
+//                    dismiss();
+//                }
+//
+//                @Override
+//                public void right() {
 
                     //没开户=》跳转到开户页面ton
                     NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRegistUrl, "公募基金开户", false);
-                    dismiss();
-                }
-            };
-            dialog.show();
+//                    dismiss();
+//                }
+//            };
+//            dialog.show();
 
         } else if (!BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()))) {
 
@@ -159,7 +159,7 @@ public class UiSkipUtils {
     /**
      * 原生跳转到公募基金申购页面
      */
-    public static void toBuyPublicFundFromNative(Activity activity, String fundCode, String risklevel) {
+    public static void toBuyPublicFundFromNative(Activity activity, String fundCode,String fundName,String fundType, String risklevel) {
         //需要先判断是否注册绑卡
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(activity.getApplicationContext());
         String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
@@ -226,6 +226,8 @@ public class UiSkipUtils {
 
             HashMap<String, Object> maps = new HashMap<>();
             maps.put("tag_fund_code", fundCode);
+            maps.put("tag_fund_name", fundName);
+            maps.put("tag_fund_type", fundType);
             maps.put("tag_fund_risk_level", risklevel);
             NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_BUY, maps);
 
@@ -234,6 +236,7 @@ public class UiSkipUtils {
 
     /**
      * 跳转到公募基金赎回页面
+     *
      */
     public static void gotoRedeemFund(Activity activity, String action) {
         HashMap<String, Object> map = new HashMap<>();
@@ -288,6 +291,30 @@ public class UiSkipUtils {
 
         NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundRedeemResult, paramMap), "交易结果", false);
 
+    }
+
+    /**
+     * 盈泰钱包赎回结果页
+     *
+     */
+    /**
+     *
+     * @param buyOrBuy 1:买入,2:卖出
+     * @param fungType 基金类型  0:FOF型基金,1:货币基金,2:QDll基金,3:股票型，债券型，混合型，指数型基金
+     * @param allMoney 买入钱数
+     * @param allShare 卖出份额
+     *                 https://t4-app.simuyun.com/app6.0/biz/publicfund/deal_prompt.html?pageType=2&fundType=0&allMoney=2000
+     */
+    public static void gotoNewFundResult(Activity activity,int buyOrBuy,String fungType, String allMoney){
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("pageType", buyOrBuy+"");
+        paramMap.put("fundType", fungType);
+        if(buyOrBuy == 1){
+            paramMap.put("allMoney", allMoney);
+        }else if(buyOrBuy == 2){
+            paramMap.put("allMoney", allMoney);
+        }
+        NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果", false);
     }
 
     public static String getUrl(String host, HashMap<String, String> params) {

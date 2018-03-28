@@ -1,38 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
 
-    <ImageView
-        android:id="@+id/iv_back_icon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/ui_15_dip" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_70_dip">
+
+        <ImageView
+            android:id="@+id/iv_back_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            />
+
+        <TextView
+            android:id="@+id/tv_back_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:layout_toRightOf="@id/iv_back_icon"
+            android:text="银行(8080)"
+            android:textSize="@dimen/dimens_sp_16" />
+
+
+        <TextView
+            android:id="@+id/tv_bank_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tv_back_name"
+            android:layout_below="@id/tv_back_name"
+            android:layout_marginTop="@dimen/ui_4_dip"
+            android:textColor="@color/color_595959"
+            android:textSize="@dimen/dimens_sp_12" />
+
+        <ImageView
+            android:id="@+id/iv_select_state"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ui_15_dip" />
+
+
+    </RelativeLayout>
+
 
     <TextView
-        android:id="@+id/tv_back_name"
+        android:id="@+id/tv_not_useable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/ui_15_dip"
-        android:text="银行(8080)"
-        android:layout_toRightOf="@id/iv_back_icon"
-        android:textSize="@dimen/dimens_sp_16" />
-
-
-    <ImageView
-        android:id="@+id/iv_select_state"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/ui_15_dip" />
-
+        android:layout_marginLeft="@dimen/ui_62_dip"
+        android:layout_marginTop="@dimen/ui_6_dip"
+        android:layout_marginBottom="@dimen/ui_20_dip"
+        android:text="@string/public_fund_bank_not_useable"
+        android:textColor="@color/black"
+        android:textSize="@dimen/dimens_sp_14"
+        android:visibility="gone" />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
         android:background="#E2E1E6" />
 
-</RelativeLayout>
+</LinearLayout>

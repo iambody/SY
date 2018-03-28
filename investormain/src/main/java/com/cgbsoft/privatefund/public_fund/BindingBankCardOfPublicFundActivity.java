@@ -2,8 +2,11 @@ package com.cgbsoft.privatefund.public_fund;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +44,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import io.rong.imageloader.utils.L;
 
 /**
  * Created by wangpeng on 18-1-29.
@@ -183,8 +188,103 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 }
             }
         });
+
+        mPankcardCode.addTextChangedListener(mTextWatcher);
+
+        mPankcardCode.addTextChangedListener(new TextWatcher() {
+            private boolean isRun = false;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Log.e("test","isRun　 = "+isRun+" s="+s+ " start ="+start+" before"+ before+" count="+count);
+                if(isRun){
+                    isRun=false;
+                    return;
+                }
+                isRun = true;
+                String  d = "";
+                String newStr = s.toString();
+                newStr = newStr.replace(" ", "");
+                int index = 0;
+                while ((index + 4) < newStr.length()){
+                    d += (newStr.substring(index, index + 4) + " ");
+                    index += 4;
+                }
+                d += (newStr.substring(index, newStr.length()));
+                int i = mPankcardCode.getSelectionStart();
+                mPankcardCode.setText(d);
+                Log.e("test","字符串　s = "+s+ " 修改后的字符串　ｄ="+d+" SelectionStart"+i);
+                try {
+                    if (i % 5 == 0 && before == 0) {
+                        if (i + 1 <= d.length()) {
+                            mPankcardCode.setSelection(i + 1);
+                        } else {
+                            mPankcardCode.setSelection(d.length());
+                        }
+                    } else if ((before == 1 || before == 0 ) && i < d.length()) {
+                        mPankcardCode.setSelection(i);
+                    }else {
+                        mPankcardCode.setSelection(d.length());
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
+                 /*  int lastSpaceIndex = s.toString().lastIndexOf(" ");
+                   if(lastSpaceIndex < s.length() && s.length() -1 - lastSpaceIndex == 4 ){
+                       mPankcardCode.setText(s+" ");
+                   }else {
+                       mPankcardCode.setText(s);
+                   }*/
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+        mPhoneCode.addTextChangedListener(mTextWatcher);
+      /*  mPhoneCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                if(s.length() > 11){
+                    mPhoneCode.setText(s.subSequence(0,11));
+                    if(mPhoneCode.getSelectionStart() > 11){
+                        mPhoneCode.setSelection(11);
+                    }
+                }else {
+                    mPhoneCode.setText(s);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {//
+            }
+        });*/
+        mVerificationCode.addTextChangedListener(mTextWatcher);
     }
 
+    private TextWatcher mTextWatcher = new  TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {//
+        }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {//
+        }
+        @Override
+        public void afterTextChanged(Editable s) {
+            requestChangConfirmColor();
+        }
+    };
+
+    /**
+     * 地址选择
+     */
     private void showAddressSelector() {
         List<Map<String, Object>> parentList = null;
         try {
@@ -269,7 +369,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             case R.id.title_left:// 返回键
                 finish();
                 break;
-
+            default: //
         }
     }
 
@@ -296,8 +396,41 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             bindingBankCardBean.setChannelname(data.getStringExtra(SelectBranchBankActivity.CHANNEL_NAME));
             bindingBankCardBean.setParatype(data.getStringExtra(SelectBranchBankActivity.PARATYPE));
             mBankBranchName.setText(bindingBankCardBean.getChannelname());
+            requestChangConfirmColor();
         }
 
+    }
+
+    /**
+     * 改变确定按钮颜色
+     *
+     */
+    private void requestChangConfirmColor(){
+        boolean isEnabled = true;
+        //支行名字
+        if(TextUtils.isEmpty(mBankBranchName.getText())){
+            isEnabled = false;
+        }
+        // 银行卡号
+        String bankcard =mPankcardCode.getText() !=null ? mPankcardCode.getText().toString().replace(" ","") : "";
+        if(TextUtils.isEmpty(bankcard)){
+            isEnabled = false;
+        }
+        //
+        if(TextUtils.isEmpty(mPhoneCode.getText())){
+            isEnabled = false;
+        }
+
+        if(TextUtils.isEmpty(mVerificationCode.getText())){
+            isEnabled = false;
+        }
+
+        findViewById(R.id.bt_Confirm).setEnabled(isEnabled);
+        if(isEnabled){
+            findViewById(R.id.bt_Confirm).setBackgroundResource(R.color.app_golden);
+        }else {
+            findViewById(R.id.bt_Confirm).setBackgroundColor(Color.parseColor("#DDDDDD"));
+        }
     }
 
 
@@ -321,7 +454,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             return;
         }
 
-        String bankCode = mPankcardCode.getText().toString().trim();
+
+        String bankCode =mPankcardCode.getText() !=null ? mPankcardCode.getText().toString().replace(" ","") : "";
         if (isCheck && BStrUtils.isEmpty(bankCode)) {
             MToast.makeText(this, "银行号不能为空", Toast.LENGTH_LONG);
             return;
@@ -425,7 +559,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             return;
         }
 
-        String bankCode = mPankcardCode.getText().toString();
+        String bankCode =mPankcardCode.getText() !=null ? mPankcardCode.getText().toString().replace(" ","") : "";
         if (BStrUtils.isEmpty(bankCode)) {
             MToast.makeText(this, "银行号不能为空", Toast.LENGTH_LONG);
             return;

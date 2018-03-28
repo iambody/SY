@@ -30,7 +30,6 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.Contant;
 import com.cgbsoft.lib.contant.RouteConfig;
-import com.cgbsoft.lib.share.dialog.CommonNewShareDialog;
 import com.cgbsoft.lib.utils.SkineColorManager;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
@@ -63,6 +62,7 @@ import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
+import com.cgbsoft.privatefund.public_fund.SelectBankCardActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.FloatStewardView;
 import com.chenenyu.router.Router;
@@ -353,8 +353,10 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void onNewClicked() {
 //        Snackbar.make(fb, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
 
-        CommonNewShareDialog shareDialog=new CommonNewShareDialog(baseActivity,CommonNewShareDialog.Tag_Style_WxPyq,null,null);
-        shareDialog.show();
+//        CommonNewShareDialog shareDialog=new CommonNewShareDialog(baseActivity,CommonNewShareDialog.Tag_Style_WxPyq,null,null);
+//        shareDialog.show();
+//
+        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, SelectBankCardActivity.class));
 
 //        if (AppManager.isVisitor(baseActivity)) {
 //            Intent intent = new Intent(baseActivity, LoginActivity.class);
@@ -1148,7 +1150,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.view_public_fund_regist)
     public void onViewClicked() {
         UiSkipUtils.toPublicFundRegist(baseActivity);
-
+        TrackingDataManger.homeDoneRegistPublicFundClick(baseActivity);
     }
 
     /**
@@ -1159,7 +1161,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //跳转到基金详情页面
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundcode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundcode()), false);
         NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, BStrUtils.NullToStr(publishFundRecommend.getFundName()), false);
-
+        TrackingDataManger.homeGrowthrateClick(baseActivity);
 
     }
 
@@ -1168,8 +1170,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_shift)
     public void publicFundShift() {
-        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundcode(), publishFundRecommend.getRisklevel());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundcode(),publishFundRecommend.getFundName(),publishFundRecommend.getFundtype(),publishFundRecommend.getRisklevel());
         //ssssss
+        TrackingDataManger.homeBuyClick(baseActivity);
     }
 
     @Override

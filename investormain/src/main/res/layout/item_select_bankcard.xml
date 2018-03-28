@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="70dp">
+
+    <ImageView
+        android:id="@+id/item_public_fund_bankls_iv"
+        android:layout_width="@dimen/ui_45_dip"
+        android:layout_height="@dimen/ui_45_dip"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/ui_15_dip"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo" />
 
     <TextView
         android:id="@+id/tv_bank_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/ui_10_dip"
         android:layout_marginLeft="@dimen/ui_15_dip"
-        android:textColor="#979797"
-        android:textSize="@dimen/dimens_sp_16"
-        />
+        android:layout_toRightOf="@id/item_public_fund_bankls_iv"
 
+        android:textColor="@color/black"
+
+        android:textSize="@dimen/dimens_sp_16" />
+    <TextView
+        android:id="@+id/item_public_fund_bankls_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ui_15_dip"
+        android:layout_toRightOf="@id/item_public_fund_bankls_iv"
+        android:layout_alignParentBottom="true"
+
+        android:layout_marginBottom="@dimen/ui_10_dip"
+        android:textColor="@color/public_fund_bankls_down_notes_color"
+        android:textSize="@dimen/dimens_sp_12" />
 
     <View
         android:layout_width="match_parent"

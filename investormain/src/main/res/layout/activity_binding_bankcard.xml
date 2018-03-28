@@ -409,6 +409,7 @@
                     android:background="@null"
                     android:hint="请输入您的手机号"
                     android:inputType="phone"
+                    android:maxLength="11"
                     android:textColor="@color/black"
                     android:textColorHint="#A5A5A5"
                     android:textSize="@dimen/dimens_sp_16" />
@@ -479,7 +480,7 @@
                 android:layout_marginLeft="@dimen/ui_15_dip"
                 android:layout_marginRight="@dimen/ui_15_dip"
                 android:layout_marginTop="@dimen/ui_10_dip"
-                android:text="温馨提示：1. 手机号请填写您在该银行预留的手机号。"
+                android:text="手机号请填写您在该银行预留的手机号。"
                 android:textColor="#595959"
                 android:textSize="@dimen/dimens_sp_15" />
 

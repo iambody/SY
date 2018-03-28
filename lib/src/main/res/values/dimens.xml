@@ -35,6 +35,7 @@
     <dimen name="ui_16_dip">16dip</dimen>
     <dimen name="ui_17_dip">17dip</dimen>
     <dimen name="ui_20_dip">20dip</dimen>
+    <dimen name="ui_21_dip">20dip</dimen>
     <dimen name="ui_28_dip">20dip</dimen>
     <dimen name="ui_30_dip">30dip</dimen>
     <dimen name="ui_32_dip">32dip</dimen>

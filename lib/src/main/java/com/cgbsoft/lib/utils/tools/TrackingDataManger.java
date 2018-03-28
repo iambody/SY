@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 /**
- * desc  ${DESC}
+ * desc 埋点的工具类
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/11/29-19:25
  */
@@ -553,5 +553,42 @@ public class TrackingDataManger {
         TrackingDataUtils.save(context, "1055002081", "退出登录");
         Log.i("existLoginout", "退出登录*******");
     }
+
+    /**
+     * 首页=》公募基金taba按钮
+     *
+     * @param context
+     */
+    public static void tabPublicFundClick(Context context) {
+        TrackingDataUtils.save(context, "1010001051", "");
+    }
+
+
+    /**
+     * 首页=》盈泰钱包立即转入
+     *
+     * @param context
+     */
+    public static void homeBuyClick(Context context) {
+        TrackingDataUtils.save(context, "1001001741", "");
+    }
+
+    /**
+     * 首页=》盈泰钱包收益率 七日年化 点击
+     *
+     * @param context
+     */
+    public static void homeGrowthrateClick(Context context) {
+        TrackingDataUtils.save(context, "1001001751", "");
+    }
+    /**
+     * 首页=》
+     *
+     * @param context
+     */
+    public static void homeDoneRegistPublicFundClick(Context context) {
+        TrackingDataUtils.save(context, "1001001761", "");
+    }
+
 
 }

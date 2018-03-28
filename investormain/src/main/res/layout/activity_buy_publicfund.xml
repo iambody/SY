@@ -15,52 +15,63 @@
         android:layout_height="wrap_content" />
 
 
-    <!--<RelativeLayout
+    <RelativeLayout
+        android:id="@+id/rl_fundinfo"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/ui_70_dip"
+        android:layout_marginBottom="@dimen/ui_10_dip"
+        android:layout_marginTop="@dimen/ui_10_dip"
         android:background="@color/white"
         >
         <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/iv_fund_icon"
+            android:layout_width="@dimen/ui_32_dip"
+            android:layout_height="@dimen/ui_32_dip"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/ui_15_dip"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginRight="@dimen/ui_15_dip"
             android:layout_centerVertical="true"
-            android:src="@drawable/delate_nor"
+            android:src="@drawable/public_fund_icon"
             />
 
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_fundname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_toRightOf="@+id/iv_fund_icon"
+            android:layout_alignTop="@+id/iv_fund_icon"
             android:textColor="@color/black"
-            android:layout_centerInParent="true"
-            android:text="买入"
-            android:textSize="20sp"
+            android:text="鹏华养老产业股票"
+            android:textSize="15sp"
             />
-    </RelativeLayout>-->
+        <TextView
+            android:id="@+id/tv_fundcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_fundname"
+            android:layout_alignLeft="@id/tv_fundname"
+            android:textColor="@color/black"
+            android:text="000854"
+            android:textSize="12sp"
+            />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_bank_card"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/ui_70_dip"
         android:background="@color/white"
-        android:gravity="center_vertical"
         android:paddingLeft="@dimen/ui_15_dip"
         >
         <ImageView
             android:id="@+id/iv_bank_icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/bank_icon"
+            android:layout_marginTop="@dimen/ui_14_dip"
+            android:layout_marginRight="@dimen/ui_15_dip"
             />
 
 
@@ -68,11 +79,8 @@
             android:id="@+id/tv_bank_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/iv_bank_icon"
             android:layout_alignTop="@+id/iv_bank_icon"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:layout_toRightOf="@+id/iv_bank_icon"
             android:textSize="@dimen/dimens_sp_16"
             android:textColor="@color/black"
             android:text="银行"
@@ -82,15 +90,39 @@
             android:id="@+id/tv_bank_tailcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/tv_bank_name"
             android:layout_alignTop="@+id/tv_bank_name"
-            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/ui_10_dip"
             android:textSize="@dimen/dimens_sp_16"
             android:textColor="@color/app_golden"
             android:text="----"
             />
+
+        <TextView
+            android:id="@+id/tv_bank_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_4_dip"
+            android:layout_below="@id/tv_bank_name"
+            android:layout_alignLeft="@id/tv_bank_name"
+            android:textColor="@color/color_595959"
+            android:textSize="@dimen/dimens_sp_12"
+            android:text="银行限额"
+            />
+
+        <TextView
+            android:id="@+id/tv_not_useable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_4_dip"
+            android:layout_below="@id/tv_bank_limit"
+            android:layout_alignLeft="@id/iv_bank_icon"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_14"
+            android:visibility="gone"
+            android:text="@string/public_fund_bank_not_useable"
+            />
+
     </RelativeLayout>
 
     <RelativeLayout

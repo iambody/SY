@@ -39,6 +39,7 @@ import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.UserInf;
 import com.cgbsoft.privatefund.bean.commui.JsShareBean;
+import com.cgbsoft.privatefund.bean.commui.OpenWebBean;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.chenenyu.router.Router;
 import com.google.gson.Gson;
@@ -158,16 +159,34 @@ public class JavaScriptObjectToc {
     public void openWebview(String param) {
         try {
             JSONObject ja = new JSONObject(param);
-            String url = ja.getString("URL");
-            String title = ja.getString("title");
-            System.out.println("---chenlong=" + BaseWebNetConfig.baseSxyParentUrl + url);
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put(WebViewConstant.push_message_url, BaseWebNetConfig.baseSxyParentUrl + url);
-            hashMap.put(WebViewConstant.push_message_title, title);
-            NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
-        } catch (JSONException e) {
-            e.printStackTrace();
+            JSONObject data = ja.getJSONObject("data");
+            String callback = ja.getString("callback");
+            OpenWebBean webBean = new Gson().fromJson(data.toString(), OpenWebBean.class);
+            Log.i("s", "sss");
+
+
+//            HashMap<String, Object> hashMap = new HashMap<>();
+//            hashMap.put(WebViewConstant.push_message_url, BaseWebNetConfig.baseSxyParentUrl + url);
+//            hashMap.put(WebViewConstant.push_message_title, title);
+//            NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+//            this.webView.loadUrl("javascript:" + callback + "()");
+
+        } catch (Exception e) {
         }
+
+//        try {
+//            JSONObject ja = new JSONObject(param);
+//            String url = ja.getString("URL");
+//            String title = ja.getString("title");
+//            System.out.println("---chenlong=" + BaseWebNetConfig.baseSxyParentUrl + url);
+//            HashMap<String, Object> hashMap = new HashMap<>();
+//            hashMap.put(WebViewConstant.push_message_url, BaseWebNetConfig.baseSxyParentUrl + url);
+//            hashMap.put(WebViewConstant.push_message_title, title);
+//            NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @JavascriptInterface
@@ -378,8 +397,10 @@ public class JavaScriptObjectToc {
                     if (!BStrUtils.isEmpty(data)) {
                         JSONObject obj = new JSONObject(data);
                         String fundCode = obj.getString("fundcode");
+                        String fundName = obj.getString("fundname");
+                        String fundType = obj.getString("fundType");
                         String riskLevel = obj.getString("risklevel");
-                        UiSkipUtils.toBuyPublicFundFromNative((Activity) context, fundCode, riskLevel);
+                        UiSkipUtils.toBuyPublicFundFromNative((Activity) context, fundCode,fundName,fundType, riskLevel);
 
                     }
                 }
@@ -759,6 +780,6 @@ public class JavaScriptObjectToc {
 //        JSONObject object=new Gson().fromJson(new Gson().toJson(userInf),JSONObject.class);new Gson().toJson(userInf)
 //          webView.loadUrl("javascript:Command.aaaa()");
         if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
-            webView.loadUrl(String.format("javascript:%s(%s)", jscall.getCallback(), new Gson().toJson(userInf)));
+            webView.loadUrl(String.format("javascript:%s(\'%s\')", jscall.getCallback(), new Gson().toJson(userInf)));
     }
 }

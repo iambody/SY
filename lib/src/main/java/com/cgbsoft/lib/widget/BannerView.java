@@ -133,7 +133,7 @@ public class BannerView extends RelativeLayout implements View.OnTouchListener, 
         if (bannerAdapter == null) {
             bannerAdapter = new HomeBannerAdapter(bannerList);
             targetVp.setAdapter(bannerAdapter);
-
+            bannerAdapter.notifyDataSetChanged();
         } else {
             bannerAdapter.notifyData(bannerList);
 

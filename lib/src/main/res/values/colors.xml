@@ -163,4 +163,5 @@
     <color name="comment_share_bt_press">#67dfdede</color>
 
 <color name="public_fund_line">#E2E1E6</color>
+    <color name="public_fund_bankls_down_notes_color">#595959</color>
 </resources>

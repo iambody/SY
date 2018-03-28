@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
@@ -21,7 +22,7 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
     private boolean isWidtherDialog;
 
     private CustomPasswordView passwordInput;
-    private TextView close;
+    private ImageView close;
     public PayPasswordDialog(Context context,String title,String summary,String money) {
         super(context, R.style.dialog_alpha);
         this.title = title;
@@ -46,7 +47,7 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
      */
     private void initView() {
         passwordInput = (CustomPasswordView)findViewById(R.id.ev_password_input);
-        close = (TextView) findViewById(R.id.tv_close);
+        close = (ImageView) findViewById(R.id.iv_close);
     }
 
     /**
@@ -91,7 +92,7 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_close:
+            case R.id.iv_close:
                 dismiss();
                 break;
         }
