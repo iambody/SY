@@ -48,7 +48,24 @@ public class BankListOfJZSupport {
         private String minbuysingle; // 最小单笔交易
         private String isopenplaninfo; //是否开通了定投标志 1 代表支持定投
         private int showseq; //展示顺序
+        private String bankLimit;//单次转出限额5万元，单日转出限额五万元
+        private String icon;//图标
 
+        public String getBankLimit() {
+            return bankLimit;
+        }
+
+        public void setBankLimit(String bankLimit) {
+            this.bankLimit = bankLimit;
+        }
+
+        public String getIcon() {
+            return icon;
+        }
+
+        public void setIcon(String icon) {
+            this.icon = icon;
+        }
 
         public String getBanknameid() {
             return banknameid;

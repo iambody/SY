@@ -9,12 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.google.gson.Gson;
@@ -103,7 +106,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                     bankOfJZSupportList.addAll(bankListOfJZSupport.getDatasets());
 //                    bankList.getAdapter().notifyDataSetChanged();
-                    bankList.setAdapter(new SelectBankAdapter(baseContext,bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
+                    bankList.setAdapter(new SelectBankAdapter(baseContext, bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
                         @Override
                         public void seclecBackCard(BankListOfJZSupport.BankOfJZSupport bankOfJZSupport) {
                             getIntent().putExtra(BANK_NAME_ID, bankOfJZSupport.getBanknameid());
@@ -138,6 +141,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
         private View mFooterView;
         private int TYPE_HEADER = -1;
         private int TYPE_FOOTER = -2;
+        private Context context;
 
         //一些辅助的方法
         public int getHeaderCount() {
@@ -153,11 +157,12 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
         }
 
 
-        public SelectBankAdapter(Context context,List<BankListOfJZSupport.BankOfJZSupport> bankCardList, SelectBankCardLinsterer linsterer) {
+        public SelectBankAdapter(Context context, List<BankListOfJZSupport.BankOfJZSupport> bankCardList, SelectBankCardLinsterer linsterer) {
             this.bankCardList = bankCardList;
             this.linsterer = linsterer;
-            mFooterView= LayoutInflater.from(context).inflate(R.layout.item_publicfund_banckls_foot,null);
-            LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            this.context=context;
+            mFooterView = LayoutInflater.from(context).inflate(R.layout.item_publicfund_banckls_foot, null);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             mFooterView.setLayoutParams(params);
         }
 
@@ -167,7 +172,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
                 return new SelectBankFootViewHolder(mFooterView);
             } else {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_select_bankcard, parent, false);
-                return new SelectBankViewHolder(view, linsterer);
+                return new SelectBankViewHolder(context,view, linsterer);
             }
         }
 
@@ -182,8 +187,10 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if (position != getItemCount() - 1)
+            if (position != getItemCount() - 1) {
                 ((SelectBankViewHolder) holder).bindView(bankCardList.get(position));
+
+            }
         }
 
         @Override
@@ -202,13 +209,18 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
 
 
         static class SelectBankViewHolder extends RecyclerView.ViewHolder {
-            private TextView bankName;
+            private TextView bankName, item_public_fund_bankls_notes;
+            private ImageView item_public_fund_bankls_iv;
+            private Context context;
             private SelectBankCardLinsterer linsterer;
             private BankListOfJZSupport.BankOfJZSupport bankOfJZSupport;
 
-            public SelectBankViewHolder(View itemView, final SelectBankCardLinsterer linsterer) {
+            public SelectBankViewHolder(Context contexts, View itemView, final SelectBankCardLinsterer linsterer) {
                 super(itemView);
+                context = contexts;
                 bankName = (TextView) itemView.findViewById(R.id.tv_bank_name);
+                item_public_fund_bankls_notes = (TextView) itemView.findViewById(R.id.item_public_fund_bankls_notes);
+                item_public_fund_bankls_iv = (ImageView) itemView.findViewById(R.id.item_public_fund_bankls_iv);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -220,6 +232,8 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
             public void bindView(BankListOfJZSupport.BankOfJZSupport bankOfJZSupport) {
                 this.bankOfJZSupport = bankOfJZSupport;
                 bankName.setText(bankOfJZSupport.getName());
+                BStrUtils.setTv(item_public_fund_bankls_notes, bankOfJZSupport.getBankLimit());
+                Imageload.display(context instanceof Activity? context.getApplicationContext():context, bankOfJZSupport.getIcon(), item_public_fund_bankls_iv);
             }
 
         }
