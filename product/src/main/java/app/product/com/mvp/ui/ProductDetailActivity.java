@@ -9,6 +9,7 @@ import com.cgbsoft.lib.TaskInfo;
 import com.cgbsoft.lib.base.model.bean.ProductlsBean;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
+import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
@@ -21,6 +22,7 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
+import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.chenenyu.router.Router;
@@ -107,7 +109,38 @@ public class ProductDetailActivity extends BaseWebViewActivity {
             protected void onRxError(Throwable error) {
             }
         });
+
+        mWebview.setBaseWebViewScrollListener(new BaseWebview.OnBaseWebViewScrollListener() {
+            @Override
+            public void onScrollUp() {
+                isDoneDown = false;
+                if(!isDoneUp) {
+                    StatusBarUtil.translucentStatusBar(baseContext);
+                    mWebview.setPadding(0, 0, 0, 0);
+                    isDoneUp=true;
+                }
+            }
+
+            @Override
+            public void onScrollDown() {
+                isDoneUp = false;
+                if (!isDoneDown) {
+                    StatusBarUtil.setColor(baseContext, getResources().getColor(R.color.app_golden));//showSystemBar(baseContext);
+                    mWebview.setPadding(0, DimensionPixelUtil.dip2px(baseContext, 15), 0, 0);
+                    isDoneDown = true;
+                }
+            }
+
+            @Override
+            public void scrollHeight(int h) {
+//                PromptManager.ShowCustomToast(baseContext,"滑动的高度......."+h);
+            }
+        });
+        findViewById(R.id.barlayout).setVisibility(View.GONE);
+
     }
+
+    private boolean isDoneDown, isDoneUp;
 
     /**
      * 获取intent里面传递的数据
@@ -192,41 +225,6 @@ public class ProductDetailActivity extends BaseWebViewActivity {
 
 //        Domain.foundNews + newsBean.getInfoId() + "&category=" + newsBean.getCategory();
     }
-
-//    /**
-//     * 分享产品
-//     *
-//     * @param action
-//     */
-//    private void shareToC(String action) {
-//        String actionDecode = URLDecoder.decode(action);
-//        String[] split = actionDecode.split(":");
-//        String sharePYQtitle = "";
-//        try {
-//            String title = split[2];
-//            String subTitle = split[3];
-//            String imageTitle = split[4];
-//            String link = split[5];
-//
-//            link = link.startsWith("/") ? BaseWebNetConfig.baseParentUrl + link : BaseWebNetConfig.baseParentUrl + "/" + link;
-//
-//            shareCommonBean = new ShareCommonBean(title, subTitle, link, "");
-//            commonShareDialog = new CommonShareDialog(baseContext, CommonShareDialog.Tag_Style_WeiXin, shareCommonBean, new CommonShareDialog.CommentShareListener() {
-//
-//                @Override
-//                public void completShare(int shareType) {
-//                    TaskInfo.complentTask("分享产品");
-//
-//                }
-//            });
-//            commonShareDialog.show();
-//
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 
     /**
      * 在webview里面展示pdf

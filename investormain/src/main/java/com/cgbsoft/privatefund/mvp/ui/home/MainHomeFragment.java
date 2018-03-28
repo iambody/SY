@@ -1149,8 +1149,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_public_fund_regist)
     public void onViewClicked() {
-        UiSkipUtils.toPublicFundRegist(baseActivity );
-
+        UiSkipUtils.toPublicFundRegist(baseActivity);
+        TrackingDataManger.homeDoneRegistPublicFundClick(baseActivity);
     }
 
     /**
@@ -1161,7 +1161,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //跳转到基金详情页面
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundcode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundcode()), false);
         NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, BStrUtils.NullToStr(publishFundRecommend.getFundName()), false);
-
+        TrackingDataManger.homeGrowthrateClick(baseActivity);
 
     }
 
@@ -1170,8 +1170,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_shift)
     public void publicFundShift() {
-        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundcode(),publishFundRecommend.getFundName(), publishFundRecommend.getRisklevel());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundcode(), publishFundRecommend.getFundName(), publishFundRecommend.getRisklevel());
         //ssssss
+        TrackingDataManger.homeBuyClick(baseActivity);
     }
 
     @Override

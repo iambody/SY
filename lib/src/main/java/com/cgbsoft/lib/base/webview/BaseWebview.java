@@ -165,6 +165,20 @@ public class BaseWebview extends WebView {
         }
     }
 
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+        if (onWebViewScrollListener != null){
+            if (t - oldt <= 2){
+                onWebViewScrollListener.onScrollDown();
+            }
+            if(oldt - t >= 2) {
+                onWebViewScrollListener.onScrollUp();
+            }
+            onWebViewScrollListener.scrollHeight(t);
+        }
+    }
+
     /**
      * 加载url，加一些别的参数
      *
@@ -210,4 +224,20 @@ public class BaseWebview extends WebView {
         this.isShangxueyuan = isShangxueyuan;
     }
 
+    private OnBaseWebViewScrollListener onWebViewScrollListener;
+
+    public void setBaseWebViewScrollListener(OnBaseWebViewScrollListener onBaseWebViewScrollListener) {
+        this.onWebViewScrollListener = onBaseWebViewScrollListener;
+    }
+
+    /**
+     * 滑动指令
+     */
+    public interface OnBaseWebViewScrollListener {
+        void onScrollUp();//上滑
+
+        void onScrollDown();//下滑
+
+        void scrollHeight(int h);
+    }
 }
