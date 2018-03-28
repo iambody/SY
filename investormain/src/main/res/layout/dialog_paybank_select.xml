@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+<!--    <LinearLayout
         android:id="@+id/ll_add_new_bankcord"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -59,7 +59,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_16" />
 
-    </LinearLayout>
+    </LinearLayout>-->
 
     <View
         android:layout_width="match_parent"

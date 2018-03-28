@@ -25,6 +25,7 @@
             android:layout_height="@dimen/ui_32_dip"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/ui_15_dip"
+            android:layout_marginRight="@dimen/ui_15_dip"
             android:layout_centerVertical="true"
             android:src="@drawable/public_fund_icon"
             />
@@ -54,6 +55,62 @@
 
 
     <RelativeLayout
+        android:id="@+id/rl_bank_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/ui_70_dip"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/ui_15_dip"
+        >
+        <ImageView
+            android:id="@+id/iv_bank_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="@dimen/ui_14_dip"
+            android:layout_marginRight="@dimen/ui_15_dip"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_bank_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_bank_icon"
+            android:layout_toRightOf="@+id/iv_bank_icon"
+            android:textSize="@dimen/dimens_sp_16"
+            android:textColor="@color/black"
+            android:text="银行"
+            />
+
+        <TextView
+            android:id="@+id/tv_bank_tailcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_bank_name"
+            android:layout_alignTop="@+id/tv_bank_name"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:textSize="@dimen/dimens_sp_16"
+            android:textColor="@color/app_golden"
+            android:text="----"
+            />
+
+        <TextView
+            android:id="@+id/tv_bank_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_4_dip"
+            android:layout_below="@id/tv_bank_name"
+            android:layout_alignLeft="@id/tv_bank_name"
+            android:textColor="@color/color_595959"
+            android:textSize="@dimen/dimens_sp_12"
+            android:text="银行限额"
+            />
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@color/white"
@@ -74,7 +131,7 @@
 
 
 
-        <Button
+      <!--  <Button
             android:id="@+id/bt_sell_all"
             android:layout_width="86dp"
             android:layout_height="32dp"
@@ -86,15 +143,14 @@
             android:gravity="center"
             android:textSize="@dimen/dimens_sp_14"
             android:text="全部"
-           />
+           />-->
 
 
         <EditText
             android:id="@+id/ev_sell_money_input"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv_sell_money"
-            android:layout_toLeftOf="@+id/bt_sell_all"
             android:layout_marginLeft="@dimen/ui_30_dip"
             android:layout_marginRight="@dimen/ui_10_dip"
             android:layout_centerVertical="true"

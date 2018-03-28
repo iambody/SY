@@ -82,6 +82,35 @@ public class Utils {
         return px / scale + 0.5f * (px >= 0 ? 1 : -1);
     }
 
+
+
+    /**
+     * 将px值转换为sp值，保证文字大小不变
+     *
+     * @param pxValue
+     * @param fontScale
+     *            （DisplayMetrics类中属性scaledDensity）
+     * @return
+     */
+    public static int convertPx2Sp(Context context, float pxValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (pxValue / fontScale + 0.5f);
+    }
+
+    /**
+     * 将sp值转换为px值，保证文字大小不变
+     *
+     * @param spValue
+     * @param fontScale
+     *            （DisplayMetrics类中属性scaledDensity）
+     * @return
+     */
+    public static int convertSp2Px(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
+
+
     /**
      * 获取屏幕的宽度
      *
@@ -91,6 +120,9 @@ public class Utils {
     public static int getScreenWidth(@NonNull final Context context) {
         return context.getApplicationContext().getResources().getDisplayMetrics().widthPixels;
     }
+
+
+
 
     /**
      * 获取屏幕高度

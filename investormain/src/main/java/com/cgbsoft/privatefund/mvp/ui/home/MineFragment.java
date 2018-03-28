@@ -979,7 +979,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.tv_now_transfer)
     void gotoNowTransferPrivateShare() {
         PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
-        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundcode(), publicFundInf.getFundName(),publicFundInf.getRisklevel());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundcode(), publicFundInf.getFundName(),publicFundInf.getFundtype(),publicFundInf.getRisklevel());
     }
 
     @OnClick(R.id.ll_private_share_bao_empty)

@@ -1170,7 +1170,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_shift)
     public void publicFundShift() {
-        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundcode(), publishFundRecommend.getFundName(), publishFundRecommend.getRisklevel());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundcode(),publishFundRecommend.getFundName(),publishFundRecommend.getFundtype(),publishFundRecommend.getRisklevel());
         //ssssss
         TrackingDataManger.homeBuyClick(baseActivity);
     }

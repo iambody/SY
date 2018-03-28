@@ -398,8 +398,9 @@ public class JavaScriptObjectToc {
                         JSONObject obj = new JSONObject(data);
                         String fundCode = obj.getString("fundcode");
                         String fundName = obj.getString("fundname");
+                        String fundType = obj.getString("fundType");
                         String riskLevel = obj.getString("risklevel");
-                        UiSkipUtils.toBuyPublicFundFromNative((Activity) context, fundCode, fundName, riskLevel);
+                        UiSkipUtils.toBuyPublicFundFromNative((Activity) context, fundCode,fundName,fundType, riskLevel);
 
                     }
                 }

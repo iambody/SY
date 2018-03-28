@@ -17,6 +17,7 @@ import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
@@ -38,6 +39,7 @@ import java.util.Map;
 public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> implements View.OnClickListener {
     public static final String TAG_FUND_CODE = "tag_fund_code";
     public static final String TAG_FUND_NAME = "tag_fund_name";
+    public static final String TAG_FUND_Type = "tag_fund_type";
     public static final String TAG_FUND_RISK_LEVEL = "tag_fund_risk_level";
     public static final String YINGTAI_QIANBAO = "210012";
     private Button buyConfirm;
@@ -50,6 +52,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
     private String fundCode; // 基金号
     private String fundName; // 基金名字
+    private String fundType; // 基金类型
     private String rate; // 费率
     private String profitDate; // 收益日期
     private String limitOfDay; //银行卡每日限额
@@ -72,6 +75,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     protected void init(Bundle savedInstanceState) {
         fundCode = getIntent().getStringExtra(TAG_FUND_CODE);
         fundName = getIntent().getStringExtra(TAG_FUND_NAME);
+        fundType = getIntent().getStringExtra(TAG_FUND_Type);
         if(YINGTAI_QIANBAO.equals(fundCode.trim())) isPublicFund = false;
         fundRiskLevel = getIntent().getStringExtra(TAG_FUND_RISK_LEVEL);
 
@@ -148,7 +152,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
                 break;
             case R.id.rl_bank_card: // 用于支付的银行卡
-                if (bean == null) return;
+                if (currectPayBank == null || bean == null || bean.getBankCardInfoList() == null || bean.getBankCardInfoList().size() <0) return;
                 new PayFundBankSelectDialog(this,currectPayBank.getDepositacct(), bean.getBankCardInfoList(), new PayFundBankSelectDialog.SelectListener() {
                     @Override
                     public void select(int index) {
@@ -305,7 +309,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
 
                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) {
-                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + money, "申购成功", false);
+                    if(isPublicFund){
+                        // TODO　基金类型待确定
+                        UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,2,"",money);
+                    }else {
+                        NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + money, "申购成功", false);
+                    }
                     finish();
                 } else {
                     MToast.makeText(BuyPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG);
@@ -516,6 +525,13 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         private String bankShortName = "银行";  // 银行简称
         private String bankLimit;  // 银行卡限额
         private String bankEnableStatus;  // 银行卡可用状态　0不可用，１可用
+        private String availbalMode1 = ""; //　申请基金的份额
+        private String balfund = ""; //　
+        private String balfundMode1 = ""; //　
+        private String background = ""; //　
+        private String icon = ""; //　
+        private String tano = ""; //　
+
 
         public String getTransactionaccountid() {
             return transactionaccountid;
@@ -638,12 +654,59 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         }
 
         public String getBankEnableStatus() {
-            //return bankEnableStatus;
-            return "0";
+            return bankEnableStatus;
         }
 
         public void setBankEnableStatus(String bankEnableStatus) {
             this.bankEnableStatus = bankEnableStatus;
+        }
+
+        public String getAvailbalMode1() {
+            return availbalMode1;
+        }
+
+        public void setAvailbalMode1(String availbalMode1) {
+            this.availbalMode1 = availbalMode1;
+        }
+
+        public String getBalfund() {
+            return balfund;
+        }
+
+        public void setBalfund(String balfund) {
+            this.balfund = balfund;
+        }
+
+        public String getBalfundMode1() {
+            return balfundMode1;
+        }
+
+        public void setBalfundMode1(String balfundMode1) {
+            this.balfundMode1 = balfundMode1;
+        }
+
+        public String getBackground() {
+            return background;
+        }
+
+        public void setBackground(String background) {
+            this.background = background;
+        }
+
+        public String getIcon() {
+            return icon;
+        }
+
+        public void setIcon(String icon) {
+            this.icon = icon;
+        }
+
+        public String getTano() {
+            return tano;
+        }
+
+        public void setTano(String tano) {
+            this.tano = tano;
         }
     }
 }
