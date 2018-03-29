@@ -100,8 +100,8 @@ android {
         }
     }
     productFlavors {
-        guanwang {}
-//        huawei{}
+//        guanwang{}
+        huawei{}
 //        qihu360{}
 //        tengxun{}
 //        xiaomi{}
