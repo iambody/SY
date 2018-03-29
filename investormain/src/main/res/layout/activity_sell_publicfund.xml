@@ -1,166 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_bg"
     android:orientation="vertical">
+
     <include
         android:id="@+id/title_bar"
         layout="@layout/title_normal_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <RelativeLayout
-        android:id="@+id/rl_fundinfo"
+    <LinearLayout
+        android:id="@+id/ll_fundinfo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ui_70_dip"
         android:layout_marginBottom="@dimen/ui_10_dip"
         android:layout_marginTop="@dimen/ui_10_dip"
         android:background="@color/white"
-        >
+        android:gravity="center_vertical">
+
         <ImageView
             android:id="@+id/iv_fund_icon"
             android:layout_width="@dimen/ui_32_dip"
             android:layout_height="@dimen/ui_32_dip"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/ui_15_dip"
             android:layout_marginRight="@dimen/ui_15_dip"
-            android:layout_centerVertical="true"
-            android:src="@drawable/public_fund_icon"
-            />
+            android:src="@drawable/public_fund_icon" />
 
-
-        <TextView
-            android:id="@+id/tv_fundname"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/iv_fund_icon"
-            android:layout_alignTop="@+id/iv_fund_icon"
-            android:textColor="@color/black"
-            android:text="鹏华养老产业股票"
-            android:textSize="15sp"
-            />
-        <TextView
-            android:id="@+id/tv_fundcode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_fundname"
-            android:layout_alignLeft="@id/tv_fundname"
-            android:textColor="@color/black"
-            android:text="000854"
-            android:textSize="12sp"
-            />
-    </RelativeLayout>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_fundname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="鹏华养老产业股票"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_fundcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="000854"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
 
 
     <RelativeLayout
         android:id="@+id/rl_bank_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/ui_70_dip"
+        android:layout_marginBottom="@dimen/ui_10_dip"
         android:background="@color/white"
-        android:paddingLeft="@dimen/ui_15_dip"
-        >
+        android:minHeight="@dimen/ui_70_dip"
+        android:paddingLeft="@dimen/ui_15_dip">
+
         <ImageView
             android:id="@+id/iv_bank_icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="@dimen/ui_14_dip"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ui_15_dip"
-            />
+            android:layout_marginTop="@dimen/ui_14_dip" />
 
 
-        <TextView
-            android:id="@+id/tv_bank_name"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/iv_bank_icon"
             android:layout_toRightOf="@+id/iv_bank_icon"
-            android:textSize="@dimen/dimens_sp_16"
-            android:textColor="@color/black"
-            android:text="银行"
-            />
+            android:layout_centerVertical="true"
+            >
 
-        <TextView
-            android:id="@+id/tv_bank_tailcode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_bank_name"
-            android:layout_alignTop="@+id/tv_bank_name"
-            android:layout_marginLeft="@dimen/ui_10_dip"
-            android:textSize="@dimen/dimens_sp_16"
-            android:textColor="@color/app_golden"
-            android:text="----"
-            />
+            <TextView
+                android:id="@+id/tv_bank_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="银行"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimens_sp_16" />
 
-        <TextView
-            android:id="@+id/tv_bank_limit"
+            <TextView
+                android:id="@+id/tv_bank_tailcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_bank_name"
+                android:layout_marginLeft="@dimen/ui_10_dip"
+                android:layout_toRightOf="@+id/tv_bank_name"
+                android:text="----"
+                android:textColor="@color/app_golden"
+                android:textSize="@dimen/dimens_sp_16" />
+
+            <TextView
+                android:id="@+id/tv_bank_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_bank_name"
+                android:layout_below="@id/tv_bank_name"
+                android:layout_marginTop="@dimen/ui_4_dip"
+                android:text="银行限额"
+                android:textColor="@color/color_595959"
+                android:textSize="@dimen/dimens_sp_12" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_direct"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ui_4_dip"
-            android:layout_below="@id/tv_bank_name"
-            android:layout_alignLeft="@id/tv_bank_name"
-            android:textColor="@color/color_595959"
-            android:textSize="@dimen/dimens_sp_12"
-            android:text="银行限额"
-            />
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ui_10_dip" />
+
     </RelativeLayout>
-
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@color/white"
-        android:gravity="center_vertical"
-        >
+        android:gravity="center_vertical">
+
         <TextView
             android:id="@+id/tv_sell_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/ui_15_dip"
-            android:textSize="@dimen/dimens_sp_16"
-            android:textColor="@color/black"
             android:layout_centerInParent="true"
-            android:text="卖出份额"
-            />
-
-
-
-      <!--  <Button
-            android:id="@+id/bt_sell_all"
-            android:layout_width="86dp"
-            android:layout_height="32dp"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/ui_15_dip"
-            android:background="@color/app_golden"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:textSize="@dimen/dimens_sp_14"
-            android:text="全部"
-           />-->
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:text="金额"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_16" />
+
+
+        <!--  <Button
+              android:id="@+id/bt_sell_all"
+              android:layout_width="86dp"
+              android:layout_height="32dp"
+              android:layout_alignParentRight="true"
+              android:layout_centerVertical="true"
+              android:layout_marginRight="@dimen/ui_15_dip"
+              android:background="@color/app_golden"
+              android:textColor="@color/white"
+              android:gravity="center"
+              android:textSize="@dimen/dimens_sp_14"
+              android:text="全部"
+             />-->
 
 
         <EditText
             android:id="@+id/ev_sell_money_input"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_sell_money"
-            android:layout_marginLeft="@dimen/ui_30_dip"
-            android:layout_marginRight="@dimen/ui_10_dip"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:background="@null"
-            android:textColor="@color/black"
-            android:hint="卖出份额"
+            android:hint="请输入您卖出的份额"
             android:inputType="numberDecimal"
-            android:textSize="@dimen/dimens_sp_16"
             android:singleLine="true"
-            />
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_16" />
     </RelativeLayout>
 
     <TextView
@@ -169,10 +175,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ui_15_dip"
         android:layout_marginTop="@dimen/ui_10_dip"
-        android:textColor="#595959"
         android:text="卖出至原银行卡"
-        android:textSize="@dimen/dimens_sp_15"
-        />
+        android:textColor="#595959"
+        android:textSize="@dimen/dimens_sp_15" />
 
     <Button
         android:id="@+id/bt_finsh"
@@ -182,7 +187,6 @@
         android:layout_marginLeft="@dimen/ui_15_dip"
         android:layout_marginRight="@dimen/ui_15_dip"
         android:layout_marginTop="@dimen/ui_40_dip"
-        android:background="@drawable/sellfund_button"
-        />
+        android:background="@drawable/sellfund_button" />
 
 </LinearLayout>

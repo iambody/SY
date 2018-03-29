@@ -589,6 +589,22 @@ public class TrackingDataManger {
     public static void homeDoneRegistPublicFundClick(Context context) {
         TrackingDataUtils.save(context, "1001001761", "");
     }
+    /**
+     * 公募基金购买
+     *
+     * @param context
+     */
+    public static void buyPublicFund(Context context,String fundName) {
+        TrackingDataUtils.save(context, "1075008011", fundName);
+    }
+    /**
+     * 公募基金卖出
+     *
+     * @param context
+     */
+    public static void sellPublicFund(Context context,String fundName) {
+        TrackingDataUtils.save(context, "1075009011", fundName);
+    }
 
 
 }

@@ -29,14 +29,15 @@ public class SellFundBankSelectDialog extends BaseDialog {
     private RecyclerView bankList;
     private PayFundBankSelectDialog.SelectListener selectListener;
     private String currectBankCodeNum = "";
+    private boolean isFund;
 
-    public SellFundBankSelectDialog(Context context, String currectBankCodeNum, List<BuyPublicFundActivity.BankCardInfo> bankCardInfos, PayFundBankSelectDialog.SelectListener selectListener) {
+    public SellFundBankSelectDialog(Context context, String currectBankCodeNum, List<BuyPublicFundActivity.BankCardInfo> bankCardInfos, boolean isFund, PayFundBankSelectDialog.SelectListener selectListener) {
         super(context, R.style.dialog_alpha);
         this.bankCardInfos = bankCardInfos;
+        this.isFund = isFund;
         this.selectListener = selectListener;
         this.currectBankCodeNum = currectBankCodeNum;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
 
     private void bindViews() {
         bankList.setLayoutManager(new LinearLayoutManager(getContext()));
-        bankList.setAdapter(new SellFundBankSelectDialog.MyAdapter(currectBankCodeNum, bankCardInfos, new PayFundBankSelectDialog.SelectListener() {
+        bankList.setAdapter(new SellFundBankSelectDialog.MyAdapter(currectBankCodeNum, bankCardInfos,this.isFund,new PayFundBankSelectDialog.SelectListener() {
             @Override
             public void select(int index) {
                 SellFundBankSelectDialog.this.selectListener.select(index);
@@ -80,11 +81,13 @@ public class SellFundBankSelectDialog extends BaseDialog {
         private List<BuyPublicFundActivity.BankCardInfo> list;
         private PayFundBankSelectDialog.SelectListener selectListener;
         private String currectBankNum = "";
+        private boolean isFund;
 
-        public MyAdapter(String currectBankNum, List<BuyPublicFundActivity.BankCardInfo> list, PayFundBankSelectDialog.SelectListener selectListener) {
+        public MyAdapter(String currectBankNum, List<BuyPublicFundActivity.BankCardInfo> list,boolean isFund, PayFundBankSelectDialog.SelectListener selectListener) {
             this.list = list;
             this.selectListener = selectListener;
             this.currectBankNum = currectBankNum;
+            this.isFund = isFund;
         }
 
 
@@ -103,7 +106,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
 
         @Override
         public void onBindViewHolder(SellFundBankSelectDialog.MyViewHolder holder, int position) {
-            holder.bindData(list, position, currectBankNum);
+            holder.bindData(list, position, currectBankNum,isFund);
         }
 
         @Override
@@ -143,7 +146,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
         }
 
 
-        public void bindData(List<BuyPublicFundActivity.BankCardInfo> selectListener, int postion, String curBankNum) {
+        public void bindData(List<BuyPublicFundActivity.BankCardInfo> selectListener, int postion, String curBankNum,boolean isFund) {
             index = postion;
             BuyPublicFundActivity.BankCardInfo bankCardInfo = selectListener.get(postion);
 
@@ -159,8 +162,11 @@ public class SellFundBankSelectDialog extends BaseDialog {
                 bankCoade = bankCoade.substring(bankCoade.length() - 4);
             }
             bankName.setText(bankCardInfo.getBankShortName() + "(" + bankCoade + ")");
-            bankLimit.setText("可赎回"+bankCardInfo.getAvailbalMode1());
-
+            if(isFund){
+                this.bankLimit.setText("可卖出份额"+bankCardInfo.getAvailbalMode1()+"份");
+            }else {
+                this.bankLimit.setText("可体现金额"+bankCardInfo.getAvailbalMode1()+"元");
+            }
             Imageload.display(bankIcon.getContext(),bankCardInfo.getIcon(),bankIcon,R.drawable.bank_icon,R.drawable.bank_icon);
             //bankIcon.setBackgroundResource(R.drawable.bank_icon);
             itemView.findViewById(R.id.tv_not_useable).setVisibility(View.GONE);

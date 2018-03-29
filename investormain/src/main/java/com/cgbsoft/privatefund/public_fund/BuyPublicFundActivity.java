@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -102,7 +104,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         }
 
         if(!isPublicFund){
-            findViewById(R.id.rl_fundinfo).setVisibility(View.GONE);
+            findViewById(R.id.ll_fundinfo).setVisibility(View.GONE);
         }else {
             ((TextView)findViewById(R.id.tv_fundname)).setText(fundName);
             ((TextView)findViewById(R.id.tv_fundcode)).setText(fundCode);
@@ -235,7 +237,9 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 loadingDialog.dismiss();
                 bean = new Gson().fromJson(o, Bean.class);
                 bean.setFundCode(fundCode);
-                currectPayBank = bean.getBankCardInfoList().get(0);
+                if(bean.getBankCardInfoList().size()>0){
+                    currectPayBank = bean.getBankCardInfoList().get(0);
+                }
                 if(currectPayBank == null) return;
                 showBankView();
             }
@@ -255,6 +259,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      */
     Map<String,String> dictionaryTable = null;
     private void showBankView() {
+        if(bean != null && bean.getBankCardInfoList().size()>1){
+            findViewById(R.id.iv_direct).setBackgroundResource(R.drawable.direct_right);
+        }else {
+            findViewById(R.id.iv_direct).setBackgroundResource(0);
+        }
+
         String limitAmt = bean.getLimitOrderAmt().trim();// 最少购买限额
         if (!BStrUtils.isEmpty(limitAmt) && !"null".equals(limitAmt)) {
 
@@ -262,34 +272,23 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
             if(index == 0 || index > 3){
                 double amt =new BigDecimal(limitAmt).divide(new BigDecimal("10000")).doubleValue();
-                buyInput.setHint("最低买入" + amt + "万元");
+                buyInput.setHint("最低购买金额" + amt + "万元");
             }else {
-                buyInput.setHint("最低买入" + limitAmt + "元");
+                buyInput.setHint("最低购买金额" + limitAmt + "元");
             }
         }
 
-       /* if(dictionaryTable == null) {
-            dictionaryTable = new HashMap<>();
-            for(DataDictionary dataDictionary : channlidDictionarys){
-                dictionaryTable.put(dataDictionary.getSubitem(),dataDictionary.getSubitemname());
-            }
-            for(BankCardInfo bankCardInfo : bean.getBankCardInfoList()){
-                String bankName = dictionaryTable.get(bankCardInfo.getChannelid());
-                if(!TextUtils.isEmpty(bankName)) bankCardInfo.setBankname(bankName);
-            }
-
-        }*/
+        Imageload.display(BuyPublicFundActivity.this,currectPayBank.getIcon(),this.bankIcon,R.drawable.bank_icon,R.drawable.bank_icon);
         this.bankName.setText(currectPayBank.getBankShortName());
         String bankCoade = currectPayBank.getDepositacct();
         if (bankCoade.length() > 4) {
             bankTailCode.setText(bankCoade.substring(bankCoade.length() - 4));
         }
-        this.bankLimit.setText(currectPayBank.getBankLimit());
 
         if("0".equals(currectPayBank.getBankEnableStatus())){
-            findViewById(R.id.tv_not_useable).setVisibility(View.VISIBLE);
+            this.bankLimit.setText(getString(R.string.public_fund_bank_not_useable));
         }else {
-            findViewById(R.id.tv_not_useable).setVisibility(View.GONE);
+            this.bankLimit.setText(currectPayBank.getBankLimit());
         }
     }
 
@@ -309,9 +308,9 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
 
                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) {
+                    TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this,BuyPublicFundActivity.this.fundName);
                     if(isPublicFund){
-                        // TODO　基金类型待确定
-                        UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,2,"",money);
+                        UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,2,fundType,money);
                     }else {
                         NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + money, "申购成功", false);
                     }

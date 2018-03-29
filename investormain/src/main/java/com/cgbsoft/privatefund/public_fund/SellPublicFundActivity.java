@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -122,10 +124,8 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         sellFinsh.setOnClickListener(this);
         input = (EditText) findViewById(R.id.ev_sell_money_input);
         if (!isFund) {
-            unit = "元";
             input.setHint("请输入您要卖出的金额");
         } else {
-            unit = "份";
             input.setHint("请输入您要卖出的份额");
         }
 
@@ -136,12 +136,12 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         // 该表标题
         if(isFund){
             ((TextView) findViewById(R.id.title_mid)).setText("卖出");
-            findViewById(R.id.rl_fundinfo).setVisibility(View.VISIBLE);
+            findViewById(R.id.ll_fundinfo).setVisibility(View.VISIBLE);
             ((TextView)findViewById(R.id.tv_fundname)).setText(fundName);
             ((TextView)findViewById(R.id.tv_fundcode)).setText(fundcode);
         }else {
             ((TextView) findViewById(R.id.title_mid)).setText("盈泰钱包");
-            findViewById(R.id.rl_fundinfo).setVisibility(View.GONE);
+            findViewById(R.id.ll_fundinfo).setVisibility(View.GONE);
         }
 
         if(bankcardlist!=null && bankcardlist.size()>0){
@@ -167,8 +167,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.e("test"," 改变后的s="+s.toString()+"  ｉｎｐｕｔ　＝　"+input.getText());
-             if(s.equals(input.getText())) return;
+             if(TextUtils.isEmpty(s) || s.equals(input.getText())) return;
              if(curruntBankCard != null && new BigDecimal(s.toString()).subtract(new BigDecimal(curruntBankCard.getAvailbalMode1())).doubleValue() >0){
                  input.setText(curruntBankCard.getAvailbalMode1());
                  input.setSelection(curruntBankCard.getAvailbalMode1().length());
@@ -188,14 +187,23 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
      * @param bankCardInfo
      */
     private void changeBankInfo(BuyPublicFundActivity.BankCardInfo bankCardInfo){
-        Imageload.display(SellPublicFundActivity.this,bankCardInfo.getIcon(),this.bankIcon,R.drawable.bank_icon,null);
+        if(this.bankcardlist != null && this.bankcardlist.size() > 1){
+            findViewById(R.id.iv_direct).setBackgroundResource(R.drawable.direct_right);
+        }else {
+            findViewById(R.id.iv_direct).setBackgroundResource(0);
+        }
+        Imageload.display(SellPublicFundActivity.this,bankCardInfo.getIcon(),this.bankIcon,R.drawable.bank_icon,R.drawable.bank_icon);
         this.bankName.setText(bankCardInfo.getBankShortName());
         String bankcode = bankCardInfo.getDepositacct();
         String tailCode = bankcode.length() > 4 ? bankcode.substring(bankcode.length()-4) : bankcode;
         this.bankTailCode.setText(tailCode);
-        this.bankLimit.setText(bankCardInfo.getAvailbalMode1());
+        if(isFund){
+            this.bankLimit.setText("可卖出份额"+bankCardInfo.getAvailbalMode1()+"份");
+        }else {
+            this.bankLimit.setText("可体现金额"+bankCardInfo.getAvailbalMode1()+"元");
+        }
         if (!BStrUtils.isEmpty(fastredeemflag)) {
-            prompt.setText("转出至尾号为 "+tailCode +" 的"+bankCardInfo.getBankShortName()+"卡。\n\r\r ·本转出为快速到账（一般两小时内），不享受转出 当天收益，以实际到账时间为准。\n\r\r ·单次转出限额20万；单日转出限额20万。");
+            prompt.setText("转出至尾号为 "+tailCode +" 的"+bankCardInfo.getBankShortName()+"卡。\n\r·本转出为快速到账（一般两小时内），不享受转出 当天收益，以实际到账时间为准。\n\r·单次转出限额20万；单日转出限额20万。");
         } else {
             prompt.setText("卖出至尾号为 "+tailCode+" 的"+bankCardInfo.getBankShortName()+"卡，具体到账时间以银行到账时间为准。");
         }
@@ -226,8 +234,8 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 break;
 
             case R.id.rl_bank_card:
-                if(curruntBankCard == null || bankcardlist == null || bankcardlist.size() <= 0) return;
-                new PayFundBankSelectDialog(this,curruntBankCard.getDepositacct(), bankcardlist, new PayFundBankSelectDialog.SelectListener() {
+                if(curruntBankCard == null || bankcardlist == null || bankcardlist.size() <= 1) return;
+                new SellFundBankSelectDialog(this,curruntBankCard.getDepositacct(), bankcardlist,isFund,new PayFundBankSelectDialog.SelectListener() {
                     @Override
                     public void select(int index) {
                         Log.e(this.getClass().getSimpleName(), "选择银行卡" + index);
@@ -268,6 +276,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                             BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
                             if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                                 // 跳转到成功页面
+                                TrackingDataManger.sellPublicFund(SellPublicFundActivity.this,SellPublicFundActivity.this.fundName);
                                 String successData = "";
                                 try {
                                     successData = new JSONObject(result).getString("datasets");

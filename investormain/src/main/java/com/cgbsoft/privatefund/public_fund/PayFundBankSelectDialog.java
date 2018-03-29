@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 import com.cgbsoft.privatefund.R;
@@ -236,7 +237,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
         public void bindData(List<BuyPublicFundActivity.BankCardInfo> selectListener, int postion, String curBankNum) {
             index = postion;
             BuyPublicFundActivity.BankCardInfo bankCardInfo = selectListener.get(postion);
-
+            Imageload.display(bankIcon.getContext(),bankCardInfo.getIcon(),this.bankIcon,R.drawable.bank_icon,R.drawable.bank_icon);
             String bankCoade = bankCardInfo.getDepositacct();
             if (curBankNum.trim().equals(bankCoade.trim())) {
                 selectState.setVisibility(View.VISIBLE);
