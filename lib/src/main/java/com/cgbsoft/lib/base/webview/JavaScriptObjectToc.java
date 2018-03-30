@@ -398,8 +398,8 @@ public class JavaScriptObjectToc {
                         JSONObject obj = new JSONObject(data);
                         String fundCode = obj.getString("fundcode");
                         String fundName = "";
-                        if(obj.has("fundname")){
-                            fundName = obj.getString("fundname");
+                        if(obj.has("fundName")){
+                            fundName = obj.getString("funName");
                         }
                         String fundType = obj.getString("fundType");
                         String riskLevel = obj.getString("risklevel");

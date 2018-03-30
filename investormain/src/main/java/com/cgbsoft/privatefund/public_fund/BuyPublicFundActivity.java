@@ -3,7 +3,9 @@ package com.cgbsoft.privatefund.public_fund;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -116,6 +118,20 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         findViewById(R.id.rl_bank_card).setOnClickListener(this);
 
         buyInput.setHint("请输入金额");
+        buyInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+               if(TextUtils.isEmpty(buyInput.getText())){
+                   buyConfirm.setBackgroundResource(R.color.app_golden_disable);
+               }else {
+                   buyConfirm.setBackgroundResource(R.color.app_golden);
+               }
+            }
+        });
 
         buyConfirm.setOnClickListener(this);
 

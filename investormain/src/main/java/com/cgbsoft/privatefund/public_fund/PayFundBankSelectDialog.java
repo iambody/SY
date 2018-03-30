@@ -251,7 +251,6 @@ public class PayFundBankSelectDialog extends BaseDialog {
             }
             bankName.setText(bankCardInfo.getBankShortName() + "(" + bankCoade + ")");
             bankLimit.setText(bankCardInfo.getBankLimit());
-            bankIcon.setBackgroundResource(R.drawable.bank_icon);
             if ("0".equals(bankCardInfo.getBankEnableStatus())) {
                 itemView.findViewById(R.id.tv_not_useable).setVisibility(View.VISIBLE);
             } else {
