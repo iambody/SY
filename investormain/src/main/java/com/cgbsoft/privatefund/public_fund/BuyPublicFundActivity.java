@@ -101,8 +101,10 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         // 该表标题
         if(isPublicFund){
             ((TextView) findViewById(R.id.title_mid)).setText("立即购买");
+            buyConfirm.setText("确认购买");
         }else {
             ((TextView) findViewById(R.id.title_mid)).setText("盈泰钱包");
+            buyConfirm.setText("确认转入");
         }
 
         if(!isPublicFund){
