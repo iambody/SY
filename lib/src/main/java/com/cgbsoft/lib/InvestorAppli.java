@@ -13,6 +13,7 @@ import java.util.HashMap;
  */
 public class InvestorAppli extends BaseApplication {
     private boolean isMainpage;
+
     private UserInfo userInfo;
 
     private boolean isRequestCustom;
@@ -20,6 +21,16 @@ public class InvestorAppli extends BaseApplication {
     private boolean isTouGuOnline;
 
     private String tempFile;
+
+    private   String openWebUrl;
+
+    public   String getOpenWebUrl() {
+        return openWebUrl;
+    }
+
+    public   void setOpenWebUrl(String openWebUrl) {
+         openWebUrl = openWebUrl;
+    }
 
     private HashMap<String, String> serverDatahashMap = new HashMap<>();
 
@@ -53,6 +64,7 @@ public class InvestorAppli extends BaseApplication {
         super.onCreate();
         Router.initialize(this);
     }
+
     public boolean isMainpage() {
         return isMainpage;
     }

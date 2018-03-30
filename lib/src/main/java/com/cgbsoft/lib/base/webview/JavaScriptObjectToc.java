@@ -2,6 +2,7 @@ package com.cgbsoft.lib.base.webview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,6 +26,7 @@ import com.cgbsoft.lib.share.utils.ShareManger;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.poster.ElevenPoster;
 import com.cgbsoft.lib.utils.poster.ScreenShot;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -32,6 +34,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
@@ -40,6 +43,7 @@ import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.bean.UserInf;
 import com.cgbsoft.privatefund.bean.commui.JsShareBean;
 import com.cgbsoft.privatefund.bean.commui.OpenWebBean;
+import com.cgbsoft.privatefund.bean.commui.WebRightTopViewConfigBean;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.chenenyu.router.Router;
 import com.google.gson.Gson;
@@ -155,6 +159,8 @@ public class JavaScriptObjectToc {
         }
     }
 
+    BaseWebViewActivity viewActivity;
+
     @JavascriptInterface
     public void openWebview(String param) {
         try {
@@ -162,14 +168,21 @@ public class JavaScriptObjectToc {
             JSONObject data = ja.getJSONObject("data");
             String callback = ja.getString("callback");
             OpenWebBean webBean = new Gson().fromJson(data.toString(), OpenWebBean.class);
-            Log.i("s", "sss");
 
+
+            Intent intent = new Intent(context, BaseWebViewActivity.class);
+            intent.putExtra(WebViewConstant.push_message_url, NetConfig.SERVER_ADD + webBean.getURL());
+            intent.putExtra(WebViewConstant.push_message_title, webBean.getTitle());
+            intent.putExtra(WebViewConstant.push_message_title_isdiv, webBean.isHasHTMLTag());
+            intent.putExtra(WebViewConstant.push_message_title_is_hidetoolbar, true);
+
+            context.startActivity(intent);
 
 //            HashMap<String, Object> hashMap = new HashMap<>();
 //            hashMap.put(WebViewConstant.push_message_url, BaseWebNetConfig.baseSxyParentUrl + url);
 //            hashMap.put(WebViewConstant.push_message_title, title);
 //            NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
-//            this.webView.loadUrl("javascript:" + callback + "()");
+            this.webView.loadUrl("javascript:" + callback + "()");
 
         } catch (Exception e) {
         }
@@ -784,5 +797,76 @@ public class JavaScriptObjectToc {
 //          webView.loadUrl("javascript:Command.aaaa()");
         if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
             webView.loadUrl(String.format("javascript:%s(\'%s\')", jscall.getCallback(), new Gson().toJson(userInf)));
+    }
+
+    /**
+     * 右上角的  按钮显示
+     *
+     * @param data
+     */
+    @JavascriptInterface
+    public void setWebviewConfig(String data) {
+
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            WebRightTopViewConfigBean webRightTopViewConfigBean = new Gson().fromJson(jsonObject.getString("data"), WebRightTopViewConfigBean.class);
+
+            webRightTopViewConfigBean.setOpenWebUrl(((InvestorAppli) (((Activity) context).getApplication())).getOpenWebUrl());
+            ((BaseWebViewActivity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ((BaseWebViewActivity) context).setWebRightTopViewConfig(webRightTopViewConfigBean);
+                }
+            });
+
+
+            String callback = jsonObject.getString("callback");
+            webView.loadUrl(String.format("javascript:%s()", callback));
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * 长时间的toast
+     *
+     * @param data
+     */
+    @JavascriptInterface
+    public void showToast(String data) {// {"data":{"text":"显示失败！","duration":5},"callback":"Command.func10f8c6cc988d4ababcff2e4f77a50bb3"}
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            String datas = jsonObject.getString("data");
+            String text = (new JSONObject(datas)).getString("text");
+            int duration = (new JSONObject(datas)).getInt("duration");
+            PromptManager.ShowCustomLongToast(context, text, duration);
+
+            String callback = jsonObject.getString("callback");
+            webView.loadUrl(String.format("javascript:%s()", callback));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * 轮播的 图片
+     *
+     * @param data
+     */
+    @JavascriptInterface
+    public void previewImagesByURLs(String data) {// {"data":{"images":["https://www.apple.com/ac/flags/1/images/cn/32.png","https://www.apple.com/ac/flags/1/images/cn/32.png"]},"callback":"Command.func34f013e1dca9490f90b3dee38d4c2003"}
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            String callback = jsonObject.getString("callback");
+            webView.loadUrl(String.format("javascript:%s()", callback));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -6,8 +6,10 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,15 +28,18 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.shake.ShakeListener;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.ui.DialogUtils;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.cgbsoft.privatefund.bean.commui.WebRightTopViewConfigBean;
 import com.chenenyu.router.annotation.Route;
 import com.umeng.analytics.MobclickAgent;
 
@@ -74,6 +79,19 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @BindView(R2.id.divide_line)
     protected View mView;
+    @BindView(R2.id.baseweb_appbar)
+    AppBarLayout baseweb_appbar;
+
+    @BindView(R2.id.title_normal_new)
+    RelativeLayout myTitleRelativeLayout;
+
+
+    @BindView(R2.id.title_right)
+    TextView myTitleRightText;
+    @BindView(R2.id.baseweb_title_right_iv)
+    ImageView baseweb_title_right_iv;
+    @BindView(R2.id.baseweb_title_leftright_iv)
+    ImageView baseweb_title_leftright_iv;
 
     protected boolean hasEmailShare;
 
@@ -112,12 +130,17 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     private Observable<String> mallDeleteObservable;
     private Observable<Boolean> unReadMessageObservable;
     private Observable<String> callBackObservable;
+    private Observable<WebRightTopViewConfigBean> openWebConfigObservable;
     private boolean isH5ControlRight;
+    private boolean isDivTitle;//是否需要html的形式显示
+    private boolean isHideBar;//是否隐藏toolbar
 
     @Override
     protected int layoutID() {
         return R.layout.acitivity_userinfo;
     }
+
+
 
     @Override
     protected void before() {
@@ -132,6 +155,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         rightRechargeShow = getIntent().getBooleanExtra(WebViewConstant.RIGHT_RECHARGE_HAS, false);
         rightYundouRule = getIntent().getBooleanExtra(WebViewConstant.RIGHT_YUNDOU_RULE_HAS, false);
         rightMemberRule = getIntent().getBooleanExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, false);
+        isDivTitle = getIntent().getBooleanExtra(WebViewConstant.push_message_title_isdiv, false);
+        isHideBar = getIntent().getBooleanExtra(WebViewConstant.push_message_title_is_hidetoolbar, false);
+
+
         initPage = getIntent().getBooleanExtra(WebViewConstant.PAGE_INIT, false);
         if (getIntent().getExtras().containsKey(WebViewConstant.push_message_value))
             pushMessageValue = getIntent().getStringExtra(WebViewConstant.push_message_value);
@@ -225,6 +252,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             System.out.println("----------webview=---rightMessageIcon" + rightMessageIcon);
             RxBus.get().post(RxConstant.REFRUSH_UNREADER_NUMBER_RESULT_OBSERVABLE, true);
         }
+
+
     }
 
     /**
@@ -250,10 +279,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected void pageShare() {
         String javascript = "javascript:shareClick()";
         mWebview.loadUrl(javascript);
-        if (!TextUtils.isEmpty(url) && url.contains("&goCustomFeedBack=0")){ // 健康项目详情页面埋点
+        if (!TextUtils.isEmpty(url) && url.contains("&goCustomFeedBack=0")) { // 健康项目详情页面埋点
             TrackingHealthDataStatistics.projectDetailRightShare(this);
         } else if (!TextUtils.isEmpty(url) && url.contains("information/details.html")) {
-            TrackingDiscoveryDataStatistics.rightShare(this,title);
+            TrackingDiscoveryDataStatistics.rightShare(this, title);
         }
     }
 
@@ -287,8 +316,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 TrackingHealthDataStatistics.projectDetailLeftBack(this);
             } else if (!TextUtils.isEmpty(url) && url.contains("information/details.html")) {
                 TrackingDiscoveryDataStatistics.leftBack(this, title);
-            } else if (!TextUtils.isEmpty(url) && url.contains("health/free_consult.html")){ // 免费咨询页面返回
-                 TrackingHealthDataStatistics.freeConsultLeftBack(this);
+            } else if (!TextUtils.isEmpty(url) && url.contains("health/free_consult.html")) { // 免费咨询页面返回
+                TrackingHealthDataStatistics.freeConsultLeftBack(this);
             } else {
 
             }
@@ -353,7 +382,32 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 startActivity(intent);
             });
         }
+        if (isHideBar) {//从openweb指令进来的
+            toolbar.setVisibility(View.GONE);
+//            mView.setVisibility(View.GONE);
+//            myTitleRelativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);
+            TextView titleTextView = (TextView) findViewById(R.id.title_mid_empty);
+            if (isDivTitle) {
+                titleTextView.setText(Html.fromHtml(title));
+            } else {
+                titleTextView.setText(title);
+            }
+
+            myTitleRelativeLayout.setVisibility(View.VISIBLE);
+            myTitleRelativeLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+
+            ImageView myTitleLeftImageView = (ImageView) findViewById(R.id.title_left);
+            myTitleLeftImageView.setImageResource(R.drawable.ic_back_black_24dp);
+            myTitleLeftImageView.setOnClickListener(v -> finish());
+
+//
+//            myTitleRightText = (TextView) findViewById(R.id.title_right);
+            myTitleRightText.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+//            baseweb_title_right_iv = (ImageView) findViewById(R.id.baseweb_title_right_iv);
+//
+        }
     }
+
 
     private ShakeListener.OnShakeListener onShakeListener = new ShakeListener.OnShakeListener() {
         @Override
@@ -677,8 +731,45 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             return "";
         }
     }
-//	public void onEventMainThread(EventBusUpdateHeadImage event) {
-//		String laun = "javascript:setHeadImage('" + event.getRemoteAddress() + "');";
-//		mWebview.loadUrl(laun);
-//	}
+
+
+    public void setWebRightTopViewConfig(WebRightTopViewConfigBean webRightTopViewConfig) {
+
+        switch (webRightTopViewConfig.getRightButtonType()) {
+            case 1:
+                if (null == myTitleRightText) break;
+                myTitleRightText.setVisibility(View.VISIBLE);
+                BStrUtils.setTv(myTitleRightText, webRightTopViewConfig.getRightButtons().get(0).getText());
+                myTitleRightText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        mWebview.loadUrl(String.format("javascript:%s()", webRightTopViewConfig.getRightButtons().get(0).getEvent()));
+                    }
+                });
+                break;
+            case 2:
+                if (null == myTitleRightText || null == baseweb_title_right_iv) break;
+                myTitleRightText.setVisibility(View.GONE);
+                baseweb_title_right_iv.setVisibility(View.VISIBLE);
+                if (null != webRightTopViewConfig.getRightButtons() && webRightTopViewConfig.getRightButtons().size() > 0) {//只有一个时候
+                    Imageload.display(baseContext, webRightTopViewConfig.getRightButtons().get(0).getIcon(), baseweb_title_right_iv);
+                    baseweb_title_right_iv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mWebview.loadUrl(String.format("javascript:%s(%s)", webRightTopViewConfig.getRightButtons().get(0).getEvent()));
+                        }
+                    });
+                }
+                if (null != webRightTopViewConfig.getRightButtons() && 2==webRightTopViewConfig.getRightButtons().size()){//有两个时候
+
+                }
+                    break;
+        }
+
+
+    }
+
 }
+
+

@@ -39,6 +39,7 @@ import rx.Observable;
 public class InitApplication extends InvestorAppli {
     private Observable<Integer> logoutObservable;
 
+
     @Override
     public void onCreate() {
         super.onCreate();

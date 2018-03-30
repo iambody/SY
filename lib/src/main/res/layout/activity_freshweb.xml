@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/freshweb_title_normal_new"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/black"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/freshweb_title_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ui_8_dip"
+            android:scaleType="center"
+            android:src="@drawable/ic_back_white_dp" />
+
+        <TextView
+            android:id="@+id/freshweb_title_mid_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="10dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:visibility="gone"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/freshweb_title_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ui_5_dip"
+            android:layout_toLeftOf="@+id/freshweb_title_mid_empty"
+            android:gravity="center"
+            android:textColor="@color/color_6a6a6a"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/freshweb_divide_line"
+        layout="@layout/acitivity_divide_online" />
+
+    <com.cgbsoft.lib.base.webview.BaseWebview
+        android:id="@+id/freshweb_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" />
+</LinearLayout>

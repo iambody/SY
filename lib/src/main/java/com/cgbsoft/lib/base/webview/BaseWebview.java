@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * desc  ${DESC}
+ * desc
  * author wangyongkui  wangyongkui@simuyun.com
  * 日期 2017/5/4-17:32
  */

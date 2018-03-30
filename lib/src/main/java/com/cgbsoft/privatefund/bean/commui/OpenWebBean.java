@@ -5,11 +5,10 @@ package com.cgbsoft.privatefund.bean.commui;
  * author wangyongkui
  */
 public class OpenWebBean {
-
+   boolean hasHTMLTag;
     String title;//":"不正经",
-    String HTMLTitle;//":"<span style="font-size: 18px; color: #ff0000;">主标题大字</span><br><span style="font-size: 14px; color: #ffffff;">副标题文字</span>",
     String autoTitle;//":true,
-    String landscape;//":0,
+//    String landscape;//":0,
     //    String navigationBar;//":{
     String barTextStyle;//":"#ff0000",
     String backgroundColor;//":"transparent"
@@ -29,12 +28,12 @@ public class OpenWebBean {
         this.title = title;
     }
 
-    public String getHTMLTitle() {
-        return HTMLTitle;
+    public boolean isHasHTMLTag() {
+        return hasHTMLTag;
     }
 
-    public void setHTMLTitle(String HTMLTitle) {
-        this.HTMLTitle = HTMLTitle;
+    public void setHasHTMLTag(boolean hasHTMLTag) {
+        this.hasHTMLTag = hasHTMLTag;
     }
 
     public String getAutoTitle() {
@@ -43,14 +42,6 @@ public class OpenWebBean {
 
     public void setAutoTitle(String autoTitle) {
         this.autoTitle = autoTitle;
-    }
-
-    public String getLandscape() {
-        return landscape;
-    }
-
-    public void setLandscape(String landscape) {
-        this.landscape = landscape;
     }
 
     public NavigationBar getNavigationBar() {

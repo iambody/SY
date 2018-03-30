@@ -8,6 +8,9 @@ public class WebViewConstant {
     public static final String push_message_url = "push_message_url";
     public static final String push_message = "push_message";
     public static final String push_message_title = "push_message_title";
+    public static final String push_message_title_isdiv = "push_message_title_isdiv";//是否是html标签的title
+    public static final String push_message_title_is_hidetoolbar = "push_message_title_ishidetoolbar";//是否隐藏toobar
+
     public static final String push_message_value = "push_message_value";
     public static final String right_message_index = "right_message_icon";
     public static final String RIGHT_RECHARGE_HAS = "right_recharge_text";
