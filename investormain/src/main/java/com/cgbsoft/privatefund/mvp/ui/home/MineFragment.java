@@ -46,6 +46,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
@@ -952,12 +953,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.ll_public_fund_fill)
     void gotoMinePublicFund() {
         NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.minePublicFund, getString(R.string.public_fund), false);
+        TrackingDataManger.morePublicFundProduct(getContext());
     }
 
     @OnClick(R.id.tv_look_public_fund_product)
     void gotoLookPublicFundProduct() {
 //        NavigationUtils.jumpNativePage(getActivity(), WebViewConstant.Navigation.PUBLIC_FUND_PAGE);
         NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
+        TrackingDataManger.publicFundAssert(getContext());
     }
 
     @OnClick(R.id.account_info_level_ll)
@@ -979,6 +982,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     void gotoNowTransferPrivateShare() {
         PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
         UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundcode(), publicFundInf.getRisklevel());
+        TrackingDataManger.intimeMoneyIncome(getContext());
     }
 
     @OnClick(R.id.ll_private_share_bao_empty)
@@ -986,6 +990,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
         if(null==publicFundInf)return;
         NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publicFundInf.getFundName()), BStrUtils.nullToEmpty(publicFundInf.getFundcode())), false);
+        TrackingDataManger.intimeMoneyClick(getContext());
     }
 
     @OnClick(R.id.account_info_caifu_value_ll)

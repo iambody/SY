@@ -3,6 +3,8 @@ package com.cgbsoft.lib.utils.tools;
 import android.content.Context;
 import android.util.Log;
 
+import com.cgbsoft.lib.BaseApplication;
+
 /**
  * desc  ${DESC}
  * author wangyongkui  wangyongkui@simuyun.com
@@ -554,4 +556,37 @@ public class TrackingDataManger {
         Log.i("existLoginout", "退出登录*******");
     }
 
+    /**
+     * 盈泰钱包立即转入按钮
+     * @param context
+     */
+    public static void intimeMoneyIncome(Context context) {
+        TrackingDataUtils.save(context, "1055001521", "");
+        Log.i("1055001521", "intimeMoneyIncome*******");
+    }
+
+    /**
+     * 盈泰钱包收益率七日年化图片  1055001531
+     */
+    public static void intimeMoneyClick(Context context){
+        TrackingDataUtils.save(context, "1055001531", "");
+        Log.i("1055001531", "intimeMoneyIncome*******");
+    }
+
+
+    /**
+     *查看更多公募基金产品按钮  1055001541
+     */
+    public static void morePublicFundProduct(Context context){
+        TrackingDataUtils.save(context, "1055001541", "");
+        Log.i("1055001541", "intimeMoneyIncome*******");
+    }
+
+    /**
+     * 金融资产公募基金模块图片  1055001551
+     */
+    public static void publicFundAssert(Context context){
+        TrackingDataUtils.save(context, "1055001551", "");
+        Log.i("1055001551", "intimeMoneyIncome*******");
+    }
 }
