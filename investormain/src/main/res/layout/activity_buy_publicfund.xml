@@ -69,6 +69,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ui_15_dip"
             android:layout_marginTop="@dimen/ui_14_dip" />
 
