@@ -399,7 +399,7 @@ public class JavaScriptObjectToc {
                         String fundCode = obj.getString("fundcode");
                         String fundName = "";
                         if(obj.has("fundName")){
-                            fundName = obj.getString("funName");
+                            fundName = obj.getString("fundName");
                         }
                         String fundType = obj.getString("fundType");
                         String riskLevel = obj.getString("risklevel");
