@@ -3,19 +3,20 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
 
-      <!--  <activity android:name=".ui.Share_InitActivity"></activity>-->
+        <!--  <activity android:name=".ui.Share_InitActivity"></activity>-->
 
         <activity
             android:name="com.cgbsoft.lib.base.webview.BaseWebViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <!--权限管理-->
         <activity
             android:name="com.cgbsoft.lib.permission.MyPermissionsActivity"
@@ -24,18 +25,17 @@
         <activity
             android:name="com.cgbsoft.lib.base.mvp.ui.QrMidActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog"
-             />
-
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+        <activity android:name=".utils.previewphoto.PhotoPreviewActivity" />
         <!--<activity android:name="me.iwf.photopicker.PhotoPickerActivity"-->
-            <!--android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
+        <!--android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
 
         <!--<activity android:name="me.iwf.photopicker.PhotoPagerActivity"-->
-            <!--android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
+        <!--android:theme="@style/Theme.AppCompat.NoActionBar"/>-->
 
         <activity
-            android:configChanges="orientation|screenSize"
-            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
+            android:configChanges="orientation|screenSize" />
 
 
         <!-- ****************百度定位****************-->

@@ -13,6 +13,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.webview.bean.JsCall;
@@ -29,6 +30,7 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.poster.ElevenPoster;
 import com.cgbsoft.lib.utils.poster.ScreenShot;
+import com.cgbsoft.lib.utils.previewphoto.PhotoPreviewIntent;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -52,8 +54,10 @@ import com.tencent.smtt.sdk.WebView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -412,12 +416,12 @@ public class JavaScriptObjectToc {
                         JSONObject obj = new JSONObject(data);
                         String fundCode = obj.getString("fundcode");
                         String fundName = "";
-                        if(obj.has("fundName")){
+                        if (obj.has("fundName")) {
                             fundName = obj.getString("fundName");
                         }
                         String fundType = obj.getString("fundType");
                         String riskLevel = obj.getString("risklevel");
-                        UiSkipUtils.toBuyPublicFundFromNative((Activity) context, fundCode,fundName,fundType, riskLevel);
+                        UiSkipUtils.toBuyPublicFundFromNative((Activity) context, fundCode, fundName, fundType, riskLevel);
 
                     }
                 }
@@ -864,6 +868,18 @@ public class JavaScriptObjectToc {
         try {
             JSONObject jsonObject = new JSONObject(data);
             String callback = jsonObject.getString("callback");
+            String images = jsonObject.getString("data");
+            String igs = new JSONObject(images).getString("images");
+            PhotoPreviewIntent intent = new PhotoPreviewIntent(context);
+
+            List<String> ivs = new Gson().fromJson(igs, new ArrayList<String>().getClass());
+
+            intent.setPhotoPaths(ivs) ;//预览图片对象列表
+
+            intent.setDefluatDrawble(R.drawable.logo) ;//加载错误时的图片
+            intent.launch();
+
+
             webView.loadUrl(String.format("javascript:%s()", callback));
         } catch (JSONException e) {
             e.printStackTrace();
