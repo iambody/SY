@@ -27,6 +27,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.cgbsoft.lib.R;
 import com.cgbsoft.lib.utils.tools.Utils;
 
 import java.io.File;
@@ -70,7 +71,7 @@ public class Imageload {
 
     private static void base(DrawableTypeRequest drawableTypeRequest, ImageView imageView) {
         if (drawableTypeRequest != null) {
-            drawableTypeRequest.into(imageView);
+            drawableTypeRequest.error(R.drawable.logo).into(imageView);
         }
     }
 

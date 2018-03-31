@@ -77,20 +77,20 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected BaseWebview mWebview;
 
     @BindView(R2.id.divide_line)
-    protected View mView;
+    protected  View mView;
 //    @BindView(R2.id.baseweb_appbar)
 //    AppBarLayout baseweb_appbar;
 
-    @BindView(R2.id.title_normal_new)
-    RelativeLayout myTitleRelativeLayout;
+//    @BindView(R2.id.title_normal_new)
+//    RelativeLayout titleRelativeLayout;
 
 
-    @BindView(R2.id.title_right)
-    TextView myTitleRightText;
-    @BindView(R2.id.baseweb_title_right_iv)
-    ImageView baseweb_title_right_iv;
-    @BindView(R2.id.baseweb_title_leftright_iv)
-    ImageView baseweb_title_leftright_iv;
+//    @BindView(R2.id.title_right)
+//    TextView myTitleRightText;
+//    @BindView(R2.id.baseweb_title_right_iv)
+//    ImageView baseweb_title_right_iv;
+//    @BindView(R2.id.baseweb_title_leftright_iv)
+//    ImageView baseweb_title_leftright_iv;
 
     protected boolean hasEmailShare;
 
@@ -340,9 +340,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     private void changeTitileStyle() {
         if (title.equals("我的财富值")) {
             toolbar.setVisibility(View.GONE);
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);
-            relativeLayout.setVisibility(View.VISIBLE);
-            relativeLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            RelativeLayout titleRelativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);
+            titleRelativeLayout.setVisibility(View.VISIBLE);
+            titleRelativeLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
             ImageView imageView = (ImageView) findViewById(R.id.title_left);
             imageView.setImageResource(R.drawable.ic_back_black_24dp);
             imageView.setOnClickListener(v -> finish());
@@ -362,19 +362,19 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (rightMemberRule) {
             toolbar.setVisibility(View.GONE);
             mView.setVisibility(View.GONE);
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);
-            relativeLayout.setVisibility(View.VISIBLE);
-            relativeLayout.setBackgroundColor(Color.parseColor("#292B2A"));
+            RelativeLayout titleRelativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);
+            titleRelativeLayout.setVisibility(View.VISIBLE);
+            titleRelativeLayout.setBackgroundColor(Color.parseColor("#292B2A"));
             ImageView imageView = (ImageView) findViewById(R.id.title_left);
             imageView.setImageResource(R.drawable.ic_back_white_24dp);
             imageView.setOnClickListener(v -> finish());
             TextView titleTextView = (TextView) findViewById(R.id.title_mid_empty);
             titleTextView.setText("会员专区");
             titleTextView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-            TextView rightText = (TextView) findViewById(R.id.title_right);
-            rightText.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-            rightText.setText("会员规则");
-            rightText.setOnClickListener(v -> {
+            TextView myTitleRightText = (TextView) findViewById(R.id.title_right);
+            myTitleRightText.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+            myTitleRightText.setText("会员规则");
+            myTitleRightText.setOnClickListener(v -> {
                 Intent intent = new Intent(BaseWebViewActivity.this, BaseWebViewActivity.class);
                 intent.putExtra(WebViewConstant.push_message_url, CwebNetConfig.memberRule);
                 intent.putExtra(WebViewConstant.push_message_title, "会员规则");
@@ -391,16 +391,18 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             } else {
                 titleTextView.setText(title);
             }
+            titleTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
 
-            myTitleRelativeLayout.setVisibility(View.VISIBLE);
-            myTitleRelativeLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+            RelativeLayout titleRelativeLayout = (RelativeLayout) findViewById(R.id.title_normal_new);
+            titleRelativeLayout.setVisibility(View.VISIBLE);
+            titleRelativeLayout.setBackgroundColor(Color.parseColor("#ffffff"));
 
             ImageView myTitleLeftImageView = (ImageView) findViewById(R.id.title_left);
             myTitleLeftImageView.setImageResource(R.drawable.ic_back_black_24dp);
             myTitleLeftImageView.setOnClickListener(v -> finish());
 
 //
-//            myTitleRightText = (TextView) findViewById(R.id.title_right);
+            TextView  myTitleRightText = (TextView) findViewById(R.id.title_right);
             myTitleRightText.setTextColor(ContextCompat.getColor(this, android.R.color.black));
 //            baseweb_title_right_iv = (ImageView) findViewById(R.id.baseweb_title_right_iv);
 //
@@ -733,7 +735,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
 
     public void setWebRightTopViewConfig(WebRightTopViewConfigBean webRightTopViewConfig) {
-
+        TextView  myTitleRightText = (TextView) findViewById(R.id.title_right);
+        ImageView baseweb_title_right_iv= (ImageView) findViewById(R.id.baseweb_title_right_iv);
         switch (webRightTopViewConfig.getRightButtonType()) {
             case 1:
                 if (null == myTitleRightText) break;
