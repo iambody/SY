@@ -987,6 +987,17 @@ interface RequestManager {
     @POST(NetConfig.PUBLIC_FUND.NEW_BANKCORD_INFO)
     Observable<ResponseBody> postNewBankCordInfo(@FieldMap Map<String, String> paramsMap);
 
+    /**
+     * 重置交易密码
+     */
+    @POST(NetConfig.PUBLIC_FUND.RESET_PWD)
+    Observable<ResponseBody> resetPwdPublicFund(@Body RequestBody responseBody);
+
+    /**
+     * 获取已绑定银行卡信息
+     */
+    @GET(NetConfig.PUBLIC_FUND.BOUND_CARD)
+    Observable<ResponseBody> getBoundCards(@QueryMap Map<String, String> paramsMap);
 
     /**
      * 获取申购页面的配置信息

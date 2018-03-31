@@ -449,6 +449,8 @@ public class NetConfig {
         static final String PUBLIBC_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/proxy";
         static final String BUY_CONFIG = PUBLIC_FUND_API_V2 + "/kz/fundbuyinginfo";//申购配置信息
         static final String NEW_BANKCORD_INFO = PUBLIC_FUND_API_V2 + "/kz/bankacctinfo";
+        static final String RESET_PWD = PUBLIC_FUND_API_V2 + "/resetpassword";
+        static final String BOUND_CARD = PUBLIC_FUND_API_V2 + "/boundcards";
     }
 
 
