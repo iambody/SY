@@ -1883,13 +1883,80 @@ public class ApiClient {
 
     }
 
+
     /**
-     * 获取申购时候的配置信息
+     * 获取金证支持的银行卡列
+     * @param custNo 客户号
+     * @return
      */
+    public static Observable<String> getUseableBankList(String custNo) {
+        Map<String, String> params = new HashMap<>();
+        params.put("custNo",custNo);
+        return OKHTTP.getInstance().getRequestManager().getUseableBankList(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     *  获取绑定银行卡验证吗
+     * @param params
+     * @return
+     */
+    public static Observable<String> getBindCardCaptcha(Map<String,String> params) {
+        return OKHTTP.getInstance().getRequestManager().getBindCardCaptcha(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 　获取支行
+     * @param params
+     * @return
+     */
+    public static Observable<String> getBankBranch(Map<String,String> params) {
+        return OKHTTP.getInstance().getRequestManager().getBankBranch(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
+    /**
+     * 　绑定银行卡
+     * @param params
+     * @return
+     */
+    public static Observable<String> bindCard(Map<String,String> params) {
+        return OKHTTP.getInstance().getRequestManager().bindCard(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
+    /**
+     * 　获取申购信息
+     * @param
+     * @return
+     */
+    public static Observable<String> getBuyInfo(String fundCode) {
+        Map<String, String> params = new HashMap<>();
+        params.put("fundCode", fundCode);
+        return OKHTTP.getInstance().getRequestManager().getBuyInfo(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 　发起申购
+     * @param
+     * @return
+     */
+    public static Observable<String> getOrderAndPay(Map<String,String> params) {
+        return OKHTTP.getInstance().getRequestManager().getOrderAndPay(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 赎回
+     * @param params
+     * @return
+     */
+    public static Observable<String> redeem(Map<String,String> params) {
+        return OKHTTP.getInstance().getRequestManager().redeem(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+ /*   *//**
+     * 获取申购时候的配置信息
+     *//*
     public static Observable<String> getPublicFundConfig(String fundCode) {
-
-
-
         JSONObject js = new JSONObject();
         try {
             js.put("fundcode", fundCode);
@@ -1902,7 +1969,7 @@ public class ApiClient {
             params.put("param", js.toString());
         return OKHTTP.getInstance().getRequestManager().getFundPayConfig(params).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
-    }
+    }*/
 
     private static RequestBody uploadRemotePathUse(List<String> remoteParams, Map params) {
         JSONObject jsonObject = new JSONObject();

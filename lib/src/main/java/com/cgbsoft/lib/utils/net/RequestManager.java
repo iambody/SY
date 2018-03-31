@@ -994,4 +994,39 @@ interface RequestManager {
     @GET(NetConfig.PUBLIC_FUND.BUY_CONFIG)
     Observable<ResponseBody> getFundPayConfig(@QueryMap Map<String, String> paramsMap);
 
+    /**
+     * 获取可用的银行卡列表
+     * @param program
+     * @return
+     */
+    @GET(NetConfig.PUBLIC_FUND.USEABLE_BANK_LIST_INFO)
+    Observable<ResponseBody> getUseableBankList(@QueryMap  Map<String, String> program);
+
+    /**
+     * 获取绑定银行卡界面的验证码
+     * @param program
+     * @return
+     */
+    @GET(NetConfig.PUBLIC_FUND.BINDCARD_CAPTCHA)
+    Observable<ResponseBody> getBindCardCaptcha(@QueryMap  Map<String, String> program);
+
+
+    @GET(NetConfig.PUBLIC_FUND.BANK_BRANCH)
+    Observable<ResponseBody> getBankBranch(@QueryMap  Map<String, String> program);
+
+    @FormUrlEncoded
+    @POST(NetConfig.PUBLIC_FUND.BINDCARD)
+    Observable<ResponseBody> bindCard(@FieldMap  Map<String, String> program);
+
+
+    @GET(NetConfig.PUBLIC_FUND.BUY_CONFIG)
+    Observable<ResponseBody> getBuyInfo(@QueryMap  Map<String, String> program);
+
+    @FormUrlEncoded
+    @POST(NetConfig.PUBLIC_FUND.ORDER_AND_PAY)
+    Observable<ResponseBody> getOrderAndPay(@QueryMap  Map<String, String> program);
+
+    @FormUrlEncoded
+    @POST(NetConfig.PUBLIC_FUND.REDEEM)
+    Observable<ResponseBody> redeem(@QueryMap  Map<String, String> program);
 }

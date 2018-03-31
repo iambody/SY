@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
+import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 
 import java.util.HashMap;
@@ -37,26 +38,28 @@ class SellPUblicFundPresenter extends BasePublicFundPresenter {
 
         }*/
 
-        Map<String,Object> parms = new HashMap<>();
-        parms.put("trantype","520004");
-        parms.put("custno", AppManager.getPublicFundInf(getContext()).getCustNo());
-        parms.put("fundcode",fundcode);
-        parms.put("largeredemptionflag",largeredemptionflag);
-        parms.put("transactionaccountid",transactionaccountid);
-        parms.put("branchcode",branchcode);
-        parms.put("tano",tano);
+        Map<String,String> parms = new HashMap<>();
+        parms.put("custNo", AppManager.getPublicFundInf(getContext()).getCustNo());
+        parms.put("fundCode",fundcode);
+        parms.put("largeRedemptionFlag",largeredemptionflag);
+        parms.put("transactionAccountId",transactionaccountid);
+        parms.put("branchCode",branchcode);
+        parms.put("taNo",tano);
         if(!BStrUtils.isEmpty(fastredeemflag)){
-            parms.put("fastredeemflag",fastredeemflag);
+            parms.put("fastRedeemFlag",fastredeemflag);
         }
-        parms.put("taserialno","");
-        parms.put("transactorcertno","");
-        parms.put("transactorcerttype","");
-        parms.put("transactorname","");
+        parms.put("taserialNo","");
+        parms.put("transactorCertNo","");
+        parms.put("transactorCertType","");
+        parms.put("transactorName","");
 
-        parms.put("applicationvol",money); // 申请份额
-        parms.put("ischktpasswd","1"); // 是否校验密码，这里固定写1
-        parms.put("tpasswd",payPassword); // 交易密码
+        parms.put("applicationVol",money); // 申请份额
+        // TODO校验
+        parms.put("isChktPasswd","1"); // 是否校验密码，这里固定写1
+        parms.put("tPasswd",payPassword); // 交易密码
 
-        super.getFundDataFormJZ(parms,preSenterCallBack);
+
+        super.handlerPublicFundResult(ApiClient.redeem(parms),preSenterCallBack);
+      //  super.getFundDataFormJZ(parms,preSenterCallBack);
     }
 }

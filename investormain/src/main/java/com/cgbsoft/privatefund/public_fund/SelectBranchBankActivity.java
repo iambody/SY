@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -22,9 +21,6 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.public_fund.passworddiglog.BankBranchBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,6 +147,17 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
+                try {
+                    Gson gson = new Gson();
+                    originBankListBranchs = gson.fromJson(result, new TypeToken<ArrayList<BankBranchBean>>(){}.getType());
+                    bankListBranchs.clear();
+                    bankListBranchs.addAll(originBankListBranchs);
+                    RecyclerView.Adapter adapter =  bankList.getAdapter();
+                    adapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+/*
                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
                 if (bankListOfJZSupport != null) {
                     String code = bankListOfJZSupport.getErrorCode();
@@ -164,7 +171,6 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
                             bankListBranchs.addAll(originBankListBranchs);
                             RecyclerView.Adapter adapter =  bankList.getAdapter();
                             adapter.notifyDataSetChanged();
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -173,7 +179,7 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
                     Toast.makeText(SelectBranchBankActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(SelectBranchBankActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG).show();
-                }
+                }*/
 
             }
 

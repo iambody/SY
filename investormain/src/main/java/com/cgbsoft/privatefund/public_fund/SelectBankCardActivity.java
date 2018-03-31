@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -21,6 +20,7 @@ import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
     public final static String CHANNEL_NAME = "channelname";
 
     private RecyclerView bankList;
-    private List<BankListOfJZSupport.BankOfJZSupport> bankOfJZSupportList = new ArrayList<>();
+    private List<BuyPublicFundActivity.BankCardInfo> bankOfJZSupportList = new ArrayList<>();
 
     @Override
     protected int layoutID() {
@@ -102,25 +102,25 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
-                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
-                if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
-                    bankOfJZSupportList.addAll(bankListOfJZSupport.getDatasets());
+                List<BuyPublicFundActivity.BankCardInfo> bankListOfJZSupports = new Gson().fromJson(result, new TypeToken<List<BuyPublicFundActivity.BankCardInfo>>(){}.getType());
+                bankOfJZSupportList.addAll(bankListOfJZSupports);
 //                    bankList.getAdapter().notifyDataSetChanged();
-                    bankList.setAdapter(new SelectBankAdapter(baseContext, bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
-                        @Override
-                        public void seclecBackCard(BankListOfJZSupport.BankOfJZSupport bankOfJZSupport) {
-                            getIntent().putExtra(BANK_NAME_ID, bankOfJZSupport.getBanknameid());
-                            getIntent().putExtra(CHANNEL_ID, bankOfJZSupport.getChannelid());
-                            getIntent().putExtra(CHANNEL_NAME, bankOfJZSupport.getFullname());
-                            setResult(Activity.RESULT_OK, getIntent());
-                            finish();
-                        }
-                    }));
+                bankList.setAdapter(new SelectBankAdapter(baseContext, bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
+                    @Override
+                    public void seclecBackCard(BuyPublicFundActivity.BankCardInfo bankOfJZSupport) {
+                        getIntent().putExtra(BANK_NAME_ID, bankOfJZSupport.getBankNameId());
+                        getIntent().putExtra(CHANNEL_ID, bankOfJZSupport.getChannelId());
+                        getIntent().putExtra(CHANNEL_NAME, bankOfJZSupport.getFullName());
+                        setResult(Activity.RESULT_OK, getIntent());
+                        finish();
+                    }
+                }));
+              /*  if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                 } else if (PublicFundContant.REQEUSTING.equals(bankListOfJZSupport.getErrorCode())) {// 处理中
                     Toast.makeText(SelectBankCardActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(SelectBankCardActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG).show();
-                }
+                }*/
             }
 
             @Override
@@ -133,7 +133,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
     }
 
     static class SelectBankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        private List<BankListOfJZSupport.BankOfJZSupport> bankCardList;
+        private List<BuyPublicFundActivity.BankCardInfo> bankCardList;
         private SelectBankCardLinsterer linsterer;
         //Header和Footer,以及对应的Type  for 防止改需求 把head相关的也预备
 
@@ -157,7 +157,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
         }
 
 
-        public SelectBankAdapter(Context context, List<BankListOfJZSupport.BankOfJZSupport> bankCardList, SelectBankCardLinsterer linsterer) {
+        public SelectBankAdapter(Context context, List<BuyPublicFundActivity.BankCardInfo> bankCardList, SelectBankCardLinsterer linsterer) {
             this.bankCardList = bankCardList;
             this.linsterer = linsterer;
             this.context=context;
@@ -213,7 +213,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
             private ImageView item_public_fund_bankls_iv;
             private Context context;
             private SelectBankCardLinsterer linsterer;
-            private BankListOfJZSupport.BankOfJZSupport bankOfJZSupport;
+            private BuyPublicFundActivity.BankCardInfo bankOfJZSupport;
 
             public SelectBankViewHolder(Context contexts, View itemView, final SelectBankCardLinsterer linsterer) {
                 super(itemView);
@@ -229,9 +229,9 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
                 });
             }
 
-            public void bindView(BankListOfJZSupport.BankOfJZSupport bankOfJZSupport) {
+            public void bindView(BuyPublicFundActivity.BankCardInfo bankOfJZSupport) {
                 this.bankOfJZSupport = bankOfJZSupport;
-                bankName.setText(bankOfJZSupport.getName());
+                bankName.setText(bankOfJZSupport.getBankShortName());
                 BStrUtils.setTv(item_public_fund_bankls_notes, bankOfJZSupport.getBankLimit());
                 Imageload.display(context instanceof Activity? context.getApplicationContext():context, bankOfJZSupport.getIcon(), item_public_fund_bankls_iv);
             }
@@ -245,7 +245,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
         }
 
         interface SelectBankCardLinsterer {
-            void seclecBackCard(BankListOfJZSupport.BankOfJZSupport bankOfJZSupport);
+            void seclecBackCard(BuyPublicFundActivity.BankCardInfo bankOfJZSupport);
         }
 
     }

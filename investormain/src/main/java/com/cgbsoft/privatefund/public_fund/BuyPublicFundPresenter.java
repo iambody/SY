@@ -68,7 +68,8 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
      * 获取申购需要数据
      */
     public void getData(String fundCode, BasePublicFundPresenter.PreSenterCallBack callBack) {
-        ApiClient.getPublicFundConfig(fundCode).subscribe(new RxSubscriber<String>() {
+        super.handlerPublicFundResult(ApiClient.getBuyInfo(fundCode),callBack);
+   /*     ApiClient.getBuyInfo(fundCode).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 parseResultFormServer(s, callBack);
@@ -81,7 +82,7 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
                 }
                 error.printStackTrace();
             }
-        });
+        });*/
     }
 
 
@@ -138,40 +139,40 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
                 riskwarnflag: '1' //已经阅读风险提示标志，传死1即可
                 highriskwarnflag:'1' 买最高风险等级产品
 */
-        Map<String, Object> parms = new HashMap<>();
-        parms.put("trantype", "orderAndPay");
-        parms.put("fundcode", bean.getFundCode());
-        parms.put("fundname", bean.getFundName());
-        parms.put("fundtype", bean.getFundtype());
-        parms.put("sharetype", bean.getSharetype());
-        parms.put("tano", bean.getTano());
+        Map<String, String> parms = new HashMap<>();
+        parms.put("fundCode", bean.getFundCode());
+        parms.put("fundName", bean.getFundName());
+        parms.put("fundType", bean.getFundtype());
+        parms.put("shareType", bean.getSharetype());
+        parms.put("taNo", bean.getTano());
 
 
-        parms.put("certificatetype", AppManager.getPublicFundInf(getContext()).getCertificateType());
-        parms.put("certificateno", AppManager.getPublicFundInf(getContext()).getCertificateNo());
-        parms.put("depositacctname", AppManager.getPublicFundInf(getContext()).getDepositAcctName());
-        parms.put("custno", bankCardInfo.getCustno());
+        parms.put("certificateType", AppManager.getPublicFundInf(getContext()).getCertificateType());
+        parms.put("certificateNo", AppManager.getPublicFundInf(getContext()).getCertificateNo());
+        parms.put("depositacctName", AppManager.getPublicFundInf(getContext()).getDepositAcctName());
+        parms.put("custNo", bankCardInfo.getCustno());
 
-        parms.put("buyflag", bean.getBuyflag());
+        parms.put("buyFlag", bean.getBuyflag());
 
 
-        parms.put("depositacct", bankCardInfo.getDepositacct());
-        parms.put("mobiletelno", AppManager.getPublicFundInf(getContext()).getMobileNo());
-        parms.put("transactionaccountid",bankCardInfo.getTransactionaccountid());
-        parms.put("channelid", bankCardInfo.getChannelid());
-        parms.put("moneyaccount",bankCardInfo.getMoneyaccount());
-        parms.put("paycenterid", bankCardInfo.getPaycenterid());
-        parms.put("branchcode",bankCardInfo.getBranchcode());
+        parms.put("depositAcct", bankCardInfo.getDepositacct());
+        parms.put("mobileTelNo", AppManager.getPublicFundInf(getContext()).getMobileNo());
+        parms.put("transactionAccountId",bankCardInfo.getTransactionaccountid());
+        parms.put("channelId", bankCardInfo.getChannelId());
+        parms.put("moneyAccount",bankCardInfo.getMoneyaccount());
+        parms.put("payCenterId", bankCardInfo.getPaycenterid());
+        parms.put("branchCode",bankCardInfo.getBranchcode());
         parms.put("riskwarnflag", "1");
         parms.put("highriskwarnflag", "1");
-        parms.put("callbackurl", "");
-        parms.put("businesscode", BStrUtils.isEmpty(bean.getBusinesscode()) ? "22" : bean.getBusinesscode());
+        parms.put("callbackUrl", "");
+        parms.put("businessCode", BStrUtils.isEmpty(bean.getBusinesscode()) ? "22" : bean.getBusinesscode());
 
 
-        parms.put("applicationamt", money); // 认申购金额
-        parms.put("tpasswd", paswd); // 交易密码
+        parms.put("applicationAmt", money); // 认申购金额
+        parms.put("tPassWd", paswd); // 交易密码
 
-        super.getFundDataFormJZ(parms, preSenterCallBack);
+        super.handlerPublicFundResult(ApiClient.redeem(parms),preSenterCallBack);
+        //super.getFundDataFormJZ(parms, preSenterCallBack);
     }
 
 }

@@ -282,20 +282,31 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     @Override
                     public void even(String result) {
                         loadingDialog.dismiss();
+
+                        TrackingDataManger.sellPublicFund(SellPublicFundActivity.this, SellPublicFundActivity.this.fundName);
+                        // 跳转到成功页面
+                        if (isFund) {
+                            UiSkipUtils.gotoNewFundResult(SellPublicFundActivity.this, 2, fundType, money);
+                        } else {
+                            UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, issxb, money, result);
+                        }
+
+                        finish();
+                      /*
                         BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
                         if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
-                            // 跳转到成功页面
                             TrackingDataManger.sellPublicFund(SellPublicFundActivity.this, SellPublicFundActivity.this.fundName);
-                            String successData = "";
+                         *//*   String successData = "";
                             try {
                                 successData = new JSONObject(result).getString("datasets");
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                            }
+                            }*//*
+                            // 跳转到成功页面
                             if (isFund) {
                                 UiSkipUtils.gotoNewFundResult(SellPublicFundActivity.this, 2, fundType, money);
                             } else {
-                                UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, issxb, money, successData);
+                                UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, issxb, money, result);
                             }
 
                             finish();
@@ -303,7 +314,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                             Toast.makeText(SellPublicFundActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(SellPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG).show();
-                        }
+                        }*/
                     }
 
                     @Override

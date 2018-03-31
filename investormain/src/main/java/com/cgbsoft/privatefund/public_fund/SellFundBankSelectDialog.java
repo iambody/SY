@@ -48,6 +48,8 @@ public class SellFundBankSelectDialog extends BaseDialog {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.BOTTOM;
+        lp.softInputMode =  WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING|WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN;
+        getWindow().setAttributes(lp);
         window.setAttributes(lp);
         setContentView(R.layout.dialog_paybank_select);
         initView();

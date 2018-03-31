@@ -29,6 +29,9 @@ import com.cgbsoft.privatefund.bean.DataDictionary;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -323,6 +326,27 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
+                try {
+                    String code = new JSONObject(result).getString("code");
+                    String message = new JSONObject(result).getString("message");
+                    if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
+                        TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this,BuyPublicFundActivity.this.fundName);
+                        if(isPublicFund){
+                            UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,2,fundType,money);
+                        }else {
+                            NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + money, "申购成功", false);
+                        }
+                        finish();
+                    } else {
+                        MToast.makeText(BuyPublicFundActivity.this, message, Toast.LENGTH_LONG);
+                    }
+
+                } catch (JSONException e) {
+                    MToast.makeText(BuyPublicFundActivity.this, "申购失败", Toast.LENGTH_LONG);
+                    e.printStackTrace();
+                }
+/*
+
                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
 
                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) {
@@ -336,6 +360,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 } else {
                     MToast.makeText(BuyPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG);
                 }
+*/
 
             }
 
@@ -358,7 +383,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             if(bankCordInfo == null) return;
 
             bankCordInfo.setCustno(currectPayBank.getCustno());
-            String bankName = dictionaryTable.get(bankCordInfo.getChannelid());
+            String bankName = dictionaryTable.get(bankCordInfo.getChannelId());
             if(!TextUtils.isEmpty(bankName)) bankCordInfo.setBankname(bankName);
             if(bean != null) bean.getBankCardInfoList().add(0,bankCordInfo);
             currectPayBank = bankCordInfo;
@@ -526,6 +551,22 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 "depositacctname": "能星辰",
                 "channelid": "Z001"*/
 
+
+        /* "   authenticateflag = 1;\\\\ 验证码\n"+
+                 "                bankname = \"\\U4e2d\\U56fd\\U5efa\\U8bbe\\U94f6\\U884c\\U5317\\U4eac\\U4e0a\\U5730\\U652f\\U884c\";\\\\ 银行名称\n"+
+                 "                branchcode = 370; // 托管网点\n"+
+                 "                cardtelno = 18500152424; //绑卡对应手机号\n"+
+                 "                channelid = Z004;// 银行代码\n"+
+                 "                custno = 266; //客户号\n"+
+                 "                depositacct = 6217000010076615759;// 银行卡号\n"+
+                 "                depositacctname = \"\\U674e\\U6c38\\U5f3a\";//投资人全称\n"+
+                 "                isopenmobiletrade = 1; //\n"+
+                 "                moneyaccount = 341;// 资金账户\n"+
+                 "                paycenterid = 0330; //支付渠道代码[110079]\n"+
+                 "                status = 0;\n"+
+                 "                transactionaccountid = Z004A00000349; //交易账户"
+                 */
+
         private String moneyaccount = ""; // /交易账户id（从银行卡列表信息中获取
         private String transactionaccountid = ""; // 账户号
         private String bankname = ""; // 名字
@@ -538,7 +579,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         private String branchcode;
         private String isopenmobiletrade;
         private String depositacctname;
-        private String channelid;  //
         private String bankShortName = "银行";  // 银行简称
         private String bankLimit;  // 银行卡限额
         private String bankEnableStatus;  // 银行卡可用状态　0不可用，１可用
@@ -549,6 +589,34 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         private String icon = ""; //　
         private String tano = ""; //　
 
+
+        private String channelId;  // 支付网点号
+        private String fullName;  //　渠道名字
+        private String bankNameId;  //银行Id
+
+        public String getChannelId() {
+            return channelId;
+        }
+
+        public void setChannelId(String channelId) {
+            this.channelId = channelId;
+        }
+
+        public String getFullName() {
+            return fullName;
+        }
+
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
+        }
+
+        public String getBankNameId() {
+            return bankNameId;
+        }
+
+        public void setBankNameId(String bankNameId) {
+            this.bankNameId = bankNameId;
+        }
 
         public String getTransactionaccountid() {
             return transactionaccountid;
@@ -644,14 +712,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
         public void setDepositacctname(String depositacctname) {
             this.depositacctname = depositacctname;
-        }
-
-        public String getChannelid() {
-            return channelid;
-        }
-
-        public void setChannelid(String channelid) {
-            this.channelid = channelid;
         }
 
         public String getBankShortName() {

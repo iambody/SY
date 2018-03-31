@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
+import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 
 import java.util.HashMap;
@@ -31,12 +32,13 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
      * }
      */
     public void getBinidedBankList(String custno,PreSenterCallBack<String> preSenterCallBack) {
-        Map<String, Object> parms = new HashMap<>();
+        super.handlerPublicFundResult(ApiClient.getUseableBankList(custno),preSenterCallBack);
+     /*   Map<String, Object> parms = new HashMap<>();
         parms.put("trantype", "530335");
         parms.put("custno", custno); // TODO //证件类型（H5调取app指令的时候会传入） BStrUtils.nullToEmpty(bindingBankCardBean.getCustno())
         parms.put("planflag", "");
 
-        super.getFundDataFormJZ(parms, preSenterCallBack);
+        super.getFundDataFormJZ(parms, preSenterCallBack);*/
     }
 
     /**
@@ -52,15 +54,15 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
      * }
      */
     public void getVerificationCodeFormServer(BindingBankCardBean bindingBankCardBean, String phone, String bankCode, BasePublicFundPresenter.PreSenterCallBack<String> preSenterCallBack) {
-        Map<String, Object> parms = new HashMap<>();
-        parms.put("trantype", "bgMsgSend");
-        parms.put("certificatetype", bindingBankCardBean.getCertificatetype());//证件类型（H5调取app指令的时候会传入）
-        parms.put("certificateno", bindingBankCardBean.getCertificateno());
-        parms.put("channelid", bindingBankCardBean.getChannelid());
-        parms.put("depositacctname", bindingBankCardBean.getDepositacctname());
-        parms.put("depositacct", bankCode);
-        parms.put("mobiletelno", phone);
-        super.getFundDataFormJZ(parms, preSenterCallBack);
+        Map<String, String> parms = new HashMap<>();
+        parms.put("certificateType", bindingBankCardBean.getCertificatetype());//证件类型（H5调取app指令的时候会传入）
+        parms.put("certificateNo", bindingBankCardBean.getCertificateno());
+        parms.put("channelId", bindingBankCardBean.getChannelid());
+        parms.put("depositAcctName", bindingBankCardBean.getDepositacctname());
+        parms.put("depositAcct", bankCode);
+        parms.put("mobileNo", phone);
+        super.handlerPublicFundResult(ApiClient.getBindCardCaptcha(parms),preSenterCallBack);
+        //super.getFundDataFormJZ(parms, preSenterCallBack);
     }
 
 
@@ -72,26 +74,25 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
      */
     public void sureBind(BindingBankCardBean bindingBankCardBean, String bankName, String bankCode, String phoneCode, String verificationCode, PreSenterCallBack<String> callBack) {
         Map parms = new HashMap();
-        parms.put("trantype", "bgAddCard");
-        parms.put("custno", BStrUtils.nullToEmpty(bindingBankCardBean.getCustno()));
-        parms.put("mobileno", BStrUtils.nullToEmpty(phoneCode));
+        parms.put("custNo", BStrUtils.nullToEmpty(bindingBankCardBean.getCustno()));
+        parms.put("mobileNo", BStrUtils.nullToEmpty(phoneCode));
         parms.put("verificationCode", BStrUtils.nullToEmpty(verificationCode));
-        parms.put("authenticateflag", "1");
+        parms.put("authenticateFlag", "");
       //  parms.put("bankname", BStrUtils.nullToEmpty(bankName));
-        parms.put("channelid", BStrUtils.nullToEmpty(bindingBankCardBean.getChannelid()));
+        parms.put("channelId", BStrUtils.nullToEmpty(bindingBankCardBean.getChannelid()));
       //  parms.put("channelname", BStrUtils.nullToEmpty(bankName));
-        parms.put("depositacct", BStrUtils.nullToEmpty(bankCode));
-        parms.put("depositacctname", BStrUtils.nullToEmpty(bindingBankCardBean.getDepositacctname()));
-        parms.put("depositname", BStrUtils.nullToEmpty(bindingBankCardBean.getDepositname()));
-        parms.put("depositcity", ""); // 所在城市
-        parms.put("depositprov", ""); // 所以省份
-        parms.put("operorg", BStrUtils.isEmpty(bindingBankCardBean.getOperorg()) ? "9999" : bindingBankCardBean.getOperorg());  //交易操作网点，写死9999就可以
-        parms.put("tpasswd", BStrUtils.isEmpty(bindingBankCardBean.getTpasswd()) ? "" : bindingBankCardBean.getTpasswd());
-        parms.put("certificatetype", "0");
+        parms.put("depositAcct", BStrUtils.nullToEmpty(bankCode));
+        parms.put("depositAcctName", BStrUtils.nullToEmpty(bindingBankCardBean.getDepositacctname()));
+        parms.put("depositName", BStrUtils.nullToEmpty(bindingBankCardBean.getDepositname()));
+        parms.put("depositCity", ""); // 所在城市
+        parms.put("depositProv", ""); // 所以省份
+        parms.put("operOrg", BStrUtils.isEmpty(bindingBankCardBean.getOperorg()) ? "9999" : bindingBankCardBean.getOperorg());  //交易操作网点，写死9999就可以
+        parms.put("tPasswd", BStrUtils.isEmpty(bindingBankCardBean.getTpasswd()) ? "" : bindingBankCardBean.getTpasswd());
+        parms.put("certificateType", "0");
 
-        parms.put("bankname", BStrUtils.nullToEmpty(bindingBankCardBean.getBankname()));
-        parms.put("channelname", BStrUtils.nullToEmpty(bindingBankCardBean.getChannelname()));
-        parms.put("paratype", BStrUtils.nullToEmpty(bindingBankCardBean.getParatype()));
+        parms.put("bankName", BStrUtils.nullToEmpty(bindingBankCardBean.getBankname()));
+        parms.put("channelName", BStrUtils.nullToEmpty(bindingBankCardBean.getChannelname()));
+        parms.put("paraType", BStrUtils.nullToEmpty(bindingBankCardBean.getParatype()));
 
         //获取身份证号
         String certificateno = bindingBankCardBean.getCertificateno();
@@ -100,17 +101,18 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
             certificateno= AppManager.getPublicFundInf(getContext()).getCertificateNo();
         }
 
-        parms.put("certificateno", BStrUtils.isEmpty(certificateno)?"":certificateno);
+        parms.put("certificateNo", BStrUtils.isEmpty(certificateno)?"":certificateno);
 
-        super.getFundDataFormJZ(parms, callBack);
+        handlerPublicFundResult(ApiClient.bindCard(parms),callBack);
+
+       // super.getFundDataFormJZ(parms, callBack);
     }
 
 
     public void getBranchBankInfo(String keyWords,String channelid,PreSenterCallBack preSenterCallBack){
         Map parms = new HashMap();
-        parms.put("trantype", "411411");
-        parms.put("channelid", channelid);
-        parms.put("paracity", keyWords);
-        super.getFundDataFormJZ(parms,preSenterCallBack);
+        parms.put("channelId", channelid);
+        parms.put("paraCity", keyWords);
+        super.handlerPublicFundResult(ApiClient.getBankBranch(parms),preSenterCallBack);
     }
 }

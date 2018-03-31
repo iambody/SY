@@ -34,6 +34,7 @@ import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -44,8 +45,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import io.rong.imageloader.utils.L;
 
 /**
  * Created by wangpeng on 18-1-29.
@@ -498,7 +497,26 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             getPresenter().getVerificationCodeFormServer(bindingBankCardBean, phoneCode, bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
                 @Override
                 public void even(String s) {
-                    BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(s, BankListOfJZSupport.class);
+
+                    try {
+                        String code = new JSONObject(s).getString("code");
+                        String msg = new JSONObject(s).getString("msg");
+                        if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
+                            // 发送成功
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "验证码发送成功", Toast.LENGTH_LONG);
+                        } else if (PublicFundContant.REQEUSTING.equals(code)) {
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "处理中", Toast.LENGTH_LONG);
+                        } else {
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this,msg, Toast.LENGTH_LONG);
+                            getVerificationCode.setTag(TIME, null);
+                            timer.cancel();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        getVerificationCode.setTag(TIME, null);
+                        timer.cancel();
+                    }
+             /*       BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(s, BankListOfJZSupport.class);
                     if (bankListOfJZSupport != null) {
                         String code = bankListOfJZSupport.getErrorCode();
                         if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
@@ -511,7 +529,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                             getVerificationCode.setTag(TIME, null);
                             timer.cancel();
                         }
-                    }
+                    }*/
 
                 }
 
@@ -576,7 +594,25 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             @Override
             public void even(String s) {
                 loadingDialog.dismiss();
-                String datasets = "";
+
+
+                if (style == 1) {
+                    Gson gson = new Gson();
+                    BuyPublicFundActivity.BankCardInfo bankCordInfo = gson.fromJson(s, BuyPublicFundActivity.BankCardInfo.class);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bankCordInfo", bankCordInfo);
+                    getIntent().putExtras(bundle);
+                    BindingBankCardOfPublicFundActivity.this.setResult(Activity.RESULT_OK, getIntent());
+                } else {
+                    // 去风险测评页面
+                    UiSkipUtils.gotoPublicFundRisk(BindingBankCardOfPublicFundActivity.this);
+                    RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
+                }
+                MToast.makeText(BindingBankCardOfPublicFundActivity.this, "绑定成功", Toast.LENGTH_LONG);
+                finish();
+
+                      /*    String datasets = "";
                 String code = "";
                 String message = "";
                 try {
@@ -586,8 +622,9 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                     datasets = result.getJSONArray("datasets").getString(0);
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
-                if (PublicFundContant.REQEUST_SUCCESS.equals(code)) { // 成功
+                }*/
+
+             /*   if (PublicFundContant.REQEUST_SUCCESS.equals(code)) { // 成功
                     if (style == 1) {
                         Gson gson = new Gson();
                         BuyPublicFundActivity.BankCardInfo bankCordInfo = gson.fromJson(datasets, BuyPublicFundActivity.BankCardInfo.class);
@@ -609,7 +646,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                     MToast.makeText(BindingBankCardOfPublicFundActivity.this, "请输入正确的验证码", Toast.LENGTH_LONG);
                 } else {
                     MToast.makeText(BindingBankCardOfPublicFundActivity.this, message, Toast.LENGTH_LONG);
-                }
+                }*/
             }
 
             @Override

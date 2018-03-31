@@ -15,6 +15,8 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+import rx.Observable;
+
 /**
  * Created by wangpeng on 18-1-31.
  */
@@ -47,6 +49,27 @@ public class BasePublicFundPresenter extends BasePresenterImpl {
         });
 
 
+    }
+
+    /**
+     * 处理公募基金接口信息
+     * @param observable
+     */
+    public void handlerPublicFundResult(Observable<String> observable,PreSenterCallBack preSenterCallBack){
+        observable.subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                parseResultFormServer(s,preSenterCallBack);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                if(error instanceof ApiException && preSenterCallBack!=null){
+                    preSenterCallBack.field(((ApiException) error).getCode(),error.getMessage());
+                }
+                error.printStackTrace();
+            }
+        });
     }
 
 
