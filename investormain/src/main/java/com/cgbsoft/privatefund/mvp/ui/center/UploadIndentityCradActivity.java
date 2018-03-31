@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.permission.MyPermissionsActivity;
@@ -55,6 +57,7 @@ import com.cgbsoft.privatefund.mvp.contract.center.UploadIndentityContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.UploadIndentityPresenterImpl;
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
+import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 
@@ -332,6 +335,23 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             submit.setEnabled(true);
             return;
         }
+
+        if (submit.getText().equals("合格投资者认定")){
+            if ("0".equals(credentialStateMedel.getSpecialInvestorState())) {
+                if ("10".equals(credentialStateMedel.getCustomerType())) {
+                    Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(getApplicationContext());
+                } else if ("20".equals(credentialStateMedel.getCustomerType())) {
+                    Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(getApplicationContext());
+                }
+            } else if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "0".equals(credentialStateMedel.getInvestorInfoState())) {
+                if ("10".equals(credentialStateMedel.getCustomerType())) {
+                    jumpWebPage(BaseWebNetConfig.investorInfoPerson, "投资者信息填写");
+                } else if ("20".equals(credentialStateMedel.getCustomerType())) {
+                    jumpWebPage(BaseWebNetConfig.investorInfoCompany, "投资者信息填写");
+                }
+            }
+            return;
+        }
         if (isIdCard) {
             if (TextUtils.isEmpty(firstPhotoPath) && TextUtils.isEmpty(secondPhotoPath)) {
                 Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
@@ -387,21 +407,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
             getPresenter().getLivingCount();
             return;
-
-//            File fileFirst = new File(firstPhotoPath);
-//            File fileSecond = new File(secondPhotoPath);
-//            if (!fileFirst.exists() && !fileSecond.exists()) {
-//                Toast.makeText(getApplicationContext(), "请点击拍摄证件照照片", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//            if (fileFirst.exists() && !fileSecond.exists()) {
-//                Toast.makeText(getApplicationContext(), "请点击拍摄反面证件照照片", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//            if (!fileFirst.exists() && fileSecond.exists()) {
-//                Toast.makeText(getApplicationContext(), "请点击拍摄正面证件照照片", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
         } else {
             if (!"50".equals(credentialModel.getStateCode())) {
                 if (TextUtils.isEmpty(firstPhotoPath)) {
@@ -480,31 +485,6 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                         });
             }
             return;
-
-            //====================
-//            new Thread() {
-//                @Override
-//                public void run() {
-//                    super.run();
-//                    remoteParams.clear();
-//                    for (final String localPath : paths) {
-//                        String newTargetFile = FileUtils.compressFileToUpload(localPath, true);
-//                        String paths = DownloadUtils.postSecretObject(newTargetFile, "credential/" + credentialModel.getCode() + "/");
-//                        FileUtils.deleteFile(newTargetFile);
-//                        if (!TextUtils.isEmpty(paths)) {
-//                            remoteParams.add(paths);
-//                        } else {
-//                            ThreadUtils.runOnMainThread(() -> Toast.makeText(UploadIndentityCradActivity.this, "证件上传失败，请重新上传", Toast.LENGTH_SHORT).show());
-//                            submit.setEnabled(true);
-//                            mLoadingDialog.dismiss();
-//                            return;
-//                        }
-//                    }
-//                    startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG));
-//                }
-//            }.start();
-//            submit.setEnabled(true);
-//            return;
         }
         mLoadingDialog.show();
         new Thread() {
@@ -544,6 +524,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                     case "0":
                         submit.setVisibility(View.GONE);
                         tagIv.setVisibility(View.GONE);
+                        getPresenter().verifyIndentityV3();
                         tagTv.setText("审核通过");
                         RecognitionCardRelative.setVisibility(View.GONE);
                         miniResultLinear.setVisibility(View.VISIBLE);
@@ -558,6 +539,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                         uploadFirst.setEnabled(false);
                         uploadSecond.setEnabled(false);
                         uploadSecondCover.setEnabled(false);
+                        credentialStateMedel.setCustomerLivingbodyState("1");
                         RxBus.get().post(RxConstant.REFRESH_CREDENTIAL_INFO, 0);
                         break;
                     case "1":
@@ -957,6 +939,32 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
 
     @Override
     public void getLivingCountError(Throwable error) {
+
+    }
+
+    @Override
+    public void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel) {
+        this.credentialStateMedel = credentialStateMedel;
+        boolean isFromMine = SPreference.getBoolean(this, "isFromMine");
+        if (credentialStateMedel.getDurationAmt()>0&&isFromMine){
+            submit.setText("合格投资者认定");
+            submit.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void jumpWebPage(String url, String title) {
+        Intent i = new Intent(this, BaseWebViewActivity.class);
+        i.putExtra(WebViewConstant.push_message_url, url);
+        i.putExtra(WebViewConstant.push_message_title, title);
+        i.putExtra(WebViewConstant.RIGHT_SAVE, false);
+        i.putExtra(WebViewConstant.RIGHT_SHARE, false);
+        i.putExtra(WebViewConstant.PAGE_INIT, false);
+
+        startActivity(i);
+    }
+
+    @Override
+    public void verifyIndentityError(Throwable error) {
 
     }
 

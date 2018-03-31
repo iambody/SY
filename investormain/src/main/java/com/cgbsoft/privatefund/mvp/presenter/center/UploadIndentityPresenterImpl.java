@@ -3,12 +3,19 @@ package com.cgbsoft.privatefund.mvp.presenter.center;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
+import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.model.CredentialModelListener;
 import com.cgbsoft.privatefund.model.UploadIndentityModelListener;
 import com.cgbsoft.privatefund.model.impl.UploadIndentityModelImpl;
 import com.cgbsoft.privatefund.mvp.contract.center.CredentialDetialContract;
 import com.cgbsoft.privatefund.mvp.contract.center.UploadIndentityContract;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -48,6 +55,33 @@ public class UploadIndentityPresenterImpl extends BasePresenterImpl<UploadIndent
     public void getCredentialInfo(String credentialId) {
         uploadIndentityView.showLoadDialog();
         uploadModel.credentialDetail(getCompositeSubscription(),this,credentialId);
+    }
+
+    /**
+     * 获取证件基本信息
+     */
+    @Override
+    public void verifyIndentityV3() {
+        addSubscription(ApiClient.verifyIndentityInClientV3().subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                try {
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject result = jsonObject.getJSONObject("result");
+                    Gson gson = new Gson();
+                    CredentialStateMedel credentialStateMedel = gson.fromJson(result.toString(), CredentialStateMedel.class);
+                    getView().verifyIndentitySuccessV3(credentialStateMedel);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    getView().verifyIndentityError(e);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                getView().verifyIndentityError(error);
+            }
+        }));
     }
 
     @Override

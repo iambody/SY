@@ -16,6 +16,9 @@ import java.io.Serializable;
  * "customerLivingbodyState": "0",
  * "credentialStateName": "已通过",
  * "idCardState": "50"
+ * "specialInvestorState"   //特定投资者状态code
+ * "investorInfoState"   //完善资料状态code
+ * "durationAmt"   // //存续金额
  */
 public class CredentialStateMedel implements Serializable{
     private String credentialDetailId;
@@ -29,9 +32,36 @@ public class CredentialStateMedel implements Serializable{
     private String customerLivingbodyState;
     private String credentialStateName;
     private String idCardState;
+    private Long durationAmt;
+    private String investorInfoState;
+    private String specialInvestorState;
 
 
     public CredentialStateMedel() {
+    }
+
+    public Long getDurationAmt() {
+        return durationAmt;
+    }
+
+    public void setDurationAmt(Long durationAmt) {
+        this.durationAmt = durationAmt;
+    }
+
+    public String getInvestorInfoState() {
+        return investorInfoState;
+    }
+
+    public void setInvestorInfoState(String investorInfoState) {
+        this.investorInfoState = investorInfoState;
+    }
+
+    public String getSpecialInvestorState() {
+        return specialInvestorState;
+    }
+
+    public void setSpecialInvestorState(String specialInvestorState) {
+        this.specialInvestorState = specialInvestorState;
     }
 
     public String getCredentialDetailId() {

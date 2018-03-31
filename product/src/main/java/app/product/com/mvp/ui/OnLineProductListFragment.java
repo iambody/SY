@@ -236,7 +236,7 @@ public class OnLineProductListFragment extends BaseFragment<ProductPresenter> im
         super.onResume();
         MobclickAgent.onPageStart(Constant.SXY_SIHANG_CP);
         //是否需要风险评测d 弹出框
-        product_product_riskevalust.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
+        product_product_riskevalust.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerSpecialFlag()) ? View.VISIBLE : View.GONE);
         productlsAdapter.notifyDataSetChanged();
     }
 

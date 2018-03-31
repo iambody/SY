@@ -1,5 +1,6 @@
 package com.cgbsoft.privatefund.mvp.contract.center;
 
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.mvp.presenter.BasePresenter;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 
@@ -29,6 +30,10 @@ public interface UploadIndentityContract {
 
         void getLivingCountSuccess(String s);
         void getLivingCountError(Throwable error);
+
+        void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel);
+
+        void verifyIndentityError(Throwable error);
     }
     interface UploadIndentityPresenter extends BasePresenter {
         /**

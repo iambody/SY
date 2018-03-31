@@ -319,6 +319,16 @@ public class UserInfoDataEntity extends BaseResult<UserInfoDataEntity.Result> {
         //视频列表序言添加
         private String customerRole;
 
+        private String customerSpecialFlag;
+
+
+        public String getCustomerSpecialFlag() {
+            return customerSpecialFlag;
+        }
+
+        public void setCustomerSpecialFlag(String customerSpecialFlag) {
+            this.customerSpecialFlag = customerSpecialFlag;
+        }
 
         public String getMemberLevel() {
             return memberLevel;
