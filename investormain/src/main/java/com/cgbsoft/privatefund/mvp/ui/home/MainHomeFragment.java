@@ -7,6 +7,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -228,9 +229,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         timeCountDown();
         initCache();
         getPresenter().getHomeData();
+
+
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         getPresenter().getPublicFundRecommend();
-
-
     }
 
     @Override
@@ -936,7 +943,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private void initPublicFundData(boolean isCache, PublishFundRecommendBean publishFundRecommendBean) {
 
         publishFundRecommend = publishFundRecommendBean;
-        initPublicFundLay();
+
+
+
+        boolean isRato = BStrUtils.homeIsRato(publishFundRecommendBean.getLeftUpValue());
+        if (isRato) {
+            SpannableString spannableString = SpannableUtils.setTextSize1(publishFundRecommendBean.getLeftUpValue(), publishFundRecommendBean.getLeftUpValue().length() - 1, publishFundRecommendBean.getLeftUpValue().length(), DimensionPixelUtil.dip2px(baseActivity, 15));
+            viewHomePublicFundLeftvalues.setText(spannableString);
+        }
         BStrUtils.setTv(viewHomePublicFundFundname, publishFundRecommendBean.getFundName());
         BStrUtils.setTv(viewHomePublicFundFunddes, publishFundRecommendBean.getFundDes());
         BStrUtils.setTv(viewHomePublicFundLeftvalues, publishFundRecommendBean.getLeftUpValue());
@@ -944,11 +958,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         BStrUtils.setTv(viewHomePublicFundRightvalues, publishFundRecommendBean.getRightUpValue());
         BStrUtils.setTv(viewHomePublicFundRightdes, publishFundRecommendBean.getRightDownDes());
 
-        boolean isRato = BStrUtils.homeIsRato(publishFundRecommendBean.getLeftUpValue());
-        if (isRato) {
-            SpannableString spannableString = SpannableUtils.setTextSize1(publishFundRecommendBean.getLeftUpValue(), publishFundRecommendBean.getLeftUpValue().length() - 1, publishFundRecommendBean.getLeftUpValue().length(), DimensionPixelUtil.dip2px(baseActivity, 15));
-            viewHomePublicFundLeftvalues.setText(spannableString);
-        }
+        initPublicFundLay();
     }
 
     /**
