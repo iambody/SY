@@ -442,7 +442,7 @@ public class NetConfig {
         //        static final String PRIVATE_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/userinfo";///老的
         static final String PRIVATE_FUND_INF = PUBLIC_FUND_API_V2 + "/userinfo";//新的
 
-        final static String MINE_FININCIAL_ASSERT = PUBLIC_FUND_API_V2 + "/kz/userfund";
+        final static String MINE_FININCIAL_ASSERT = PUBLIC_FUND_API_V2 + "/my/walletandfundincome";
 
 
         final static String DIRECT_JZ_URL = PUBLIC_FUND_API_V2 + "/kz/proxy";

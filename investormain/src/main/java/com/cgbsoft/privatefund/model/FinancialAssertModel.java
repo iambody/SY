@@ -87,15 +87,15 @@ public class FinancialAssertModel {
 
         private String riskLevel;
 
-        private String fundcode;
+        private String fundCode;
 
-        private String allud;
+        private String allUD;
 
         private String survivingAssets;
 
-        private String addincome;
+        private String addIncome;
 
-        private String yestincome;
+        private String yestIncome;
 
         public String isBuyIn() {
             return buyIn;
@@ -118,11 +118,11 @@ public class FinancialAssertModel {
         }
 
         public String getFundcode() {
-            return fundcode;
+            return fundCode;
         }
 
         public void setFundcode(String fundcode) {
-            this.fundcode = fundcode;
+            this.fundCode = fundcode;
         }
 
         public String getSurvivingAssets() {
@@ -142,27 +142,27 @@ public class FinancialAssertModel {
         }
 
         public String getAllud() {
-            return allud;
+            return allUD;
         }
 
         public void setAllud(String allud) {
-            this.allud = allud;
+            this.allUD = allud;
         }
 
         public String getAddincome() {
-            return addincome;
+            return addIncome;
         }
 
         public void setAddincome(String addincome) {
-            this.addincome = addincome;
+            this.addIncome = addincome;
         }
 
         public String getYestincome() {
-            return yestincome;
+            return yestIncome;
         }
 
         public void setYestincome(String yestincome) {
-            this.yestincome = yestincome;
+            this.yestIncome = yestincome;
         }
     }
 
@@ -172,7 +172,7 @@ public class FinancialAssertModel {
 
         private String survivingAssets;
 
-        private String addincome;
+        private String addIncome;
 
         private String yestincome;
 
@@ -185,11 +185,11 @@ public class FinancialAssertModel {
         }
 
         public String getAddincome() {
-            return addincome;
+            return addIncome;
         }
 
         public void setAddincome(String addincome) {
-            this.addincome = addincome;
+            this.addIncome = addincome;
         }
 
         public String getYestincome() {
