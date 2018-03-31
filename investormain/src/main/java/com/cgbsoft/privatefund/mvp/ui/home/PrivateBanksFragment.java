@@ -63,11 +63,11 @@ public class PrivateBanksFragment extends BasePageFragment {
 
     @Override
     protected ArrayList<TabBean> list() {
-        isDoneFreash=true;
+        isDoneFreash = true;
         ArrayList<NavigationBean> navigationBeans = NavigationUtils.getNavigationBeans(getActivity());
         ArrayList<TabBean> tabBeens = new ArrayList<>();
         //新添加了白名单的逻辑处理
-        if (!BStrUtils.isEmpty(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg()) && "1".equals(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg())) {
+        if (null != AppManager.getPublicFundInf(baseActivity.getApplicationContext()) && !BStrUtils.isEmpty(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg()) && "1".equals(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg())) {
             tabBeens.add(new TabBean("公募基金", new PublicFundFragment(), Integer.parseInt(PUBLIC_FUND_CODE)));
         }
 
