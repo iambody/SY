@@ -2,7 +2,8 @@ package com.cgbsoft.privatefund;
 
 import android.util.Log;
 
-import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.privatefund.bean.commui.SignBean;
+import com.google.gson.Gson;
 
 import org.junit.Test;
 
@@ -34,19 +35,26 @@ public class ExampleUnitTest {
 //            Log.i("s", "sss");
 //        }
 //        Log.i("s", "sss");
-        String saaaas = "最长3个月";
+//        String saaaas = "最长3个月";
+//
+//        boolean aaaa = BStrUtils.hasDigit(saaaas);
+//        boolean bbbb = BStrUtils.hasDigit("osossosos");
+//        boolean ccc = BStrUtils.hasDigit("最长的月");
+//        int postionstart = BStrUtils.beginPostionDigit(saaaas);
+//        int postionend = BStrUtils.lastPostionDigit(saaaas);
+//        int postionendss = BStrUtils.beginPostionDigit("最长23个月");
+//        int postionendsssss = BStrUtils.lastPostionDigit("最长23个月");
+//
+//        int postionendssssss = BStrUtils.beginPostionDigit("最长234个月");
+//        int postionendsssssssss = BStrUtils.lastPostionDigit("最长234个月");
+//        Log.i("s", "sss");
+        String aa = "{\n" +
+                "    \"tomorrowCoinNum\": \"随机\"\n" +
+                "}";
 
-        boolean aaaa = BStrUtils.hasDigit(saaaas);
-        boolean bbbb = BStrUtils.hasDigit("osossosos");
-        boolean ccc = BStrUtils.hasDigit("最长的月");
-        int postionstart = BStrUtils.beginPostionDigit(saaaas);
-        int postionend = BStrUtils.lastPostionDigit(saaaas);
-        int postionendss = BStrUtils.beginPostionDigit("最长23个月");
-        int postionendsssss = BStrUtils.lastPostionDigit("最长23个月");
+        SignBean signBean = new Gson().fromJson(aa, SignBean.class);
 
-        int postionendssssss = BStrUtils.beginPostionDigit("最长234个月");
-        int postionendsssssssss = BStrUtils.lastPostionDigit("最长234个月");
-        Log.i("s", "sss");
-
+        String AA = signBean.tomorrowCoinNum + "";
+        Log.i("ssss", AA);
     }
 }

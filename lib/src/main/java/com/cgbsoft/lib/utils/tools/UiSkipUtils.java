@@ -96,8 +96,8 @@ public class UiSkipUtils {
     public static void toPublicFundRegist(Activity activity ) {
 
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(activity.getApplicationContext());
-        String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
-        if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustrisk())) {//未开户
+        String fundinf = publicFundInf.getCustNo();//客户号 空=》未开户；非空=》开户
+        if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {//未开户
             //没风险测评=》跳转到公共的页面
 //            DefaultDialog dialog = new DefaultDialog(activity, "您还未开户，马上去开户吧～", "取消", "确定") {
 //                @Override
@@ -135,7 +135,7 @@ public class UiSkipUtils {
                 }
             };
             dialog.show();
-        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
+        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
             //没风险测评=》跳转到公共的页面
             DefaultDialog dialog = new DefaultDialog(activity, "您还未进行风险测评，马上去开展测评吧～", "取消", "确定") {
                 @Override
@@ -162,8 +162,8 @@ public class UiSkipUtils {
     public static void toBuyPublicFundFromNative(Activity activity, String fundCode,String fundName,String fundType, String risklevel) {
         //需要先判断是否注册绑卡
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(activity.getApplicationContext());
-        String fundinf = publicFundInf.getCustno();//客户号 空=》未开户；非空=》开户
-        if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustrisk())) {//未开户
+        String fundinf = publicFundInf.getCustNo();//客户号 空=》未开户；非空=》开户
+        if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {//未开户
             //没开户=》跳转到开户页面ton
             DefaultDialog dialog = new DefaultDialog(activity, "您还未开户，马上去开户吧～", "取消", "确定") {
                 @Override
@@ -199,7 +199,7 @@ public class UiSkipUtils {
                 }
             };
             dialog.show();
-        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
+        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
             //没风险测评=》跳转到公共的页面
             DefaultDialog dialog = new DefaultDialog(activity, "您还未进行风险测评，马上去开展测评吧～", "取消", "确定") {
                 @Override
@@ -215,7 +215,7 @@ public class UiSkipUtils {
                 }
             };
             dialog.show();
-        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
+        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
             //开过户并且已经完成绑卡 跳转到数据里面
             // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
             //判断风险等级
@@ -249,7 +249,7 @@ public class UiSkipUtils {
      * 跳转到风险测评
      */
     public static void gotoPublicFundRisk(Activity activity) {
-        NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRiskUrl + "?custno=" + AppManager.getPublicFundInf(activity.getApplicationContext()).getCustno(), "风险测评", false);
+        NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRiskUrl + "?custno=" + AppManager.getPublicFundInf(activity.getApplicationContext()).getCustNo(), "风险测评", false);
 
     }
 
@@ -349,10 +349,10 @@ public class UiSkipUtils {
         if (BStrUtils.isEmpty(fundRisk)) {
             return true;
         }
-        if (BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
+        if (BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
             return true;
         }
-        int customRisk = Integer.parseInt(publicFundInf.getCustrisk());
+        int customRisk = Integer.parseInt(publicFundInf.getCustRisk());
         int publicFundRisk = Integer.parseInt(fundRisk);
         if (customRisk >= publicFundRisk) {
             return true;
@@ -395,7 +395,7 @@ public class UiSkipUtils {
      */
     public static String customRiskToStr(Context context) {//
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(context.getApplicationContext());
-        switch (publicFundInf.getCustrisk()) {
+        switch (publicFundInf.getCustRisk()) {
             case "01":
                 return "保守型";
 

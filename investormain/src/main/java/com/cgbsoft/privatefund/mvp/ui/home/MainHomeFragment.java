@@ -960,7 +960,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (!BStrUtils.isEmpty(publicFundInf.getWhiteUserListFlg()) && "1".equals(publicFundInf.getWhiteUserListFlg())) {
             viewHomePublicFundLay.setVisibility(View.VISIBLE);
             //在白名单内 需要显示
-            if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustrisk()) || BStrUtils.isEmpty(publicFundInf.getCustrisk())) {
+            if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustRisk()) || BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
                 viewPublicFundRegist.setVisibility(View.VISIBLE);
             } else {
                 viewPublicFundRegist.setVisibility(View.GONE);
@@ -970,7 +970,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             viewHomePublicFundLay.setVisibility(View.GONE);
             return;
         }
-
 
     }
 
@@ -1170,7 +1169,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_shift)
     public void publicFundShift() {
-        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundcode(),publishFundRecommend.getFundName(),publishFundRecommend.getFundtype(),publishFundRecommend.getRisklevel());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundCode(),publishFundRecommend.getFundName(),publishFundRecommend.getFundType(),publishFundRecommend.getRiskLevel());
         //ssssss
         TrackingDataManger.homeBuyClick(baseActivity);
     }

@@ -39,7 +39,7 @@ class SellPUblicFundPresenter extends BasePublicFundPresenter {
 
         Map<String,Object> parms = new HashMap<>();
         parms.put("trantype","520004");
-        parms.put("custno", AppManager.getPublicFundInf(getContext()).getCustno());
+        parms.put("custno", AppManager.getPublicFundInf(getContext()).getCustNo());
         parms.put("fundcode",fundcode);
         parms.put("largeredemptionflag",largeredemptionflag);
         parms.put("transactionaccountid",transactionaccountid);

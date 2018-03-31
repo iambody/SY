@@ -1,6 +1,5 @@
 package com.cgbsoft.privatefund.mvp.ui.center;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -74,7 +73,7 @@ public class PublicFundSettingActivity extends BaseActivity<PublicFundSettingPre
 
     private void initPublicFund() {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
-        boolean existAccount = !TextUtils.isEmpty(publicFundInf.getCustno());
+        boolean existAccount = !TextUtils.isEmpty(publicFundInf.getCustNo());
         boolean bindCard = TextUtils.equals("1", publicFundInf.getIsHaveCustBankAcct());
         boolean isWhiteFlag = Utils.isWhiteUserFlag(this);
 
@@ -91,7 +90,7 @@ public class PublicFundSettingActivity extends BaseActivity<PublicFundSettingPre
     @OnClick(R.id.sin_public_fund_account_status)
     void gotoCreatePublicFundAccount() {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
-        if (TextUtils.isEmpty(publicFundInf.getCustno())) {
+        if (TextUtils.isEmpty(publicFundInf.getCustNo())) {
             NavigationUtils.gotoWebActivity(this, CwebNetConfig.publicFundRegistUrl, getResources().getString(R.string.public_fund_regist), false);
         } else {
             NavigationUtils.startActivityByRouter(this, RouteConfig.GOTO_PUBLIC_FUND_INFO_ACTIVITY);
@@ -110,13 +109,13 @@ public class PublicFundSettingActivity extends BaseActivity<PublicFundSettingPre
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("trantype", "bgAddCard");
-                jsonObject.put("custno", publicFundInf1.getCustno());
+                jsonObject.put("custno", publicFundInf1.getCustNo());
                 jsonObject.put("authenticateflag", "1");
-                jsonObject.put("certificateno", publishFundRecommendBean.getCertificateno());
-                jsonObject.put("certificatetype", publishFundRecommendBean.getCertificatetype());
-                jsonObject.put("depositacct", publishFundRecommendBean.getDepositacct());
-                jsonObject.put("depositacctname", publishFundRecommendBean.getDepositacctname());
-                jsonObject.put("depositname", publishFundRecommendBean.getDepositacctname());
+                jsonObject.put("certificateno", publishFundRecommendBean.getCertificateNo());
+                jsonObject.put("certificatetype", publishFundRecommendBean.getCertificateType());
+                jsonObject.put("depositacct", publishFundRecommendBean.getDepositAcct());
+                jsonObject.put("depositacctname", publishFundRecommendBean.getDepositacctName());
+                jsonObject.put("depositname", publishFundRecommendBean.getDepositacctName());
                 jsonObject.put("depositcity", "");
                 jsonObject.put("depositprov", "");
                 jsonObject.put("operorg", "9999");

@@ -862,9 +862,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @SuppressLint("StringFormatInvalid")
     private void initPrivateShareMoneyData(FinancialAssertModel financialAssertModel) {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(getActivity());
-        String custno = publicFundInf.getCustno();
+        String custno = publicFundInf.getCustNo();
         String isHaveBanckAccount = publicFundInf.getIsHaveCustBankAcct();
-        String ristPingce = publicFundInf.getCustrisk();
+        String ristPingce = publicFundInf.getCustRisk();
         ll_public_fund_create_account.setVisibility((Utils.isWhiteUserFlag(getContext())) && (TextUtils.isEmpty(custno) || (!TextUtils.equals("1", isHaveBanckAccount) || TextUtils.isEmpty(ristPingce))) ? View.VISIBLE : View.GONE);
         if (isExistPrivateShareMoney(financialAssertModel)) {
             ll_private_share_bao_empty.setVisibility(View.GONE);
@@ -982,7 +982,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.tv_now_transfer)
     void gotoNowTransferPrivateShare() {
         PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
-        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundcode(), publicFundInf.getFundName(),publicFundInf.getFundtype(),publicFundInf.getRisklevel());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundCode(), publicFundInf.getFundName(),publicFundInf.getFundType(),publicFundInf.getRiskLevel());
         TrackingDataManger.intimeMoneyIncome(getContext());
     }
 
@@ -990,7 +990,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     void gotoSxbDetail() {
         PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
         if(null==publicFundInf)return;
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publicFundInf.getFundName()), BStrUtils.nullToEmpty(publicFundInf.getFundcode())), false);
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publicFundInf.getFundName()), BStrUtils.nullToEmpty(publicFundInf.getFundCode())), false);
         TrackingDataManger.intimeMoneyClick(getContext());
     }
 

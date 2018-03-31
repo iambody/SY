@@ -97,7 +97,7 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
         String certificateno = bindingBankCardBean.getCertificateno();
 
         if (BStrUtils.isEmpty(certificateno)) {
-            certificateno= AppManager.getPublicFundInf(getContext()).getCertificateno();
+            certificateno= AppManager.getPublicFundInf(getContext()).getCertificateNo();
         }
 
         parms.put("certificateno", BStrUtils.isEmpty(certificateno)?"":certificateno);

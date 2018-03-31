@@ -168,7 +168,7 @@ public class SettingActivity extends BaseActivity<SettingPresenterImpl> implemen
 
     private void initPublicFund() {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
-        boolean existAccount = !TextUtils.isEmpty(publicFundInf.getCustno());
+        boolean existAccount = !TextUtils.isEmpty(publicFundInf.getCustNo());
         boolean bindCard = TextUtils.equals("1", publicFundInf.getIsHaveCustBankAcct());
         boolean isWhiteFlag = Utils.isWhiteUserFlag(this);
         publicFund.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);

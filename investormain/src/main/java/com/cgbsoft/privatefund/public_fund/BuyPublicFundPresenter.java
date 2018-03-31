@@ -147,16 +147,16 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
         parms.put("tano", bean.getTano());
 
 
-        parms.put("certificatetype", AppManager.getPublicFundInf(getContext()).getCertificatetype());
-        parms.put("certificateno", AppManager.getPublicFundInf(getContext()).getCertificateno());
-        parms.put("depositacctname", AppManager.getPublicFundInf(getContext()).getDepositacctname());
+        parms.put("certificatetype", AppManager.getPublicFundInf(getContext()).getCertificateType());
+        parms.put("certificateno", AppManager.getPublicFundInf(getContext()).getCertificateNo());
+        parms.put("depositacctname", AppManager.getPublicFundInf(getContext()).getDepositAcctName());
         parms.put("custno", bankCardInfo.getCustno());
 
         parms.put("buyflag", bean.getBuyflag());
 
 
         parms.put("depositacct", bankCardInfo.getDepositacct());
-        parms.put("mobiletelno", AppManager.getPublicFundInf(getContext()).getMobileno());
+        parms.put("mobiletelno", AppManager.getPublicFundInf(getContext()).getMobileNo());
         parms.put("transactionaccountid",bankCardInfo.getTransactionaccountid());
         parms.put("channelid", bankCardInfo.getChannelid());
         parms.put("moneyaccount",bankCardInfo.getMoneyaccount());

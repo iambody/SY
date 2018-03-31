@@ -7,27 +7,27 @@ package com.cgbsoft.privatefund.bean.product;
 public class PublishFundRecommendBean {
 
     private String isHaveAccount;
-    private String fundcode;
+    private String fundCode;
     private String fundName;
     private String fundDes;
-    private String fundtype;
+    private String fundType;
 
     private String leftUpValue;
     private String leftDownDes;
     private String rightUpValue;
     private String rightDownDes;
     //1.30 15:00 新增
-    private String sharetype;////份额类别 'A'前收费 'B' 后收费
-    private String tano;//ta代码
-    private String certificatetype;////证件类型
-    private String certificateno;////身份证号 (证件号)
-    private String depositacctname;////客户姓名
-    private String businesscode;// //业务类型，认购或申购
-    private String buyflag;// / 制购买标志，1为强制购买
-    private String callbackurl;
-    private String depositacct;// //客户银行卡号
-    private String custrisk;// 客户的风险等级！！！ 不为空就是风险风等级   1:安全型 2:保守型 3:稳健型 4:积极 型 5:进取型)
-    private String risklevel;//产品的风险等级！！
+    private String shareType;////份额类别 'A'前收费 'B' 后收费
+    private String taNo;//ta代码
+    private String certificateType;////证件类型
+    private String certificateNo;////身份证号 (证件号)
+    private String depositacctName;////客户姓名
+    private String businessCode;// //业务类型，认购或申购
+    private String buyFlag;// / 制购买标志，1为强制购买
+    private String callbackUrl;
+    private String depositAcct;// //客户银行卡号
+    private String custRisk;// 客户的风险等级！！！ 不为空就是风险风等级   1:安全型 2:保守型 3:稳健型 4:积极 型 5:进取型)
+    private String riskLevel;//产品的风险等级！！
 
     public String getIsHaveAccount() {
         return isHaveAccount;
@@ -37,7 +37,13 @@ public class PublishFundRecommendBean {
         this.isHaveAccount = isHaveAccount;
     }
 
+    public String getFundCode() {
+        return fundCode;
+    }
 
+    public void setFundCode(String fundCode) {
+        this.fundCode = fundCode;
+    }
 
     public String getFundName() {
         return fundName;
@@ -55,12 +61,12 @@ public class PublishFundRecommendBean {
         this.fundDes = fundDes;
     }
 
-    public String getFundtype() {
-        return fundtype;
+    public String getFundType() {
+        return fundType;
     }
 
-    public void setFundtype(String fundtype) {
-        this.fundtype = fundtype;
+    public void setFundType(String fundType) {
+        this.fundType = fundType;
     }
 
     public String getLeftUpValue() {
@@ -95,100 +101,91 @@ public class PublishFundRecommendBean {
         this.rightDownDes = rightDownDes;
     }
 
-    public String getSharetype() {
-        return sharetype;
+    public String getShareType() {
+        return shareType;
     }
 
-    public void setSharetype(String sharetype) {
-        this.sharetype = sharetype;
+    public void setShareType(String shareType) {
+        this.shareType = shareType;
     }
 
-    public String getTano() {
-        return tano;
+    public String getTaNo() {
+        return taNo;
     }
 
-    public void setTano(String tano) {
-        this.tano = tano;
+    public void setTaNo(String taNo) {
+        this.taNo = taNo;
     }
 
-    public String getCertificatetype() {
-        return certificatetype;
+    public String getCertificateType() {
+        return certificateType;
     }
 
-    public void setCertificatetype(String certificatetype) {
-        this.certificatetype = certificatetype;
+    public void setCertificateType(String certificateType) {
+        this.certificateType = certificateType;
     }
 
-    public String getCertificateno() {
-        return certificateno;
+    public String getCertificateNo() {
+        return certificateNo;
     }
 
-    public void setCertificateno(String certificateno) {
-        this.certificateno = certificateno;
+    public void setCertificateNo(String certificateNo) {
+        this.certificateNo = certificateNo;
     }
 
-    public String getDepositacctname() {
-        return depositacctname;
+    public String getDepositacctName() {
+        return depositacctName;
     }
 
-    public void setDepositacctname(String depositacctname) {
-        this.depositacctname = depositacctname;
+    public void setDepositacctName(String depositacctName) {
+        this.depositacctName = depositacctName;
     }
 
-    public String getBusinesscode() {
-        return businesscode;
+    public String getBusinessCode() {
+        return businessCode;
     }
 
-    public void setBusinesscode(String businesscode) {
-        this.businesscode = businesscode;
+    public void setBusinessCode(String businessCode) {
+        this.businessCode = businessCode;
     }
 
-    public String getBuyflag() {
-        return buyflag;
+    public String getBuyFlag() {
+        return buyFlag;
     }
 
-    public void setBuyflag(String buyflag) {
-        this.buyflag = buyflag;
+    public void setBuyFlag(String buyFlag) {
+        this.buyFlag = buyFlag;
     }
 
-    public String getCallbackurl() {
-        return callbackurl;
+    public String getCallbackUrl() {
+        return callbackUrl;
     }
 
-    public void setCallbackurl(String callbackurl) {
-        this.callbackurl = callbackurl;
+    public void setCallbackUrl(String callbackUrl) {
+        this.callbackUrl = callbackUrl;
     }
 
-    public String getDepositacct() {
-        return depositacct;
+    public String getDepositAcct() {
+        return depositAcct;
     }
 
-    public void setDepositacct(String depositacct) {
-        this.depositacct = depositacct;
+    public void setDepositAcct(String depositAcct) {
+        this.depositAcct = depositAcct;
     }
 
-    public String getCustrisk() {
-        return custrisk;
+    public String getCustRisk() {
+        return custRisk;
     }
 
-    public void setCustrisk(String custrisk) {
-        this.custrisk = custrisk;
+    public void setCustRisk(String custRisk) {
+        this.custRisk = custRisk;
     }
 
-    public String getRisklevel() {
-        return risklevel;
+    public String getRiskLevel() {
+        return riskLevel;
     }
 
-    public void setRisklevel(String risklevel) {
-        this.risklevel = risklevel;
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel = riskLevel;
     }
-
-    public String getFundcode() {
-        return fundcode;
-    }
-
-    public void setFundcode(String fundcode) {
-        this.fundcode = fundcode;
-    }
-
 }

@@ -613,7 +613,7 @@ public class JavaScriptObjectToc {
                         JSONObject obj = new JSONObject(result);
                         PublicFundInf publicFundInf = AppManager.getPublicFundInf(context.getApplicationContext());
                         if (obj.has("custno") && !BStrUtils.isEmpty(obj.getString("custno"))) {
-                            publicFundInf.setCustno(obj.getString("custno"));
+                            publicFundInf.setCustNo(obj.getString("custno"));
                             if (obj.has("type")) {
                                 publicFundInf.setType(obj.getString("type"));
                             }
@@ -621,7 +621,7 @@ public class JavaScriptObjectToc {
                             webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
                         }
                         if (obj.has("custrisk") && !BStrUtils.isEmpty(obj.getString("custrisk"))) {
-                            publicFundInf.setCustrisk(obj.getString("custrisk"));
+                            publicFundInf.setCustRisk(obj.getString("custrisk"));
                             if (obj.has("type")) {
                                 publicFundInf.setType(obj.getString("type"));
                             }
@@ -630,7 +630,7 @@ public class JavaScriptObjectToc {
                         }
 
                         if (obj.has("custRisk") && !BStrUtils.isEmpty(obj.getString("custRisk"))) {
-                            publicFundInf.setCustrisk(obj.getString("custRisk"));
+                            publicFundInf.setCustRisk(obj.getString("custRisk"));
                             if (obj.has("type")) {
                                 publicFundInf.setType(obj.getString("type"));
                             }

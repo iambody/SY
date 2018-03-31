@@ -436,8 +436,11 @@ public class NetConfig {
      * 公募基金的API
      */
     static class PUBLIC_FUND {
-        static final String HOME_RECOMMEND = PUBLIC_FUND_API_V2 + "/kz/sixiangbao";
-        static final String PRIVATE_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/userinfo";
+//        static final String HOME_RECOMMEND = PUBLIC_FUND_API_V2 + "/kz/sixiangbao";
+        static final String HOME_RECOMMEND = PUBLIC_FUND_API_V2 + "/my/wallet";//新的
+
+//        static final String PRIVATE_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/userinfo";///老的
+        static final String PRIVATE_FUND_INF = PUBLIC_FUND_API_V2 + "/userinfo";//新的 用户信息
         final static String MINE_FININCIAL_ASSERT = PUBLIC_FUND_API_V2 + "/kz/userfund";
         final static String DIRECT_JZ_URL = PUBLIC_FUND_API_V2 + "/kz/proxy";
         static final String PUBLIBC_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/proxy";

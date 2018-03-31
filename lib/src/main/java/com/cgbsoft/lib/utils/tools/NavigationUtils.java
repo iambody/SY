@@ -411,18 +411,18 @@ public class NavigationUtils {
      * @return
      */
     public static String getObjToBuy(PublishFundRecommendBean publishFundRecommendBeans, PublicFundInf publicFundInf) {
-        String fundCode = publishFundRecommendBeans.getFundcode();//基金代码
+        String fundCode = publishFundRecommendBeans.getFundCode();//基金代码
         String fundName = publishFundRecommendBeans.getFundName();//基金名称
-        String taNo = publishFundRecommendBeans.getTano();//TA代码
-        String businesscode = publishFundRecommendBeans.getBusinesscode();//业务类型，认购或申购
-        String buyflag = publishFundRecommendBeans.getBuyflag();//制购买标志，1为强制购买
-        String depositacct = RegexUtil.getPublicFundBanks(publishFundRecommendBeans.getDepositacct()); //客户银行卡号
-        String fundtype = publishFundRecommendBeans.getFundtype(); //基金类型，0-股票型基金 1-债券型基金 2-货币型基 金 3-混合型基金 4-专户基金 5-指数型基金 6-QDII 基金
-        String mobiletelno = publicFundInf.getMobileno();//客户手机号
-        String shareType = publishFundRecommendBeans.getSharetype(); //份额类别 'A'前收费 'B' 后收费
-        String certificatetype = publishFundRecommendBeans.getCertificatetype();//证件类型
-        String certificateno = publishFundRecommendBeans.getCertificateno(); //身份证号
-        String depositacctname = publishFundRecommendBeans.getDepositacctname(); //客户姓名（
+        String taNo = publishFundRecommendBeans.getTaNo();//TA代码
+        String businesscode = publishFundRecommendBeans.getBusinessCode();//业务类型，认购或申购
+        String buyflag = publishFundRecommendBeans.getBuyFlag();//制购买标志，1为强制购买
+        String depositacct = RegexUtil.getPublicFundBanks(publishFundRecommendBeans.getDepositAcct()); //客户银行卡号
+        String fundtype = publishFundRecommendBeans.getFundType(); //基金类型，0-股票型基金 1-债券型基金 2-货币型基 金 3-混合型基金 4-专户基金 5-指数型基金 6-QDII 基金
+        String mobiletelno = publicFundInf.getMobileNo();//客户手机号
+        String shareType = publishFundRecommendBeans.getShareType(); //份额类别 'A'前收费 'B' 后收费
+        String certificatetype = publishFundRecommendBeans.getCertificateType();//证件类型
+        String certificateno = publishFundRecommendBeans.getCertificateNo(); //身份证号
+        String depositacctname = publishFundRecommendBeans.getDepositacctName(); //客户姓名（
         //此处不用gson 如果某些字段是空的话 key值会直接隐藏不显示 会有问题
         JSONObject JsonObj = new JSONObject();
         try {

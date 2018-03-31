@@ -30,7 +30,7 @@ public class PublicFundInfoPresenterImpl extends BasePresenterImpl<PublicFundInf
     public void requestPublicFundInfo() {
         getView().showLoadDialog();
         HashMap<String, Object> hashMap = new HashMap<>();
-        String cusno = AppManager.getPublicFundInf(getContext()) != null ? AppManager.getPublicFundInf(getContext()).getCustno() : "";
+        String cusno = AppManager.getPublicFundInf(getContext()) != null ? AppManager.getPublicFundInf(getContext()).getCustNo() : "";
         hashMap.put("trantype", "520101");
         hashMap.put("custno", cusno);
         addSubscription(ApiClient.directRequestJzServer(hashMap).subscribe(new RxSubscriber<String>() {

@@ -98,7 +98,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
      */
     private void bindBankCardData() {
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "加载中", false, false);
-        getPresenter().getBinidedBankList(AppManager.getPublicFundInf(SelectBankCardActivity.this).getCustno(), new BasePublicFundPresenter.PreSenterCallBack<String>() {
+        getPresenter().getBinidedBankList(AppManager.getPublicFundInf(SelectBankCardActivity.this).getCustNo(), new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
