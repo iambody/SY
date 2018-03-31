@@ -6,7 +6,6 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -79,8 +78,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     @BindView(R2.id.divide_line)
     protected View mView;
-    @BindView(R2.id.baseweb_appbar)
-    AppBarLayout baseweb_appbar;
+//    @BindView(R2.id.baseweb_appbar)
+//    AppBarLayout baseweb_appbar;
 
     @BindView(R2.id.title_normal_new)
     RelativeLayout myTitleRelativeLayout;

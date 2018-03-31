@@ -871,19 +871,13 @@ public class JavaScriptObjectToc {
             String images = jsonObject.getString("data");
             String igs = new JSONObject(images).getString("images");
             PhotoPreviewIntent intent = new PhotoPreviewIntent(context);
-
             List<String> ivs = new Gson().fromJson(igs, new ArrayList<String>().getClass());
-
             intent.setPhotoPaths(ivs) ;//预览图片对象列表
-
             intent.setDefluatDrawble(R.drawable.logo) ;//加载错误时的图片
             intent.launch();
-
-
             webView.loadUrl(String.format("javascript:%s()", callback));
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 }

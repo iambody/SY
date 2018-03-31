@@ -62,7 +62,6 @@ import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
 import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
-import com.cgbsoft.privatefund.public_fund.SelectBankCardActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.FloatStewardView;
 import com.chenenyu.router.Router;
@@ -72,6 +71,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
+import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.product.com.utils.ProductNavigationUtils;
 import butterknife.BindView;
@@ -356,17 +356,17 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 //        CommonNewShareDialog shareDialog=new CommonNewShareDialog(baseActivity,CommonNewShareDialog.Tag_Style_WxPyq,null,null);
 //        shareDialog.show();
 //
-        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, SelectBankCardActivity.class));
+//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, SelectBankCardActivity.class));
 
-//        if (AppManager.isVisitor(baseActivity)) {
-//            Intent intent = new Intent(baseActivity, LoginActivity.class);
-//            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-//        } else {
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-//        }
-//        DataStatistApiParam.homeClickNew();
-//        TrackingDataManger.homeNew(baseActivity);
+        if (AppManager.isVisitor(baseActivity)) {
+            Intent intent = new Intent(baseActivity, LoginActivity.class);
+            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+        } else {
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+        }
+        DataStatistApiParam.homeClickNew();
+        TrackingDataManger.homeNew(baseActivity);
 
     }
 
