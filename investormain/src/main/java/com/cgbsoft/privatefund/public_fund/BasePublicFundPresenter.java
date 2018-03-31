@@ -2,6 +2,7 @@ package com.cgbsoft.privatefund.public_fund;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
@@ -9,6 +10,7 @@ import com.cgbsoft.lib.utils.exception.ApiException;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.widget.MToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,6 +67,9 @@ public class BasePublicFundPresenter extends BasePresenterImpl {
             @Override
             protected void onRxError(Throwable error) {
                 if(error instanceof ApiException && preSenterCallBack!=null){
+                    if("500".equals(((ApiException) error).getCode())){
+                        MToast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG);
+                    }
                     preSenterCallBack.field(((ApiException) error).getCode(),error.getMessage());
                 }
                 error.printStackTrace();

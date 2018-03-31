@@ -513,6 +513,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        MToast.makeText(BindingBankCardOfPublicFundActivity.this,"发送验证码失败", Toast.LENGTH_LONG);
                         getVerificationCode.setTag(TIME, null);
                         timer.cancel();
                     }
@@ -651,7 +652,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
             @Override
             public void field(String errorCode, String errorMsg) {
-                MToast.makeText(BindingBankCardOfPublicFundActivity.this, "绑定失败", Toast.LENGTH_LONG);
+                if(!"500".equals(errorCode)) MToast.makeText(BindingBankCardOfPublicFundActivity.this, "绑定失败", Toast.LENGTH_LONG);
                 Log.e("绑定页面", " 网络错误 " + errorMsg);
                 loadingDialog.dismiss();
             }

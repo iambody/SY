@@ -7,23 +7,22 @@ package com.cgbsoft.privatefund.public_fund.passworddiglog;
  */
 
 public class BankBranchBean {
-    private String paratype = "";
-    private String paravalue = "";
+    private String paraType = "";
+    private String paraValue = "";
 
-
-    public String getParatype() {
-        return paratype;
+    public String getParaType() {
+        return paraType;
     }
 
-    public void setParatype(String paratype) {
-        this.paratype = paratype;
+    public void setParaType(String paraType) {
+        this.paraType = paraType;
     }
 
-    public String getParavalue() {
-        return paravalue;
+    public String getParaValue() {
+        return paraValue;
     }
 
-    public void setParavalue(String paravalue) {
-        this.paravalue = paravalue;
+    public void setParaValue(String paraValue) {
+        this.paraValue = paraValue;
     }
 }

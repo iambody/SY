@@ -55,12 +55,12 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
      */
     public void getVerificationCodeFormServer(BindingBankCardBean bindingBankCardBean, String phone, String bankCode, BasePublicFundPresenter.PreSenterCallBack<String> preSenterCallBack) {
         Map<String, String> parms = new HashMap<>();
-        parms.put("certificateType", bindingBankCardBean.getCertificatetype());//证件类型（H5调取app指令的时候会传入）
-        parms.put("certificateNo", bindingBankCardBean.getCertificateno());
+       /* parms.put("certificateType", bindingBankCardBean.getCertificatetype());//证件类型（H5调取app指令的时候会传入）
+        parms.put("certificateNo", bindingBankCardBean.getCertificateno());*/
         parms.put("channelId", bindingBankCardBean.getChannelid());
-        parms.put("depositAcctName", bindingBankCardBean.getDepositacctname());
+       // parms.put("depositAcctName", bindingBankCardBean.getDepositacctname());
         parms.put("depositAcct", bankCode);
-        parms.put("mobileNo", phone);
+        parms.put("mobileTelNo", phone);
         super.handlerPublicFundResult(ApiClient.getBindCardCaptcha(parms),preSenterCallBack);
         //super.getFundDataFormJZ(parms, preSenterCallBack);
     }

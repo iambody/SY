@@ -983,16 +983,10 @@ interface RequestManager {
     /**
      * 直接请求金正接口
      */
-    @FormUrlEncoded
+
     @POST(NetConfig.PUBLIC_FUND.NEW_BANKCORD_INFO)
     Observable<ResponseBody> postNewBankCordInfo(@FieldMap Map<String, String> paramsMap);
 
-
-    /**
-     * 获取申购页面的配置信息
-     */
-    @GET(NetConfig.PUBLIC_FUND.BUY_CONFIG)
-    Observable<ResponseBody> getFundPayConfig(@QueryMap Map<String, String> paramsMap);
 
     /**
      * 获取可用的银行卡列表
@@ -1007,26 +1001,27 @@ interface RequestManager {
      * @param program
      * @return
      */
-    @GET(NetConfig.PUBLIC_FUND.BINDCARD_CAPTCHA)
-    Observable<ResponseBody> getBindCardCaptcha(@QueryMap  Map<String, String> program);
+
+    @POST(NetConfig.PUBLIC_FUND.BINDCARD_CAPTCHA)
+    Observable<ResponseBody> getBindCardCaptcha(@Body RequestBody responseBody);
 
 
     @GET(NetConfig.PUBLIC_FUND.BANK_BRANCH)
     Observable<ResponseBody> getBankBranch(@QueryMap  Map<String, String> program);
 
-    @FormUrlEncoded
+
     @POST(NetConfig.PUBLIC_FUND.BINDCARD)
-    Observable<ResponseBody> bindCard(@FieldMap  Map<String, String> program);
+    Observable<ResponseBody> bindCard(@Body RequestBody responseBody);
 
 
     @GET(NetConfig.PUBLIC_FUND.BUY_CONFIG)
     Observable<ResponseBody> getBuyInfo(@QueryMap  Map<String, String> program);
 
-    @FormUrlEncoded
-    @POST(NetConfig.PUBLIC_FUND.ORDER_AND_PAY)
-    Observable<ResponseBody> getOrderAndPay(@QueryMap  Map<String, String> program);
 
-    @FormUrlEncoded
+    @POST(NetConfig.PUBLIC_FUND.ORDER_AND_PAY)
+    Observable<ResponseBody> getOrderAndPay(@Body RequestBody responseBody);
+
+
     @POST(NetConfig.PUBLIC_FUND.REDEEM)
-    Observable<ResponseBody> redeem(@QueryMap  Map<String, String> program);
+    Observable<ResponseBody> redeem(@Body RequestBody responseBody);
 }

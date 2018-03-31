@@ -78,8 +78,8 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
         bankList.setAdapter(new SelectBankAdapter(bankListBranchs, new SelectBankAdapter.SelectBankCardLinsterer() {
             @Override
             public void seclecBranchBankCard(BankBranchBean bankBranchBean) {
-                getIntent().putExtra(PARATYPE,bankBranchBean.getParatype());
-                getIntent().putExtra(CHANNEL_NAME,bankBranchBean.getParavalue());
+                getIntent().putExtra(PARATYPE,bankBranchBean.getParaType());
+                getIntent().putExtra(CHANNEL_NAME,bankBranchBean.getParaValue());
                 setResult(Activity.RESULT_OK,getIntent());
                 finish();
             }
@@ -94,7 +94,7 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
                     bankListBranchs.addAll(originBankListBranchs);
                 }else {
                     for(BankBranchBean bankBranchBean:originBankListBranchs){
-                        if(BStrUtils.NullToStr1(bankBranchBean.getParavalue()).contains(value)) bankListBranchs.add(bankBranchBean);
+                        if(BStrUtils.NullToStr1(bankBranchBean.getParaValue()).contains(value)) bankListBranchs.add(bankBranchBean);
                     }
                 }
                 bankList.getAdapter().notifyDataSetChanged();
@@ -262,7 +262,7 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
 
             public void bindView(BankBranchBean bankBranchBean) {
                 this.bankBranchBean = bankBranchBean;
-                bankName.setText(bankBranchBean.getParavalue());
+                bankName.setText(bankBranchBean.getParaValue());
             }
 
         }

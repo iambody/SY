@@ -455,7 +455,7 @@ public class NetConfig {
         static final String BUY_CONFIG = PUBLIC_FUND_API_V2 + "/buyinfo";//申购配置信息
         static final String BINDCARD_CAPTCHA = PUBLIC_FUND_API_V2 + "/bindcardcaptcha";
         static final String BANK_BRANCH= PUBLIC_FUND_API_V2 + "/bankbranch";
-        static final String BINDCARD= PUBLIC_FUND_API_V2 + "/bankbranch";
+        static final String BINDCARD= PUBLIC_FUND_API_V2 + "/bindcard";
 
         static final String ORDER_AND_PAY= PUBLIC_FUND_API_V2 + "/orderandpay";
 

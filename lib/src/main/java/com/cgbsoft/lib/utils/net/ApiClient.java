@@ -1901,7 +1901,7 @@ public class ApiClient {
      * @return
      */
     public static Observable<String> getBindCardCaptcha(Map<String,String> params) {
-        return OKHTTP.getInstance().getRequestManager().getBindCardCaptcha(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().getBindCardCaptcha(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1920,7 +1920,7 @@ public class ApiClient {
      * @return
      */
     public static Observable<String> bindCard(Map<String,String> params) {
-        return OKHTTP.getInstance().getRequestManager().bindCard(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().bindCard(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
 
@@ -1941,7 +1941,7 @@ public class ApiClient {
      * @return
      */
     public static Observable<String> getOrderAndPay(Map<String,String> params) {
-        return OKHTTP.getInstance().getRequestManager().getOrderAndPay(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().getOrderAndPay(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
     /**
@@ -1950,7 +1950,7 @@ public class ApiClient {
      * @return
      */
     public static Observable<String> redeem(Map<String,String> params) {
-        return OKHTTP.getInstance().getRequestManager().redeem(createProgram(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+        return OKHTTP.getInstance().getRequestManager().redeem(mapToBody(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
     }
 
  /*   *//**

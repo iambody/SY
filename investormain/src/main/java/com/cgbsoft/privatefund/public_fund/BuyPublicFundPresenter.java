@@ -110,6 +110,8 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
             }
 
         });
+        // TODo
+        super.handlerPublicFundResult(ApiClient.getOrderAndPay(hashMap),callBack);
 
 }
 
