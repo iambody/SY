@@ -18,7 +18,7 @@ public class NetConfig {
 
     //        private static String START_APP = "https://app";
 //    public static String START_APP = "https://d8-app";//sim
-        public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
+    public static String START_APP = BaseApplication.getContext().getResources().getString(R.string.URL_BASE);//sim
     private static String START_DS = "http://muninubc";
     private static String START_WWW = "http://www";
     private static String BASE = ".simuyun.com";
@@ -436,12 +436,15 @@ public class NetConfig {
      * 公募基金的API
      */
     static class PUBLIC_FUND {
-//        static final String HOME_RECOMMEND = PUBLIC_FUND_API_V2 + "/kz/sixiangbao";
+        //        static final String HOME_RECOMMEND = PUBLIC_FUND_API_V2 + "/kz/sixiangbao";//老的
         static final String HOME_RECOMMEND = PUBLIC_FUND_API_V2 + "/my/wallet";//新的
 
-//        static final String PRIVATE_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/userinfo";///老的
-        static final String PRIVATE_FUND_INF = PUBLIC_FUND_API_V2 + "/userinfo";//新的 用户信息
+        //        static final String PRIVATE_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/userinfo";///老的
+        static final String PRIVATE_FUND_INF = PUBLIC_FUND_API_V2 + "/userinfo";//新的
+
         final static String MINE_FININCIAL_ASSERT = PUBLIC_FUND_API_V2 + "/kz/userfund";
+
+
         final static String DIRECT_JZ_URL = PUBLIC_FUND_API_V2 + "/kz/proxy";
         static final String PUBLIBC_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/proxy";
         static final String BUY_CONFIG = PUBLIC_FUND_API_V2 + "/kz/fundbuyinginfo";//申购配置信息
