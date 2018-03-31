@@ -74,7 +74,11 @@ public class Imageload {
             drawableTypeRequest.error(R.drawable.logo).into(imageView);
         }
     }
-
+    private static void base1(DrawableTypeRequest drawableTypeRequest, ImageView imageView) {
+        if (drawableTypeRequest != null) {
+            drawableTypeRequest.error(R.drawable.logo).placeholder(R.drawable.logo).into(imageView);
+        }
+    }
     private static void baseListener(DrawableTypeRequest drawableTypeRequest, ImageView imageView, RequestListener requestListener) {
         if (drawableTypeRequest != null) {
             drawableTypeRequest.listener(requestListener).into(imageView);
