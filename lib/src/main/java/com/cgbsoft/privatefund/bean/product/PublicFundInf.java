@@ -52,8 +52,7 @@ public class PublicFundInf {
     }
 
     public String getCustRisk() {
-        return "02";
-//        return custRisk;
+        return custRisk;
 
     }
 
