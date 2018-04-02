@@ -13,26 +13,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
-import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.BindBankCardInfoBean;
 import com.cgbsoft.privatefund.bean.DataDictionary;
-import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.mvp.contract.center.BindBankCardInfoContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.BindBankCardInfoPresenterImpl;
 import com.cgbsoft.privatefund.public_fund.BindingBankCardOfPublicFundActivity;
 import com.cgbsoft.privatefund.public_fund.PayFundBankSelectDialog;
-import com.cgbsoft.privatefund.public_fund.PayPasswordDialog;
 import com.chenenyu.router.annotation.Route;
 
 import java.util.ArrayList;
@@ -285,8 +279,8 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
                     holder = (ViewHolder) view.getTag();
                 }
                 String simpleBankName = findNameByChannelId(bindBankCardInfoBean.getChannelid());
-                holder.bank_name.setText(TextUtils.isEmpty(simpleBankName) ? bindBankCardInfoBean.getBankname(): simpleBankName);
-                holder.bank_number.setText(hintLastBankCardNumber(bindBankCardInfoBean.getDepositacct()));
+                holder.bank_name.setText(TextUtils.isEmpty(simpleBankName) ? bindBankCardInfoBean.getBankName(): simpleBankName);
+                holder.bank_number.setText(hintLastBankCardNumber(bindBankCardInfoBean.getDepositAcct()));
                 Imageload.display(BindBankCardInfoActivity.this, bindBankCardInfoBean.getIcon(), holder.bankIcon);
                 Imageload.displayListenr(BindBankCardInfoActivity.this, bindBankCardInfoBean.getBackground(), holder.relativeLayout);
             } else if (getItemViewType(position) == BUTTON) {
