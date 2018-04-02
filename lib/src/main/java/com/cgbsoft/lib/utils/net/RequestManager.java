@@ -1001,15 +1001,17 @@ interface RequestManager {
 
     /**
      * 获取可用的银行卡列表
+     *
      * @param program
      * @return
      */
     @GET(NetConfig.PUBLIC_FUND.USEABLE_BANK_LIST_INFO)
-    Observable<ResponseBody> getUseableBankList(@QueryMap  Map<String, String> program);
+    Observable<ResponseBody> getUseableBankList(@QueryMap Map<String, String> program);
 
     /**
      * 获取绑定银行卡界面的验证码
-     * @param program
+     *
+     * @param
      * @return
      */
 
@@ -1018,7 +1020,7 @@ interface RequestManager {
 
 
     @GET(NetConfig.PUBLIC_FUND.BANK_BRANCH)
-    Observable<ResponseBody> getBankBranch(@QueryMap  Map<String, String> program);
+    Observable<ResponseBody> getBankBranch(@QueryMap Map<String, String> program);
 
 
     @POST(NetConfig.PUBLIC_FUND.BINDCARD)
@@ -1026,7 +1028,7 @@ interface RequestManager {
 
 
     @GET(NetConfig.PUBLIC_FUND.BUY_CONFIG)
-    Observable<ResponseBody> getBuyInfo(@QueryMap  Map<String, String> program);
+    Observable<ResponseBody> getBuyInfo(@QueryMap Map<String, String> program);
 
 
     @POST(NetConfig.PUBLIC_FUND.ORDER_AND_PAY)
