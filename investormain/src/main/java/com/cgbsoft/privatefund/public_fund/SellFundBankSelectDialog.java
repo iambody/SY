@@ -152,7 +152,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
             index = postion;
             BuyPublicFundActivity.BankCardInfo bankCardInfo = selectListener.get(postion);
 
-            String bankCoade = bankCardInfo.getDepositacct();
+            String bankCoade = bankCardInfo.getDepositAcct();
             if (curBankNum.trim().equals(bankCoade.trim())) {
                 selectState.setVisibility(View.VISIBLE);
                 selectState.setBackgroundResource(R.drawable.icon_paybank_selected);
@@ -165,9 +165,9 @@ public class SellFundBankSelectDialog extends BaseDialog {
             }
             bankName.setText(bankCardInfo.getBankShortName() + "(" + bankCoade + ")");
             if(isFund){
-                this.bankLimit.setText("可卖出份额"+bankCardInfo.getAvailbalMode1()+"份");
+                this.bankLimit.setText("可卖出份额"+bankCardInfo.getAvailBalMode1()+"份");
             }else {
-                this.bankLimit.setText("可体现金额"+bankCardInfo.getAvailbalMode1()+"元");
+                this.bankLimit.setText("可体现金额"+bankCardInfo.getAvailBalMode1()+"元");
             }
             Imageload.display(bankIcon.getContext(),bankCardInfo.getIcon(),bankIcon,R.drawable.bank_icon,R.drawable.bank_icon);
             //bankIcon.setBackgroundResource(R.drawable.bank_icon);

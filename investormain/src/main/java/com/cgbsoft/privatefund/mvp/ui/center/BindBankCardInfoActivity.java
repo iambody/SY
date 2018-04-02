@@ -300,17 +300,6 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
         }
     }
 
-    private String findNameByChannelId(String channelId) {
-        if (!CollectionUtils.isEmpty(dataDictionaryList)) {
-            for (DataDictionary dataDictionary : dataDictionaryList) {
-                if (TextUtils.equals(channelId, dataDictionary.getSubitem())) {
-                    return dataDictionary.getSubitemname();
-                }
-            }
-        }
-        return "";
-    }
-
     class ViewHolder{
         TextView bank_name;
         TextView bank_type;

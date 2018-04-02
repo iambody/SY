@@ -89,20 +89,86 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     @Override
     protected void init(Bundle savedInstanceState) {
         String data = getIntent().getStringExtra(Tag_PARAM);
+     /*
+     {
+"fundCode":"210012",
+"largeRedemptionFlag":1,
+"fundName":"盈泰钱包",
+"bankCardList":[
+{
+"branchCode":"370",
+"custNo":"212",
+"taNo":"21",
+"transactionAccountId":"Z008A00000259",
+"availBal":"12996",
+"availBalMode1":"12996",
+"balFund":"12996",
+"balFundMode1":"12996",
+"channelId":"招商银行",
+"depositAcct":"6225881010120920",
+"icon":"http:\/\/upload.simuyun.com\/publicfund\/bankicon\/CMB3x.png",
+"background":"http:\/\/upload.simuyun.com\/publicfund\/bankicon\/CMB-bg3x.png",
+"bankShortName":"招商银行",
+"bankLimit":"",
+"bankEnableStatus":"0"
+}
+],
+"isSxb":"0",
+"limitMoney":"0",
+"fundType":"2",
+"fastRedeemFlag":"1",
+"singleRedeemMaxAmount":"9999999999999.00",
+"dailyRedeemLimit":"9999999999999.00",
+"dailySurplusAmt":"9999999999999.00",
+"dailyRedeemAmt":"0.00"
+}
+{
+"fundCode":"210012",
+"largeRedemptionFlag":1,
+"fundName":"盈泰钱包",
+"bankCardList":[
+{
+"branchCode":"370",
+"custNo":"212",
+"taNo":"21",
+"transactionAccountId":"Z008A00000259",
+"availBal":"12996",
+"availBalMode1":"12996",
+"balFund":"12996",
+"balFundMode1":"12996",
+"channelId":"招商银行",
+"depositAcct":"6225881010120920",
+"icon":"http://upload.simuyun.com/publicfund/bankicon/CMB3x.png",
+"background":"http://upload.simuyun.com/publicfund/bankicon/CMB-bg3x.png",
+"bankShortName":"招商银行",
+"bankLimit":"",
+"bankEnableStatus":"0"
+}
+],
+"isSxb":"0",
+"limitMoney":"0",
+"fundType":"2",
+"fastRedeemFlag":"1",
+"singleRedeemMaxAmount":"9999999999999.00",
+"dailyRedeemLimit":"9999999999999.00",
+"dailySurplusAmt":"9999999999999.00",
+"dailyRedeemAmt":"0.00"
+}
+      */
 
         try {
             JSONObject jsonObject = new JSONObject(data);
-            fundcode = jsonObject.getString("fundcode");
-            fundName = jsonObject.getString("fundname");
+            fundcode = jsonObject.getString("fundCode");
+            fundName = jsonObject.getString("fundName");
             // transactionaccountid = jsonObject.getString("transactionaccountid");
-            largeredemptionflag = jsonObject.getString("largeredemptionflag");
+            largeredemptionflag = jsonObject.getString("largeRedemptionFlag");
             fundType = jsonObject.getString("fundType");
 
             // branchcode = jsonObject.getString("branchcode");
             // availbal = jsonObject.getString("availbal");
-            issxb = jsonObject.getString("issxb");
+            issxb = jsonObject.getString("isSxb");
             limitMoney = jsonObject.getString("limitMoney");
-            bankcardlist = new Gson().fromJson(jsonObject.getString("bankcardlist"), new TypeToken<List<BuyPublicFundActivity.BankCardInfo>>() {
+            bankcardlist = new Gson().fromJson(jsonObject.getString("bankCardList"), new TypeToken<List<BuyPublicFundActivity.BankCardInfo>>() {
             }.getType());
 
             if ("1".equals(issxb)) {
@@ -110,7 +176,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             } else {
                 isFund = false;
             }
-            fastredeemflag = jsonObject.getString("fastredeemflag");
+            fastredeemflag = jsonObject.getString("fastRedeemFlag");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -174,9 +240,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     sellFinsh.setBackgroundResource(R.color.app_golden);
                 }
                 if (s.equals(input.getText())) return;
-                if (curruntBankCard != null && new BigDecimal(s.toString()).subtract(new BigDecimal(curruntBankCard.getAvailbalMode1())).doubleValue() > 0) {
-                    input.setText(curruntBankCard.getAvailbalMode1());
-                    input.setSelection(curruntBankCard.getAvailbalMode1().length());
+                if (curruntBankCard != null && new BigDecimal(s.toString()).subtract(new BigDecimal(curruntBankCard.getAvailBalMode1())).doubleValue() > 0) {
+                    input.setText(curruntBankCard.getAvailBalMode1());
+                    input.setSelection(curruntBankCard.getAvailBalMode1().length());
                 }
             }
         });
@@ -201,13 +267,13 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         }
         Imageload.display(SellPublicFundActivity.this, bankCardInfo.getIcon(), this.bankIcon, R.drawable.bank_icon, R.drawable.bank_icon);
         this.bankName.setText(bankCardInfo.getBankShortName());
-        String bankcode = bankCardInfo.getDepositacct();
+        String bankcode = bankCardInfo.getDepositAcct();
         String tailCode = bankcode.length() > 4 ? bankcode.substring(bankcode.length() - 4) : bankcode;
         this.bankTailCode.setText(tailCode);
         if (isFund) {
-            this.bankLimit.setText("可卖出份额" + bankCardInfo.getAvailbalMode1() + "份");
+            this.bankLimit.setText("可卖出份额" + bankCardInfo.getAvailBalMode1() + "份");
         } else {
-            this.bankLimit.setText("可提现金额" + bankCardInfo.getAvailbalMode1() + "元");
+            this.bankLimit.setText("可提现金额" + bankCardInfo.getAvailBalMode1() + "元");
         }
         if (isFund) {
             fastredeemflag = "0";
@@ -245,7 +311,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             case R.id.rl_bank_card:
                 if (curruntBankCard == null || bankcardlist == null || bankcardlist.size() <= 1)
                     return;
-                new SellFundBankSelectDialog(this, curruntBankCard.getDepositacct(), bankcardlist, isFund, new PayFundBankSelectDialog.SelectListener() {
+                new SellFundBankSelectDialog(this, curruntBankCard.getDepositAcct(), bankcardlist, isFund, new PayFundBankSelectDialog.SelectListener() {
                     @Override
                     public void select(int index) {
                         Log.e(this.getClass().getSimpleName(), "选择银行卡" + index);
@@ -267,7 +333,6 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         }
     }
 
-
     /**
      * 开始支付
      *
@@ -276,7 +341,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     private void starSell(String money, String payPassword) {
         if (curruntBankCard == null) return;
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在交易", false, false);
-        getPresenter().sureSell(fundcode, this.largeredemptionflag, this.curruntBankCard.getTransactionaccountid(), this.curruntBankCard.getBranchcode(), this.curruntBankCard.getTano(),
+        getPresenter().sureSell(fundcode, this.largeredemptionflag, this.curruntBankCard.getTransactionAccountId(), this.curruntBankCard.getBranchCode(),
                 fastredeemflag, money, payPassword, new BasePublicFundPresenter.PreSenterCallBack<String>() {
 
                     @Override

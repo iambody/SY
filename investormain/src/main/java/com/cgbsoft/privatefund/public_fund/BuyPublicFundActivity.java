@@ -29,9 +29,6 @@ import com.cgbsoft.privatefund.bean.DataDictionary;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -175,8 +172,8 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
                 break;
             case R.id.rl_bank_card: // 用于支付的银行卡
-                if (currectPayBank == null || bean == null || bean.getBankCardInfoList() == null || bean.getBankCardInfoList().size() <0) return;
-                new PayFundBankSelectDialog(this,currectPayBank.getDepositacct(), bean.getBankCardInfoList(), new PayFundBankSelectDialog.SelectListener() {
+                if (currectPayBank == null || bean == null || bean.getUserBankCardInfo() == null || bean.getUserBankCardInfo().size() <0) return;
+                new PayFundBankSelectDialog(this,currectPayBank.getDepositAcct(), bean.getUserBankCardInfo(), new PayFundBankSelectDialog.SelectListener() {
                     @Override
                     public void select(int index) {
                         Log.e(this.getClass().getSimpleName(), "选择银行卡" + index);
@@ -187,7 +184,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                             intent.putExtra(BindingBankCardOfPublicFundActivity.TITLE,"使用新卡支付");
                             activity.startActivityForResult(intent, PayFundBankSelectDialog.REQUESTCODE);
                         } else if (index >= 0) {
-                            BankCardInfo bankCardInfo = bean.getBankCardInfoList().get(index);
+                            BankCardInfo bankCardInfo = bean.getUserBankCardInfo().get(index);
                             if (bankCardInfo == null) return;
                             currectPayBank = bankCardInfo;
                             showBankView();
@@ -258,8 +255,8 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 loadingDialog.dismiss();
                 bean = new Gson().fromJson(o, Bean.class);
                 bean.setFundCode(fundCode);
-                if(bean.getBankCardInfoList().size()>0){
-                    currectPayBank = bean.getBankCardInfoList().get(0);
+                if(bean.getUserBankCardInfo().size()>0){
+                    currectPayBank = bean.getUserBankCardInfo().get(0);
                 }
                 if(currectPayBank == null) return;
                 showBankView();
@@ -280,7 +277,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      */
     Map<String,String> dictionaryTable = null;
     private void showBankView() {
-        if(bean != null && bean.getBankCardInfoList().size()>1){
+        if(bean != null && bean.getUserBankCardInfo().size()>1){
             findViewById(R.id.iv_direct).setBackgroundResource(R.drawable.direct_right);
         }else {
             findViewById(R.id.iv_direct).setBackgroundResource(0);
@@ -301,7 +298,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
         Imageload.display(BuyPublicFundActivity.this,currectPayBank.getIcon(),this.bankIcon,R.drawable.bank_icon,R.drawable.bank_icon);
         this.bankName.setText(currectPayBank.getBankShortName());
-        String bankCoade = currectPayBank.getDepositacct();
+        String bankCoade = currectPayBank.getDepositAcct();
         if (bankCoade.length() > 4) {
             bankTailCode.setText(bankCoade.substring(bankCoade.length() - 4));
         }
@@ -326,6 +323,16 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
+
+                TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this,BuyPublicFundActivity.this.fundName);
+                if(isPublicFund){
+                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,2,fundType,money);
+                }else {
+                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + money, "申购成功", false);
+                }
+                finish();
+
+            /*
                 try {
                     String code = new JSONObject(result).getString("code");
                     String message = new JSONObject(result).getString("message");
@@ -344,7 +351,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 } catch (JSONException e) {
                     MToast.makeText(BuyPublicFundActivity.this, "申购失败", Toast.LENGTH_LONG);
                     e.printStackTrace();
-                }
+                }*/
 /*
 
                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
@@ -382,10 +389,10 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             BankCardInfo bankCordInfo = (BankCardInfo) data.getExtras().get("bankCordInfo");
             if(bankCordInfo == null) return;
 
-            bankCordInfo.setCustno(currectPayBank.getCustno());
+            bankCordInfo.setCustNo(currectPayBank.getCustNo());
             String bankName = dictionaryTable.get(bankCordInfo.getChannelId());
-            if(!TextUtils.isEmpty(bankName)) bankCordInfo.setBankname(bankName);
-            if(bean != null) bean.getBankCardInfoList().add(0,bankCordInfo);
+            if(!TextUtils.isEmpty(bankName)) bankCordInfo.setBankName(bankName);
+            if(bean != null) bean.getUserBankCardInfo().add(0,bankCordInfo);
             currectPayBank = bankCordInfo;
             showBankView();
         }
@@ -415,17 +422,32 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                         "tano": "21"
                 }*/
 
+        /**
+         {
+         "businessCode":"22",
+         "fundType":"2",
+         "userBankCardInfo":[
+
+         ],
+         "fundName":"金鹰货币A",
+         "taNo":"21",
+         "shareType":" ",
+         "limitOrderAmt":"1",
+         "buyFlag":"1"
+         }
+         */
+
         private String fundName; // 基金名字
         private String fundCode; // 基金号
-        private String fundtype; // 基金类型
-        private String sharetype; // 收费类型
-        private String buyflag = "1";
-        private String tano;// TA代码
-        private String businesscode;
-        private String rate; // 费率
+        private String fundType; // 基金类型
+        private String shareType; // 收费类型
+        private String buyFlag = "1";
+        private String taNo;// TA代码
+        private String businessCode;
+      /*  private String rate; // 费率
         private String profitDate; // 收益日期
         private String limitOfDay; //银行卡每日限额
-        private String limitOfSingle; //银行卡单笔限额
+        private String limitOfSingle; //银行卡单笔限额*/
         private String limitOrderAmt; //最低买入
         private List<BankCardInfo> userBankCardInfo = new ArrayList<>();
 
@@ -446,84 +468,44 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             this.fundCode = fundCode;
         }
 
-        public String getFundtype() {
-            return fundtype;
+        public String getFundType() {
+            return fundType;
         }
 
-        public void setFundtype(String fundtype) {
-            this.fundtype = fundtype;
+        public void setFundType(String fundType) {
+            this.fundType = fundType;
         }
 
-        public String getSharetype() {
-            return sharetype;
+        public String getShareType() {
+            return shareType;
         }
 
-        public void setSharetype(String sharetype) {
-            this.sharetype = sharetype;
+        public void setShareType(String shareType) {
+            this.shareType = shareType;
         }
 
-        public String getBuyflag() {
-            return buyflag;
+        public String getBuyFlag() {
+            return buyFlag;
         }
 
-        public void setBuyflag(String buyflag) {
-            this.buyflag = buyflag;
+        public void setBuyFlag(String buyFlag) {
+            this.buyFlag = buyFlag;
         }
 
-        public String getRate() {
-            return rate;
+        public String getTaNo() {
+            return taNo;
         }
 
-        public void setRate(String rate) {
-            this.rate = rate;
+        public void setTaNo(String taNo) {
+            this.taNo = taNo;
         }
 
-        public String getProfitDate() {
-            return profitDate;
+        public String getBusinessCode() {
+            return businessCode;
         }
 
-        public void setProfitDate(String profitDate) {
-            this.profitDate = profitDate;
-        }
-
-        public String getLimitOfDay() {
-            return limitOfDay;
-        }
-
-        public void setLimitOfDay(String limitOfDay) {
-            this.limitOfDay = limitOfDay;
-        }
-
-        public String getLimitOfSingle() {
-            return limitOfSingle;
-        }
-
-        public void setLimitOfSingle(String limitOfSingle) {
-            this.limitOfSingle = limitOfSingle;
-        }
-
-        public String getTano() {
-            return tano;
-        }
-
-        public void setTano(String tano) {
-            this.tano = tano;
-        }
-
-        public String getBusinesscode() {
-            return businesscode;
-        }
-
-        public void setBusinesscode(String businesscode) {
-            this.businesscode = businesscode;
-        }
-
-        public List<BankCardInfo> getBankCardInfoList() {
-            return userBankCardInfo;
-        }
-
-        public void setBankCardInfoList(List<BankCardInfo> bankCardInfoList) {
-            this.userBankCardInfo = bankCardInfoList;
+        public void setBusinessCode(String businessCode) {
+            this.businessCode = businessCode;
         }
 
         public String getLimitOrderAmt() {
@@ -532,6 +514,14 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
         public void setLimitOrderAmt(String limitOrderAmt) {
             this.limitOrderAmt = limitOrderAmt;
+        }
+
+        public List<BankCardInfo> getUserBankCardInfo() {
+            return userBankCardInfo;
+        }
+
+        public void setUserBankCardInfo(List<BankCardInfo> userBankCardInfo) {
+            this.userBankCardInfo = userBankCardInfo;
         }
     }
 
@@ -567,30 +557,51 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                  "                transactionaccountid = Z004A00000349; //交易账户"
                  */
 
+
+        /**
+         *  {
+         "authenticateFlag":"1",
+         "background":"http://upload.simuyun.com/publicfund/bankicon/HXBANK-bg3x.png",
+         "bankEnableStatus":"1",
+         "bankLimit":"",
+         "bankName":"华夏银行",
+         "bankShortName":"华夏银行",
+         "branchCode":"370",
+         "cardTelNo":" ",
+         "channelId":"Z017",
+         "custNo":"225",
+         "depositAcct":"6226311810148946",
+         "depositAcctName":"刘聪为",
+         "icon":"http://upload.simuyun.com/publicfund/bankicon/HXBANK3x.png",
+         "isOpenMobileTrade":"0",
+         "moneyAccount":"217",
+         "paycenterId":"0330",
+         "status":0,
+         "transactionAccountId":"Z017A00000267"
+         }
+         */
         private String moneyaccount = ""; // /交易账户id（从银行卡列表信息中获取
-        private String transactionaccountid = ""; // 账户号
-        private String bankname = ""; // 名字
-        private String depositacct = ""; // 卡号
+        private String transactionAccountId = ""; // 账户号
+        private String bankName = ""; // 名字
+        private String depositAcct = ""; // 卡号
         private String status;
-        private String cardtelno;
-        private String custno = ""; // 客户号
-        private String paycenterid; // 所属网点
-        private String authenticateflag;
-        private String branchcode;
-        private String isopenmobiletrade;
-        private String depositacctname;
+        private String cardTelNo;
+        private String custNo = ""; // 客户号
+        private String paycenterId; // 所属网点
+        private String authenticateFlag;
+        private String branchCode;
+        private String isOpenMobileTrade;
+        private String depositAcctName;
         private String bankShortName = "银行";  // 银行简称
         private String bankLimit;  // 银行卡限额
         private String bankEnableStatus;  // 银行卡可用状态　0不可用，１可用
-        private String availbalMode1 = ""; //　申请基金的份额
-        private String balfund = ""; //　
-        private String balfundMode1 = ""; //　
+        private String balFund = ""; //　
+        private String balFundMode1 = ""; //　
         private String background = ""; //　
         private String icon = ""; //　
-        private String tano = ""; //　
-
-
         private String channelId;  // 支付网点号
+
+        private String availBalMode1 = ""; //　申请基金的份额(H５传过来)
         private String fullName;  //　渠道名字
         private String bankNameId;  //银行Id
 
@@ -618,13 +629,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             this.bankNameId = bankNameId;
         }
 
-        public String getTransactionaccountid() {
-            return transactionaccountid;
-        }
-
-        public void setTransactionaccountid(String transactionaccountid) {
-            this.transactionaccountid = transactionaccountid;
-        }
 
         public String getMoneyaccount() {
             return moneyaccount;
@@ -634,20 +638,29 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             this.moneyaccount = moneyaccount;
         }
 
-        public String getBankname() {
-            return bankname;
+
+        public String getTransactionAccountId() {
+            return transactionAccountId;
         }
 
-        public void setBankname(String bankname) {
-            this.bankname = bankname;
+        public void setTransactionAccountId(String transactionAccountId) {
+            this.transactionAccountId = transactionAccountId;
         }
 
-        public String getDepositacct() {
-            return depositacct;
+        public String getBankName() {
+            return bankName;
         }
 
-        public void setDepositacct(String depositacct) {
-            this.depositacct = depositacct;
+        public void setBankName(String bankName) {
+            this.bankName = bankName;
+        }
+
+        public String getDepositAcct() {
+            return depositAcct;
+        }
+
+        public void setDepositAcct(String depositAcct) {
+            this.depositAcct = depositAcct;
         }
 
         public String getStatus() {
@@ -658,60 +671,60 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             this.status = status;
         }
 
-        public String getCardtelno() {
-            return cardtelno;
+        public String getCardTelNo() {
+            return cardTelNo;
         }
 
-        public void setCardtelno(String cardtelno) {
-            this.cardtelno = cardtelno;
+        public void setCardTelNo(String cardTelNo) {
+            this.cardTelNo = cardTelNo;
         }
 
-        public String getCustno() {
-            return custno;
+        public String getCustNo() {
+            return custNo;
         }
 
-        public void setCustno(String custno) {
-            this.custno = custno;
+        public void setCustNo(String custNo) {
+            this.custNo = custNo;
         }
 
-        public String getPaycenterid() {
-            return paycenterid;
+        public String getPaycenterId() {
+            return paycenterId;
         }
 
-        public void setPaycenterid(String paycenterid) {
-            this.paycenterid = paycenterid;
+        public void setPaycenterId(String paycenterId) {
+            this.paycenterId = paycenterId;
         }
 
-        public String getAuthenticateflag() {
-            return authenticateflag;
+        public String getAuthenticateFlag() {
+            return authenticateFlag;
         }
 
-        public void setAuthenticateflag(String authenticateflag) {
-            this.authenticateflag = authenticateflag;
+        public void setAuthenticateFlag(String authenticateFlag) {
+            this.authenticateFlag = authenticateFlag;
         }
 
-        public String getBranchcode() {
-            return branchcode;
+        public String getBranchCode() {
+            return branchCode;
         }
 
-        public void setBranchcode(String branchcode) {
-            this.branchcode = branchcode;
+        public void setBranchCode(String branchCode) {
+            this.branchCode = branchCode;
         }
 
-        public String getIsopenmobiletrade() {
-            return isopenmobiletrade;
+        public String getIsOpenMobileTrade() {
+            return isOpenMobileTrade;
         }
 
-        public void setIsopenmobiletrade(String isopenmobiletrade) {
-            this.isopenmobiletrade = isopenmobiletrade;
+        public void setIsOpenMobileTrade(String isOpenMobileTrade) {
+            this.isOpenMobileTrade = isOpenMobileTrade;
         }
 
-        public String getDepositacctname() {
-            return depositacctname;
+        public String getDepositAcctName() {
+            return depositAcctName;
         }
 
-        public void setDepositacctname(String depositacctname) {
-            this.depositacctname = depositacctname;
+        public void setDepositAcctName(String depositAcctName) {
+            this.depositAcctName = depositAcctName;
         }
 
         public String getBankShortName() {
@@ -738,28 +751,20 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             this.bankEnableStatus = bankEnableStatus;
         }
 
-        public String getAvailbalMode1() {
-            return availbalMode1;
+        public String getBalFund() {
+            return balFund;
         }
 
-        public void setAvailbalMode1(String availbalMode1) {
-            this.availbalMode1 = availbalMode1;
+        public void setBalFund(String balFund) {
+            this.balFund = balFund;
         }
 
-        public String getBalfund() {
-            return balfund;
+        public String getBalFundMode1() {
+            return balFundMode1;
         }
 
-        public void setBalfund(String balfund) {
-            this.balfund = balfund;
-        }
-
-        public String getBalfundMode1() {
-            return balfundMode1;
-        }
-
-        public void setBalfundMode1(String balfundMode1) {
-            this.balfundMode1 = balfundMode1;
+        public void setBalFundMode1(String balFundMode1) {
+            this.balFundMode1 = balFundMode1;
         }
 
         public String getBackground() {
@@ -778,12 +783,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             this.icon = icon;
         }
 
-        public String getTano() {
-            return tano;
+        public String getAvailBalMode1() {
+            return availBalMode1;
         }
 
-        public void setTano(String tano) {
-            this.tano = tano;
+        public void setAvailBalMode1(String availBalMode1) {
+            this.availBalMode1 = availBalMode1;
         }
     }
 }

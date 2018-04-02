@@ -3,10 +3,8 @@ package com.cgbsoft.privatefund.public_fund;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.net.ApiClient;
-import com.cgbsoft.lib.utils.tools.BStrUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +19,7 @@ class SellPUblicFundPresenter extends BasePublicFundPresenter {
     }
 
     public void sureSell(String fundcode, String largeredemptionflag, String transactionaccountid, String branchcode,
-                         String tano, String fastredeemflag, String money, String payPassword,PreSenterCallBack preSenterCallBack) {
+                        String fastredeemflag, String money, String payPassword,PreSenterCallBack preSenterCallBack) {
       /* {
             trantype: '520004',
                     applicationvol:'100000',//申请份额(必填 String)[用户手动填写]
@@ -38,25 +36,34 @@ class SellPUblicFundPresenter extends BasePublicFundPresenter {
 
         }*/
 
+        /*
+         *{"applicationVol":"5", //申请份额(必填 String)[用户手动填写]
+         * "transactionAccountId":"Z017A00000267", ,//交易账号(必填 String)[H5调取app指令的时候会传入]
+         * "fundCode":"202001", //基金代码(必填 String)[H5调取app指令的时候会传入]
+         * "branchCode":"370", //份额托管网点编号(必填 String)[H5调取app指令的时候会传入]
+         * "tPasswd":"123456" //交易密码
+         * }
+         */
+
         Map<String,String> parms = new HashMap<>();
-        parms.put("custNo", AppManager.getPublicFundInf(getContext()).getCustNo());
+    //    parms.put("custNo", AppManager.getPublicFundInf(getContext()).getCustNo());
         parms.put("fundCode",fundcode);
-        parms.put("largeRedemptionFlag",largeredemptionflag);
+     //   parms.put("largeRedemptionFlag",largeredemptionflag);
         parms.put("transactionAccountId",transactionaccountid);
         parms.put("branchCode",branchcode);
-        parms.put("taNo",tano);
-        if(!BStrUtils.isEmpty(fastredeemflag)){
-            parms.put("fastRedeemFlag",fastredeemflag);
-        }
-        parms.put("taserialNo","");
-        parms.put("transactorCertNo","");
-        parms.put("transactorCertType","");
-        parms.put("transactorName","");
-
         parms.put("applicationVol",money); // 申请份额
-        // TODO校验
-        parms.put("isChktPasswd","1"); // 是否校验密码，这里固定写1
         parms.put("tPasswd",payPassword); // 交易密码
+        //     parms.put("taNo",tano);
+      /*  if(!BStrUtils.isEmpty(fastredeemflag)){
+            parms.put("fastRedeemFlag",fastredeemflag);
+        }*/
+        // parms.put("taserialNo","");
+        // parms.put("transactorCertNo","");
+        // parms.put("transactorCertType","");
+        //  parms.put("transactorName","");
+
+        // TODO校验
+        // parms.put("isChktPasswd","1"); // 是否校验密码，这里固定写1
 
 
         super.handlerPublicFundResult(ApiClient.redeem(parms),preSenterCallBack);

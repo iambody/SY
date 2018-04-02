@@ -4,12 +4,10 @@ package com.cgbsoft.privatefund.public_fund;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.view.BaseView;
 import com.cgbsoft.lib.utils.exception.ApiException;
 import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
-import com.cgbsoft.lib.utils.tools.BStrUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -141,39 +139,54 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
                 riskwarnflag: '1' //已经阅读风险提示标志，传死1即可
                 highriskwarnflag:'1' 买最高风险等级产品
 */
+
+        /**
+         *
+         String parseJS eval
+         {
+         "taNo":"21",
+         "transactionAccountId":"Z017A00000267",
+         "applicationAmt":"109",
+         "tPasswd":"123456",
+         "fundCode":"210012",
+         "branchCode":"370"
+         }
+         */
+     //   parms.put("fundName", bean.getFundName());
+        // parms.put("fundType", bean.getFundtype());
+        // parms.put("shareType", bean.getSharetype());
+
+
+        //  parms.put("certificateType", AppManager.getPublicFundInf(getContext()).getCertificateType());
+        //   parms.put("certificateNo", AppManager.getPublicFundInf(getContext()).getCertificateNo());
+        //  parms.put("depositacctName", AppManager.getPublicFundInf(getContext()).getDepositAcctName());
+        //  parms.put("custNo", bankCardInfo.getCustno());
+
+        //   parms.put("buyFlag", bean.getBuyflag());
+
+
+        //   parms.put("depositAcct", bankCardInfo.getDepositacct());
+        //   parms.put("mobileTelNo", AppManager.getPublicFundInf(getContext()).getMobileNo());
+        //   parms.put("channelId", bankCardInfo.getChannelId());
+        //   parms.put("moneyAccount",bankCardInfo.getMoneyaccount());
+        //   parms.put("payCenterId", bankCardInfo.getPaycenterid());
+        //   parms.put("riskwarnflag", "1");
+        //   parms.put("highriskwarnflag", "1");
+        //  parms.put("callbackUrl", "");
+        //  parms.put("businessCode", BStrUtils.isEmpty(bean.getBusinesscode()) ? "22" : bean.getBusinesscode());
+
+        //{"taNo":"21","transactionAccountId":"Z017A00000267","applicationAmt":"109","tPasswd":"123456","fundCode":"210012","branchCode":"370"}
+
         Map<String, String> parms = new HashMap<>();
+        parms.put("taNo", bean.getTaNo());
         parms.put("fundCode", bean.getFundCode());
-        parms.put("fundName", bean.getFundName());
-        parms.put("fundType", bean.getFundtype());
-        parms.put("shareType", bean.getSharetype());
-        parms.put("taNo", bean.getTano());
-
-
-        parms.put("certificateType", AppManager.getPublicFundInf(getContext()).getCertificateType());
-        parms.put("certificateNo", AppManager.getPublicFundInf(getContext()).getCertificateNo());
-        parms.put("depositacctName", AppManager.getPublicFundInf(getContext()).getDepositAcctName());
-        parms.put("custNo", bankCardInfo.getCustno());
-
-        parms.put("buyFlag", bean.getBuyflag());
-
-
-        parms.put("depositAcct", bankCardInfo.getDepositacct());
-        parms.put("mobileTelNo", AppManager.getPublicFundInf(getContext()).getMobileNo());
-        parms.put("transactionAccountId",bankCardInfo.getTransactionaccountid());
-        parms.put("channelId", bankCardInfo.getChannelId());
-        parms.put("moneyAccount",bankCardInfo.getMoneyaccount());
-        parms.put("payCenterId", bankCardInfo.getPaycenterid());
-        parms.put("branchCode",bankCardInfo.getBranchcode());
-        parms.put("riskwarnflag", "1");
-        parms.put("highriskwarnflag", "1");
-        parms.put("callbackUrl", "");
-        parms.put("businessCode", BStrUtils.isEmpty(bean.getBusinesscode()) ? "22" : bean.getBusinesscode());
-
+        parms.put("transactionAccountId",bankCardInfo.getTransactionAccountId());
 
         parms.put("applicationAmt", money); // 认申购金额
-        parms.put("tPassWd", paswd); // 交易密码
+        parms.put("branchCode",bankCardInfo.getBranchCode());
+        parms.put("tPasswd", paswd); // 交易密码
 
-        super.handlerPublicFundResult(ApiClient.redeem(parms),preSenterCallBack);
+        super.handlerPublicFundResult(ApiClient.getOrderAndPay(parms),preSenterCallBack);
         //super.getFundDataFormJZ(parms, preSenterCallBack);
     }
 

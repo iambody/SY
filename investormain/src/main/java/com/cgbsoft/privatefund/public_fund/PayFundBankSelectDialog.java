@@ -239,7 +239,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
             index = postion;
             BuyPublicFundActivity.BankCardInfo bankCardInfo = selectListener.get(postion);
             Imageload.display(bankIcon.getContext(),bankCardInfo.getIcon(),this.bankIcon,R.drawable.bank_icon,R.drawable.bank_icon);
-            String bankCoade = bankCardInfo.getDepositacct();
+            String bankCoade = bankCardInfo.getDepositAcct();
             if (curBankNum.trim().equals(bankCoade.trim())) {
                 selectState.setVisibility(View.VISIBLE);
                 selectState.setBackgroundResource(R.drawable.icon_paybank_selected);
