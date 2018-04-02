@@ -402,7 +402,6 @@ public class JavaScriptObjectToc {
 
     /**
      * 申购页面
-     *
      * @param jsonObj
      */
     @JavascriptInterface
