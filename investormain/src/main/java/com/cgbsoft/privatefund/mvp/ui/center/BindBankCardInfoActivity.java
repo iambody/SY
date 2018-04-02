@@ -278,8 +278,7 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
                     view = convertView;
                     holder = (ViewHolder) view.getTag();
                 }
-                String simpleBankName = findNameByChannelId(bindBankCardInfoBean.getChannelid());
-                holder.bank_name.setText(TextUtils.isEmpty(simpleBankName) ? bindBankCardInfoBean.getBankName(): simpleBankName);
+                holder.bank_name.setText(bindBankCardInfoBean.getBankShortName());
                 holder.bank_number.setText(hintLastBankCardNumber(bindBankCardInfoBean.getDepositAcct()));
                 Imageload.display(BindBankCardInfoActivity.this, bindBankCardInfoBean.getIcon(), holder.bankIcon);
                 Imageload.displayListenr(BindBankCardInfoActivity.this, bindBankCardInfoBean.getBackground(), holder.relativeLayout);

@@ -13,11 +13,10 @@
         android:background="@drawable/icon_bank_card_bg">
         
         <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/ui_26_dip"
+            android:layout_height="@dimen/ui_26_dip"
             android:layout_marginStart="@dimen/ui_26_dip"
-            android:layout_marginTop="@dimen/ui_26_dip"
-            android:src="@drawable/play"
+            android:layout_marginTop="@dimen/ui_30_dip"
             android:id="@+id/bank_icon"/>
 
         <TextView
