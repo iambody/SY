@@ -77,7 +77,8 @@ public class BindBankCardInfoActivity extends BaseActivity<BindBankCardInfoPrese
         titleTV.setText(getResources().getString(R.string.public_fund_setting_bankcard_info));
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
         initListView();
-        getPresenter().requsetSubbranchBankInfo();
+//        getPresenter().requsetSubbranchBankInfo();
+        getPresenter().requestBindBankCardInfo();
     }
 
     private void initListView() {

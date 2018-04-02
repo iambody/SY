@@ -460,6 +460,8 @@ public class NetConfig {
         static final String ORDER_AND_PAY= PUBLIC_FUND_API_V2 + "/orderandpay";
 
         static final String REDEEM= PUBLIC_FUND_API_V2 + "/redeem";
+        static final String RESET_PWD = PUBLIC_FUND_API_V2 + "/resetpassword";
+        static final String BOUND_CARD = PUBLIC_FUND_API_V2 + "/boundcards";
     }
 
 

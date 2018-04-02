@@ -34,28 +34,19 @@ public class BindBankCardInfoPresenterImpl extends BasePresenterImpl<BindBankCar
 
     @Override
     public void requestBindBankCardInfo() {
-        HashMap<String, Object> hashMap = new HashMap<>();
-        String cusno = AppManager.getPublicFundInf(getContext()) != null ? AppManager.getPublicFundInf(getContext()).getCustNo() : "";
-        hashMap.put("trantype", "520012");
-        hashMap.put("custno", cusno);
-        hashMap.put("signstatus", "");
-        addSubscription(ApiClient.directRequestJzServer(hashMap).subscribe(new RxSubscriber<String>() {
+        addSubscription(ApiClient.boundCardsPublicFund().subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    jsonObject = jsonObject.getJSONObject("result");
-                    if (jsonObject != null) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("datasets");
-                        Log.i("requestBindBankCardInfo", jsonArray.toString());
-                        jsonArray = jsonArray.getJSONArray(0);
+                    JSONArray jsonArray = jsonObject.getJSONArray("result");
+                    if (jsonArray != null) {
                         if (jsonArray != null && jsonArray.length() > 0) {
                             List<BindBankCardInfoBean> beanlist = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<BindBankCardInfoBean>>() {}.getType());
                             getView().requestInfoSuccess(beanlist);
                             return;
                         }
                     }
-                    getView().requestInfoFailure("查询银行信息失败");
                 } catch (JSONException e) {
                     e.printStackTrace();
                     getView().requestInfoFailure(e.getMessage());

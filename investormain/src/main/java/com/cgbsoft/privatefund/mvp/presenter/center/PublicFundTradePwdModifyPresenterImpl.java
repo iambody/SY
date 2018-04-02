@@ -31,45 +31,26 @@ public class PublicFundTradePwdModifyPresenterImpl extends BasePresenterImpl<Pub
     @Override
     public void modifyPublicFundTradePwd(String identifyNo, String phoneNumber, String validateCode, String tradePwd) {
         getView().showLoadDialog();
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("accttype", "7");
-        hashMap.put("trantype", "520049");
-        hashMap.put("mobileno", phoneNumber);
+        HashMap<String, String> hashMap = new HashMap<>();
+//        hashMap.put("trantype", "520049");
+//        hashMap.put("checkPhoneDuplicate", "901");
+//        hashMap.put("certificatetype", "0");
+//        hashMap.put("pwdtype", "0");
+        hashMap.put("acctType", "7");
+        hashMap.put("certificateNo", identifyNo);
         hashMap.put("captcha", validateCode);
-        hashMap.put("checkPhoneDuplicate", "901");
-        hashMap.put("certificateno", identifyNo);
-        hashMap.put("certificatetype", "0");
-        hashMap.put("pwdtype", "0");
-        hashMap.put("newpwd", tradePwd);
-        addSubscription(ApiClient.directRequestJzServer(hashMap).subscribe(new RxSubscriber<String>() {
+        hashMap.put("mobileno", phoneNumber);
+        hashMap.put("newPwd", tradePwd);
+        addSubscription(ApiClient.resetPwdPublicFund(hashMap).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    jsonObject = jsonObject.getJSONObject("result");
-                    if (jsonObject != null) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("datasets");
-                        jsonArray = jsonArray.getJSONArray(0);
-                        if (jsonArray != null && jsonArray.length() > 0) {
-                            JSONObject dataJson = jsonArray.getJSONObject(0);
-                            String modify = dataJson.getString("appsheetserialno");
-                            if (!TextUtils.isEmpty(modify)) {
-                                getView().modifyPwdSuccess("修改交易密码成功");
-                                return;
-                            }
-                        }
-                    }
-                    getView().modifyPwdFailure("修改交易密码失败");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    getView().modifyPwdFailure(e.getMessage());
-                }
+                getView().modifyPwdSuccess("修改交易密码成功");
             }
 
             @Override
             protected void onRxError(Throwable error) {
                 Log.i("s", error.getMessage());
-                getView().modifyPwdFailure(error.getMessage());
+                getView().modifyPwdFailure("修改交易密码失败");
             }
         }));
     }

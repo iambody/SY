@@ -5,31 +5,26 @@ package com.cgbsoft.privatefund.bean;
  */
 public class BindBankCardInfoBean {
 
-    private String bankname;
-
     private String channelid;
-
-    private String depositacct;
-
-    private String icon;
 
     private String background;
 
-    public String getDepositacct() {
-        return depositacct;
-    }
+    private String bankEnableStatus;
 
-    public void setDepositacct(String depositacct) {
-        this.depositacct = depositacct;
-    }
+    private String bankLimit;
 
-    public String getBankname() {
-        return bankname;
-    }
+    private String bankName;
 
-    public void setBankname(String bankname) {
-        this.bankname = bankname;
-    }
+    private String bankShortName;
+
+    //银行卡号
+    private String depositAcct;
+    //持卡人姓名
+    private String depositAcctName;
+
+    private String icon;
+
+    private String channeld;
 
     public String getChannelid() {
         return channelid;
@@ -37,6 +32,62 @@ public class BindBankCardInfoBean {
 
     public void setChannelid(String channelid) {
         this.channelid = channelid;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
+    public String getBankEnableStatus() {
+        return bankEnableStatus;
+    }
+
+    public void setBankEnableStatus(String bankEnableStatus) {
+        this.bankEnableStatus = bankEnableStatus;
+    }
+
+    public String getBankLimit() {
+        return bankLimit;
+    }
+
+    public void setBankLimit(String bankLimit) {
+        this.bankLimit = bankLimit;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankShortName() {
+        return bankShortName;
+    }
+
+    public void setBankShortName(String bankShortName) {
+        this.bankShortName = bankShortName;
+    }
+
+    public String getDepositAcct() {
+        return depositAcct;
+    }
+
+    public void setDepositAcct(String depositAcct) {
+        this.depositAcct = depositAcct;
+    }
+
+    public String getDepositAcctName() {
+        return depositAcctName;
+    }
+
+    public void setDepositAcctName(String depositAcctName) {
+        this.depositAcctName = depositAcctName;
     }
 
     public String getIcon() {
@@ -47,11 +98,11 @@ public class BindBankCardInfoBean {
         this.icon = icon;
     }
 
-    public String getBackground() {
-        return background;
+    public String getChanneld() {
+        return channeld;
     }
 
-    public void setBackground(String background) {
-        this.background = background;
+    public void setChanneld(String channeld) {
+        this.channeld = channeld;
     }
 }

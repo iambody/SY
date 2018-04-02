@@ -1874,6 +1874,23 @@ public class ApiClient {
         return OKHTTP.getInstance().getRequestManager().directJZServer(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
 
     }
+
+    /**
+     * 获取已绑定银行卡信息
+     */
+    public static Observable<String> boundCardsPublicFund(){
+        Map<String, Object> params = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().getBoundCards(createProgramObject(params)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+    /**
+     * 公募基金重置交易密码
+     */
+    public static Observable<String> resetPwdPublicFund(HashMap<String,String>hashMap){
+        return OKHTTP.getInstance().getRequestManager().resetPwdPublicFund(mapToBody(hashMap)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+    }
+
+
     /**
      * 获取刚新绑定卡的信息
      */
