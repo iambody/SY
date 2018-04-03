@@ -281,8 +281,7 @@ public class UiSkipUtils {
         String transactiondate = "";
         try {
 //            JSONArray jsonArray=new JSONArray(result).getJSONArray(0).getJSONObject(0);
-
-            JSONObject jsonObject = new JSONArray(result).getJSONArray(0).getJSONObject(0);
+            JSONObject jsonObject = new JSONObject(result);
             appsheetserialno = jsonObject.getString("appSheetSerialNo");
             confirmeddate = jsonObject.getString("confirmedDate");
             operdate = jsonObject.getString("operDate");
