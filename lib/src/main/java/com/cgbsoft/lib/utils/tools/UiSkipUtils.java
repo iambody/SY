@@ -249,10 +249,9 @@ public class UiSkipUtils {
      * 跳转到风险测评
      */
     public static void gotoPublicFundRisk(Activity activity) {
-        NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRiskUrl + "?custno=" + AppManager.getPublicFundInf(activity.getApplicationContext()).getCustNo(), "风险测评", false);
+        NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRiskUrl + "?custno=" + AppManager.getPublicFundInf(activity.getApplicationContext()).getCustNo(), "公募基金开户", false);
 
     }
-
 
     /**
      * 赎回成功之后需要跳转到一个H5网页（赎回结果页）
