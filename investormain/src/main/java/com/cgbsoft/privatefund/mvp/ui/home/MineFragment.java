@@ -569,7 +569,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                                     if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
                                         jumpGuidePage();
                                     } else {
-                                        if (credentialStateMedel.getDurationAmt() > 0) {
+                                        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
                                             if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                                                 toAssertMatchActivit();
                                             } else {
@@ -584,7 +584,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                                     if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
                                         jumpCollect();
                                     } else {
-                                        if (credentialStateMedel.getDurationAmt() > 0) {
+                                        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
                                             if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                                                 toAssertMatchActivit();
                                             } else {
@@ -673,7 +673,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
                     replenishCards();
                 } else {  //已通过 核身成功
-                    if (credentialStateMedel.getDurationAmt() > 0) {
+                    if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
                         if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                             Intent intent = new Intent(getActivity(), CardCollectActivity.class);
                             intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
@@ -689,7 +689,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
                 }
             } else {//  非大陆去证件列表
-                if (credentialStateMedel.getDurationAmt() > 0) {
+                if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
                     if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                         Intent intent = new Intent(getActivity(), CardCollectActivity.class);
                         intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
@@ -712,9 +712,11 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void jumpInvestorInfo() {
         if ("0".equals(credentialStateMedel.getSpecialInvestorState())) {
             if ("10".equals(credentialStateMedel.getCustomerType())) {
-                Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
+//                Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
+                jumpWebPage(BaseWebNetConfig.evaluation + "?property=1", "合格投资者认定");
             } else if ("20".equals(credentialStateMedel.getCustomerType())) {
-                Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
+//                Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
+                jumpWebPage(BaseWebNetConfig.evaluation + "?property=1", "合格投资者认定");
             }
         } else if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "0".equals(credentialStateMedel.getInvestorInfoState())) {
             if ("10".equals(credentialStateMedel.getCustomerType())) {
@@ -831,7 +833,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (!AppManager.isVisitor(getActivity())) {
             getPresenter().getMineFinacailAssert();
         }
-        SPreference.putBoolean(getContext(),"isFromMine",true);
+        SPreference.putBoolean(getContext(), "isFromMine", true);
     }
 
     @Override
@@ -1121,7 +1123,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_hide_assert)
     void switchAssetNumber() {
-        if (credentialStateMedel.getDurationAmt() > 0) {
+        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
             if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                 intercepterAssertGesturePassword();
             } else {
@@ -1176,7 +1178,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 }
             } else {
                 isClickBack = false;
-                if (credentialStateMedel.getDurationAmt() > 0) {
+                if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
                     if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                         GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
                     } else {
@@ -1216,7 +1218,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
                         jumpGuidePage();
                     } else {
-                        if (credentialStateMedel.getDurationAmt() > 0) {
+                        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
                             if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                                 toAssertMatchActivit();
                             } else {
@@ -1230,7 +1232,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
                         jumpCollect();
                     } else {
-                        if (credentialStateMedel.getDurationAmt() > 0) {
+                        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
                             if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                                 toAssertMatchActivit();
                             } else {
@@ -1244,7 +1246,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 isClickBack = false;
             }
         } else {
-            if (credentialStateMedel.getDurationAmt() > 0) {
+            if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
                 if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                     GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
                 } else {
@@ -1301,7 +1303,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     }
                 }
             } else {
-                if (credentialStateMedel.getDurationAmt() > 0) {
+                if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
                     if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                         GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
                     } else {
@@ -1333,7 +1335,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
 
         } else {
-            if (credentialStateMedel.getDurationAmt() > 0) {
+            if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
                 if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                     GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
                 } else {

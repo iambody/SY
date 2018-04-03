@@ -12,6 +12,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.webview.bean.JsCall;
 import com.cgbsoft.lib.contant.Contant;
@@ -169,7 +170,7 @@ public class JavaScriptObjectToc {
     }
 
     @JavascriptInterface
-    public void openCredentialsFolder(String param){
+    public void openCredentialsFolder(String param) {
         try {
             JSONObject ja = new JSONObject(param);
             JSONObject data = ja.getJSONObject("data");
@@ -181,14 +182,14 @@ public class JavaScriptObjectToc {
                     if ("5".equals(credentialStateMedel.getIdCardState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(credentialStateMedel.getIdCardState()) && "0".equals(credentialStateMedel.getCustomerLivingbodyState()))) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("credentialStateMedel", credentialStateMedel);
-                        NavigationUtils.startActivityByRouter(context,RouteConfig.CrenditralGuideActivity,bundle);
+                        NavigationUtils.startActivityByRouter(context, RouteConfig.CrenditralGuideActivity, bundle);
 //                        Intent intent = new Intent(context, CrenditralGuideActivity.class);
 //                        intent.putExtra("credentialStateMedel", credentialStateMedel);
 //                        startActivity(intent);
                     } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("credentialStateMedel", credentialStateMedel);
-                        NavigationUtils.startActivityByRouter(context,RouteConfig.UploadIndentityCradActivity,bundle);
+                        NavigationUtils.startActivityByRouter(context, RouteConfig.UploadIndentityCradActivity, bundle);
 
 //                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
 //                        intent.putExtra("credentialStateMedel", credentialStateMedel);
@@ -202,13 +203,13 @@ public class JavaScriptObjectToc {
                 } else {//  非大陆去证件列表
                     Bundle bundle = new Bundle();
                     bundle.putString("indentityCode", credentialStateMedel.getCustomerIdentity());
-                    NavigationUtils.startActivityByRouter(context,RouteConfig.CardCollectActivity,bundle);
+                    NavigationUtils.startActivityByRouter(context, RouteConfig.CardCollectActivity, bundle);
 //                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
 //                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
 //                    startActivity(intent);
                 }
             } else {//无身份
-                NavigationUtils.startActivityByRouter(context,RouteConfig.SelectIndentityActivity);
+                NavigationUtils.startActivityByRouter(context, RouteConfig.SelectIndentityActivity);
 //                Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
 //                startActivity(intent);
             }
@@ -216,6 +217,16 @@ public class JavaScriptObjectToc {
             e.printStackTrace();
         }
     }
+
+
+    @JavascriptInterface
+    public void finishInvestorConfig() {
+        UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(context);
+        userInfo.getToC().setCustomerSpecialFlag("1");
+        AppInfStore.saveUserInfo(context, userInfo);
+        RxBus.get().post(RxConstant.REFRESH_INVESTOR_INFO,1);
+    }
+
 
     //生成海报的监听
     @JavascriptInterface

@@ -71,7 +71,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
         RecyclerView.ViewHolder viewHolder = null;
         switch (viewType) {
             case HOTPRODUCT://热门产品
-                View hotView = layoutInflater.inflate(R.layout.product_item_productls_hot,null);
+                View hotView = layoutInflater.inflate(R.layout.product_item_productls_hot, null);
                 viewHolder = new HotProductHolder(hotView);
                 hotView.setOnClickListener(this);
                 break;
@@ -101,7 +101,10 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
             case HOTPRODUCT://热门产品
                 HotProductHolder hotProductHolder = (HotProductHolder) holder;
                 hotProductHolder.itemView.setTag(position);
-                hotProductHolder.item_blur_image.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(acontext).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
+                hotProductHolder.item_blur_image.setVisibility(
+                        TextUtils.isEmpty(AppManager.getUserInfo(acontext).getToC().getCustomerSpecialFlag())||
+                                AppManager.getUserInfo(acontext).getToC().getCustomerSpecialFlag().equals("0")
+                                ? View.VISIBLE : View.GONE);
                 Imageload.display(acontext, productlsBean.marketingImageUrl, hotProductHolder.productItemProductlsHotBg);
                 String pro_name = productlsBean.productName;
                 if (pro_name.length() > 16) {
@@ -138,7 +141,7 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                         if (l <= 0) {
                             BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJiezhi, "已截止");
                         } else {
-                            BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJiezhi, "截止" + dateString+"打款");
+                            BStrUtils.SetTxt(hotProductHolder.productItemProductlsHotJiezhi, "截止" + dateString + "打款");
                         }
                     }
                 } catch (ParseException e) {
@@ -209,7 +212,9 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
                 NormalProductHolder normalProductHolder = (NormalProductHolder) holder;
                 normalProductHolder.itemView.setTag(position);
                 BStrUtils.SetTxt(normalProductHolder.productItemProductlsTitle, productlsBean.productName);
-                normalProductHolder.item_blur_image.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(acontext).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
+                normalProductHolder.item_blur_image.setVisibility(
+                        TextUtils.isEmpty(AppManager.getUserInfo(acontext).getToC().getCustomerSpecialFlag())
+                                || AppManager.getUserInfo(acontext).getToC().getCustomerSpecialFlag().equals("0") ? View.VISIBLE : View.GONE);
                 normalProductHolder.productItemProductlsLogobackground.setImageResource(R.drawable.logobackgroundzanting);
 
 
@@ -348,7 +353,8 @@ public class ProductlsAdapter extends RecyclerView.Adapter implements View.OnCli
             case OVERPRODUCT://已清算
                 OverProductHolder overProductHolder = (OverProductHolder) holder;
                 overProductHolder.itemView.setTag(position);
-                overProductHolder.item_blur_image.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(acontext).getToC().getCustomerType()) ? View.VISIBLE : View.GONE);
+                overProductHolder.item_blur_image.setVisibility(TextUtils.isEmpty(AppManager.getUserInfo(acontext).getToC().getCustomerSpecialFlag())
+                        ||AppManager.getUserInfo(acontext).getToC().getCustomerSpecialFlag().equals("0") ? View.VISIBLE : View.GONE);
                 BStrUtils.SetTxt1(overProductHolder.productItemProductlsOverTitle, productlsBean.productName);
                 BStrUtils.switchColorToBandC(acontext, overProductHolder.productItemProductlsOverShengyueduCount);
 

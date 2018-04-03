@@ -163,7 +163,7 @@
     <string name="get_phone_validate_code">获取验证码</string>
     <string name="risk_prompt">请不要使用过于简单的密码（如：自己的生日、简单连续的数字等）</string>
     <string name="confirm">确定</string>
-    <string name="after_appraisal_canvisible">风险评测后可见</string>
+    <string name="after_appraisal_canvisible">合格投资者认定</string>
     <string name="ten_thousand">万</string>
     <string name="performance_standard">业绩基准</string>
     <string name="residue_limit">剩余额度</string>

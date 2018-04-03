@@ -336,12 +336,13 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             return;
         }
 
-        if (submit.getText().equals("合格投资者认定")){
+        if (submit.getText().equals("合格投资者认定")) {
             if ("0".equals(credentialStateMedel.getSpecialInvestorState())) {
                 if ("10".equals(credentialStateMedel.getCustomerType())) {
-                    Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(getApplicationContext());
+//                    Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(getApplicationContext());
+                    jumpWebPage(BaseWebNetConfig.evaluation + "?property=1", "合格投资者认定");
                 } else if ("20".equals(credentialStateMedel.getCustomerType())) {
-                    Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(getApplicationContext());
+                    jumpWebPage(BaseWebNetConfig.evaluation + "?property=1", "合格投资者认定");
                 }
             } else if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "0".equals(credentialStateMedel.getInvestorInfoState())) {
                 if ("10".equals(credentialStateMedel.getCustomerType())) {
@@ -946,7 +947,7 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
     public void verifyIndentitySuccessV3(CredentialStateMedel credentialStateMedel) {
         this.credentialStateMedel = credentialStateMedel;
         boolean isFromMine = SPreference.getBoolean(this, "isFromMine");
-        if (credentialStateMedel.getDurationAmt()>0&&isFromMine){
+        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0 && isFromMine) {
             submit.setText("合格投资者认定");
             submit.setVisibility(View.VISIBLE);
         }
