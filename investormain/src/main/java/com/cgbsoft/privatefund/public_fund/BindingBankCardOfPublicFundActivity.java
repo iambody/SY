@@ -197,7 +197,6 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.e("test","isRun　 = "+isRun+" s="+s+ " start ="+start+" before"+ before+" count="+count);
                 if(isRun){
                     isRun=false;
                     return;
@@ -214,7 +213,6 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 d += (newStr.substring(index, newStr.length()));
                 int i = mPankcardCode.getSelectionStart();
                 mPankcardCode.setText(d);
-                Log.e("test","字符串　s = "+s+ " 修改后的字符串　ｄ="+d+" SelectionStart"+i);
                 try {
                     if (i % 5 == 0 && before == 0) {
                         if (i + 1 <= d.length()) {
