@@ -236,9 +236,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 if (TextUtils.isEmpty(s) || s.equals(input.getText())) return;
                 if (curruntBankCard != null && new BigDecimal(s.toString()).subtract(new BigDecimal(curruntBankCard.getAvailBalMode1())).doubleValue() > 0) {
                     if(isFund){
-                        MToast.makeText(SellPublicFundActivity.this,"该卡最大可提现"+curruntBankCard.getAvailBalMode1()+"元",Toast.LENGTH_LONG).show();
-                    }else {
                         MToast.makeText(SellPublicFundActivity.this,"该卡最大可卖出"+curruntBankCard.getAvailBalMode1()+"份",Toast.LENGTH_LONG).show();
+                    }else {
+                        MToast.makeText(SellPublicFundActivity.this,"该卡最大可提现"+curruntBankCard.getAvailBalMode1()+"元",Toast.LENGTH_LONG).show();
                     }
                     input.setText(curruntBankCard.getAvailBalMode1());
                     input.setSelection(curruntBankCard.getAvailBalMode1().length());
