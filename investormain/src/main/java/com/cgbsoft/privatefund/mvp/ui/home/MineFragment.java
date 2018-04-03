@@ -888,12 +888,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         ViewUtils.showTextByValue(getContext(), tv_share_bao_yestoday_income, financialAssertModel.getSxbInfo().getYestincome());
 //        tv_share_bao_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
 //        tv_share_bao_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
-        tv_share_bao_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getSurvivingAssets(), false));
-        tv_share_bao_continue_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getAddincome(), true));
-        tv_share_bao_yestoday_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getSxbInfo().getYestincome(), true));
-        tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getSurvivingAssets())));
-        tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getAddincome())));
-        tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), ViewUtils.getMoneyUnit(financialAssertModel.getSxbInfo().getYestincome())));
+        tv_share_bao_subsist_assert.setText(financialAssertModel.getSxbInfo().getSurvivingAssets());
+        tv_share_bao_continue_income.setText(financialAssertModel.getSxbInfo().getAddincome());
+        tv_share_bao_yestoday_income.setText(financialAssertModel.getSxbInfo().getYestincome());
+        tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), "万"));
+        tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income),"万"));
+        tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), "万"));
     }
 
     private void fillPublicFundData(FinancialAssertModel financialAssertModel) {
@@ -901,12 +901,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         ViewUtils.showTextByValue(getContext(), tv_public_fund_yestoday_income, financialAssertModel.getGmInfo().getYestincome());
 //        tv_public_fund_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
 //        tv_public_fund_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getGmInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
-        tv_public_fund_subsist_assert.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getGmInfo().getSurvivingAssets(), false));
-        tv_public_fund_continue_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getGmInfo().getAddincome(), true));
-        tv_public_fund_yestoday_income.setText(ViewUtils.formateMoneyPattern(financialAssertModel.getGmInfo().getYestincome(), true));
-        tv_public_fund_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getSurvivingAssets())));
-        tv_public_fund_continue_income_desc.setText(String.format(getString(R.string.continue_income), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getAddincome())));
-        tv_public_fund_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), ViewUtils.getMoneyUnit(financialAssertModel.getGmInfo().getYestincome())));
+        tv_public_fund_subsist_assert.setText(financialAssertModel.getGmInfo().getSurvivingAssets());
+        tv_public_fund_continue_income.setText(financialAssertModel.getGmInfo().getAddincome());
+        tv_public_fund_yestoday_income.setText(financialAssertModel.getGmInfo().getYestincome());
+        tv_public_fund_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), "万"));
+        tv_public_fund_continue_income_desc.setText(String.format(getString(R.string.continue_income), "万"));
+        tv_public_fund_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), "万"));
     }
 
     @SuppressLint("StringFormatInvalid")
