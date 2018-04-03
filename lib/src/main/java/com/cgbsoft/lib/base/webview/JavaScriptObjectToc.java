@@ -220,7 +220,7 @@ public class JavaScriptObjectToc {
 
 
     @JavascriptInterface
-    public void finishInvestorConfig() {
+    public void finishInvestorConfig(String datas) {
         UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(context);
         userInfo.getToC().setCustomerSpecialFlag("1");
         AppInfStore.saveUserInfo(context, userInfo);
