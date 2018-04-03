@@ -24,7 +24,7 @@ import rx.Observable;
  */
 
 public class BasePublicFundPresenter extends BasePresenterImpl {
-
+    public static final String UNEXPECTED = "unexpected"; // 意料之外的情况
 
     public BasePublicFundPresenter(@NonNull Context context, @NonNull BaseView view) {
         super(context, view);
@@ -66,13 +66,15 @@ public class BasePublicFundPresenter extends BasePresenterImpl {
 
             @Override
             protected void onRxError(Throwable error) {
-                if(error instanceof ApiException && preSenterCallBack!=null){
-                    if("500".equals(((ApiException) error).getCode())){
-                        MToast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG);
-                    }
-                    preSenterCallBack.field(((ApiException) error).getCode(),error.getMessage());
-                }
                 error.printStackTrace();
+                String errorCode = UNEXPECTED;
+                if(error instanceof ApiException && "500".equals(((ApiException) error).getCode())){
+                    MToast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    errorCode = ((ApiException) error).getCode();
+                }
+                if(preSenterCallBack!=null){
+                    preSenterCallBack.field(errorCode,error.getMessage());
+                }
             }
         });
     }

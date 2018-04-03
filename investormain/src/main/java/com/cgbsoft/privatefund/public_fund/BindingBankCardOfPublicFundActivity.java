@@ -52,8 +52,9 @@ import java.util.TimerTask;
  * 绑定公募基金银行列表
  */
 @Route(RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD)
-public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBankCardOfPublicFundPresenter> implements View.OnClickListener {
+public class BindingBankCardOfPublicFundActivity extends BaseActivity< BindingBankCardOfPublicFundPresenter> implements View.OnClickListener {
     public static final String TAG_PARAMETER = "tag_parameter";
+    public static final int ADD_BANK = 1;
     public static final String STYLE = "Style";
     public static final String TITLE = "title";
 
@@ -144,10 +145,10 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             ((TextView) findViewById(R.id.title_mid)).setText(getIntent().getStringExtra(TITLE));
         }
 
-        if (style == 1) {
+        if (style == ADD_BANK) {
             ((TextView) findViewById(R.id.bt_Confirm)).setText("完成");
         } else {
-            ((TextView) findViewById(R.id.bt_Confirm)).setText("完成开户");
+            ((TextView) findViewById(R.id.bt_Confirm)).setText("去风险测评");
         }
 
         // 获取验证码按钮
@@ -596,8 +597,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             public void even(String s) {
                 loadingDialog.dismiss();
 
-
-                if (style == 1) {
+                 Log.i("绑定成功"," 银行卡信息：-->"+s);
+                if (style == ADD_BANK) {
                     Gson gson = new Gson();
                     BuyPublicFundActivity.BankCardInfo bankCordInfo = gson.fromJson(s, BuyPublicFundActivity.BankCardInfo.class);
 

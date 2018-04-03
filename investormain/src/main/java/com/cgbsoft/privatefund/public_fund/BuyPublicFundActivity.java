@@ -167,7 +167,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                     @Override
                     public void onInputFinish(String psw) {
-                        starPay(money, psw);
+                        starPay(inputText, psw);
                         payPasswordDialog.dismiss();
                     }
                 });
@@ -319,7 +319,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      *
      * @param psw
      */
-    private void starPay(String money, String psw) {
+    private void  starPay(String money, String psw) {
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在支付", false, false);
 
         getPresenter().sure(bean, currectPayBank, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
@@ -338,7 +338,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
                 TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this,BuyPublicFundActivity.this.fundName);
                 if(isPublicFund){
-                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,2,fundType,money,redeemReFundDate);
+                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,1,fundType,money,redeemReFundDate);
                 }else {
                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + money, "申购成功", false);
                 }
@@ -387,7 +387,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             public void field(String errorCode, String errorMsg) {
                 loadingDialog.dismiss();
                 Log.e("Test", " 申购异常 " + errorMsg);
-                MToast.makeText(BuyPublicFundActivity.this, " 支付失败", Toast.LENGTH_LONG);
+              //  MToast.makeText(BuyPublicFundActivity.this, " 支付失败", Toast.LENGTH_LONG);
             }
         });
         loadingDialog.show();

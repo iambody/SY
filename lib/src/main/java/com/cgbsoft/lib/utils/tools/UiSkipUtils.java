@@ -235,7 +235,7 @@ public class UiSkipUtils {
             // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
             //判断风险等级
             if (!isMatchRisk(activity, risklevel)) {
-                buyRiskShow(activity, fundCode, risklevel);
+                buyRiskShow(activity, fundCode, fundName,fundType,risklevel);
                 return;
             }
 
@@ -315,8 +315,8 @@ public class UiSkipUtils {
      * @param buyOrBuy 1:买入,2:卖出
      * @param fungType 基金类型  0:FOF型基金,1:货币基金,2:QDll基金,3:股票型，债券型，混合型，指数型基金
      * @param allMoney 买入钱数
-     * @param allShare 卖出份额
-     *                 https://t4-app.simuyun.com/app6.0/biz/publicfund/deal_prompt.html?pageType=2&fundType=0&allMoney=2000
+     * @param
+     *       https://t4-app.simuyun.com/app6.0/biz/publicfund/deal_prompt.html?pageType=2&fundType=0&allMoney=2000
      */
     public static void gotoNewFundResult(Activity activity,int buyOrBuy,String fungType, String allMoney,String redeemReFundDate){
         HashMap<String, String> paramMap = new HashMap<>();
@@ -326,7 +326,7 @@ public class UiSkipUtils {
         if(buyOrBuy == 1){
             paramMap.put("allMoney", allMoney);
         }else if(buyOrBuy == 2){
-            paramMap.put("allMoney", allMoney);
+            paramMap.put("allShare", allMoney);
         }
         NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果", false);
     }
@@ -379,7 +379,7 @@ public class UiSkipUtils {
     /**
      * 只有风险不匹配时候显示弹出框  匹配时候不用显示
      */
-    public static void buyRiskShow(final Activity acontext, String fundCode, String fundRisk) {
+    public static void buyRiskShow(final Activity acontext, String fundCode,String fundName,String fundType, String fundRisk) {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(acontext.getApplicationContext());
 
         String riskNote = String.format("该产品风险等级为【%s】，与您的风险评测【%s】不匹配。购买后可能面临风险匹配不适当，给您的投资带来不确定性风险因素。\n 您确定购买么？", fundRisk(fundRisk), customRiskToStr(acontext));
@@ -394,6 +394,8 @@ public class UiSkipUtils {
                 //去风险测评a
                 HashMap<String, Object> maps = new HashMap<>();
                 maps.put("tag_fund_code", fundCode);
+                maps.put("tag_fund_name", fundName);
+                maps.put("tag_fund_type", fundType);
                 maps.put("tag_fund_risk_level", fundRisk);
                 NavigationUtils.startActivityByRouter(acontext, RouteConfig.GOTO_PUBLIC_FUND_BUY, maps);
                 dismiss();
