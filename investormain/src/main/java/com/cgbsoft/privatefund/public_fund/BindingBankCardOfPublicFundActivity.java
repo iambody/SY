@@ -106,7 +106,6 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         style = getIntent().getIntExtra(STYLE, 0);
         String data = getIntent().getStringExtra(TAG_PARAMETER);
         if (style == 1) data = AppInfStore.getPublicFundInfo(this.getApplicationContext());
-
         if (!BStrUtils.isEmpty(data)) {
             bindingBankCardBean = new Gson().fromJson(data, BindingBankCardBean.class);
         }
@@ -126,7 +125,6 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.VISIBLE);
         }
 
-
         bindView();
     }
 
@@ -141,7 +139,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     private void bindView() {
         // 该表标题
         if (TextUtils.isEmpty(getIntent().getStringExtra(TITLE))) {
-            ((TextView) findViewById(R.id.title_mid)).setText("绑定银行卡");
+            ((TextView) findViewById(R.id.title_mid)).setText("完成公募基金开户");
         } else {
             ((TextView) findViewById(R.id.title_mid)).setText(getIntent().getStringExtra(TITLE));
         }

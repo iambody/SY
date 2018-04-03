@@ -320,8 +320,8 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
             StockIndexBean stockIndexBean = mDatas.get(position);
             holder.name.setText(stockIndexBean.getName());
             holder.stockValue.setText(ViewUtils.formatNumberPatter(stockIndexBean.getIndex(), 2));
-            holder.increaseValue.setText((!TextUtils.isEmpty(stockIndexBean.getGain()) && stockIndexBean.getGain().startsWith("-")) ? stockIndexBean.getGain() : "+".concat(stockIndexBean.getGain()));
-            holder.increatePercent.setText((!TextUtils.isEmpty(stockIndexBean.getRate()) && stockIndexBean.getRate().startsWith("-")) ? stockIndexBean.getRate() : "+".concat(stockIndexBean.getRate()));
+            holder.increaseValue.setText(((!TextUtils.isEmpty(stockIndexBean.getGain()) && stockIndexBean.getGain().startsWith("-")) ? stockIndexBean.getGain() : "+".concat(stockIndexBean.getGain()))+"%");
+            holder.increatePercent.setText(((!TextUtils.isEmpty(stockIndexBean.getRate()) && stockIndexBean.getRate().startsWith("-")) ? stockIndexBean.getRate() : "+".concat(stockIndexBean.getRate()))+"%");
             setIndexValueColor(stockIndexBean.getRate(), holder.stockValue);
             setIndexValueColor(stockIndexBean.getRate(), holder.increaseValue);
             setIndexValueColor(stockIndexBean.getRate(), holder.increatePercent);

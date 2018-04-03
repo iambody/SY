@@ -1167,6 +1167,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_detial_lay)
     public void publicFundDetail() {
+
         //跳转到基金详情页面
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundcode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundcode()), false);
         NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, BStrUtils.NullToStr(publishFundRecommend.getFundName()), false);

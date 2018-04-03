@@ -611,21 +611,23 @@ public class JavaScriptObjectToc {
                     if (!BStrUtils.isEmpty(result)) {
                         JSONObject obj = new JSONObject(result);
                         PublicFundInf publicFundInf = AppManager.getPublicFundInf(context.getApplicationContext());
-                        if (obj.has("custno") && !BStrUtils.isEmpty(obj.getString("custno"))) {
-                            publicFundInf.setCustNo(obj.getString("custno"));
+                        webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+
+                        if (obj.has("custNo") && !BStrUtils.isEmpty(obj.getString("custNo"))) {
+                            publicFundInf.setCustNo(obj.getString("custNo"));
                             if (obj.has("type")) {
                                 publicFundInf.setType(obj.getString("type"));
                             }
                             AppInfStore.savePublicFundInf(context, publicFundInf);
-                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+
                         }
-                        if (obj.has("custrisk") && !BStrUtils.isEmpty(obj.getString("custrisk"))) {
-                            publicFundInf.setCustRisk(obj.getString("custrisk"));
+                        if (obj.has("custRisk") && !BStrUtils.isEmpty(obj.getString("custRisk"))) {
+                            publicFundInf.setCustRisk(obj.getString("custRisk"));
                             if (obj.has("type")) {
                                 publicFundInf.setType(obj.getString("type"));
                             }
                             AppInfStore.savePublicFundInf(context, publicFundInf);
-                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+//                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
                         }
 
                         if (obj.has("custRisk") && !BStrUtils.isEmpty(obj.getString("custRisk"))) {
@@ -635,7 +637,7 @@ public class JavaScriptObjectToc {
                             }
 //                            AppInfStore.savePublicFundInf(context, publicFundInf);
                             RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
-                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+//                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
                         }
                     }
                 }
