@@ -91,7 +91,7 @@ import rx.functions.Action0;
  */
 public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements MainHomeContract.View, SwipeRefreshLayout.OnRefreshListener, SmartScrollView.ISmartScrollChangedListener, View.OnClickListener, SensorEventListener {
     public static final String LIVERXOBSERBER_TAG = "rxobserlivetag";
-    public final int ADVISERSHOWTIME = 5;
+    public final int ADVISERSHOWTIME = 2;
     public final int ADVISERLOADTIME = 3;
     @BindView(R.id.mainhome_webview)
     BaseWebview mainhomeWebview;
@@ -229,7 +229,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         timeCountDown();
         initCache();
         getPresenter().getHomeData();
-
 
 
     }
@@ -945,7 +944,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         publishFundRecommend = publishFundRecommendBean;
 
 
-
         boolean isRato = BStrUtils.homeIsRato(publishFundRecommendBean.getLeftUpValue());
         if (isRato) {
             SpannableString spannableString = SpannableUtils.setTextSize1(publishFundRecommendBean.getLeftUpValue(), publishFundRecommendBean.getLeftUpValue().length() - 1, publishFundRecommendBean.getLeftUpValue().length(), DimensionPixelUtil.dip2px(baseActivity, 15));
@@ -1090,6 +1088,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_skip_lay)
     public void onViewPublicFundSkipClicked() {
+
         NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
     }
 
@@ -1180,7 +1179,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.view_home_public_fund_shift)
     public void publicFundShift() {
-        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundCode(),publishFundRecommend.getFundName(),publishFundRecommend.getFundType(),publishFundRecommend.getRiskLevel());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundCode(), publishFundRecommend.getFundName(), publishFundRecommend.getFundType(), publishFundRecommend.getRiskLevel());
         //ssssss
         TrackingDataManger.homeBuyClick(baseActivity);
     }

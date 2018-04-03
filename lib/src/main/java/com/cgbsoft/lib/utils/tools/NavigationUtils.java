@@ -324,12 +324,13 @@ public class NavigationUtils {
                 break;
             case WebViewConstant.Navigation.PRIVATE_BANK_PAGE:
                 jumpNativeMain(context, map);
+
                 RxBus.get().post(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, 2);
                 break;
-            case  WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE:
-
+            case WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE:
                 jumpNativeMain(context, map);
                 RxBus.get().post(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, 1);
+
                 break;
             case WebViewConstant.Navigation.PRODUCT_PAGE:
                 jumpNativeMain(context, map);

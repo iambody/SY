@@ -7,11 +7,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.mvp.contract.center.PublicFundInfoContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PublicFundInfoPresenterImpl;
 import com.chenenyu.router.annotation.Route;
@@ -23,7 +26,7 @@ import butterknife.OnClick;
  * @auther chenlong
  */
 @Route(RouteConfig.GOTO_PUBLIC_FUND_INFO_ACTIVITY)
-public class PublicFundIdentifyInfoActivity extends BaseActivity<PublicFundInfoPresenterImpl> implements PublicFundInfoContract.PublicFundInfoView{
+public class PublicFundIdentifyInfoActivity extends BaseActivity<PublicFundInfoPresenterImpl> implements PublicFundInfoContract.PublicFundInfoView {
 
     @BindView(R.id.title_left)
     ImageView back;
@@ -50,8 +53,16 @@ public class PublicFundIdentifyInfoActivity extends BaseActivity<PublicFundInfoP
     protected void init(Bundle savedInstanceState) {
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.public_fund_account_info));
-        mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
-        getPresenter().requestPublicFundInfo();
+
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(getApplicationContext());
+//        tv_public_fund_info_name.setText(publicFundInf.getCustFullName());
+//        tv_public_fund_info_identify_number.setText(publicFundInf.getCertificateNo());
+
+        BStrUtils.setTv(tv_public_fund_info_name, publicFundInf.getCustFullName());
+        BStrUtils.setTv(tv_public_fund_info_identify_number, publicFundInf.getCertificateNo());
+//        mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
+//        getPresenter().requestPublicFundInfo();
+
     }
 
     @Override

@@ -165,7 +165,14 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
             }
         }
     }
+    protected void setIndex1(int code) {
+         try {
+             if(code>=0)
+             viewPager.setCurrentItem(code);
+         }catch (Exception e){}
 
+
+    }
     @Override
     public void onResume() {
         super.onResume();

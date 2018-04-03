@@ -606,12 +606,14 @@ public class JavaScriptObjectToc {
         if (!BStrUtils.isEmpty(jsonstr)) {
             try {
                 JSONObject object = new JSONObject(jsonstr);
+
+
                 if (object.has("data")) {
                     String result = object.getString("data");
                     if (!BStrUtils.isEmpty(result)) {
                         JSONObject obj = new JSONObject(result);
                         PublicFundInf publicFundInf = AppManager.getPublicFundInf(context.getApplicationContext());
-                        webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+
 
                         if (obj.has("custNo") && !BStrUtils.isEmpty(obj.getString("custNo"))) {
                             publicFundInf.setCustNo(obj.getString("custNo"));
@@ -640,6 +642,11 @@ public class JavaScriptObjectToc {
 //                            webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
                         }
                     }
+                }
+
+
+                if(object.has("callback")){//调用js
+                    webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
                 }
 
             } catch (JSONException e) {

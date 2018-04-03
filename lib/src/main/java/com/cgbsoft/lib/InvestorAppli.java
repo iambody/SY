@@ -28,6 +28,16 @@ public class InvestorAppli extends BaseApplication {
         return openWebUrl;
     }
 
+    public boolean isFristClickPublicTab;
+
+    public boolean isFristClickPublicTab() {
+        return isFristClickPublicTab;
+    }
+
+    public void setFristClickPublicTab(boolean fristClickPublicTab) {
+        isFristClickPublicTab = fristClickPublicTab;
+    }
+
     public   void setOpenWebUrl(String openWebUrl) {
          openWebUrl = openWebUrl;
     }

@@ -147,7 +147,7 @@
     <string name="datum_manage_risk_type_pingheng">平衡性</string>
     <string name="datum_manage_relative_statues">未关联</string>
     <string name="setting_title">设置</string>
-    <string name="public_fund_account_info">公墓基金账号信息</string>
+    <string name="public_fund_account_info">公募基金账号信息</string>
 
     <!-- 投资账号-->
     <string name="real_name">真实姓名</string>
