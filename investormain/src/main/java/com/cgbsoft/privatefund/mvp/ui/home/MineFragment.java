@@ -584,6 +584,10 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                                     if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
                                         jumpCollect();
                                     } else {
+                                        if ("10".equals(credentialStateMedel.getCredentialState())) {
+                                            replenishCards();
+                                            return;
+                                        }
                                         if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
                                             if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
                                                 toAssertMatchActivit();
@@ -615,7 +619,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                                         toInvestorCarlendarActivity();
                                     }
                                 } else {
-                                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                                    if ("10".equals(credentialStateMedel.getCredentialState())) {
+                                        replenishCards();
+                                    } else if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
                                         jumpCollect();
                                     } else {
                                         toInvestorCarlendarActivity();
