@@ -16,67 +16,53 @@ public class BindingBankCardBean {
                 "operorg":"9999",
                 "tpasswd":"123456"*/
 
-    private String custno = ""; // 客户号
-    private String certificatetype; //证件类型
-    private String certificateno=""; // 证件号
-    private String depositacctname; // 客户名字
-    private String depositname; // 客户名字
+    private String custNo = ""; // 客户号
+    private String certificateType; //证件类型
+    private String certificateNo=""; // 证件号
+    private String depositName =""; // 客户名字
+    private String depositAcctName =""; // 客户名字
     private String depositprov = ""; // 客户所在省
     private String depositcity = ""; // 客户所在城市
-    private String operorg = "9999"; // 交易操作网点，写死9999就可以
-    private String tpasswd = ""; // 开户时的交易密码， 绑定银行是为空就可以
-    private String channelid = ""; // 开户时的交易密码， 绑定银行是为空就可以
     private String banknameid = "";//
+
+    private String channelid = ""; // 开户时的交易密码， 绑定银行是为空就可以
     private String bankname = "";//
     private String channelname = "";
     private String paratype = "";
 
-    public String getBanknameid() {
-        return banknameid;
+    private String operOrg = "9999"; // 交易操作网点，写死9999就可以
+    private String tPasswd = ""; // 开户时的交易密码， 绑定银行是为空就可以
+
+    public String getCustNo() {
+        return custNo;
     }
 
-    public void setBanknameid(String banknameid) {
-        this.banknameid = banknameid;
+    public void setCustNo(String custNo) {
+        this.custNo = custNo;
     }
 
-    public String getCustno() {
-        return custno;
+    public String getCertificateType() {
+        return certificateType;
     }
 
-    public void setCustno(String custno) {
-        this.custno = custno;
+    public void setCertificateType(String certificateType) {
+        this.certificateType = certificateType;
     }
 
-    public String getCertificatetype() {
-        return certificatetype;
+    public String getCertificateNo() {
+        return certificateNo;
     }
 
-    public void setCertificatetype(String certificatetype) {
-        this.certificatetype = certificatetype;
+    public void setCertificateNo(String certificateNo) {
+        this.certificateNo = certificateNo;
     }
 
-    public String getCertificateno() {
-        return certificateno;
+    public String getDepositName() {
+        return depositName;
     }
 
-    public void setCertificateno(String certificateno) {
-        this.certificateno = certificateno;
-    }
-
-    public String getDepositacctname() {
-        return depositacctname;
-    }
-
-    public void setDepositacctname(String depositacctname) {
-        this.depositacctname = depositacctname;
-    }
-
-    public String getDepositname() {
-        return depositname;
-    }
-
-    public void setDepositname(String depositname) {
-        this.depositname = depositname;
+    public void setDepositName(String depositName) {
+        this.depositName = depositName;
     }
 
     public String getDepositprov() {
@@ -95,20 +81,20 @@ public class BindingBankCardBean {
         this.depositcity = depositcity;
     }
 
-    public String getOperorg() {
-        return operorg;
+    public String getDepositAcctName() {
+        return depositAcctName;
     }
 
-    public void setOperorg(String operorg) {
-        this.operorg = operorg;
+    public void setDepositAcctName(String depositAcctName) {
+        this.depositAcctName = depositAcctName;
     }
 
-    public String getTpasswd() {
-        return tpasswd;
+    public String getBanknameid() {
+        return banknameid;
     }
 
-    public void setTpasswd(String tpasswd) {
-        this.tpasswd = tpasswd;
+    public void setBanknameid(String banknameid) {
+        this.banknameid = banknameid;
     }
 
     public String getChannelid() {
@@ -141,5 +127,21 @@ public class BindingBankCardBean {
 
     public void setParatype(String paratype) {
         this.paratype = paratype;
+    }
+
+    public String getOperOrg() {
+        return operOrg;
+    }
+
+    public void setOperOrg(String operOrg) {
+        this.operOrg = operOrg;
+    }
+
+    public String gettPasswd() {
+        return tPasswd;
+    }
+
+    public void settPasswd(String tPasswd) {
+        this.tPasswd = tPasswd;
     }
 }

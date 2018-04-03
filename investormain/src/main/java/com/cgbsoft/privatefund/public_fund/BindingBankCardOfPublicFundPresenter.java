@@ -53,11 +53,11 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
      * mobiletelno: '13700000000' //银行卡绑定的手机号（客户填写）
      * }
      */
-    public void getVerificationCodeFormServer(BindingBankCardBean bindingBankCardBean, String phone, String bankCode, BasePublicFundPresenter.PreSenterCallBack<String> preSenterCallBack) {
+    public void getVerificationCodeFormServer(String channelid, String phone, String bankCode, BasePublicFundPresenter.PreSenterCallBack<String> preSenterCallBack) {
         Map<String, String> parms = new HashMap<>();
        /* parms.put("certificateType", bindingBankCardBean.getCertificatetype());//证件类型（H5调取app指令的时候会传入）
         parms.put("certificateNo", bindingBankCardBean.getCertificateno());*/
-        parms.put("channelId", bindingBankCardBean.getChannelid());
+        parms.put("channelId", channelid);
        // parms.put("depositAcctName", bindingBankCardBean.getDepositacctname());
         parms.put("depositAcct", bankCode);
         parms.put("mobileTelNo", phone);
@@ -74,7 +74,7 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
      */
     public void sureBind(BindingBankCardBean bindingBankCardBean, String bankName, String bankCode, String phoneCode, String verificationCode, PreSenterCallBack<String> callBack) {
         Map parms = new HashMap();
-        parms.put("custNo", BStrUtils.nullToEmpty(bindingBankCardBean.getCustno()));
+        parms.put("custNo", BStrUtils.nullToEmpty(bindingBankCardBean.getCustNo()));
         parms.put("mobileNo", BStrUtils.nullToEmpty(phoneCode));
         parms.put("verificationCode", BStrUtils.nullToEmpty(verificationCode));
         parms.put("authenticateFlag", "");
@@ -82,12 +82,12 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
         parms.put("channelId", BStrUtils.nullToEmpty(bindingBankCardBean.getChannelid()));
       //  parms.put("channelname", BStrUtils.nullToEmpty(bankName));
         parms.put("depositAcct", BStrUtils.nullToEmpty(bankCode));
-        parms.put("depositAcctName", BStrUtils.nullToEmpty(bindingBankCardBean.getDepositacctname()));
-        parms.put("depositName", BStrUtils.nullToEmpty(bindingBankCardBean.getDepositname()));
+        parms.put("depositAcctName", BStrUtils.nullToEmpty(bindingBankCardBean.getDepositAcctName()));
+        parms.put("depositName", BStrUtils.nullToEmpty(bindingBankCardBean.getDepositName()));
         parms.put("depositCity", ""); // 所在城市
         parms.put("depositProv", ""); // 所以省份
-        parms.put("operOrg", BStrUtils.isEmpty(bindingBankCardBean.getOperorg()) ? "9999" : bindingBankCardBean.getOperorg());  //交易操作网点，写死9999就可以
-        parms.put("tPasswd", BStrUtils.isEmpty(bindingBankCardBean.getTpasswd()) ? "" : bindingBankCardBean.getTpasswd());
+        parms.put("operOrg", BStrUtils.isEmpty(bindingBankCardBean.getOperOrg()) ? "9999" : bindingBankCardBean.getOperOrg());  //交易操作网点，写死9999就可以
+        parms.put("tPasswd", BStrUtils.isEmpty(bindingBankCardBean.gettPasswd()) ? "" : bindingBankCardBean.gettPasswd());
         parms.put("certificateType", "0");
 
         parms.put("bankName", BStrUtils.nullToEmpty(bindingBankCardBean.getBankname()));
@@ -95,7 +95,7 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
         parms.put("paraType", BStrUtils.nullToEmpty(bindingBankCardBean.getParatype()));
 
         //获取身份证号
-        String certificateno = bindingBankCardBean.getCertificateno();
+        String certificateno = bindingBankCardBean.getCertificateNo();
 
         if (BStrUtils.isEmpty(certificateno)) {
             certificateno= AppManager.getPublicFundInf(getContext()).getCertificateNo();

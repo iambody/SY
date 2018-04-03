@@ -269,12 +269,12 @@ public class UiSkipUtils {
 //            JSONArray jsonArray=new JSONArray(result).getJSONArray(0).getJSONObject(0);
 
             JSONObject jsonObject = new JSONArray(result).getJSONArray(0).getJSONObject(0);
-            appsheetserialno = jsonObject.getString("appsheetserialno");
-            confirmeddate = jsonObject.getString("confirmeddate");
-            operdate = jsonObject.getString("operdate");
-            opertime = jsonObject.getString("opertime");
-            redeemrefunddate = jsonObject.getString("redeemrefunddate");
-            transactiondate = jsonObject.getString("transactiondate");
+            appsheetserialno = jsonObject.getString("appSheetSerialNo");
+            confirmeddate = jsonObject.getString("confirmedDate");
+            operdate = jsonObject.getString("operDate");
+            opertime = jsonObject.getString("operTime");
+            redeemrefunddate = jsonObject.getString("redeemReFundDate");
+            transactiondate = jsonObject.getString("transactionDate");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -305,10 +305,11 @@ public class UiSkipUtils {
      * @param allShare 卖出份额
      *                 https://t4-app.simuyun.com/app6.0/biz/publicfund/deal_prompt.html?pageType=2&fundType=0&allMoney=2000
      */
-    public static void gotoNewFundResult(Activity activity,int buyOrBuy,String fungType, String allMoney){
+    public static void gotoNewFundResult(Activity activity,int buyOrBuy,String fungType, String allMoney,String redeemReFundDate){
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("pageType", buyOrBuy+"");
         paramMap.put("fundType", fungType);
+        paramMap.put("redeemReFundDate", redeemReFundDate);
         if(buyOrBuy == 1){
             paramMap.put("allMoney", allMoney);
         }else if(buyOrBuy == 2){

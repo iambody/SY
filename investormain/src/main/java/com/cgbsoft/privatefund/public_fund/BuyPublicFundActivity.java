@@ -29,6 +29,9 @@ import com.cgbsoft.privatefund.bean.DataDictionary;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -324,9 +327,18 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             public void even(String result) {
                 loadingDialog.dismiss();
 
+                String redeemReFundDate = "";
+                if(!TextUtils.isEmpty(result)) {
+                    try {
+                        redeemReFundDate = new JSONObject(result).getString("redeemReFundDate");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this,BuyPublicFundActivity.this.fundName);
                 if(isPublicFund){
-                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,2,fundType,money);
+                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,2,fundType,money,redeemReFundDate);
                 }else {
                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + money, "申购成功", false);
                 }

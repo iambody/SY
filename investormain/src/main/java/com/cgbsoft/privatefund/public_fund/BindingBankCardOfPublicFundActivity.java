@@ -119,7 +119,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
             findViewById(R.id.rl_cusno_name).setVisibility(View.VISIBLE);
             TextView textView = (TextView) findViewById(R.id.tv_cusno_name);
-            textView.setText(bindingBankCardBean.getDepositacctname());
+            textView.setText(bindingBankCardBean.getDepositAcctName());
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.GONE);
         } else {
             findViewById(R.id.rl_cusno_name).setVisibility(View.GONE);
@@ -494,7 +494,11 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
             if (!isCheck) return;
             isSendVerificationCoded = true;
-            getPresenter().getVerificationCodeFormServer(bindingBankCardBean, phoneCode, bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
+            if(TextUtils.isEmpty(bindingBankCardBean.getChannelid())){
+                MToast.makeText(BindingBankCardOfPublicFundActivity.this, "请先填写银行信息", Toast.LENGTH_LONG);
+                return;
+            }
+            getPresenter().getVerificationCodeFormServer(bindingBankCardBean.getChannelid(), phoneCode, bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
                 @Override
                 public void even(String s) {
 
