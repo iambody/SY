@@ -60,10 +60,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     private String fundCode; // 基金号
     private String fundName; // 基金名字
     private String fundType; // 基金类型
-    private String rate; // 费率
-    private String profitDate; // 收益日期
-    private String limitOfDay; //银行卡每日限额
-    private String limitOfSingle; //银行卡单笔限额
     private String unit = "元"; //银行卡单笔限额
 
     private boolean isPublicFund = true; // 是公募基金还是盈泰钱包
@@ -83,7 +79,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         fundCode = getIntent().getStringExtra(TAG_FUND_CODE);
         fundName = getIntent().getStringExtra(TAG_FUND_NAME);
         fundType = getIntent().getStringExtra(TAG_FUND_Type);
-        if(YINGTAI_QIANBAO.equals(fundCode.trim())) isPublicFund = false;
+        if (YINGTAI_QIANBAO.equals(fundCode.trim())) isPublicFund = false;
         fundRiskLevel = getIntent().getStringExtra(TAG_FUND_RISK_LEVEL);
 
         buyInput = (EditText) findViewById(R.id.ev_buy_money_input);
@@ -102,19 +98,19 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      */
     private void bindView() {
         // 该表标题
-        if(isPublicFund){
+        if (isPublicFund) {
             ((TextView) findViewById(R.id.title_mid)).setText("立即购买");
             buyConfirm.setText("确认购买");
-        }else {
+        } else {
             ((TextView) findViewById(R.id.title_mid)).setText("盈泰钱包");
             buyConfirm.setText("确认转入");
         }
 
-        if(!isPublicFund){
+        if (!isPublicFund) {
             findViewById(R.id.ll_fundinfo).setVisibility(View.GONE);
-        }else {
-            ((TextView)findViewById(R.id.tv_fundname)).setText(fundName);
-            ((TextView)findViewById(R.id.tv_fundcode)).setText(fundCode);
+        } else {
+            ((TextView) findViewById(R.id.tv_fundname)).setText(fundName);
+            ((TextView) findViewById(R.id.tv_fundcode)).setText(fundCode);
         }
 
         // 返回键
@@ -125,16 +121,22 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         buyInput.setHint("请输入金额");
         buyInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
-               if(TextUtils.isEmpty(buyInput.getText())){
-                   buyConfirm.setBackgroundResource(R.color.app_golden_disable);
-               }else {
-                   buyConfirm.setBackgroundResource(R.color.app_golden);
-               }
+                // 设置输入框提示文本
+                String limitAmt = bean != null ? bean.getLimitOrderAmt().trim() :"0";// 最少购买限额
+                if (TextUtils.isEmpty(s.toString().trim()) || new BigDecimal(s.toString().trim()).compareTo(new BigDecimal(limitAmt)) < 0) {
+                    buyConfirm.setBackgroundResource(R.color.app_golden_disable);
+                } else {
+                    buyConfirm.setBackgroundResource(R.color.app_golden);
+                }
             }
         });
 
@@ -164,11 +166,11 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 }
 
 
-                if(new BigDecimal(money).compareTo(BigDecimal.valueOf(10000)) >= 0){
-                     money = new BigDecimal(money).divide(BigDecimal.valueOf(10000)).doubleValue()+"";
-                     unit = "万元";
-                }else {
-                     unit = "元";
+                if (new BigDecimal(money).compareTo(BigDecimal.valueOf(10000)) >= 0) {
+                    money = new BigDecimal(money).divide(BigDecimal.valueOf(10000)).doubleValue() + "";
+                    unit = "万元";
+                } else {
+                    unit = "元";
                 }
 
                 String finalMoney = money;
@@ -184,8 +186,9 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
                 break;
             case R.id.rl_bank_card: // 用于支付的银行卡
-                if (currectPayBank == null || bean == null || bean.getUserBankCardInfo() == null || bean.getUserBankCardInfo().size() <0) return;
-                new PayFundBankSelectDialog(this,currectPayBank.getDepositAcct(), bean.getUserBankCardInfo(), new PayFundBankSelectDialog.SelectListener() {
+                if (currectPayBank == null || bean == null || bean.getUserBankCardInfo() == null || bean.getUserBankCardInfo().size() < 0)
+                    return;
+                new PayFundBankSelectDialog(this, currectPayBank.getDepositAcct(), bean.getUserBankCardInfo(), new PayFundBankSelectDialog.SelectListener() {
                     @Override
                     public void select(int index) {
                         Log.e(this.getClass().getSimpleName(), "选择银行卡" + index);
@@ -193,7 +196,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                             Activity activity = BuyPublicFundActivity.this;
                             Intent intent = new Intent(activity, BindingBankCardOfPublicFundActivity.class);
                             intent.putExtra(BindingBankCardOfPublicFundActivity.STYLE, 1);
-                            intent.putExtra(BindingBankCardOfPublicFundActivity.TITLE,"使用新卡支付");
+                            intent.putExtra(BindingBankCardOfPublicFundActivity.TITLE, "使用新卡支付");
                             activity.startActivityForResult(intent, PayFundBankSelectDialog.REQUESTCODE);
                         } else if (index >= 0) {
                             BankCardInfo bankCardInfo = bean.getUserBankCardInfo().get(index);
@@ -259,7 +262,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
     private void requestData(String fundCode) {
         loadingDialog = LoadingDialog.getLoadingDialog(this, "加载中", false, false);
-      //  requestDictionary();
+        //  requestDictionary();
         getPresenter().getData(fundCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String o) {
@@ -267,10 +270,21 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 loadingDialog.dismiss();
                 bean = new Gson().fromJson(o, Bean.class);
                 bean.setFundCode(fundCode);
-                if(bean.getUserBankCardInfo().size()>0){
+                if (bean.getUserBankCardInfo().size() > 0) {
                     currectPayBank = bean.getUserBankCardInfo().get(0);
                 }
-                if(currectPayBank == null) return;
+
+                // 设置输入框提示文本
+                String limitAmt = bean != null ? bean.getLimitOrderAmt().trim() : "";// 最少购买限额
+                if (!BStrUtils.isEmpty(limitAmt) && !"null".equals(limitAmt)) {
+                    if (new BigDecimal(limitAmt).compareTo(BigDecimal.valueOf(10000)) >= 0) {
+                        buyInput.setHint("最低购买金额" + new BigDecimal(limitAmt).divide(BigDecimal.valueOf(10000)).doubleValue() + "万元");
+                    } else {
+                        buyInput.setHint("最低购买金额" + limitAmt + "元");
+                    }
+                }
+
+                if (currectPayBank == null) return;
                 showBankView();
             }
 
@@ -287,37 +301,25 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     /**
      * 显示支付银行
      */
-    Map<String,String> dictionaryTable = null;
+    Map<String, String> dictionaryTable = null;
+
     private void showBankView() {
-        if(bean != null && bean.getUserBankCardInfo().size()>1){
+        if (bean != null && bean.getUserBankCardInfo().size() > 1) {
             findViewById(R.id.iv_direct).setBackgroundResource(R.drawable.direct_right);
-        }else {
+        } else {
             findViewById(R.id.iv_direct).setBackgroundResource(0);
         }
 
-        String limitAmt = bean.getLimitOrderAmt().trim();// 最少购买限额
-        if (!BStrUtils.isEmpty(limitAmt) && !"null".equals(limitAmt)) {
-
-            int index = limitAmt.lastIndexOf(".");
-
-            if(index == 0 || index > 3){
-                double amt =new BigDecimal(limitAmt).divide(new BigDecimal("10000")).doubleValue();
-                buyInput.setHint("最低购买金额" + amt + "万元");
-            }else {
-                buyInput.setHint("最低购买金额" + limitAmt + "元");
-            }
-        }
-
-        Imageload.display(BuyPublicFundActivity.this,currectPayBank.getIcon(),this.bankIcon,R.drawable.bank_icon,R.drawable.bank_icon);
+        Imageload.display(BuyPublicFundActivity.this, currectPayBank.getIcon(), this.bankIcon, R.drawable.bank_icon, R.drawable.bank_icon);
         this.bankName.setText(currectPayBank.getBankShortName());
         String bankCoade = currectPayBank.getDepositAcct();
         if (bankCoade.length() > 4) {
             bankTailCode.setText(bankCoade.substring(bankCoade.length() - 4));
         }
 
-        if("0".equals(currectPayBank.getBankEnableStatus())){
+        if ("0".equals(currectPayBank.getBankEnableStatus())) {
             this.bankLimit.setText(getString(R.string.public_fund_bank_not_useable));
-        }else {
+        } else {
             this.bankLimit.setText(currectPayBank.getBankLimit());
         }
     }
@@ -328,16 +330,21 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      *
      * @param psw
      */
-    private void  starPay(final String money, String psw) {
+    private void starPay(final String money, String psw) {
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在支付", false, false);
         final String formatMoney = new DecimalFormat("0.00").format(new BigDecimal(money));
+
+        if ("0".equals(currectPayBank.getBankEnableStatus())) {
+            MToast.makeText(BuyPublicFundActivity.this, "当前银行卡因渠道变更暂无法进行支付", Toast.LENGTH_LONG).show();
+            return;
+        }
         getPresenter().sure(bean, currectPayBank, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
 
                 String redeemReFundDate = "";
-                if(!TextUtils.isEmpty(result)) {
+                if (!TextUtils.isEmpty(result)) {
                     try {
                         redeemReFundDate = new JSONObject(result).getString("redeemReFundDate");
                     } catch (JSONException e) {
@@ -345,10 +352,10 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     }
                 }
 
-                TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this,BuyPublicFundActivity.this.fundName);
-                if(isPublicFund){
-                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,1,fundType,formatMoney,redeemReFundDate);
-                }else {
+                TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.fundName);
+                if (isPublicFund) {
+                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, fundType, formatMoney, redeemReFundDate);
+                } else {
                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney, "申购成功", false);
                 }
                 finish();
@@ -396,7 +403,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             public void field(String errorCode, String errorMsg) {
                 loadingDialog.dismiss();
                 Log.e("Test", " 申购异常 " + errorMsg);
-              //  MToast.makeText(BuyPublicFundActivity.this, " 支付失败", Toast.LENGTH_LONG);
+                //  MToast.makeText(BuyPublicFundActivity.this, " 支付失败", Toast.LENGTH_LONG);
             }
         });
         loadingDialog.show();
@@ -408,12 +415,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         if (data != null && requestCode == PayFundBankSelectDialog.REQUESTCODE && resultCode == Activity.RESULT_OK) {
             //TODO 发起请求
             BankCardInfo bankCordInfo = (BankCardInfo) data.getExtras().get("bankCordInfo");
-            if(bankCordInfo == null) return;
+            if (bankCordInfo == null) return;
 
             bankCordInfo.setCustNo(currectPayBank.getCustNo());
             String bankName = dictionaryTable.get(bankCordInfo.getChannelId());
-            if(!TextUtils.isEmpty(bankName)) bankCordInfo.setBankName(bankName);
-            if(bean != null) bean.getUserBankCardInfo().add(0,bankCordInfo);
+            if (!TextUtils.isEmpty(bankName)) bankCordInfo.setBankName(bankName);
+            if (bean != null) bean.getUserBankCardInfo().add(0, bankCordInfo);
             currectPayBank = bankCordInfo;
             showBankView();
         }
@@ -444,18 +451,18 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 }*/
 
         /**
-         {
-         "businessCode":"22",
-         "fundType":"2",
-         "userBankCardInfo":[
-
-         ],
-         "fundName":"金鹰货币A",
-         "taNo":"21",
-         "shareType":" ",
-         "limitOrderAmt":"1",
-         "buyFlag":"1"
-         }
+         * {
+         * "businessCode":"22",
+         * "fundType":"2",
+         * "userBankCardInfo":[
+         * <p>
+         * ],
+         * "fundName":"金鹰货币A",
+         * "taNo":"21",
+         * "shareType":" ",
+         * "limitOrderAmt":"1",
+         * "buyFlag":"1"
+         * }
          */
 
         private String fundName; // 基金名字
@@ -465,10 +472,10 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         private String buyFlag = "1";
         private String taNo;// TA代码
         private String businessCode;
-      /*  private String rate; // 费率
-        private String profitDate; // 收益日期
-        private String limitOfDay; //银行卡每日限额
-        private String limitOfSingle; //银行卡单笔限额*/
+        /*  private String rate; // 费率
+          private String profitDate; // 收益日期
+          private String limitOfDay; //银行卡每日限额
+          private String limitOfSingle; //银行卡单笔限额*/
         private String limitOrderAmt; //最低买入
         private List<BankCardInfo> userBankCardInfo = new ArrayList<>();
 
@@ -580,26 +587,26 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
 
         /**
-         *  {
-         "authenticateFlag":"1",
-         "background":"http://upload.simuyun.com/publicfund/bankicon/HXBANK-bg3x.png",
-         "bankEnableStatus":"1",
-         "bankLimit":"",
-         "bankName":"华夏银行",
-         "bankShortName":"华夏银行",
-         "branchCode":"370",
-         "cardTelNo":" ",
-         "channelId":"Z017",
-         "custNo":"225",
-         "depositAcct":"6226311810148946",
-         "depositAcctName":"刘聪为",
-         "icon":"http://upload.simuyun.com/publicfund/bankicon/HXBANK3x.png",
-         "isOpenMobileTrade":"0",
-         "moneyAccount":"217",
-         "paycenterId":"0330",
-         "status":0,
-         "transactionAccountId":"Z017A00000267"
-         }
+         * {
+         * "authenticateFlag":"1",
+         * "background":"http://upload.simuyun.com/publicfund/bankicon/HXBANK-bg3x.png",
+         * "bankEnableStatus":"1",
+         * "bankLimit":"",
+         * "bankName":"华夏银行",
+         * "bankShortName":"华夏银行",
+         * "branchCode":"370",
+         * "cardTelNo":" ",
+         * "channelId":"Z017",
+         * "custNo":"225",
+         * "depositAcct":"6226311810148946",
+         * "depositAcctName":"刘聪为",
+         * "icon":"http://upload.simuyun.com/publicfund/bankicon/HXBANK3x.png",
+         * "isOpenMobileTrade":"0",
+         * "moneyAccount":"217",
+         * "paycenterId":"0330",
+         * "status":0,
+         * "transactionAccountId":"Z017A00000267"
+         * }
          */
         private String moneyaccount = ""; // /交易账户id（从银行卡列表信息中获取
         private String transactionAccountId = ""; // 账户号

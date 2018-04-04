@@ -408,7 +408,7 @@
                     android:layout_marginLeft="@dimen/ui_30_dip"
                     android:layout_toRightOf="@+id/tv_phone_number"
                     android:background="@null"
-                    android:hint="请输入银行预留手机号"
+                    android:hint="银行预留手机号"
                     android:inputType="phone"
                     android:maxLength="11"
                     android:textColor="@color/black"

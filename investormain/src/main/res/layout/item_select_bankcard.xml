@@ -9,8 +9,7 @@
         android:layout_height="@dimen/ui_45_dip"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/ui_15_dip"
-        android:scaleType="centerCrop"
-        android:src="@drawable/logo" />
+        />
 
     <TextView
         android:id="@+id/tv_bank_name"
