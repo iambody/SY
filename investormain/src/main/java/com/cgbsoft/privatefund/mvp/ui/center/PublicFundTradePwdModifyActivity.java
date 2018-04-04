@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
@@ -68,7 +69,7 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.modify_public_fund_trade_pwd));
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
-        PublicFundInf publicFundInf = new PublicFundInf();
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(getApplicationContext());
         et_phone_number.setText(publicFundInf.getMobileNo());
         timer = new CountDownTimer(TIMER_TOTAL, TIMER_DELAYT) {
             @Override

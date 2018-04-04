@@ -74,6 +74,7 @@
                 android:inputType="phone"
                 android:textColor="@color/black"
                 android:textColorHint="@color/color_A5A5A5"
+                android:gravity="center_vertical"
                 android:textSize="@dimen/dimens_sp_16" />
 
             <TextView

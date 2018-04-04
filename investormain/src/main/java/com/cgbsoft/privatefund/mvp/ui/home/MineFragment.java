@@ -891,9 +891,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         tv_share_bao_subsist_assert.setText(financialAssertModel.getSxbInfo().getSurvivingAssets());
         tv_share_bao_continue_income.setText(financialAssertModel.getSxbInfo().getAddincome());
         tv_share_bao_yestoday_income.setText(financialAssertModel.getSxbInfo().getYestincome());
-        tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), "万"));
-        tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income),"万"));
-        tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), "万"));
+        tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), "元"));
+        tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income),"元"));
+        tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), "元"));
     }
 
     private void fillPublicFundData(FinancialAssertModel financialAssertModel) {
@@ -904,9 +904,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         tv_public_fund_subsist_assert.setText(financialAssertModel.getGmInfo().getSurvivingAssets());
         tv_public_fund_continue_income.setText(financialAssertModel.getGmInfo().getAddincome());
         tv_public_fund_yestoday_income.setText(financialAssertModel.getGmInfo().getYestincome());
-        tv_public_fund_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), "万"));
-        tv_public_fund_continue_income_desc.setText(String.format(getString(R.string.continue_income), "万"));
-        tv_public_fund_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), "万"));
+        tv_public_fund_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), "元"));
+        tv_public_fund_continue_income_desc.setText(String.format(getString(R.string.continue_income), "元"));
+        tv_public_fund_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), "元"));
     }
 
     @SuppressLint("StringFormatInvalid")
