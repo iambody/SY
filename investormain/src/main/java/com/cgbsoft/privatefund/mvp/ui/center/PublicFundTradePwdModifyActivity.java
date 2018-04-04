@@ -9,14 +9,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.tools.ViewUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.mvp.contract.center.PublicFundTradePwdModifyContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.PublicFundTradePwdModifyPresenterImpl;
 import com.chenenyu.router.annotation.Route;
+
+import org.w3c.dom.Text;
 
 import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
@@ -35,7 +39,7 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
     @BindView(R.id.et_identify_number)
     EditText et_identify_number;
     @BindView(R.id.et_phone_number)
-    EditText et_phone_number;
+    TextView et_phone_number;
     @BindView(R.id.get_phone_validate_code)
     TextView get_phone_validate_code;
     @BindView(R.id.et_validate_code)
@@ -65,6 +69,8 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
         back.setVisibility(View.VISIBLE);
         titleTV.setText(getResources().getString(R.string.modify_public_fund_trade_pwd));
         mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(getApplicationContext());
+        et_phone_number.setText(publicFundInf.getMobileNo());
         timer = new CountDownTimer(TIMER_TOTAL, TIMER_DELAYT) {
             @Override
             public void onTick(long millisUntilFinished) {
