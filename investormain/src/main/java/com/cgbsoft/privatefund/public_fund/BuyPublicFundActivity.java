@@ -304,7 +304,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     Map<String, String> dictionaryTable = null;
 
     private void showBankView() {
-        if (bean != null && bean.getUserBankCardInfo().size() > 1) {
+        if (bean != null && bean.getUserBankCardInfo().size() > 0) {
             findViewById(R.id.iv_direct).setBackgroundResource(R.drawable.direct_right);
         } else {
             findViewById(R.id.iv_direct).setBackgroundResource(0);

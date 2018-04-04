@@ -77,7 +77,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected BaseWebview mWebview;
 
     @BindView(R2.id.divide_line)
-    protected  View mView;
+    protected View mView;
 //    @BindView(R2.id.baseweb_appbar)
 //    AppBarLayout baseweb_appbar;
 
@@ -138,7 +138,6 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     protected int layoutID() {
         return R.layout.acitivity_userinfo;
     }
-
 
 
     @Override
@@ -309,17 +308,25 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationIcon(R.drawable.ic_back_black_24dp);
         toolbar.setNavigationOnClickListener((View v) -> {
-            mWebview.loadUrl("javascript:WebView.back(0)");
-            finish();
+            if (null != url && url.contains(CwebNetConfig.publicFundRiskUrl)) {
+                publicRiskEvaluation();
+                return;
+            }
+
             if (!TextUtils.isEmpty(url) && url.contains("&goCustomFeedBack=0")) { // 健康项目详情页面埋点
                 TrackingHealthDataStatistics.projectDetailLeftBack(this);
-            } else if (!TextUtils.isEmpty(url) && url.contains("information/details.html")) {
-                TrackingDiscoveryDataStatistics.leftBack(this, title);
-            } else if (!TextUtils.isEmpty(url) && url.contains("health/free_consult.html")) { // 免费咨询页面返回
-                TrackingHealthDataStatistics.freeConsultLeftBack(this);
-            } else {
-
             }
+
+            if (!TextUtils.isEmpty(url) && url.contains("information/details.html")) {
+                TrackingDiscoveryDataStatistics.leftBack(this, title);
+            }
+
+            if (!TextUtils.isEmpty(url) && url.contains("health/free_consult.html")) { // 免费咨询页面返回
+                TrackingHealthDataStatistics.freeConsultLeftBack(this);
+            }
+
+            mWebview.loadUrl("javascript:WebView.back(0)");
+            finish();
         });
         mWebview.setClick(result -> executeOverideUrlCallBack(result));
 
@@ -402,7 +409,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
             myTitleLeftImageView.setOnClickListener(v -> finish());
 
 //
-            TextView  myTitleRightText = (TextView) findViewById(R.id.title_right);
+            TextView myTitleRightText = (TextView) findViewById(R.id.title_right);
             myTitleRightText.setTextColor(ContextCompat.getColor(this, android.R.color.black));
 //            baseweb_title_right_iv = (ImageView) findViewById(R.id.baseweb_title_right_iv);
 //
@@ -470,11 +477,16 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (url.contains("rankList_share")) {
             mWebview.loadUrl("javascript:delectChart()");
         }
+        if (null != url && url.contains(CwebNetConfig.publicFundRiskUrl)) {
+            publicRiskEvaluation();
+            return;
+        }
         mWebview.loadUrl("javascript:WebView.back(1)");
         if ("风险评测".equals(title)) {
             backEvent();
             return;
         }
+
 
         if (hasPushMessage) {
 //			NavigationUtils.startMessageList(context);
@@ -485,6 +497,23 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         } else {
             super.onBackPressed();
         }
+    }
+
+    /**
+     * 风险测评
+     */
+    private void publicRiskEvaluation() {
+        new DefaultDialog(BaseWebViewActivity.this, getString(R.string.public_risk_evaluation), "取消", "确定") {
+            @Override
+            public void left() {
+                this.dismiss();
+            }
+
+            @Override
+            public void right() {
+                finish();
+            }
+        }.show();
     }
 
     private void backEvent() {
@@ -735,8 +764,8 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
 
     public void setWebRightTopViewConfig(WebRightTopViewConfigBean webRightTopViewConfig) {
-        TextView  myTitleRightText = (TextView) findViewById(R.id.title_right);
-        ImageView baseweb_title_right_iv= (ImageView) findViewById(R.id.baseweb_title_right_iv);
+        TextView myTitleRightText = (TextView) findViewById(R.id.title_right);
+        ImageView baseweb_title_right_iv = (ImageView) findViewById(R.id.baseweb_title_right_iv);
         switch (webRightTopViewConfig.getRightButtonType()) {
             case 1:
                 if (null == myTitleRightText) break;
@@ -763,10 +792,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                         }
                     });
                 }
-                if (null != webRightTopViewConfig.getRightButtons() && 2==webRightTopViewConfig.getRightButtons().size()){//有两个时候
+                if (null != webRightTopViewConfig.getRightButtons() && 2 == webRightTopViewConfig.getRightButtons().size()) {//有两个时候
 
                 }
-                    break;
+                break;
         }
 
 

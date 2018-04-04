@@ -172,4 +172,5 @@
     <string name="public_bankcard_select_up_notes">可能会由于支付渠道发生调整，导致个别银行暂时无法使用或者限额有所调整，请以实际交易为准。</string>
     <!--图片查看器下标-->
     <string name="viewpager_indicator">%1$d/%2$d</string>
+    <string name="public_risk_evaluation">未完成风险评测，是否离开？</string>
 </resources>

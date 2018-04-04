@@ -2,7 +2,6 @@ package com.cgbsoft.privatefund.public_fund;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -52,7 +51,7 @@ import java.util.TimerTask;
  * 绑定公募基金银行列表
  */
 @Route(RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD)
-public class BindingBankCardOfPublicFundActivity extends BaseActivity< BindingBankCardOfPublicFundPresenter> implements View.OnClickListener {
+public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBankCardOfPublicFundPresenter> implements View.OnClickListener {
     public static final String TAG_PARAMETER = "tag_parameter";
     public static final int ADD_BANK = 1;
     public static final String STYLE = "Style";

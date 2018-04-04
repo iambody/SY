@@ -179,7 +179,6 @@ public class JavaScriptObjectToc {
             intent.putExtra(WebViewConstant.push_message_title, webBean.getTitle());
             intent.putExtra(WebViewConstant.push_message_title_isdiv, webBean.isHasHTMLTag());
             intent.putExtra(WebViewConstant.push_message_title_is_hidetoolbar, true);
-
             context.startActivity(intent);
 
 //            HashMap<String, Object> hashMap = new HashMap<>();
@@ -402,6 +401,7 @@ public class JavaScriptObjectToc {
 
     /**
      * 申购页面
+     *
      * @param jsonObj
      */
     @JavascriptInterface
@@ -645,7 +645,7 @@ public class JavaScriptObjectToc {
                 }
 
 
-                if(object.has("callback")){//调用js
+                if (object.has("callback")) {//调用js
                     webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
                 }
 
@@ -797,7 +797,6 @@ public class JavaScriptObjectToc {
         }
     }
 
-
     @JavascriptInterface
     public void getUserInfo(String jsostr) {
         if (BStrUtils.isEmpty(jsostr)) return;
@@ -880,12 +879,31 @@ public class JavaScriptObjectToc {
             String igs = new JSONObject(images).getString("images");
             PhotoPreviewIntent intent = new PhotoPreviewIntent(context);
             List<String> ivs = new Gson().fromJson(igs, new ArrayList<String>().getClass());
-            intent.setPhotoPaths(ivs) ;//预览图片对象列表
-            intent.setDefluatDrawble(R.drawable.logo) ;//加载错误时的图片
+            intent.setPhotoPaths(ivs);//预览图片对象列表
+            intent.setDefluatDrawble(R.drawable.logo);//加载错误时的图片
             intent.launch();
             webView.loadUrl(String.format("javascript:%s()", callback));
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 弹框  场景  公募风险测评 按返回键 mWebview.loadUrl("javascript:WebView.back(0)") 后 会调用这个指令
+     * @param data
+     */
+    @JavascriptInterface
+    public void showModal(String data){
+
+    }
+
+    /**
+     * 单纯的关闭  页面
+     * @param data
+     */
+    @JavascriptInterface
+    public void closeWebview(String data){
+
+    }
+
 }

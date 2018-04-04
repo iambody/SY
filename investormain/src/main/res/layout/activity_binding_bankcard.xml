@@ -501,6 +501,7 @@
                 android:textSize="@dimen/dimens_sp_18"
                 android:textColor="@color/white"
                 android:background="@color/app_golden_disable"
+                android:translationZ="0dp"
                 />
        <!--     android:background="@drawable/bind_bankcard_button"-->
         </LinearLayout>
