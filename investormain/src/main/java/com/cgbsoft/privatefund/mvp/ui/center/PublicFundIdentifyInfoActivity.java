@@ -59,9 +59,51 @@ public class PublicFundIdentifyInfoActivity extends BaseActivity<PublicFundInfoP
 //        tv_public_fund_info_identify_number.setText(publicFundInf.getCertificateNo());
 
         BStrUtils.setTv(tv_public_fund_info_name, publicFundInf.getCustFullName());
-        BStrUtils.setTv(tv_public_fund_info_identify_number, publicFundInf.getCertificateNo());
+        BStrUtils.setTv(tv_public_fund_info_identify_number, getStarString(publicFundInf.getCertificateNo(), 9));
+
+
 //        mLoadingDialog = LoadingDialog.getLoadingDialog(baseContext, "", false, false);
 //        getPresenter().requestPublicFundInfo();
+
+    }
+
+
+    private static String getStarString(String content, int begin, int end) {
+        if (BStrUtils.isEmpty(content)) return "";
+        if (begin >= content.length() || begin < 0) {
+            return content;
+        }
+        if (end >= content.length() || end < 0) {
+            return content;
+        }
+        if (begin >= end) {
+            return content;
+        }
+        String starStr = "";
+        for (int i = begin; i < end; i++) {
+            starStr = starStr + "*";
+        }
+        return content.substring(0, begin) + starStr + content.substring(end, content.length());
+
+    }
+
+    private static String getStarString(String content, int length) {
+        if (BStrUtils.isEmpty(content)) return "";
+
+        if (length >= content.length() || length < 0) {
+            return content;
+        }
+        int begin =  (content.length() - length) / 2+1;
+        int end = begin + length;
+        if (end >= content.length() || end < 0) {
+            return content;
+        }
+
+        String starStr = "";
+        for (int i = begin; i < end; i++) {
+            starStr = starStr + "*";
+        }
+        return content.substring(0, begin) + starStr + content.substring(end, content.length());
 
     }
 

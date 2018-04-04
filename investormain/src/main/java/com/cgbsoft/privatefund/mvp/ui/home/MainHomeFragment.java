@@ -1128,6 +1128,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      * 手动闭合
      */
     private void timeCountDown() {
+
         RxCountDown.countdown(ADVISERSHOWTIME).doOnSubscribe(new Action0() {
             @Override
             public void call() {

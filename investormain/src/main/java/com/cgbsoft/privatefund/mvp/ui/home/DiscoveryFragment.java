@@ -117,7 +117,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         initIndicatorView();
         initViewPage();
         initStockIndexView();
-        initCache();
+//        initCache();
         getPresenter().getDiscoveryFirstData();
         myHandler = new MyHandler(getActivity());
     }
@@ -168,7 +168,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
                 if (currentPosition == position) {
                     return;
                 }
-                if (currentPosition > position){
+                if (currentPosition > position) {
                     TrackingDiscoveryDataStatistics.discoveryLeftScroll(getContext());
                 } else {
                     TrackingDiscoveryDataStatistics.discoveryRightScroll(getContext());
@@ -205,6 +205,8 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         if (CollectionUtils.isEmpty(lazyFragments)) {
             initIndicatorList(discoverModel);
         }
+//*****************discoverModel
+//        refrushModule(AppManager.getDiscoveryModleData(baseActivity));
     }
 
     @Override
@@ -320,8 +322,8 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
             StockIndexBean stockIndexBean = mDatas.get(position);
             holder.name.setText(stockIndexBean.getName());
             holder.stockValue.setText(ViewUtils.formatNumberPatter(stockIndexBean.getIndex(), 2));
-            holder.increaseValue.setText(((!TextUtils.isEmpty(stockIndexBean.getGain()) && stockIndexBean.getGain().startsWith("-")) ? stockIndexBean.getGain() : "+".concat(stockIndexBean.getGain()))+"%");
-            holder.increatePercent.setText(((!TextUtils.isEmpty(stockIndexBean.getRate()) && stockIndexBean.getRate().startsWith("-")) ? stockIndexBean.getRate() : "+".concat(stockIndexBean.getRate()))+"%");
+            holder.increaseValue.setText(((!TextUtils.isEmpty(stockIndexBean.getGain()) && stockIndexBean.getGain().startsWith("-")) ? stockIndexBean.getGain() : "+".concat(stockIndexBean.getGain())) + "%");
+            holder.increatePercent.setText(((!TextUtils.isEmpty(stockIndexBean.getRate()) && stockIndexBean.getRate().startsWith("-")) ? stockIndexBean.getRate() : "+".concat(stockIndexBean.getRate())) + "%");
             setIndexValueColor(stockIndexBean.getRate(), holder.stockValue);
             setIndexValueColor(stockIndexBean.getRate(), holder.increaseValue);
             setIndexValueColor(stockIndexBean.getRate(), holder.increatePercent);
@@ -333,6 +335,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
             super(arg0);
             this.rootView = arg0;
         }
+
         View rootView;
         TextView name;
         TextView stockValue;

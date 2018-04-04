@@ -96,7 +96,7 @@ public class DiscoveryListFragment extends BaseLazyFragment<DiscoveryListPresent
 
     @Override
     protected void onFirstUserVisible() {
-        LogUtils.Log("fffa", "第一次可见:" + CatoryValue);
+        LogUtils.Log("fffssssssssssssssssa", "第一次可见:" + CatoryValue);
         List<DiscoveryListModel> list = getArguments() != null ? getArguments().getParcelableArrayList(INIT_LIST_DATA_PARAMS) : null;
         discoveryListAdapter = new DiscoveryListAdapter(fBaseActivity, list == null ? new ArrayList<>() : list);
         CurrentPostion = CollectionUtils.isEmpty(list) ? 0 : 1;
