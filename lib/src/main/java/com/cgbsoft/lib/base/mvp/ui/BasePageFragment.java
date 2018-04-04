@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.R;
@@ -39,6 +40,8 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
     protected ViewPager viewPager;
     @BindView(R2.id.status_replace)
     View statusReplace;
+    @BindView(R2.id.tab_father_layout)
+    RelativeLayout tab_father_layout;
 
     protected abstract int titleLayoutId();
 
@@ -68,7 +71,8 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
     }
 
     protected void inflaterData() {
-        if (list() != null) {
+        if (list() != null && list().size() > 1) {
+            tab_father_layout.setVisibility(View.VISIBLE);
             for (TabBean tabBean : list()) {
                 XTabLayout.Tab tab = tabLayout.newTab();
                 tab.setText(tabBean.getTabName());
@@ -136,6 +140,30 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
                 if (list().get(i).getCode() == index)
                     viewPager.setCurrentItem(i);
             }
+        }else if (list().size()==1){
+            tab_father_layout.setVisibility(View.GONE);
+            viewPager.setOffscreenPageLimit(3);
+            viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+                @Override
+                public int getCount() {
+                    return list().size();
+                }
+
+                @Override
+                public Fragment getItem(int position) {
+                    return list().get(position).getFragment();
+                }
+
+                @Override
+                public void destroyItem(ViewGroup container, int position, Object object) {
+                    if (object instanceof View) {
+                        container.removeView((View) object);
+                    } else if (object instanceof Fragment) {
+                        getChildFragmentManager().beginTransaction().detach((Fragment) object);
+                    }
+                }
+            });
+
         }
     }
 

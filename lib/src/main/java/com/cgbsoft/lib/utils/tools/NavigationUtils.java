@@ -296,7 +296,11 @@ public class NavigationUtils {
 
     public static void jumpNativePage(Context context, int code) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("code", code);
+        if (code == WebViewConstant.Navigation.LIFT_HOME_PAGE) {
+            map.put("code", WebViewConstant.Navigation.LIFT_MALL_PAGE);
+        } else {
+            map.put("code", code);
+        }
         switch (code) {
             case WebViewConstant.Navigation.MAIN_PAGE:
                 NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE);
@@ -326,7 +330,7 @@ public class NavigationUtils {
                 jumpNativeMain(context, map);
                 RxBus.get().post(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, 2);
                 break;
-            case  WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE:
+            case WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE:
 
                 jumpNativeMain(context, map);
                 RxBus.get().post(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, 1);
