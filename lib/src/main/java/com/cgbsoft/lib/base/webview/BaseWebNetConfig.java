@@ -30,8 +30,8 @@ public class BaseWebNetConfig extends NetConfig {
     public static String specialInvestorCompany = "/biz/assesment/quest_company1.html";
 
     //投资者完善资料
-    public static String investorInfoPerson = "/biz/assesment/quest_person1.html";
-    public static String investorInfoCompany = "/biz/assesment/quest_company1.html";
+    public static String investorInfoPerson = "app6.0/biz/assesment/quest_person1.html";
+    public static String investorInfoCompany = "app6.0/biz/assesment/quest_company1.html";
 
     public static void updateRequestUrl() {
         baseParentUrl = SERVER_ADD + "/";

@@ -1341,15 +1341,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
 
         } else {
-            if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
-                if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
-                    GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
-                } else {
-                    jumpInvestorInfo();
-                }
-            } else {
                 GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
-            }
         }
         DataStatistApiParam.dataManager();
     }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidkun.xtablayout.XTabLayout;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.model.NavigationBean;
 import com.cgbsoft.lib.base.mvp.model.SecondNavigation;
@@ -35,13 +36,14 @@ import app.mall.com.mvp.ui.ElegantGoodsFragment;
 import app.mall.com.mvp.ui.ElegantLivingFragment;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
+import butterknife.BindView;
 
 /**
  * @author chenlong
- *         <p>
- *         乐享生活
+ * <p>
+ * 乐享生活
  */
-public class HappyLifeFragment extends BasePageFragment implements View.OnClickListener ,Toolbar.OnMenuItemClickListener{
+public class HappyLifeFragment extends BasePageFragment implements View.OnClickListener, Toolbar.OnMenuItemClickListener {
 
     private final String NAVIGATION_CODE = "30";
     private final String LIFE_HOME_CODE = "3001";
@@ -52,6 +54,8 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     private UnreadInfoNumber unreadInfoNumber;
     private Toolbar toolbar;
     private MenuItem rightItem;
+    @BindView(R.id.tab_layout)
+    XTabLayout tabLayout;
 
     @Override
     protected int titleLayoutId() {
@@ -67,12 +71,6 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     @Override
     protected void init(View view, Bundle savedInstanceState) {
         super.init(view, savedInstanceState);
-//        toolbar = (Toolbar) title_layout.findViewById(R.id.tb_toolbar);
-//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        toolbar.setNavigationIcon(R.drawable.select_happy_life_toolbar_left);
-//        toolbar.setOnMenuItemClickListener(this);
         ((TextView) title_layout.findViewById(R.id.title_mid)).setText(R.string.vbnb_happy_live_str);
         toolbarLeft = (ImageView) title_layout.findViewById(R.id.iv_title_left);
         toolbarRight = (ImageView) title_layout.findViewById(R.id.iv_title_right);
@@ -81,6 +79,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
         toolbarLeft.setOnClickListener(this);
         toolbarRight.setOnClickListener(this);
         unreadInfoNumber = new UnreadInfoNumber(getActivity(), toolbarRight, true);
+        tabLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -120,13 +119,15 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
         List<SecondNavigation> secondNavigations = navigationBean.getSecondNavigation();
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
-                case LIFE_HOME_CODE:
-                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new ElegantLivingFragment(), Integer.parseInt(secondNavigation.getCode()));
-                    tabBeens.add(tabBeen1);
-                    break;
+//                case LIFE_HOME_CODE:
+//                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new ElegantLivingFragment(), Integer.parseInt(secondNavigation.getCode()));
+//                    tabBeens.add(tabBeen1);
+//                    break;
                 case LIFE_MALL_CODE:
                     TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new ElegantGoodsFragment(), Integer.parseInt(secondNavigation.getCode()));
                     tabBeens.add(tabBeen2);
+                    break;
+                default:
                     break;
             }
         }
@@ -180,6 +181,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     public void setCode(int index) {
         super.setIndex(index);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -192,7 +194,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     protected void clickTabButton(String tabName) {
         super.clickTabButton(tabName);
 //        if (!TextUtils.isEmpty(tabName) && tabName.equals("尚品")) {
-            DataStatistApiParam.clickElegantGoodsButton(tabName);
+        DataStatistApiParam.clickElegantGoodsButton(tabName);
 //        }
     }
 
