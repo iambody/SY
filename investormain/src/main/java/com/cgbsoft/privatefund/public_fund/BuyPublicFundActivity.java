@@ -162,12 +162,21 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     Log.e(this.getClass().getSimpleName(), " 可能请求申购的数据出现了问题");
                     return;
                 }
-                String inputText = new DecimalFormat("0.00").format(new BigDecimal(money));
-                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, bean.getFundName(), inputText + unit);
+
+
+                if(new BigDecimal(money).compareTo(BigDecimal.valueOf(10000)) >= 0){
+                     money = new BigDecimal(money).divide(BigDecimal.valueOf(10000)).doubleValue()+"";
+                     unit = "万元";
+                }else {
+                     unit = "元";
+                }
+
+                String finalMoney = money;
+                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, bean.getFundName(), money + unit);
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                     @Override
                     public void onInputFinish(String psw) {
-                        starPay(inputText, psw);
+                        starPay(finalMoney, psw);
                         payPasswordDialog.dismiss();
                     }
                 });
@@ -319,9 +328,9 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      *
      * @param psw
      */
-    private void  starPay(String money, String psw) {
+    private void  starPay(final String money, String psw) {
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在支付", false, false);
-
+        final String formatMoney = new DecimalFormat("0.00").format(new BigDecimal(money));
         getPresenter().sure(bean, currectPayBank, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
@@ -338,9 +347,9 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
                 TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this,BuyPublicFundActivity.this.fundName);
                 if(isPublicFund){
-                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,1,fundType,money,redeemReFundDate);
+                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,1,fundType,formatMoney,redeemReFundDate);
                 }else {
-                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + money, "申购成功", false);
+                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney, "申购成功", false);
                 }
                 finish();
 
