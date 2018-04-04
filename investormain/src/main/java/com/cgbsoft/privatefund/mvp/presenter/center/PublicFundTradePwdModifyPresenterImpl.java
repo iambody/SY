@@ -39,7 +39,7 @@ public class PublicFundTradePwdModifyPresenterImpl extends BasePresenterImpl<Pub
         hashMap.put("acctType", "7");
         hashMap.put("certificateNo", identifyNo);
         hashMap.put("captcha", validateCode);
-        hashMap.put("mobileno", phoneNumber);
+        hashMap.put("mobileNo", phoneNumber);
         hashMap.put("newPwd", tradePwd);
         addSubscription(ApiClient.resetPwdPublicFund(hashMap).subscribe(new RxSubscriber<String>() {
             @Override
