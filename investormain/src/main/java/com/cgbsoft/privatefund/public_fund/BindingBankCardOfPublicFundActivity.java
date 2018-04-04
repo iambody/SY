@@ -425,7 +425,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity< BindingBa
         if(isEnabled){
             findViewById(R.id.bt_Confirm).setBackgroundResource(R.color.app_golden);
         }else {
-            findViewById(R.id.bt_Confirm).setBackgroundColor(Color.parseColor("#DDDDDD"));
+            findViewById(R.id.bt_Confirm).setBackgroundResource(R.color.app_golden_disable);
         }
     }
 
@@ -457,6 +457,83 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity< BindingBa
             return;
         }
 
+            if (!isCheck) return;
+            isSendVerificationCoded = true;
+            lastBankCode = bankCode;
+            if(TextUtils.isEmpty(bindingBankCardBean.getChannelid())){
+                MToast.makeText(BindingBankCardOfPublicFundActivity.this, "请先填写银行信息", Toast.LENGTH_LONG);
+                return;
+            }
+            getPresenter().getVerificationCodeFormServer(bindingBankCardBean.getChannelid(), phoneCode, bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
+                @Override
+                public void even(String s) {
+
+                    try {
+                        String code = new JSONObject(s).getString("code");
+                        String msg = new JSONObject(s).getString("msg");
+                        if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
+                            // 发送成功
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "验证码发送成功", Toast.LENGTH_LONG).show();
+                            // 开启倒计时
+                            startCountdown(v,maxTime);
+                        } else if (PublicFundContant.REQEUSTING.equals(code)) {
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "处理中", Toast.LENGTH_LONG).show();
+                        } else {
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this,msg, Toast.LENGTH_LONG).show();
+                            // 关闭倒计时
+                            closeConutDown(getVerificationCode);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        MToast.makeText(BindingBankCardOfPublicFundActivity.this,"发送验证码失败", Toast.LENGTH_LONG);
+                        // 关闭倒计时
+                        closeConutDown(getVerificationCode);
+                    }
+             /*       BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(s, BankListOfJZSupport.class);
+                    if (bankListOfJZSupport != null) {
+                        String code = bankListOfJZSupport.getErrorCode();
+                        if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
+                            // 发送成功
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "验证码发送成功", Toast.LENGTH_LONG);
+                        } else if (PublicFundContant.REQEUSTING.equals(code)) {
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "处理中", Toast.LENGTH_LONG);
+                        } else {
+                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG);
+                            getVerificationCode.setTag(TIME, null);
+                            timer.cancel();
+                        }
+                    }*/
+
+                }
+
+                @Override
+                public void field(String errorCode, String errorMsg) {
+                    // 关闭倒计时
+                    closeConutDown(getVerificationCode);
+                }
+            });
+
+
+
+    }
+
+
+    private void closeConutDown(Button v){
+        Timer timer = (Timer) v.getTag();
+        timer.cancel();
+        v.setTag(TIME, null);
+        ThreadUtils.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                v.setText("获取验证码");
+            }
+        });
+    }
+
+    /**
+     * 开启倒计时
+     */
+    private void startCountdown(View v,int maxTime) {
 
         if (v.getTag(TIME) == null || (Integer) v.getTag(TIME) == 0) {
             v.setTag(TIME, maxTime);
@@ -488,67 +565,14 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity< BindingBa
                     }
                 }
             }, 1000, 1000);
-
-            if (!isCheck) return;
-            isSendVerificationCoded = true;
-            if(TextUtils.isEmpty(bindingBankCardBean.getChannelid())){
-                MToast.makeText(BindingBankCardOfPublicFundActivity.this, "请先填写银行信息", Toast.LENGTH_LONG);
-                return;
-            }
-            getPresenter().getVerificationCodeFormServer(bindingBankCardBean.getChannelid(), phoneCode, bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
-                @Override
-                public void even(String s) {
-
-                    try {
-                        String code = new JSONObject(s).getString("code");
-                        String msg = new JSONObject(s).getString("msg");
-                        if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
-                            // 发送成功
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "验证码发送成功", Toast.LENGTH_LONG);
-                        } else if (PublicFundContant.REQEUSTING.equals(code)) {
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "处理中", Toast.LENGTH_LONG);
-                        } else {
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this,msg, Toast.LENGTH_LONG);
-                            getVerificationCode.setTag(TIME, null);
-                            timer.cancel();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        MToast.makeText(BindingBankCardOfPublicFundActivity.this,"发送验证码失败", Toast.LENGTH_LONG);
-                        getVerificationCode.setTag(TIME, null);
-                        timer.cancel();
-                    }
-             /*       BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(s, BankListOfJZSupport.class);
-                    if (bankListOfJZSupport != null) {
-                        String code = bankListOfJZSupport.getErrorCode();
-                        if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
-                            // 发送成功
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "验证码发送成功", Toast.LENGTH_LONG);
-                        } else if (PublicFundContant.REQEUSTING.equals(code)) {
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "处理中", Toast.LENGTH_LONG);
-                        } else {
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG);
-                            getVerificationCode.setTag(TIME, null);
-                            timer.cancel();
-                        }
-                    }*/
-
-                }
-
-                @Override
-                public void field(String errorCode, String errorMsg) {
-                    getVerificationCode.setTag(TIME, null);
-                    timer.cancel();
-                }
-            });
         }
-
-
     }
 
     /**
      * 完成绑定
      */
+
+    private String lastBankCode = "";
     private void finshBanding() {
         String phoneCode = mPhoneCode.getText().toString();
         if (BStrUtils.isEmpty(phoneCode)) {
@@ -585,7 +609,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity< BindingBa
             return;
         }
 
-        if (!isSendVerificationCoded) {
+        //　防止没有发送验证码就点击绑定和获取验证之后又修改了银行卡号之后绑定银行卡
+        if (!isSendVerificationCoded && !lastBankCode.equals(bankCode)) {
             MToast.makeText(this, "请先点击获取验证码", Toast.LENGTH_LONG);
             return;
         }

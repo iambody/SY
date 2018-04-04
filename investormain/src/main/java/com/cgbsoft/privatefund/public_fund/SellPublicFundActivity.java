@@ -233,6 +233,12 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
 
             @Override
             public void afterTextChanged(Editable s) {
+                // 修改按钮颜色
+                if(TextUtils.isEmpty(s)){
+                    sellFinsh.setBackgroundResource(R.color.app_golden_disable);
+                }else {
+                    sellFinsh.setBackgroundResource(R.color.app_golden);
+                }
                 if (TextUtils.isEmpty(s) || s.equals(input.getText())) return;
                 if (curruntBankCard != null && new BigDecimal(s.toString()).subtract(new BigDecimal(curruntBankCard.getAvailBalMode1())).doubleValue() > 0) {
                     if(isFund){
@@ -242,9 +248,6 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     }
                     input.setText(curruntBankCard.getAvailBalMode1());
                     input.setSelection(curruntBankCard.getAvailBalMode1().length());
-                    sellFinsh.setBackgroundResource(R.color.app_golden);
-                }else {
-                    sellFinsh.setBackgroundResource(R.color.app_golden_disable);
                 }
             }
         });
@@ -299,6 +302,11 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 BigDecimal bigDecimal = new BigDecimal(inputText);
                 String money = new DecimalFormat("0.00").format(bigDecimal);
 
+                if(isFund){
+                    unit = "份";
+                }else {
+                    unit = "元";
+                }
                 PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, fundName, money + unit);
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                     @Override

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -246,12 +247,14 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
 
         static class SelectBankViewHolder extends RecyclerView.ViewHolder {
             private TextView bankName;
+            private ImageView bankLogn;
             private SelectBankCardLinsterer linsterer;
             private BankBranchBean bankBranchBean;
 
             public SelectBankViewHolder(View itemView, final SelectBankCardLinsterer linsterer) {
                 super(itemView);
                 bankName = (TextView)itemView.findViewById(R.id.tv_bank_name);
+                bankLogn = (ImageView) itemView.findViewById(R.id.item_public_fund_bankls_iv);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -263,6 +266,7 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
             public void bindView(BankBranchBean bankBranchBean) {
                 this.bankBranchBean = bankBranchBean;
                 bankName.setText(bankBranchBean.getParaValue());
+                bankLogn.setVisibility(View.GONE);
             }
 
         }
