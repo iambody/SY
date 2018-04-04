@@ -122,37 +122,6 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
 "dailySurplusAmt":"9999999999999.00",
 "dailyRedeemAmt":"0.00"
 }
-{
-"fundCode":"210012",
-"largeRedemptionFlag":1,
-"fundName":"盈泰钱包",
-"bankCardList":[
-{
-"branchCode":"370",
-"custNo":"212",
-"taNo":"21",
-"transactionAccountId":"Z008A00000259",
-"availBal":"12996",
-"availBalMode1":"12996",
-"balFund":"12996",
-"balFundMode1":"12996",
-"channelId":"招商银行",
-"depositAcct":"6225881010120920",
-"icon":"http://upload.simuyun.com/publicfund/bankicon/CMB3x.png",
-"background":"http://upload.simuyun.com/publicfund/bankicon/CMB-bg3x.png",
-"bankShortName":"招商银行",
-"bankLimit":"",
-"bankEnableStatus":"0"
-}
-],
-"isSxb":"0",
-"limitMoney":"0",
-"fundType":"2",
-"fastRedeemFlag":"1",
-"singleRedeemMaxAmount":"9999999999999.00",
-"dailyRedeemLimit":"9999999999999.00",
-"dailySurplusAmt":"9999999999999.00",
-"dailyRedeemAmt":"0.00"
 }
       */
 
@@ -199,12 +168,14 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             findViewById(R.id.ll_fundinfo).setVisibility(View.VISIBLE);
             ((TextView) findViewById(R.id.tv_fundname)).setText(fundName);
             ((TextView) findViewById(R.id.tv_fundcode)).setText(fundcode);
+            ((TextView) findViewById(R.id.tv_sell_money)).setText("份额");
 
             sellFinsh.setText("确认卖出");
             input.setHint("请输入您要卖出的份额");
         } else {
             ((TextView) findViewById(R.id.title_mid)).setText("盈泰钱包");
             findViewById(R.id.ll_fundinfo).setVisibility(View.GONE);
+            ((TextView) findViewById(R.id.tv_sell_money)).setText("提现金额");
 
             input.setHint("请输入您要提现的金额");
             sellFinsh.setText("确认提现");

@@ -140,7 +140,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity< BindingBa
     private void bindView() {
         // 该表标题
         if (TextUtils.isEmpty(getIntent().getStringExtra(TITLE))) {
-            ((TextView) findViewById(R.id.title_mid)).setText("完成公募基金开户");
+            ((TextView) findViewById(R.id.title_mid)).setText("公募基金开户");
         } else {
             ((TextView) findViewById(R.id.title_mid)).setText(getIntent().getStringExtra(TITLE));
         }
