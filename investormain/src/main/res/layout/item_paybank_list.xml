@@ -64,6 +64,7 @@
         android:text="@string/public_fund_bank_not_useable"
         android:textColor="@color/black"
         android:textSize="@dimen/dimens_sp_14"
+        android:textStyle="bold"
         android:visibility="gone" />
 
     <View

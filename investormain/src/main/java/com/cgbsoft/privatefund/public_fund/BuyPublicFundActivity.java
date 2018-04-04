@@ -477,8 +477,17 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
           private String limitOfDay; //银行卡每日限额
           private String limitOfSingle; //银行卡单笔限额*/
         private String limitOrderAmt; //最低买入
+        private String serialNo; // 流水号
         private List<BankCardInfo> userBankCardInfo = new ArrayList<>();
 
+
+        public String getSerialNo() {
+            return serialNo;
+        }
+
+        public void setSerialNo(String serialNo) {
+            this.serialNo = serialNo;
+        }
 
         public String getFundName() {
             return fundName;

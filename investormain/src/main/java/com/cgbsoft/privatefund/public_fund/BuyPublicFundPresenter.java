@@ -178,6 +178,7 @@ public class BuyPublicFundPresenter extends BasePublicFundPresenter {
         //{"taNo":"21","transactionAccountId":"Z017A00000267","applicationAmt":"109","tPasswd":"123456","fundCode":"210012","branchCode":"370"}
 
         Map<String, String> parms = new HashMap<>();
+        parms.put("serialNo", bean.getSerialNo()); // 流水号
         parms.put("taNo", bean.getTaNo());
         parms.put("fundCode", bean.getFundCode());
         parms.put("transactionAccountId",bankCardInfo.getTransactionAccountId());
