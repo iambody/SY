@@ -63,7 +63,7 @@
         android:layout_marginTop="@dimen/ui_6_dip"
         android:text="@string/public_fund_bank_not_useable"
         android:textColor="@color/black"
-        android:textSize="@dimen/dimens_sp_14"
+        android:textSize="@dimen/dimens_sp_15"
         android:textStyle="bold"
         android:visibility="gone" />
 

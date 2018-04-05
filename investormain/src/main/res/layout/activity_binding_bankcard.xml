@@ -374,6 +374,7 @@
                     android:hint="请输入银行卡号"
                     android:inputType="number"
                     android:digits="0123456789xyzXYZ"
+                    android:maxLength="25"
                     android:textColor="@color/black"
                     android:textColorHint="#A5A5A5"
                     android:textSize="@dimen/dimens_sp_16" />
@@ -500,8 +501,8 @@
                 android:layout_marginBottom="@dimen/ui_100_dip"
                 android:textSize="@dimen/dimens_sp_18"
                 android:textColor="@color/white"
-                android:background="@color/app_golden_disable"
-                android:translationZ="0dp"
+                android:background="@drawable/public_fund_conrner_gray"
+                style="?android:attr/borderlessButtonStyle"
                 />
        <!--     android:background="@drawable/bind_bankcard_button"-->
         </LinearLayout>

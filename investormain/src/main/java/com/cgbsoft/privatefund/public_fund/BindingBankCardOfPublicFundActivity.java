@@ -422,9 +422,9 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
         findViewById(R.id.bt_Confirm).setEnabled(isEnabled);
         if(isEnabled){
-            findViewById(R.id.bt_Confirm).setBackgroundResource(R.color.app_golden);
+            findViewById(R.id.bt_Confirm).setBackgroundResource(R.drawable.public_fund_conrner_golden);
         }else {
-            findViewById(R.id.bt_Confirm).setBackgroundResource(R.color.app_golden_disable);
+            findViewById(R.id.bt_Confirm).setBackgroundResource(R.drawable.public_fund_conrner_gray);
         }
     }
 

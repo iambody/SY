@@ -206,9 +206,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             public void afterTextChanged(Editable s) {
                 // 修改按钮颜色
                 if(TextUtils.isEmpty(s)){
-                    sellFinsh.setBackgroundResource(R.color.app_golden_disable);
+                    sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_gray);
                 }else {
-                    sellFinsh.setBackgroundResource(R.color.app_golden);
+                    sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_golden);
                 }
                 if (TextUtils.isEmpty(s) || s.equals(input.getText())) return;
                 if (curruntBankCard != null && new BigDecimal(s.toString()).subtract(new BigDecimal(curruntBankCard.getAvailBalMode1())).doubleValue() > 0) {

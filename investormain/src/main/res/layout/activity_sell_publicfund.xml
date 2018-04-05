@@ -192,7 +192,8 @@
         android:textSize="@dimen/dimens_sp_18"
         android:textColor="@color/white"
         android:text="确认卖出"
-        android:background="@color/app_golden_disable"
+        android:background="@drawable/public_fund_conrner_gray"
+        style="?android:attr/borderlessButtonStyle"
         />
 
 </LinearLayout>

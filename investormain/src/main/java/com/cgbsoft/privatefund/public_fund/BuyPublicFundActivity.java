@@ -133,9 +133,9 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 // 设置输入框提示文本
                 String limitAmt = bean != null ? bean.getLimitOrderAmt().trim() :"0";// 最少购买限额
                 if (TextUtils.isEmpty(s.toString().trim()) || new BigDecimal(s.toString().trim()).compareTo(new BigDecimal(limitAmt)) < 0) {
-                    buyConfirm.setBackgroundResource(R.color.app_golden_disable);
+                    buyConfirm.setBackgroundResource(R.drawable.public_fund_conrner_gray);
                 } else {
-                    buyConfirm.setBackgroundResource(R.color.app_golden);
+                    buyConfirm.setBackgroundResource(R.drawable.public_fund_conrner_golden);
                 }
             }
         });
@@ -304,17 +304,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     Map<String, String> dictionaryTable = null;
 
     private void showBankView() {
-        if (bean != null && bean.getUserBankCardInfo().size() > 0) {
-            findViewById(R.id.iv_direct).setBackgroundResource(R.drawable.direct_right);
-        } else {
-            findViewById(R.id.iv_direct).setBackgroundResource(0);
-        }
-
+        findViewById(R.id.iv_direct).setBackgroundResource(R.drawable.direct_right);
         Imageload.display(BuyPublicFundActivity.this, currectPayBank.getIcon(), this.bankIcon, R.drawable.bank_icon, R.drawable.bank_icon);
         this.bankName.setText(currectPayBank.getBankShortName());
         String bankCoade = currectPayBank.getDepositAcct();
         if (bankCoade.length() > 4) {
-            bankTailCode.setText(bankCoade.substring(bankCoade.length() - 4));
+            bankTailCode.setText("尾号 "+bankCoade.substring(bankCoade.length() - 4));
         }
 
         if ("0".equals(currectPayBank.getBankEnableStatus())) {
