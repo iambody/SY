@@ -67,7 +67,6 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     private EditText mVerificationCode; // 验证码
     private Button getVerificationCode; // 获取验证码
 
-    private boolean isSendVerificationCoded = false;
     private BindingBankCardBean bindingBankCardBean;
 
     private TextView mAddressBank;
@@ -457,12 +456,12 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         }
 
             if (!isCheck) return;
-            isSendVerificationCoded = true;
             lastBankCode = bankCode;
             if(TextUtils.isEmpty(bindingBankCardBean.getChannelid())){
                 MToast.makeText(BindingBankCardOfPublicFundActivity.this, "请先填写银行信息", Toast.LENGTH_LONG);
                 return;
             }
+            v.setEnabled(false);
             getPresenter().getVerificationCodeFormServer(bindingBankCardBean.getChannelid(), phoneCode, bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
                 @Override
                 public void even(String s) {
@@ -518,15 +517,17 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
 
     private void closeConutDown(Button v){
-        Timer timer = (Timer) v.getTag();
-        timer.cancel();
-        v.setTag(TIME, null);
         ThreadUtils.runOnMainThread(new Runnable() {
             @Override
             public void run() {
                 v.setText("获取验证码");
+                v.setEnabled(true);
             }
         });
+        Timer timer = (Timer) v.getTag();
+        if(timer == null) return; // 当timer为空时，说明验证码倒计时还有没有启动
+        timer.cancel();
+        v.setTag(TIME, null);
     }
 
     /**
@@ -552,15 +553,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                             }
                         });
                     } else {
-                        timer.cancel();
-                        v.setTag(TIME, null);
-                        ThreadUtils.runOnMainThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                getVerificationCode.setText("获取验证码");
-                            }
-                        });
-
+                        closeConutDown(getVerificationCode);
                     }
                 }
             }, 1000, 1000);
@@ -609,7 +602,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         }
 
         //　防止没有发送验证码就点击绑定和获取验证之后又修改了银行卡号之后绑定银行卡
-        if (!isSendVerificationCoded && !lastBankCode.equals(bankCode)) {
+        if (!lastBankCode.equals(bankCode)) {
             MToast.makeText(this, "请先点击获取验证码", Toast.LENGTH_LONG);
             return;
         }
