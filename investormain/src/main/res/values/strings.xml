@@ -220,7 +220,7 @@
     <string name="account_video_go_server">去看视频</string>
     <string name="account_video_go_look_all">查看全部</string>
 
-    <string name="account_bank_cunxun_assert">续存资产(%s)</string>
+    <string name="account_bank_cunxun_assert">资产(%s)</string>
     <string name="account_bank_zhaiquan_assert">债权(%1$s)-%2$s</string>
     <string name="account_bank_guquan_assert">股权(%1$s)-%2$s</string>
     <string name="account_bank_online">-</string>

@@ -953,7 +953,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.ll_public_fund_fill)
     void gotoMinePublicFund() {
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.minePublicFund, getString(R.string.public_fund), false);
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.minePublicFund, getString(R.string.my_public_fund), false);
         TrackingDataManger.morePublicFundProduct(getContext());
     }
 
