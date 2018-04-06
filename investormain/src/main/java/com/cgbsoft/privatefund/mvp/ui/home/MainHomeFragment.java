@@ -1170,7 +1170,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         //跳转到基金详情页面
 //        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicFundDetailUrl + "?fundcode=" + publishFundRecommend.getFundcode(), String.format("%s(%s)", publishFundRecommend.getFundName(), publishFundRecommend.getFundcode()), false);
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, BStrUtils.NullToStr(publishFundRecommend.getFundName()), false);
+//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, BStrUtils.NullToStr(publishFundRecommend.getFundName()), false);
+        NavigationUtils.gotoNavWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, BStrUtils.NullToStr(publishFundRecommend.getFundName()));
+
         TrackingDataManger.homeGrowthrateClick(baseActivity);
 
     }

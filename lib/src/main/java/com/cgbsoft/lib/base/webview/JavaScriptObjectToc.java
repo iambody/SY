@@ -890,19 +890,30 @@ public class JavaScriptObjectToc {
 
     /**
      * 弹框  场景  公募风险测评 按返回键 mWebview.loadUrl("javascript:WebView.back(0)") 后 会调用这个指令
+     *
      * @param data
      */
     @JavascriptInterface
-    public void showModal(String data){
+    public void showModal(String data) {
 
     }
 
     /**
      * 单纯的关闭  页面
+     *
      * @param data
      */
     @JavascriptInterface
-    public void closeWebview(String data){
+    public void closeWebview(String data) {
+
+    }
+
+
+    /**
+     * 单纯的 隐藏返回键盘 或者物理键盘无反应
+     */
+    @JavascriptInterface
+    public void hideReturnButton(String data) {
 
     }
 

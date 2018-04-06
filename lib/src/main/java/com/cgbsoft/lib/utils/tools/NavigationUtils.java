@@ -148,7 +148,20 @@ public class NavigationUtils {
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, isShowRightShare);
         activity.startActivity(intent);
     }
+    /**
+     * 跳转到统一的webactivity页面
+     */
+    public static void gotoNavWebActivity(Activity activity, String url, String title ) {
 
+        Intent intent = new Intent(activity, BaseWebViewActivity.class);
+        intent.putExtra(WebViewConstant.push_message_url,url);
+        intent.putExtra(WebViewConstant.push_message_title,title);
+        intent.putExtra(WebViewConstant.push_message_title_isdiv,false);
+        intent.putExtra(WebViewConstant.push_message_title_is_hidetoolbar, true);
+        activity.startActivity(intent);
+
+
+    }
     /**
      * 跳转到公募基金
      */

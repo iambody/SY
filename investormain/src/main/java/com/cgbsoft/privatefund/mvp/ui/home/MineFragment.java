@@ -875,7 +875,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             ll_private_share_bao_fill.setVisibility(View.GONE);
             PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(getActivity());
             if (publishFundRecommendBean != null) {
-                ViewUtils.scaleUserAchievment(tv_increase_percent, publishFundRecommendBean.getLeftUpValue(),0.5f);
+                ViewUtils.scaleUserAchievment(tv_increase_percent, publishFundRecommendBean.getLeftUpValue(), 0.5f);
                 tv_server_increase.setText(publishFundRecommendBean.getLeftDownDes());
                 tv_increase_value.setText(publishFundRecommendBean.getRightUpValue());
                 tv_increase_value_desc.setText(publishFundRecommendBean.getRightDownDes());
@@ -892,7 +892,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         tv_share_bao_continue_income.setText(financialAssertModel.getSxbInfo().getAddincome());
         tv_share_bao_yestoday_income.setText(financialAssertModel.getSxbInfo().getYestincome());
         tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), "元"));
-        tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income),"元"));
+        tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income), "元"));
         tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), "元"));
     }
 
@@ -948,12 +948,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.ll_private_share_bao_fill)
     void gotoPrivateShareBaoDetail() {
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.publicShareBaoDetail, getString(R.string.private_share_bao), false);
+
+        NavigationUtils.gotoNavWebActivity(baseActivity, CwebNetConfig.publicShareBaoDetail, getString(R.string.private_share_bao));
+
+
     }
 
     @OnClick(R.id.ll_public_fund_fill)
     void gotoMinePublicFund() {
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.minePublicFund, getString(R.string.my_public_fund), false);
+//        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.minePublicFund, getString(R.string.my_public_fund), false);
+        NavigationUtils.gotoNavWebActivity(baseActivity, CwebNetConfig.minePublicFund, getString(R.string.my_public_fund));
         TrackingDataManger.morePublicFundProduct(getContext());
     }
 
@@ -982,14 +986,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @OnClick(R.id.tv_now_transfer)
     void gotoNowTransferPrivateShare() {
         PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
-        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundCode(), publicFundInf.getFundName(),publicFundInf.getFundType(),publicFundInf.getRiskLevel());
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publicFundInf.getFundCode(), publicFundInf.getFundName(), publicFundInf.getFundType(), publicFundInf.getRiskLevel());
         TrackingDataManger.intimeMoneyIncome(getContext());
     }
 
     @OnClick(R.id.ll_private_share_bao_empty)
     void gotoSxbDetail() {
         PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
-        if(null==publicFundInf)return;
+        if (null == publicFundInf) return;
         NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publicFundInf.getFundName()), BStrUtils.nullToEmpty(publicFundInf.getFundCode())), false);
         TrackingDataManger.intimeMoneyClick(getContext());
     }
@@ -1107,8 +1111,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 //                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
 //                        jumpCollect();
 //                    } else {
-                        hideAssert();
-                        showAssert = false;
+            hideAssert();
+            showAssert = false;
 //                        AppInfStore.saveShowAssetStatus(getActivity(), false);
 //                    }
 //                    isClickBack = false;
@@ -1129,7 +1133,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (mineModel != null && mineModel.getTravelOrder() != null) {
             List<MineModel.TravelOrder.TravelOrderItem> list = mineModel.getTravelOrder().getContent();
             MineModel.TravelOrder.TravelOrderItem item = list.get(0);
-            String url = CwebNetConfig.mineTravelIntroduce  + "?couponId=" + item.getCouponId() + "&rightId=" + item.getRightId();
+            String url = CwebNetConfig.mineTravelIntroduce + "?couponId=" + item.getCouponId() + "&rightId=" + item.getRightId();
             Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
             intent.putExtra(WebViewConstant.push_message_url, url);
             intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_travel));
@@ -1502,7 +1506,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             TextView healthTime = (TextView) view.findViewById(R.id.travel_time);
             String statusValue = chageStatusValue(travelOrderItem.getState());
             healthContent.setText((!TextUtils.isEmpty(statusValue) ? "【".concat(statusValue).concat("】") : "").concat(travelOrderItem.getTitle()));
-            healthTime.setText((!TextUtils.isEmpty(travelOrderItem.getCreateTime()) && travelOrderItem.getCreateTime().length() > 10) ? travelOrderItem.getCreateTime().substring(0, 10) :  travelOrderItem.getCreateTime());
+            healthTime.setText((!TextUtils.isEmpty(travelOrderItem.getCreateTime()) && travelOrderItem.getCreateTime().length() > 10) ? travelOrderItem.getCreateTime().substring(0, 10) : travelOrderItem.getCreateTime());
             travel_order_look_all.setOnClickListener((View v) -> {
                 String url = CwebNetConfig.mineTravelOrderList;
                 Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
@@ -1535,7 +1539,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             TextView healthTime = (TextView) view.findViewById(R.id.health_time);
             titleTextView.setText(R.string.health_recode_discovery);
             healthContent.setText(getString(R.string.account_health_zixun_server_title).concat(healthItem.getTitle()));
-            healthTime.setText((!TextUtils.isEmpty(healthItem.getConsultTime()) && healthItem.getConsultTime().length() > 10) ? healthItem.getConsultTime().substring(0, 10) :  healthItem.getConsultTime());
+            healthTime.setText((!TextUtils.isEmpty(healthItem.getConsultTime()) && healthItem.getConsultTime().length() > 10) ? healthItem.getConsultTime().substring(0, 10) : healthItem.getConsultTime());
             lookView.setOnClickListener((View v) -> {
                 String url = CwebNetConfig.mineHealthKnow;
                 Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
@@ -1565,34 +1569,34 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             lineView.setLayoutParams(layoutParams);
             health_had_data_ll.addView(lineView);
 
-                MineModel.HealthOrder.HealthOrderItem healthOrderItem = healthList.get(healthList.size() - 1);
-                View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_health, null);
-                TextView titleTextView = (TextView) view.findViewById(R.id.health_title);
-                TextView lookView = (TextView) view.findViewById(R.id.look_more);
-                TextView healthContent = (TextView) view.findViewById(R.id.health_content);
-                TextView healthTime = (TextView) view.findViewById(R.id.health_time);
-                titleTextView.setText(R.string.health_order_recode);
-                lookView.setText(R.string.look_more_show);
-                String statusValue = chageStatusValue(healthOrderItem.getState());
-                healthContent.setText((!TextUtils.isEmpty(statusValue) ? "【".concat(statusValue).concat("】") : "").concat(healthOrderItem.getHealthItemValues()));
-                healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCreateTime()) && healthOrderItem.getCreateTime().length() > 10) ? healthOrderItem.getCreateTime().substring(0, 10) :  healthOrderItem.getCreateTime());
-                lookView.setOnClickListener(v -> {
-                    String url = CwebNetConfig.mineHealthOrder;
-                    Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-                    intent.putExtra(WebViewConstant.push_message_url, url);
-                    intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
-                    startActivity(intent);
-                    DataStatistApiParam.operateMineHealthClick();
-                });
-                view.setOnClickListener(v -> {
-                    String url = CwebNetConfig.mineHealthOrderDetail;
-                    Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
-                    intent.putExtra(WebViewConstant.push_message_url, url + healthOrderItem.getOrderCode());
-                    intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
-                    startActivity(intent);
-                });
-                health_had_data_ll.addView(view);
-            }
+            MineModel.HealthOrder.HealthOrderItem healthOrderItem = healthList.get(healthList.size() - 1);
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.item_health, null);
+            TextView titleTextView = (TextView) view.findViewById(R.id.health_title);
+            TextView lookView = (TextView) view.findViewById(R.id.look_more);
+            TextView healthContent = (TextView) view.findViewById(R.id.health_content);
+            TextView healthTime = (TextView) view.findViewById(R.id.health_time);
+            titleTextView.setText(R.string.health_order_recode);
+            lookView.setText(R.string.look_more_show);
+            String statusValue = chageStatusValue(healthOrderItem.getState());
+            healthContent.setText((!TextUtils.isEmpty(statusValue) ? "【".concat(statusValue).concat("】") : "").concat(healthOrderItem.getHealthItemValues()));
+            healthTime.setText((!TextUtils.isEmpty(healthOrderItem.getCreateTime()) && healthOrderItem.getCreateTime().length() > 10) ? healthOrderItem.getCreateTime().substring(0, 10) : healthOrderItem.getCreateTime());
+            lookView.setOnClickListener(v -> {
+                String url = CwebNetConfig.mineHealthOrder;
+                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, url);
+                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
+                startActivity(intent);
+                DataStatistApiParam.operateMineHealthClick();
+            });
+            view.setOnClickListener(v -> {
+                String url = CwebNetConfig.mineHealthOrderDetail;
+                Intent intent = new Intent(getActivity(), BaseWebViewActivity.class);
+                intent.putExtra(WebViewConstant.push_message_url, url + healthOrderItem.getOrderCode());
+                intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_health_order));
+                startActivity(intent);
+            });
+            health_had_data_ll.addView(view);
+        }
     }
 
     //*******************************************
@@ -1796,7 +1800,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     public String chageStatusValue(String key) {
         if (!TextUtils.isEmpty(key)) {
-           return Constant.healthOrder.get(key);
+            return Constant.healthOrder.get(key);
         }
         return null;
     }

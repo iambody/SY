@@ -37,7 +37,6 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by wangpeng on 18-1-29.
@@ -302,7 +301,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     /**
      * 显示支付银行
      */
-    Map<String, String> dictionaryTable = null;
+//    Map<String, String> dictionaryTable = null;
 
     private void showBankView() {
         findViewById(R.id.iv_direct).setBackgroundResource(R.drawable.direct_right);
@@ -414,8 +413,8 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             if (bankCordInfo == null) return;
 
             bankCordInfo.setCustNo(currectPayBank.getCustNo());
-            String bankName = dictionaryTable.get(bankCordInfo.getChannelId());
-            if (!TextUtils.isEmpty(bankName)) bankCordInfo.setBankName(bankName);
+//            String bankName = dictionaryTable.get(bankCordInfo.getChannelId());
+//            if (!TextUtils.isEmpty(bankName)) bankCordInfo.setBankName(bankName);
             if (bean != null) bean.getUserBankCardInfo().add(0, bankCordInfo);
             currectPayBank = bankCordInfo;
             showBankView();
@@ -613,7 +612,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
          * "transactionAccountId":"Z017A00000267"
          * }
          */
-        private String moneyaccount = ""; // /交易账户id（从银行卡列表信息中获取
+        private String moneyAccount = ""; // /交易账户id（从银行卡列表信息中获取
         private String transactionAccountId = ""; // 账户号
         private String bankName = ""; // 名字
         private String depositAcct = ""; // 卡号
@@ -664,11 +663,11 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
 
         public String getMoneyaccount() {
-            return moneyaccount;
+            return moneyAccount;
         }
 
         public void setMoneyaccount(String moneyaccount) {
-            this.moneyaccount = moneyaccount;
+            this.moneyAccount = moneyaccount;
         }
 
 
