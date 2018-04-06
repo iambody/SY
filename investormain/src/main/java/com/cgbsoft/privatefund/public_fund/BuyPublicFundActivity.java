@@ -166,19 +166,18 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 }
 
 
-                if (new BigDecimal(money).compareTo(BigDecimal.valueOf(10000)) >= 0) {
+               /* if (new BigDecimal(money).compareTo(BigDecimal.valueOf(10000)) >= 0) {
                     money = new BigDecimal(money).divide(BigDecimal.valueOf(10000)).doubleValue() + "";
                     unit = "万元";
                 } else {
                     unit = "元";
-                }
+                }*/
 
-                String finalMoney = money;
-                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, bean.getFundName(), money + unit);
+                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, bean.getFundName(), money + "元");
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                     @Override
                     public void onInputFinish(String psw) {
-                        starPay(finalMoney, psw);
+                        starPay(money, psw);
                         payPasswordDialog.dismiss();
                     }
                 });

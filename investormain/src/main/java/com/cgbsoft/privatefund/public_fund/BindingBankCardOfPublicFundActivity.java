@@ -462,6 +462,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 return;
             }
             v.setEnabled(false);
+            v.setBackgroundResource(R.drawable.public_fund_conrner_gray);
             getPresenter().getVerificationCodeFormServer(bindingBankCardBean.getChannelid(), phoneCode, bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
                 @Override
                 public void even(String s) {
@@ -522,6 +523,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             public void run() {
                 v.setText("获取验证码");
                 v.setEnabled(true);
+                v.setBackgroundResource(R.drawable.public_fund_conrner_golden);
             }
         });
         Timer timer = (Timer) v.getTag();

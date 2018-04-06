@@ -271,13 +271,13 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     return;
                 }
                 BigDecimal bigDecimal = new BigDecimal(inputText);
-                String money = new DecimalFormat("0.00").format(bigDecimal);
-
                 if(isFund){
                     unit = "份";
                 }else {
                     unit = "元";
+                    inputText = new DecimalFormat("0.00").format(bigDecimal);
                 }
+                String money = inputText;
                 PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, fundName, money + unit);
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                     @Override
