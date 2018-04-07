@@ -919,29 +919,44 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             ll_private_share_bao_fill.setVisibility(View.VISIBLE);
             fillPrivateShareData(financialAssertModel);
         } else {
-            ll_private_share_bao_empty.setVisibility(View.VISIBLE);
-            ll_private_share_bao_fill.setVisibility(View.GONE);
-            PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(getActivity());
-            if (publishFundRecommendBean != null) {
-                ViewUtils.scaleUserAchievment(tv_increase_percent, publishFundRecommendBean.getLeftUpValue(), 0.5f);
-                tv_server_increase.setText(publishFundRecommendBean.getLeftDownDes());
-                tv_increase_value.setText(publishFundRecommendBean.getRightUpValue());
-                tv_increase_value_desc.setText(publishFundRecommendBean.getRightDownDes());
-            }
+            ll_private_share_bao_empty.setVisibility(View.GONE);
+            ll_private_share_bao_fill.setVisibility(View.VISIBLE);
+            fillPrivateShareData(financialAssertModel);
+//            PublishFundRecommendBean publishFundRecommendBean = AppManager.getPubliFundRecommend(getActivity());
+//            if (publishFundRecommendBean != null) {
+//                ViewUtils.scaleUserAchievment(tv_increase_percent, publishFundRecommendBean.getLeftUpValue(), 0.5f);
+//                tv_server_increase.setText(publishFundRecommendBean.getLeftDownDes());
+//                tv_increase_value.setText(publishFundRecommendBean.getRightUpValue());
+//                tv_increase_value_desc.setText(publishFundRecommendBean.getRightDownDes());
+//            }
         }
     }
 
     private void fillPrivateShareData(FinancialAssertModel financialAssertModel) {
-        ViewUtils.showTextByValue(getContext(), tv_share_bao_continue_income, financialAssertModel.getSxbInfo().getAddincome());
-        ViewUtils.showTextByValue(getContext(), tv_share_bao_yestoday_income, financialAssertModel.getSxbInfo().getYestincome());
+        if (isExistPrivateShareMoney(financialAssertModel)) {
+            ViewUtils.showTextByValue(getContext(), tv_share_bao_continue_income, financialAssertModel.getSxbInfo().getAddincome());
+            ViewUtils.showTextByValue(getContext(), tv_share_bao_yestoday_income, financialAssertModel.getSxbInfo().getYestincome());
 //        tv_share_bao_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
 //        tv_share_bao_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
-        tv_share_bao_subsist_assert.setText(financialAssertModel.getSxbInfo().getSurvivingAssets());
-        tv_share_bao_continue_income.setText(financialAssertModel.getSxbInfo().getAddincome());
-        tv_share_bao_yestoday_income.setText(financialAssertModel.getSxbInfo().getYestincome());
-        tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), "元"));
-        tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income), "元"));
-        tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), "元"));
+            tv_share_bao_subsist_assert.setText(financialAssertModel.getSxbInfo().getSurvivingAssets());
+            tv_share_bao_continue_income.setText(financialAssertModel.getSxbInfo().getAddincome());
+            tv_share_bao_yestoday_income.setText(financialAssertModel.getSxbInfo().getYestincome());
+            tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), "元"));
+            tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income), "元"));
+            tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), "元"));
+        }else {
+            ViewUtils.showTextByValue(getContext(), tv_share_bao_continue_income, financialAssertModel.getSxbInfo().getAddincome());
+            ViewUtils.showTextByValue(getContext(), tv_share_bao_yestoday_income, financialAssertModel.getSxbInfo().getYestincome());
+//        tv_share_bao_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+//        tv_share_bao_yestoday_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getYestincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
+            tv_share_bao_subsist_assert.setText("0.00");
+            tv_share_bao_continue_income.setText("0.00");
+            tv_share_bao_yestoday_income.setText("0.00");
+            tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), "元"));
+            tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income), "元"));
+            tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), "元"));
+        }
+
     }
 
     private void fillPublicFundData(FinancialAssertModel financialAssertModel) {
@@ -1042,7 +1057,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     void gotoSxbDetail() {
         PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
         if (null == publicFundInf) return;
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publicFundInf.getFundName()), BStrUtils.nullToEmpty(publicFundInf.getFundcode())), false);
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publicFundInf.getFundName()), BStrUtils.nullToEmpty(publicFundInf.getFundCode())), false);
         TrackingDataManger.intimeMoneyClick(getContext());
     }
 

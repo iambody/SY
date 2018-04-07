@@ -130,8 +130,8 @@
 
     <string name="immediately">立即转入</string>
     <string name="private_fund">私募基金</string>
-    <string name="publish_regist">完成公募基金开户</string>
-    <string name="finished_public_fund_create_account">完成公募基金开户</string>
+    <string name="publish_regist">公募基金开户</string>
+    <string name="finished_public_fund_create_account">公募基金开户</string>
     <string name="public_fund">公募基金</string>
     <string name="private_share_bao">盈泰钱包</string>
     <string name="my_private_share_bao">我的盈泰钱包</string>
@@ -150,6 +150,7 @@
     <string name="public_fund_setting_bind_bankcard">绑定银行卡</string>
     <string name="public_fund_setting_bankcard_info">公募基金银行卡信息</string>
     <string name="public_fund_setting_modify_public_fund_password">重置公募基金交易密码</string>
+    <string name="public_fund_setting_risk">查看风险测评</string>
     <string name="user_name">姓名</string>
     <string name="identify_number">身份证号</string>
     <string name="hint_identify_number">请输入身份证号</string>

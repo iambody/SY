@@ -22,6 +22,7 @@ import com.cgbsoft.privatefund.mvp.presenter.center.PublicFundSettingPresenterIm
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -39,6 +40,8 @@ public class PublicFundSettingActivity extends BaseActivity<PublicFundSettingPre
     SettingItemNormal publicFundBankCarkInfo;
     @BindView(R.id.sin_public_fund_trade_password)
     SettingItemNormal publicFundTradePasswordModify;
+    @BindView(R.id.sin_public_fund_setting_risk)
+    SettingItemNormal publicFundRisk;
 
     @Override
     protected void onResume() {
@@ -68,7 +71,7 @@ public class PublicFundSettingActivity extends BaseActivity<PublicFundSettingPre
 
     @Override
     protected PublicFundSettingPresenterImpl createPresenter() {
-        return new PublicFundSettingPresenterImpl(getBaseContext(),this);
+        return new PublicFundSettingPresenterImpl(getBaseContext(), this);
     }
 
     private void initPublicFund() {
@@ -83,9 +86,16 @@ public class PublicFundSettingActivity extends BaseActivity<PublicFundSettingPre
         publicFundAccountStatus.setVisibility(isWhiteFlag ? View.VISIBLE : View.GONE);
         publicFundBankCarkInfo.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
         publicFundTradePasswordModify.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
+        publicFundRisk.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
 
     }
 
+    @OnClick(R.id.sin_public_fund_setting_risk)
+    void gotoRiskResult() {
+        PublicFundInf publicFundInf = AppManager.getPublicFundInf(this);
+        publicFundInf.getCustRisk();
+        NavigationUtils.gotoWebActivity(this, MessageFormat.format("{0}?custrisk={1}", CwebNetConfig.publicFundRiskUrl, publicFundInf.getCustRisk()), "风险测评", false);
+    }
 
     @OnClick(R.id.sin_public_fund_account_status)
     void gotoCreatePublicFundAccount() {

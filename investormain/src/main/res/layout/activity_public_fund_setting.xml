@@ -31,4 +31,11 @@
         app:setting_item_title="@string/public_fund_setting_modify_public_fund_password"
         />
 
+    <com.cgbsoft.lib.widget.SettingItemNormal
+        android:id="@+id/sin_public_fund_setting_risk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:setting_item_title="@string/public_fund_setting_risk"
+        />
+
 </LinearLayout>
