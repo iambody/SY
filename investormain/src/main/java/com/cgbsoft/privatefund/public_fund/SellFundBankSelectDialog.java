@@ -48,7 +48,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.BOTTOM;
-        lp.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN;
+        lp.softInputMode =  WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING|WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN;
         getWindow().setAttributes(lp);
         window.setAttributes(lp);
         setContentView(R.layout.dialog_paybank_select);
@@ -62,9 +62,9 @@ public class SellFundBankSelectDialog extends BaseDialog {
     }
 
     private void bindViews() {
-        ((TextView) findViewById(R.id.tv_title)).setText("选择银行卡");
+        ((TextView)findViewById(R.id.tv_title)).setText("选择银行卡");
         bankList.setLayoutManager(new LinearLayoutManager(getContext()));
-        bankList.setAdapter(new SellFundBankSelectDialog.MyAdapter(currectBankCodeNum, bankCardInfos, this.isFund, new PayFundBankSelectDialog.SelectListener() {
+        bankList.setAdapter(new SellFundBankSelectDialog.MyAdapter(currectBankCodeNum, bankCardInfos,this.isFund,new PayFundBankSelectDialog.SelectListener() {
             @Override
             public void select(int index) {
                 SellFundBankSelectDialog.this.selectListener.select(index);
@@ -86,7 +86,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
         private String currectBankNum = "";
         private boolean isFund;
 
-        public MyAdapter(String currectBankNum, List<BuyPublicFundActivity.BankCardInfo> list, boolean isFund, PayFundBankSelectDialog.SelectListener selectListener) {
+        public MyAdapter(String currectBankNum, List<BuyPublicFundActivity.BankCardInfo> list,boolean isFund, PayFundBankSelectDialog.SelectListener selectListener) {
             this.list = list;
             this.selectListener = selectListener;
             this.currectBankNum = currectBankNum;
@@ -109,7 +109,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
 
         @Override
         public void onBindViewHolder(SellFundBankSelectDialog.MyViewHolder holder, int position) {
-            holder.bindData(list, position, currectBankNum, isFund);
+            holder.bindData(list, position, currectBankNum,isFund);
         }
 
         @Override
@@ -149,7 +149,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
         }
 
 
-        public void bindData(List<BuyPublicFundActivity.BankCardInfo> selectListener, int postion, String curBankNum, boolean isFund) {
+        public void bindData(List<BuyPublicFundActivity.BankCardInfo> selectListener, int postion, String curBankNum,boolean isFund) {
             index = postion;
             BuyPublicFundActivity.BankCardInfo bankCardInfo = selectListener.get(postion);
 
@@ -164,13 +164,13 @@ public class SellFundBankSelectDialog extends BaseDialog {
             if (bankCoade.length() > 4) {
                 bankCoade = bankCoade.substring(bankCoade.length() - 4);
             }
-            bankName.setText(bankCardInfo.getBankShortName() + "(" + bankCoade + ")");
-            if (isFund) {
-                this.bankLimit.setText("可卖出份额" + bankCardInfo.getAvailBalMode1() + "份");
-            } else {
-                this.bankLimit.setText("可提现金额" + bankCardInfo.getAvailBalMode1() + "元");
+            bankName.setText(bankCardInfo.getBankShortName() + "尾号(" + bankCoade + ")");
+            if(isFund){
+                this.bankLimit.setText("可卖出份额"+bankCardInfo.getAvailBalMode1()+"份");
+            }else {
+                this.bankLimit.setText("可体现金额"+bankCardInfo.getAvailBalMode1()+"元");
             }
-            Imageload.display(bankIcon.getContext(), bankCardInfo.getIcon(), bankIcon, R.drawable.bank_icon, R.drawable.bank_icon);
+            Imageload.display(bankIcon.getContext(),bankCardInfo.getIcon(),bankIcon,R.drawable.bank_icon,R.drawable.bank_icon);
             //bankIcon.setBackgroundResource(R.drawable.bank_icon);
             itemView.findViewById(R.id.tv_not_useable).setVisibility(View.GONE);
         }
