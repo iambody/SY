@@ -72,6 +72,9 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
             }
         });
 
+        findViewById(R.id.tv_forget_password).setOnClickListener(this);
+
+
         autoShowSoftInput();
     }
 
@@ -95,6 +98,11 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
             case R.id.iv_close:
                 dismiss();
                 break;
+
+            case R.id.tv_forget_password:
+                if(this.mPassWordInputListener != null) this.mPassWordInputListener.onForgetPassWord();
+                dismiss();
+                break;
         }
     }
 
@@ -110,5 +118,6 @@ public class PayPasswordDialog extends BaseDialog implements View.OnClickListene
 
     public interface PassWordInputListener {
         void onInputFinish(String psw);
+        void onForgetPassWord();
     }
 }

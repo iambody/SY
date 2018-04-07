@@ -18,6 +18,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.MToast;
@@ -271,13 +272,12 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     return;
                 }
                 BigDecimal bigDecimal = new BigDecimal(inputText);
+                String money = new DecimalFormat("0.00").format(bigDecimal);
                 if(isFund){
                     unit = "份";
                 }else {
                     unit = "元";
-                    inputText = new DecimalFormat("0.00").format(bigDecimal);
                 }
-                String money = inputText;
                 PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, fundName, money + unit);
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                     @Override
@@ -285,6 +285,13 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                         starSell(money, psw);
                         payPasswordDialog.dismiss();
                     }
+
+                    @Override
+                    public void onForgetPassWord() {
+                        NavigationUtils.startActivityByRouter(SellPublicFundActivity.this, RouteConfig.GOTO_PUBLIC_FUND_TRADE_PWD_MODIFY_ACTIVITY);
+                }
+
+
                 });
                 payPasswordDialog.show();
                 break;
@@ -330,9 +337,11 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                         loadingDialog.dismiss();
 
                         String redeemReFundDate = "";
+                        String serialNo = "";
                         if(!TextUtils.isEmpty(result)) {
                             try {
                                 redeemReFundDate = new JSONObject(result).getString("redeemReFundDate");
+                                serialNo = new JSONObject(result).getString("serialNo");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -341,7 +350,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                         TrackingDataManger.sellPublicFund(SellPublicFundActivity.this, SellPublicFundActivity.this.fundName);
                         // 跳转到成功页面
                         if (isFund) {
-                            UiSkipUtils.gotoNewFundResult(SellPublicFundActivity.this, 2, fundType, money,redeemReFundDate);
+                            UiSkipUtils.gotoNewFundResult(SellPublicFundActivity.this, 2, fundType, money,redeemReFundDate,serialNo);
                         } else {
                             UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, issxb, money, result);
                         }

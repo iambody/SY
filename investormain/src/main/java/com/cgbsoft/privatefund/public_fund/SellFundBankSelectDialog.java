@@ -62,6 +62,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
     }
 
     private void bindViews() {
+        ((TextView)findViewById(R.id.tv_title)).setText("选择银行卡");
         bankList.setLayoutManager(new LinearLayoutManager(getContext()));
         bankList.setAdapter(new SellFundBankSelectDialog.MyAdapter(currectBankCodeNum, bankCardInfos,this.isFund,new PayFundBankSelectDialog.SelectListener() {
             @Override

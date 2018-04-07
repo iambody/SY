@@ -279,6 +279,7 @@ public class UiSkipUtils {
         String opertime = "";
         String redeemrefunddate = "";
         String transactiondate = "";
+        String serialNo = "";
         try {
 //            JSONArray jsonArray=new JSONArray(result).getJSONArray(0).getJSONObject(0);
             JSONObject jsonObject = new JSONObject(result);
@@ -288,6 +289,7 @@ public class UiSkipUtils {
             opertime = jsonObject.getString("operTime");
             redeemrefunddate = jsonObject.getString("redeemReFundDate");
             transactiondate = jsonObject.getString("transactionDate");
+            serialNo = jsonObject.getString("serialNo");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -301,6 +303,7 @@ public class UiSkipUtils {
         paramMap.put("opertime", opertime);
         paramMap.put("redeemrefunddate", redeemrefunddate);
         paramMap.put("transactiondate", transactiondate);
+        paramMap.put("serialNo", serialNo);
 
         NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundRedeemResult, paramMap), "交易结果", false);
 
@@ -315,14 +318,15 @@ public class UiSkipUtils {
      * @param buyOrBuy 1:买入,2:卖出
      * @param fungType 基金类型  0:FOF型基金,1:货币基金,2:QDll基金,3:股票型，债券型，混合型，指数型基金
      * @param allMoney 买入钱数
-     * @param
+     * @param serialNo 订单流水号
      *       https://t4-app.simuyun.com/app6.0/biz/publicfund/deal_prompt.html?pageType=2&fundType=0&allMoney=2000
      */
-    public static void gotoNewFundResult(Activity activity,int buyOrBuy,String fungType, String allMoney,String redeemReFundDate){
+    public static void gotoNewFundResult(Activity activity,int buyOrBuy,String fungType, String allMoney,String redeemReFundDate,String serialNo){
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("pageType", buyOrBuy+"");
         paramMap.put("fundType", fungType);
         paramMap.put("redeemReFundDate", redeemReFundDate);
+        paramMap.put("serialNo", serialNo);
         if(buyOrBuy == 1){
             paramMap.put("allMoney", allMoney);
         }else if(buyOrBuy == 2){

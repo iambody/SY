@@ -155,8 +155,8 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_Confirm:
-                String money = buyInput.getText().toString();
-                if (BStrUtils.isEmpty(money)) {
+                String inputText = buyInput.getText().toString();
+                if (BStrUtils.isEmpty(inputText)) {
                     MToast.makeText(this, "请输入金额", Toast.LENGTH_LONG);
                     return;
                 }
@@ -172,7 +172,8 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 } else {
                     unit = "元";
                 }*/
-
+                BigDecimal bigDecimal = new BigDecimal(inputText);
+                String money = new DecimalFormat("0.00").format(bigDecimal);
                 PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, bean.getFundName(), money + "元");
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                     @Override
@@ -180,6 +181,13 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                         starPay(money, psw);
                         payPasswordDialog.dismiss();
                     }
+
+                    @Override
+                    public void onForgetPassWord() {
+                        NavigationUtils.startActivityByRouter(BuyPublicFundActivity.this, RouteConfig.GOTO_PUBLIC_FUND_TRADE_PWD_MODIFY_ACTIVITY);
+                    }
+
+
                 });
                 payPasswordDialog.show();
 
@@ -338,9 +346,11 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 loadingDialog.dismiss();
 
                 String redeemReFundDate = "";
+                String serialNo = "";
                 if (!TextUtils.isEmpty(result)) {
                     try {
                         redeemReFundDate = new JSONObject(result).getString("redeemReFundDate");
+                        serialNo = new JSONObject(result).getString("serialNo");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -348,9 +358,9 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
                 TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.fundName);
                 if (isPublicFund) {
-                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, fundType, formatMoney, redeemReFundDate);
+                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, fundType, formatMoney, redeemReFundDate,serialNo);
                 } else {
-                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney, "申购成功", false);
+                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney+"&serialNo="+serialNo, "申购成功", false);
                 }
                 finish();
 
