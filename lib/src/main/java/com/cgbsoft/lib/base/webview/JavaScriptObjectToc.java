@@ -189,20 +189,6 @@ public class JavaScriptObjectToc {
 
         } catch (Exception e) {
         }
-
-//        try {
-//            JSONObject ja = new JSONObject(param);
-//            String url = ja.getString("URL");
-//            String title = ja.getString("title");
-//            System.out.println("---chenlong=" + BaseWebNetConfig.baseSxyParentUrl + url);
-//            HashMap<String, Object> hashMap = new HashMap<>();
-//            hashMap.put(WebViewConstant.push_message_url, BaseWebNetConfig.baseSxyParentUrl + url);
-//            hashMap.put(WebViewConstant.push_message_title, title);
-//            NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @JavascriptInterface
@@ -253,6 +239,16 @@ public class JavaScriptObjectToc {
             e.printStackTrace();
         }
     }
+
+
+    @JavascriptInterface
+    public void finishInvestorConfig(String datas) {
+        UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(context);
+        userInfo.getToC().setCustomerSpecialFlag("1");
+        AppInfStore.saveUserInfo(context, userInfo);
+        RxBus.get().post(RxConstant.REFRESH_INVESTOR_INFO,1);
+    }
+
 
     //生成海报的监听
     @JavascriptInterface
@@ -678,8 +674,10 @@ public class JavaScriptObjectToc {
     @JavascriptInterface
     public void openFundAccount(String jsostr) {
         Log.i("sss", jsostr);
+
         //跳转到开户页面*************************
         UiSkipUtils.toPublicFundRegist((Activity) context);
+
     }
 
     /**

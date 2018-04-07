@@ -26,6 +26,7 @@ import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -70,6 +71,7 @@ import com.cgbsoft.privatefund.mvp.ui.center.UploadIndentityCradActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
+import com.chenenyu.router.Router;
 import com.lzy.okserver.download.DownloadInfo;
 import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
@@ -91,8 +93,8 @@ import rx.Observable;
 
 /**
  * @author chenlong
- *         <p>
- *         我的fragment
+ * <p>
+ * 我的fragment
  */
 public class MineFragment extends BaseFragment<MinePresenter> implements MineContract.View, HorizontalScrollFragment.ChangeHeightListener {
 
@@ -501,36 +503,6 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 noRelativeAssert.setText(String.format(getString(R.string.account_bank_no_relative_assert_with_status_new), stateName));
             }
         }
-
-//        if (isClickBack) {
-//            isClickBack = false;
-//            if ("45".equals(stateCode)) {
-//                replenishCards();
-//            } else {
-//                if (!TextUtils.isEmpty(identity)) {
-//                    if ("1001".equals(identity) && "0".equals(hasIdCard)) {//去上传证件照
-//                        Intent intent = new Intent(getActivity(), UploadIndentityCradActivity.class);
-//                        intent.putExtra("credentialCode", credentialCode);
-//                        intent.putExtra("indentityCode", identity);
-//                        intent.putExtra("title", title);
-//                        startActivity(intent);
-//                    } else {//去证件列表
-//                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-//                        intent.putExtra("indentityCode", identity);
-//                        startActivity(intent);
-//                    }
-//                } else {//无身份
-//                    Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
-//                    startActivity(intent);
-//                }
-//            }
-//        }
-    }
-
-    private void gotoDetial() {
-        Intent intent1 = new Intent(getActivity(), CardCollectActivity.class);
-        intent1.putExtra(INDENTITU_CODE, credentialStateMedel.getCustomerIdentity());
-        startActivity(intent1);
     }
 
     private void initObserver() {
@@ -598,13 +570,34 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                                     if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
                                         jumpGuidePage();
                                     } else {
-                                        toAssertMatchActivit();
+                                        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
+                                            if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
+                                                toAssertMatchActivit();
+                                            } else {
+                                                jumpInvestorInfo();
+                                            }
+                                        } else {
+                                            toAssertMatchActivit();
+                                        }
+
                                     }
                                 } else {
                                     if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
                                         jumpCollect();
                                     } else {
-                                        toAssertMatchActivit();
+                                        if ("10".equals(credentialStateMedel.getCredentialState())) {
+                                            replenishCards();
+                                            return;
+                                        }
+                                        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
+                                            if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
+                                                toAssertMatchActivit();
+                                            } else {
+                                                jumpInvestorInfo();
+                                            }
+                                        } else {
+                                            toAssertMatchActivit();
+                                        }
                                     }
                                 }
                             }
@@ -627,7 +620,9 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                                         toInvestorCarlendarActivity();
                                     }
                                 } else {
-                                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
+                                    if ("10".equals(credentialStateMedel.getCredentialState())) {
+                                        replenishCards();
+                                    } else if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
                                         jumpCollect();
                                     } else {
                                         toInvestorCarlendarActivity();
@@ -685,19 +680,71 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 } else if ("10".equals(credentialStateMedel.getIdCardState()) || "30".equals(credentialStateMedel.getIdCardState())) {
                     replenishCards();
                 } else {  //已通过 核身成功
-                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                    intent.putExtra(INDENTITU_CODE, credentialStateMedel.getCustomerIdentity());
-                    startActivity(intent);
+                    if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
+                        if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
+                            Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                            intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                            startActivity(intent);
+                        } else {
+                            jumpInvestorInfo();
+                        }
+                    } else {
+                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                        intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                        startActivity(intent);
+                    }
+
                 }
             } else {//  非大陆去证件列表
-                Intent intent = new Intent(getActivity(), CardCollectActivity.class);
-                intent.putExtra(INDENTITU_CODE, credentialStateMedel.getCustomerIdentity());
-                startActivity(intent);
+                if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
+                    if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
+                        Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                        intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                        startActivity(intent);
+                    } else {
+                        jumpInvestorInfo();
+                    }
+                } else {
+                    Intent intent = new Intent(getActivity(), CardCollectActivity.class);
+                    intent.putExtra("indentityCode", credentialStateMedel.getCustomerIdentity());
+                    startActivity(intent);
+                }
             }
         } else {//无身份
             Intent intent = new Intent(getActivity(), SelectIndentityActivity.class);
             startActivity(intent);
         }
+    }
+
+    private void jumpInvestorInfo() {
+        if ("0".equals(credentialStateMedel.getSpecialInvestorState())) {
+            if ("10".equals(credentialStateMedel.getCustomerType())) {
+//                Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
+                jumpWebPage(BaseWebNetConfig.evaluation + "?property=1", "合格投资者认定");
+            } else if ("20".equals(credentialStateMedel.getCustomerType())) {
+//                Router.build(RouteConfig.GOTO_APP_RISKEVALUATIONACTIVITY).go(baseActivity);
+                jumpWebPage(BaseWebNetConfig.evaluation + "?property=1", "合格投资者认定");
+            }
+        } else if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "0".equals(credentialStateMedel.getInvestorInfoState())) {
+            if ("10".equals(credentialStateMedel.getCustomerType())) {
+                jumpWebPage(BaseWebNetConfig.investorInfoPerson, "投资者信息填写");
+            } else if ("20".equals(credentialStateMedel.getCustomerType())) {
+                jumpWebPage(BaseWebNetConfig.investorInfoCompany, "投资者信息填写");
+            }
+        }
+    }
+
+    //合格投资者认定
+    private void jumpWebPage(String url, String title) {
+        Intent i = new Intent(getContext(), BaseWebViewActivity.class);
+
+        i.putExtra(WebViewConstant.push_message_url, url);
+        i.putExtra(WebViewConstant.push_message_title, title);
+        i.putExtra(WebViewConstant.RIGHT_SAVE, false);
+        i.putExtra(WebViewConstant.RIGHT_SHARE, false);
+        i.putExtra(WebViewConstant.PAGE_INIT, false);
+
+        startActivity(i);
     }
 
     private void jumpCollect() {
@@ -793,6 +840,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         if (!AppManager.isVisitor(getActivity())) {
             getPresenter().getMineFinacailAssert();
         }
+        SPreference.putBoolean(getContext(), "isFromMine", true);
     }
 
     @Override
@@ -994,7 +1042,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     void gotoSxbDetail() {
         PublishFundRecommendBean publicFundInf = AppManager.getPubliFundRecommend(getActivity());
         if (null == publicFundInf) return;
-        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publicFundInf.getFundName()), BStrUtils.nullToEmpty(publicFundInf.getFundCode())), false);
+        NavigationUtils.gotoWebActivity(baseActivity, CwebNetConfig.sxbFundDetailUrl, String.format("%s(%s)", BStrUtils.NullToStr(publicFundInf.getFundName()), BStrUtils.nullToEmpty(publicFundInf.getFundcode())), false);
         TrackingDataManger.intimeMoneyClick(getContext());
     }
 
@@ -1086,7 +1134,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_hide_assert)
     void switchAssetNumber() {
-        intercepterAssertGesturePassword();
+
+        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
+            if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
+                intercepterAssertGesturePassword();
+            } else {
+                jumpInvestorInfo();
+            }
+        } else {
+            intercepterAssertGesturePassword();
+        }
     }
 
     private void intercepterAssertGesturePassword() {
@@ -1094,30 +1151,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             return;
         }
         if (showAssert) {
-//            if (null == credentialStateMedel.getCredentialState()) {
-//                isClickBack = true;
-//                getPresenter().verifyIndentityV3();
-//            } else {
-//                if (credentialStateMedel.getCredentialCode().startsWith("10")) {
-//                    //90：存量已有证件号已上传证件照待审核
-//                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
-//                        jumpGuidePage();
-//                    } else {
-//                        hideAssert();
-//                        showAssert = false;
-//                        AppInfStore.saveShowAssetStatus(getActivity(), false);
-//                    }
-//                } else {
-//                    if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
-//                        jumpCollect();
-//                    } else {
             hideAssert();
             showAssert = false;
-//                        AppInfStore.saveShowAssetStatus(getActivity(), false);
-//                    }
-//                    isClickBack = false;
-//                }
-//            }
         } else {
             GestureManager.showAssertGestureManager(getActivity());
         }
@@ -1155,7 +1190,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                 }
             } else {
                 isClickBack = false;
-                GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
+                if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
+                    if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
+                        GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
+                    } else {
+                        jumpInvestorInfo();
+                    }
+                } else {
+                    GestureManager.showGroupGestureManage(getActivity(), GestureManager.RELATIVE_ASSERT);
+                }
+
             }
         }
         DataStatistApiParam.mineAssectClick(stateName);
@@ -1186,19 +1230,43 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState()) || ("50".equals(stateCode) && "0".equals(livingState))) {//存量用户已有证件号码未上传证件照；
                         jumpGuidePage();
                     } else {
-                        toAssertMatchActivit();
+                        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
+                            if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
+                                toAssertMatchActivit();
+                            } else {
+                                jumpInvestorInfo();
+                            }
+                        } else {
+                            toAssertMatchActivit();
+                        }
                     }
                 } else {
                     if ("45".equals(credentialStateMedel.getCredentialState()) || "45".equals(credentialStateMedel.getIdCardState())) {//存量用户已有证件号码未上传证件照；
                         jumpCollect();
                     } else {
-                        toAssertMatchActivit();
+                        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
+                            if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
+                                toAssertMatchActivit();
+                            } else {
+                                jumpInvestorInfo();
+                            }
+                        } else {
+                            toAssertMatchActivit();
+                        }
                     }
                 }
                 isClickBack = false;
             }
         } else {
-            GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
+            if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
+                if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
+                    GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
+                } else {
+                    jumpInvestorInfo();
+                }
+            } else {
+                GestureManager.showGroupGestureManage(getActivity(), GestureManager.ASSERT_GROUP);
+            }
         }
         DataStatistApiParam.mineAssectGroup();
     }
@@ -1247,7 +1315,15 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
                     }
                 }
             } else {
-                GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
+                if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
+                    if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
+                        GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
+                    } else {
+                        jumpInvestorInfo();
+                    }
+                } else {
+                    GestureManager.showGroupGestureManage(getActivity(), GestureManager.INVISTE_CARLENDAR);
+                }
             }
         }
         DataStatistApiParam.investmentCalendar();
@@ -1271,7 +1347,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
 
         } else {
-            GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
+                GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
         }
         DataStatistApiParam.dataManager();
     }

@@ -159,8 +159,6 @@ public class NavigationUtils {
         intent.putExtra(WebViewConstant.push_message_title_isdiv,false);
         intent.putExtra(WebViewConstant.push_message_title_is_hidetoolbar, true);
         activity.startActivity(intent);
-
-
     }
     /**
      * 跳转到公募基金
@@ -309,7 +307,11 @@ public class NavigationUtils {
 
     public static void jumpNativePage(Context context, int code) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("code", code);
+        if (code == WebViewConstant.Navigation.LIFT_HOME_PAGE) {
+            map.put("code", WebViewConstant.Navigation.LIFT_MALL_PAGE);
+        } else {
+            map.put("code", code);
+        }
         switch (code) {
             case WebViewConstant.Navigation.MAIN_PAGE:
                 NavigationUtils.startActivityByRouter(context, RouteConfig.GOTOCMAINHONE);
@@ -337,13 +339,11 @@ public class NavigationUtils {
                 break;
             case WebViewConstant.Navigation.PRIVATE_BANK_PAGE:
                 jumpNativeMain(context, map);
-
                 RxBus.get().post(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, 2);
                 break;
-            case WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE:
+            case  WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE:
                 jumpNativeMain(context, map);
                 RxBus.get().post(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, 1);
-
                 break;
             case WebViewConstant.Navigation.PRODUCT_PAGE:
                 jumpNativeMain(context, map);

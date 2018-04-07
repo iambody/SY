@@ -121,8 +121,8 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
         for (SecondNavigation secondNavigation : secondNavigations) {
             switch (secondNavigation.getCode()) {
                 case LIFE_HOME_CODE:
-                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new ElegantLivingFragment(), Integer.parseInt(secondNavigation.getCode()));
-                    tabBeens.add(tabBeen1);
+//                    TabBean tabBeen1 = new TabBean(secondNavigation.getTitle(), new ElegantLivingFragment(), Integer.parseInt(secondNavigation.getCode()));
+//                    tabBeens.add(tabBeen1);
                     break;
                 case LIFE_MALL_CODE:
                     TabBean tabBeen2 = new TabBean(secondNavigation.getTitle(), new ElegantGoodsFragment(), Integer.parseInt(secondNavigation.getCode()));
@@ -192,7 +192,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     protected void clickTabButton(String tabName) {
         super.clickTabButton(tabName);
 //        if (!TextUtils.isEmpty(tabName) && tabName.equals("尚品")) {
-            DataStatistApiParam.clickElegantGoodsButton(tabName);
+        DataStatistApiParam.clickElegantGoodsButton(tabName);
 //        }
     }
 

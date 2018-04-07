@@ -134,7 +134,7 @@
     <string name="personal_information_title_changename">姓名</string>
     <string name="personal_information_title_changegender">性别</string>
     <string name="camera_cancel">取消</string>
-    <string name="salons_activities">客户沙龙</string>
+    <string name="salons_activities">总裁讲堂</string>
     <string name="oldsalons_activities">过往活动</string>
 
     <!-- 资料管理 -->
@@ -303,7 +303,7 @@
     <string name="dangan">档案</string>
     <string name="publish_fund">公募基金</string>
     <string name="public_fund_regist">公募基金开户</string>
-    <string name="fill_questionnaire">请先填写调查问卷</string>
+    <string name="fill_questionnaire">请先进行合格投资者认定</string>
     <string name="live_no_start">直播暂未开始</string>
     <string name="set_call_jurisdiction">请到设置允许拨打电话权限</string>
     <string name="broadcast">开播</string>

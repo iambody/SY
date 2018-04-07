@@ -9,12 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.model.TypeNameEntity;
+import com.cgbsoft.lib.base.model.UserInfoDataEntity;
 import com.cgbsoft.lib.base.mvp.presenter.impl.BasePresenterImpl;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiBusParam;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
@@ -72,7 +76,15 @@ public class RiskResultActivity extends BaseActivity {
             }
         });
         titleMid.setText(R.string.risk_evaluating_title);
+        updataUserInfo();
         initView();
+    }
+
+    private void updataUserInfo() {
+        UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(getApplicationContext());
+        userInfo.getToC().setCustomerSpecialFlag("1");
+        AppInfStore.saveUserInfo(getApplicationContext(),userInfo);
+        RxBus.get().post(RxConstant.REFRESH_INVESTOR_INFO,1);
     }
 
     @Override

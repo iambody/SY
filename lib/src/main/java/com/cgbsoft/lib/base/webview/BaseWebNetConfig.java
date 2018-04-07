@@ -25,6 +25,14 @@ public class BaseWebNetConfig extends NetConfig {
     //风险测评
     public static String evaluation = baseSxyParentUrl + "/biz/assesment/index.html";
 
+    //特定投资者认定
+    public static String specialInvestorPerson = "/biz/assesment/quest_person1.html";
+    public static String specialInvestorCompany = "/biz/assesment/quest_company1.html";
+
+    //投资者完善资料
+    public static String investorInfoPerson = "app6.0/biz/assesment/quest_person1.html";
+    public static String investorInfoCompany = "app6.0/biz/assesment/quest_company1.html";
+
     public static void updateRequestUrl() {
         baseParentUrl = SERVER_ADD + "/";
         baseSxyParentUrl = SERVER_ADD + "/app6.0";

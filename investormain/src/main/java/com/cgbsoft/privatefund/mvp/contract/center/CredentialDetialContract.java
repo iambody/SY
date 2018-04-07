@@ -29,5 +29,7 @@ public interface CredentialDetialContract {
          * @param CaredentialCode 证件类型
          */
         void getCredentialInfo(String CaredentialCode);
+
+        void verifyIndentityV3();
     }
 }

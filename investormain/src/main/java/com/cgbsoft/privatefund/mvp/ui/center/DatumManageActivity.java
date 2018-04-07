@@ -14,6 +14,7 @@ import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.listener.listener.GestureManager;
+import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
@@ -90,6 +91,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         assetStatus = getResources().getStringArray(R.array.assert_certify);
         credentialStateMedel = new CredentialStateMedel();
         initCallBack();
+        SPreference.putBoolean(this,"isFromMine",false);
     }
 
     private void initCallBack() {

@@ -216,6 +216,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     private static final float NS2S = 1.0f / 10000000.0f;
     private float timestamp;
     private float[] angle = {0f, 0f, 0f};
+    private Observable<Integer> investorInfoRefreshObservable;
 
     @Override
     protected int layoutID() {
@@ -486,6 +487,30 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
         });
 
+        investorInfoRefreshObservable = RxBus.get().register(RxConstant.REFRESH_INVESTOR_INFO, Integer.class);
+        investorInfoRefreshObservable.subscribe(new RxSubscriber<Integer>() {
+            @Override
+            protected void onEvent(Integer integer) {
+                if (!AppManager.getIsLogin(baseActivity)) {
+                    BStrUtils.setTv1(viewHomeProductTag, getResources().getString(R.string.after_appraisal_canvisible));
+
+                } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerSpecialFlag()) ||
+                        AppManager.getUserInfo(baseActivity).getToC().getCustomerSpecialFlag().equals("0")) {//需要风险测评
+                    BStrUtils.setTv1(viewHomeProductTag, getResources().getString(R.string.after_appraisal_canvisible));
+
+                } else {//显示截至打款时间************拷贝过来的一坨产品逻辑***************
+                    if (homeData.bank != null)
+                        Utils.homeProductSet(viewHomeProductTag, homeData.bank.product.content.raiseEndTime);
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+
+            }
+        });
+
+
         /** 游客登录进入正常模式*/
         userLayObservable = RxBus.get().register(RxConstant.MAIN_FRESH_LAY, Integer.class);
         userLayObservable.subscribe(new RxSubscriber<Integer>() {
@@ -638,6 +663,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (null != registLayFresh) {
             RxBus.get().unregister(RxConstant.REFRESH_PUBLIC_FUND_RESGIST_LAY, registLayFresh);
         }
+        if (null != investorInfoRefreshObservable) {
+            RxBus.get().unregister(RxConstant.REFRESH_INVESTOR_INFO, investorInfoRefreshObservable);
+        }
 
 
     }
@@ -728,7 +756,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         BStrUtils.setTv1(viewHomeProductName, bank.product.content.productName);
         BStrUtils.setTv1(viewHomeProductDes, bank.product.content.hotName);
-        if (AppManager.isVisitor(baseActivity) || TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {
+        if (AppManager.isVisitor(baseActivity) ||
+                TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerSpecialFlag()) ||
+                AppManager.getUserInfo(baseActivity).getToC().getCustomerSpecialFlag().equals("0")) {
             homeProductDownLay.setVisibility(View.GONE);
         } else {
             homeProductDownLay.setVisibility(View.VISIBLE);
@@ -804,7 +834,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (!AppManager.getIsLogin(baseActivity)) {
             BStrUtils.setTv1(viewHomeProductTag, getResources().getString(R.string.after_appraisal_canvisible));
 
-        } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {//需要风险测评
+        } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerSpecialFlag()) ||
+                AppManager.getUserInfo(baseActivity).getToC().getCustomerSpecialFlag().equals("0")) {//需要风险测评
             BStrUtils.setTv1(viewHomeProductTag, getResources().getString(R.string.after_appraisal_canvisible));
 
         } else {//显示截至打款时间************拷贝过来的一坨产品逻辑***************
@@ -1059,7 +1090,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             map.put("backgohome", true);
             NavigationUtils.startActivityByRouter(baseActivity, RouteConfig.GOTO_LOGIN, map);
             return;
-        } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerType())) {//需要风险测评
+        } else if (TextUtils.isEmpty(AppManager.getUserInfo(baseActivity).getToC().getCustomerSpecialFlag()) || AppManager.getUserInfo(baseActivity).getToC().getCustomerSpecialFlag().equals("0")) {//需要风险测评
             gotoRiskevalust();
             return;
         }

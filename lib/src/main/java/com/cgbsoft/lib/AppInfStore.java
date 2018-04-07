@@ -585,7 +585,6 @@ public class AppInfStore implements AppinfConstant {
         String result = getPublicFundInfo(context);
         if (BStrUtils.isEmpty(result)) return new PublicFundInf();
         return new Gson().fromJson(result, PublicFundInf.class);
-
     }
 
     public static String getPublicFundInfo(Context context) {
