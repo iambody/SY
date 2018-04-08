@@ -419,6 +419,7 @@ public class JavaScriptObjectToc {
                             fundType = obj.getString("fundType");
                         }
                         String riskLevel = obj.getString("riskLevel");
+
                         UiSkipUtils.toBuyPublicFundFromNative((Activity) context, fundCode, fundName, fundType, riskLevel);
 
                     }

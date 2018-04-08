@@ -57,7 +57,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     private String fundRiskLevel;// 风险级别
 
     private String fundCode; // 基金号
-    private String fundName; // 基金名字
+    // private String fundName; // 基金名字
     private String fundType; // 基金类型
     private String unit = "元"; //银行卡单笔限额
 
@@ -76,7 +76,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     @Override
     protected void init(Bundle savedInstanceState) {
         fundCode = getIntent().getStringExtra(TAG_FUND_CODE);
-        fundName = getIntent().getStringExtra(TAG_FUND_NAME);
+//        fundName = getIntent().getStringExtra(TAG_FUND_NAME);
         fundType = getIntent().getStringExtra(TAG_FUND_Type);
         if (YINGTAI_QIANBAO.equals(fundCode.trim())) isPublicFund = false;
         fundRiskLevel = getIntent().getStringExtra(TAG_FUND_RISK_LEVEL);
@@ -105,12 +105,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             buyConfirm.setText("确认转入");
         }
 
-        if (!isPublicFund) {
-            findViewById(R.id.ll_fundinfo).setVisibility(View.GONE);
-        } else {
-            ((TextView) findViewById(R.id.tv_fundname)).setText(fundName);
-            ((TextView) findViewById(R.id.tv_fundcode)).setText(fundCode);
-        }
 
         // 返回键
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
@@ -281,6 +275,13 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     currectPayBank = bean.getUserBankCardInfo().get(0);
                 }
 
+                if (!isPublicFund) {
+                    findViewById(R.id.ll_fundinfo).setVisibility(View.GONE);
+                } else {
+                    ((TextView) findViewById(R.id.tv_fundname)).setText(bean.getFundName());
+                    ((TextView) findViewById(R.id.tv_fundcode)).setText(fundCode);
+                }
+
                 // 设置输入框提示文本
                 String limitAmt = bean != null ? bean.getLimitOrderAmt().trim() : "";// 最少购买限额
                 if (!BStrUtils.isEmpty(limitAmt) && !"null".equals(limitAmt)) {
@@ -356,7 +357,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     }
                 }
 
-                TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.fundName);
+                TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.bean.getFundName());
                 if (isPublicFund) {
                     UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, fundType, formatMoney, redeemReFundDate,serialNo);
                 } else {
