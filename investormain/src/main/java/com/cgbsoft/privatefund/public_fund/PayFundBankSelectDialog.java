@@ -13,9 +13,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 import com.cgbsoft.privatefund.R;
 
@@ -105,12 +107,17 @@ public class PayFundBankSelectDialog extends BaseDialog {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (viewType == FOOT) return FootViewHolder.creat(parent.getContext(),MyAdapter.this.selectListener);
+            if (viewType == FOOT)
+                return FootViewHolder.creat(parent.getContext(), MyAdapter.this.selectListener);
 
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_paybank_list, parent, false);
             return new MyViewHolder(view, new SelectListener() {
                 @Override
                 public void select(int index) {
+                    if ("0".equals(list.get(index).getBankEnableStatus())) {
+                        MToast.makeText(parent.getContext(), parent.getContext().getString(R.string.public_fund_bank_not_useable), Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     if (selectListener != null) MyAdapter.this.selectListener.select(index);
                 }
             });
@@ -119,7 +126,8 @@ public class PayFundBankSelectDialog extends BaseDialog {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if(getItemViewType(position) != FOOT) ((MyViewHolder) holder).bindData(list, position, currectBankNum);
+            if (getItemViewType(position) != FOOT)
+                ((MyViewHolder) holder).bindData(list, position, currectBankNum);
         }
 
         @Override
@@ -142,7 +150,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
             linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, Utils.convertDipOrPx(context, 70)));
             linearLayout.setGravity(Gravity.CENTER_VERTICAL);
 
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(Utils.convertDipOrPx(context,26), Utils.convertDipOrPx(context,19));
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(Utils.convertDipOrPx(context, 26), Utils.convertDipOrPx(context, 19));
             layoutParams.setMargins(Utils.convertDipOrPx(context, 15), 0, 0, 0);
             ImageView icon = new ImageView(context);
             icon.setBackgroundResource(R.drawable.bank_icon);
@@ -155,7 +163,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
             text.setTextColor(context.getResources().getColor(R.color.black));
             text.setTextSize(16);
             linearLayout.addView(text, textLayoutParams);
-            return new FootViewHolder(linearLayout,selectListener);
+            return new FootViewHolder(linearLayout, selectListener);
         }
 
         /*
@@ -238,7 +246,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
         public void bindData(List<BuyPublicFundActivity.BankCardInfo> selectListener, int postion, String curBankNum) {
             index = postion;
             BuyPublicFundActivity.BankCardInfo bankCardInfo = selectListener.get(postion);
-            Imageload.display(bankIcon.getContext(),bankCardInfo.getIcon(),this.bankIcon,R.drawable.bank_icon,R.drawable.bank_icon);
+            Imageload.display(bankIcon.getContext(), bankCardInfo.getIcon(), this.bankIcon, R.drawable.bank_icon, R.drawable.bank_icon);
             String bankCoade = bankCardInfo.getDepositAcct();
             if (curBankNum.trim().equals(bankCoade.trim())) {
                 selectState.setVisibility(View.VISIBLE);
@@ -250,11 +258,13 @@ public class PayFundBankSelectDialog extends BaseDialog {
             if (bankCoade.length() > 4) {
                 bankCoade = bankCoade.substring(bankCoade.length() - 4);
             }
-            bankName.setText(bankCardInfo.getBankShortName() + "尾号(" + bankCoade + ")");
+            bankName.setText(bankCardInfo.getBankShortName() + "　尾号(" + bankCoade + ")");
             bankLimit.setText(bankCardInfo.getBankLimit());
             if ("0".equals(bankCardInfo.getBankEnableStatus())) {
+                bankLimit.setVisibility(View.GONE);
                 itemView.findViewById(R.id.tv_not_useable).setVisibility(View.VISIBLE);
             } else {
+                bankLimit.setVisibility(View.VISIBLE);
                 itemView.findViewById(R.id.tv_not_useable).setVisibility(View.GONE);
             }
         }
