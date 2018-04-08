@@ -364,13 +364,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-//        Snackbar.make(fb, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
-
-//        CommonNewShareDialog shareDialog=new CommonNewShareDialog(baseActivity,CommonNewShareDialog.Tag_Style_WxPyq,null,null);
-//        shareDialog.show();
-//
-//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, SelectBankCardActivity.class));
-
         if (AppManager.isVisitor(baseActivity)) {
             Intent intent = new Intent(baseActivity, LoginActivity.class);
             intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
@@ -973,6 +966,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     /**
      * 初始化公募基金数据（历史原因需要进行单独请求）
+     *
      * @param publishFundRecommendBean
      */
     private void initPublicFundData(boolean isCache, PublishFundRecommendBean publishFundRecommendBean) {
@@ -995,7 +989,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         BStrUtils.setTv(homePublicfundUpValue, publishFundRecommendBean.getLeftUpValue());
         BStrUtils.setTv(homePublicfundDownKey, publishFundRecommendBean.getLeftDownDes());
-
 
 
         initPublicFundLay();
@@ -1125,6 +1118,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
+
+    @OnClick(R.id.home_publicfund_up_value)
+    public void homePublicfundUpValueClicked() {
+        NavigationUtils.gotoNavWebActivity(baseActivity, CwebNetConfig.publicShareBaoDetail, getString(R.string.private_share_bao));
+    }
+
     /**
      * 公募基金跳转到navagation
      */
@@ -1238,6 +1237,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //ssssss
         TrackingDataManger.homeBuyClick(baseActivity);
     }
+
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {

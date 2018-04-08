@@ -4,11 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+    <com.cgbsoft.lib.widget.MySwipeRefreshLayout
+        android:id="@+id/main_publicfund_swiperefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        >
     <com.cgbsoft.lib.base.webview.BaseWebview
         android:id="@+id/webview"
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-
+    </com.cgbsoft.lib.widget.MySwipeRefreshLayout>
 </LinearLayout>

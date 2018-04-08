@@ -26,21 +26,22 @@ public class RxCountDown {
      * @return
      */
     public static Observable<Integer> countdown(int time) {
-        if (time < 0) time = 0;
+        synchronized (RxCountDown.class) {
+            if (time < 0) time = 0;
 
-        final int countTime = time;
+            final int countTime = time;
 
-
-        return Observable.interval(0, 1, TimeUnit.SECONDS)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<Long, Integer>() {
-                    @Override
-                    public Integer call(Long increaseTime) {
-                        return countTime - increaseTime.intValue();
-                    }
-                })
-                .take(countTime + 1);
+            return Observable.interval(0, 1, TimeUnit.SECONDS)
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .map(new Func1<Long, Integer>() {
+                        @Override
+                        public Integer call(Long increaseTime) {
+                            return countTime - increaseTime.intValue();
+                        }
+                    })
+                    .take(countTime + 1);
+        }
 
     }
 
@@ -88,10 +89,10 @@ public class RxCountDown {
      * 结束计时
      */
     public static void stopKeepTime() {
-        if (null != keeptimeSubscription &&! keeptimeSubscription.isUnsubscribed()) {
+        if (null != keeptimeSubscription && !keeptimeSubscription.isUnsubscribed()) {
             keeptimeSubscription.unsubscribe();
             times = 0;
-            keeptimeSubscription=null;
+            keeptimeSubscription = null;
         }
     }
 
@@ -188,11 +189,11 @@ public class RxCountDown {
         void doNext();
     }
 
-/**********************点击防抖功能******************************/
-public static Observable<Void> clickView(@NonNull View view) {
-    checkNoNull(view);
-    return Observable.create(new ViewClickOnSubscribe(view));
-}
+    /**********************点击防抖功能******************************/
+    public static Observable<Void> clickView(@NonNull View view) {
+        checkNoNull(view);
+        return Observable.create(new ViewClickOnSubscribe(view));
+    }
 
     /**
      * 查空
