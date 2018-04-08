@@ -349,11 +349,11 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             public void even(String result) {
                 loadingDialog.dismiss();
 
-                String redeemReFundDate = "";
+//                String redeemReFundDate = "";
                 String serialNo = "";
                 if (!TextUtils.isEmpty(result)) {
                     try {
-                        redeemReFundDate = new JSONObject(result).getString("redeemReFundDate");
+//                        redeemReFundDate = new JSONObject(result).getString("redeemReFundDate");
                         serialNo = new JSONObject(result).getString("serialNo");
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -369,7 +369,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
                 TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.bean.getFundName());
                 if (isPublicFund) {
-                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, fundType, formatMoney, redeemReFundDate,serialNo);
+                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, fundType, formatMoney, serialNo);
                 } else {
                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney+"&serialNo="+serialNo, "买入结果", false);
                 }

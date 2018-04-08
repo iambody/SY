@@ -336,11 +336,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     public void even(String result) {
                         loadingDialog.dismiss();
 
-                        String redeemReFundDate = "";
                         String serialNo = "";
                         if(!TextUtils.isEmpty(result)) {
                             try {
-                                redeemReFundDate = new JSONObject(result).getString("redeemReFundDate");
                                 serialNo = new JSONObject(result).getString("serialNo");
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -350,7 +348,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                         TrackingDataManger.sellPublicFund(SellPublicFundActivity.this, SellPublicFundActivity.this.fundName);
                         // 跳转到成功页面
                         if (isFund) {
-                            UiSkipUtils.gotoNewFundResult(SellPublicFundActivity.this, 2, fundType, money,redeemReFundDate,serialNo);
+                            UiSkipUtils.gotoNewFundResult(SellPublicFundActivity.this, 2, fundType, money,serialNo);
                         } else {
                             UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, issxb, money, result);
                         }
