@@ -973,19 +973,16 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     /**
      * 初始化公募基金数据（历史原因需要进行单独请求）
-     *
      * @param publishFundRecommendBean
      */
     private void initPublicFundData(boolean isCache, PublishFundRecommendBean publishFundRecommendBean) {
 
         publishFundRecommend = publishFundRecommendBean;
 
-
         boolean isRato = BStrUtils.homeIsRato(publishFundRecommendBean.getLeftUpValue());
         if (isRato) {
             SpannableString spannableString = SpannableUtils.setTextSize1(publishFundRecommendBean.getLeftUpValue(), publishFundRecommendBean.getLeftUpValue().length() - 1, publishFundRecommendBean.getLeftUpValue().length(), DimensionPixelUtil.dip2px(baseActivity, 15));
             viewHomePublicFundLeftvalues.setText(spannableString);
-
 
         }
         BStrUtils.setTv(viewHomePublicFundFundname, publishFundRecommendBean.getFundName());

@@ -907,7 +907,9 @@ public class JavaScriptObjectToc {
      */
     @JavascriptInterface
     public void closeWebview(String data) {
-
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 9);
+        Router.build(RouteConfig.GOTOCMAINHONE).go(context);
     }
 
 
