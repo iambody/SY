@@ -30,7 +30,7 @@
             android:id="@+id/account_bank_hide_assert"
             android:gravity="right|center_vertical"
             android:text="@string/account_bank_show_assert"
-            android:textColor="@color/color_666666"
+            android:textColor="@color/app_golden"
             android:textSize="@dimen/dimens_sp_14"/>
     </LinearLayout>
 
