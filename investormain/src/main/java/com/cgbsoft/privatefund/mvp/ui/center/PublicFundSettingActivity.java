@@ -10,6 +10,7 @@ import com.cgbsoft.lib.AppManager;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
+import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.SettingItemNormal;
@@ -86,7 +87,8 @@ public class PublicFundSettingActivity extends BaseActivity<PublicFundSettingPre
         publicFundAccountStatus.setVisibility(isWhiteFlag ? View.VISIBLE : View.GONE);
         publicFundBankCarkInfo.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
         publicFundTradePasswordModify.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
-        publicFundRisk.setVisibility((isWhiteFlag && existAccount) ? View.VISIBLE : View.GONE);
+
+        publicFundRisk.setVisibility((isWhiteFlag && existAccount && !BStrUtils.isEmpty(publicFundInf.getCustRisk())) ? View.VISIBLE : View.GONE);
 
     }
 
