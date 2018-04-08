@@ -477,10 +477,10 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         if (url.contains("rankList_share")) {
             mWebview.loadUrl("javascript:delectChart()");
         }
-        if (null != url && url.contains(CwebNetConfig.publicFundRiskUrl)) {
-            publicRiskEvaluation();
-            return;
-        }
+//        if (null != url && url.contains(CwebNetConfig.publicFundRiskUrl)) {
+//            publicRiskEvaluation();
+//            return;
+//        }
         mWebview.loadUrl("javascript:WebView.back(1)");
         if ("风险评测".equals(title)) {
             backEvent();
@@ -503,17 +503,18 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
      * 风险测评
      */
     private void publicRiskEvaluation() {
-        new DefaultDialog(BaseWebViewActivity.this, getString(R.string.public_risk_evaluation), "取消", "确定") {
-            @Override
-            public void left() {
-                this.dismiss();
-            }
-
-            @Override
-            public void right() {
-                finish();
-            }
-        }.show();
+//        new DefaultDialog(BaseWebViewActivity.this, getString(R.string.public_risk_evaluation), "取消", "确定") {
+//            @Override
+//            public void left() {
+//                this.dismiss();
+//            }
+//
+//            @Override
+//            public void right() {
+//                finish();
+//            }
+//        }.show();
+        finish();
     }
 
     private void backEvent() {
