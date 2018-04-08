@@ -334,7 +334,8 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     protected void before() {
         super.before();
-        showAssert = AppManager.isShowAssert(getActivity());
+//        showAssert = AppManager.isShowAssert(getActivity());
+        AppInfStore.saveShowAssetStatus(getActivity(), false);
         showSelectAddress();
     }
 
@@ -798,13 +799,14 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     private void hidePublicAssert() {
         if (financialAssertModel != null) {
             textViewShowAssert.setText(R.string.account_bank_show_assert);
-            ViewUtils.textViewFormatPasswordType(tv_share_bao_subsist_assert);
-            ViewUtils.textViewFormatPasswordType(tv_share_bao_continue_income);
-            ViewUtils.textViewFormatPasswordType(tv_share_bao_yestoday_income);
-
             ViewUtils.textViewFormatPasswordType(tv_public_fund_subsist_assert);
             ViewUtils.textViewFormatPasswordType(tv_public_fund_continue_income);
             ViewUtils.textViewFormatPasswordType(tv_public_fund_yestoday_income);
+        }
+        if (!financialAssertModel.getSxbInfo().getSurvivingAssets().equals("0.00")){
+            ViewUtils.textViewFormatPasswordType(tv_share_bao_subsist_assert);
+            ViewUtils.textViewFormatPasswordType(tv_share_bao_continue_income);
+            ViewUtils.textViewFormatPasswordType(tv_share_bao_yestoday_income);
         }
     }
 
@@ -944,7 +946,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             tv_share_bao_subsist_assert_desc.setText(String.format(getString(R.string.subsist_assert), "元"));
             tv_share_bao_continue_income_desc.setText(String.format(getString(R.string.continue_income), "元"));
             tv_share_bao_yestoday_income_desc.setText(String.format(getString(R.string.yestoday_income), "元"));
-        }else {
+        } else {
             ViewUtils.showTextByValue(getContext(), tv_share_bao_continue_income, financialAssertModel.getSxbInfo().getAddincome());
             ViewUtils.showTextByValue(getContext(), tv_share_bao_yestoday_income, financialAssertModel.getSxbInfo().getYestincome());
 //        tv_share_bao_continue_income.setTextColor(ContextCompat.getColor(getActivity(), financialAssertModel.getSxbInfo().getAddincome().startsWith("-") ? R.color.decrease_income_color : R.color.increase_income_color));
@@ -1362,7 +1364,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
             }
 
         } else {
-                GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
+            GestureManager.showGroupGestureManage(getActivity(), GestureManager.DATUM_MANAGER);
         }
         DataStatistApiParam.dataManager();
     }

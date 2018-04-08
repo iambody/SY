@@ -44,13 +44,13 @@ public class PublicFundTradePwdModifyPresenterImpl extends BasePresenterImpl<Pub
         addSubscription(ApiClient.resetPwdPublicFund(hashMap).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                getView().modifyPwdSuccess("修改交易密码成功");
+                getView().modifyPwdSuccess("重置交易密码成功");
             }
 
             @Override
             protected void onRxError(Throwable error) {
                 Log.i("s", error.getMessage());
-                getView().modifyPwdFailure("修改交易密码失败");
+                getView().modifyPwdFailure("重置交易密码失败");
             }
         }));
     }
