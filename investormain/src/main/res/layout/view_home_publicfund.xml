@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:layout_marginLeft="@dimen/ui_10_dip"
-    android:layout_marginRight="@dimen/ui_10_dip">
-
+    android:layout_height="200dp"
+  >
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
+        android:layout_height="200dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/home_publicfund_bg" />
 
     <ImageView
@@ -18,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/ui_20_dip"
+        android:layout_marginBottom="@dimen/ui_35_dip"
         android:scaleType="centerCrop"
         android:src="@drawable/home_publicfund_bt" />
 
@@ -27,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal">
 
         <TextView

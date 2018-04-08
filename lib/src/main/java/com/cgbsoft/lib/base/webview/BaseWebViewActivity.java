@@ -801,6 +801,12 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     }
 
+    /**
+     * 隐藏toolbar返回键
+     */
+    public void hideBackIv() {
+
+    }
 }
 
 

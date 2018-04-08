@@ -246,7 +246,7 @@ public class JavaScriptObjectToc {
         UserInfoDataEntity.UserInfo userInfo = AppManager.getUserInfo(context);
         userInfo.getToC().setCustomerSpecialFlag("1");
         AppInfStore.saveUserInfo(context, userInfo);
-        RxBus.get().post(RxConstant.REFRESH_INVESTOR_INFO,1);
+        RxBus.get().post(RxConstant.REFRESH_INVESTOR_INFO, 1);
     }
 
 
@@ -918,7 +918,15 @@ public class JavaScriptObjectToc {
      */
     @JavascriptInterface
     public void hideReturnButton(String data) {
-
+        try {
+            ((Activity)context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+//                    ((BaseWebViewActivity) context).setWebRightTopViewConfig(webRightTopViewConfigBean);
+                }
+            });
+        } catch (Exception e) {
+        }
     }
 
 }
