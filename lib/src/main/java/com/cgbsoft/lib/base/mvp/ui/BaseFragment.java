@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -74,6 +75,13 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         return mFragmentView;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    boolean isVisible;
+
     /**
      * 此方法在控件初始化前调用，所以不能在此方法中直接操作控件会出现空指针
      *
@@ -82,21 +90,41 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-
-        if (isVisibleToUser && isCreateView) {
+        isVisible = isVisibleToUser;
+        if (isVisible && isCreateView) {
             viewBeShow();
             lazyLoad();
         } else {
             viewBeHide();
         }
-    }
 
-    protected void viewBeShow() {
 
     }
 
-    protected void viewBeHide() {
+    public void viewBeShow() {
 
+    }
+
+    public void viewBeHide() {
+
+    }
+//    public void viewBeShow1() {
+//
+//    }
+//
+//    public void viewBeHide2() {
+//
+//    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+//       if(isCreateView)
+        if (hidden) {
+            viewBeHide();
+        } else {
+            viewBeShow();
+        }
     }
 
     private void lazyLoad() {
@@ -122,6 +150,13 @@ public abstract class BaseFragment<P extends BasePresenterImpl> extends RxFragme
         if (getUserVisibleHint()) {
             lazyLoad();
         }
+        viewBeShow();
+//        if (isVisible) {
+//            viewBeShow();
+//
+//        } else {
+//            viewBeHide();
+//        }
     }
 
     @Override

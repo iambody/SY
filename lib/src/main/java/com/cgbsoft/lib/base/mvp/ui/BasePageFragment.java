@@ -212,13 +212,13 @@ public abstract class BasePageFragment extends BaseFragment<BasePagePresenter> {
     }
 
     @Override
-    protected void viewBeHide() {
+    public void viewBeHide() {
         super.viewBeHide();
         LogUtils.Log("aaa", "viewBeHide===----");
     }
 
     @Override
-    protected void viewBeShow() {
+    public void viewBeShow() {
         super.viewBeShow();
         LogUtils.Log("aaa", "viewBeShow===----");
     }

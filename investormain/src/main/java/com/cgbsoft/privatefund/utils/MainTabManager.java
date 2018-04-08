@@ -1,10 +1,8 @@
 package com.cgbsoft.privatefund.utils;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
-import com.cgbsoft.lib.utils.constant.RxConstant;
-import com.cgbsoft.lib.utils.rxjava.RxBus;
+import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.mvp.ui.home.EverHealthFragment;
 import com.cgbsoft.privatefund.mvp.ui.home.HappyLifeFragment;
@@ -43,8 +41,8 @@ public class MainTabManager {
         return mInstance;
     }
 
-    public Fragment getFragmentByIndex(int index,int code) {
-        Fragment fragment = null;
+    public BaseFragment getFragmentByIndex(int index, int code) {
+        BaseFragment fragment = null;
         switch (index) {
             case R.id.nav_left_first:
                 if (firstPageFragment == null) {

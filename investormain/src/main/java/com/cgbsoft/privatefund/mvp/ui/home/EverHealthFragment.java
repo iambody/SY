@@ -18,7 +18,6 @@ import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.TrackingDataUtils;
 import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.privatefund.InitApplication;
@@ -214,14 +213,14 @@ public class EverHealthFragment extends BasePageFragment implements View.OnClick
     }
 
     @Override
-    protected void viewBeShow() {
+    public void viewBeShow() {
         super.viewBeShow();
         LogUtils.Log("aaa","viewBeShow===");
         TrackingHealthDataStatistics.goHealthHomePage(getContext());
     }
 
     @Override
-    protected void viewBeHide() {
+    public void viewBeHide() {
         super.viewBeHide();
         LogUtils.Log("aaa","viewBeHide===");
     }

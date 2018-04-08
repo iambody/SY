@@ -1,7 +1,5 @@
 package app.privatefund.investor.health.mvp.ui;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,25 +8,19 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.cgbsoft.lib.base.model.bean.MemberDegrade;
-import com.cgbsoft.lib.base.model.bean.MemeberInfo;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
-import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
-import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
 import com.cgbsoft.lib.utils.ZipResourceDownload;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
 import com.cgbsoft.lib.utils.tools.NetUtils;
 import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
-import com.cgbsoft.lib.widget.MemberDegradeDialog;
-import com.cgbsoft.lib.widget.MemberUpdateDialog;
 import com.cgbsoft.lib.widget.MyBaseWebview;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecorationHorizontal;
-import com.google.gson.Gson;
 
 import java.util.List;
+
 import app.privatefund.investor.health.R;
 import app.privatefund.investor.health.R2;
 import app.privatefund.investor.health.adapter.HealthIntroduceFlagRecyclerAdapter;
@@ -205,7 +197,7 @@ public class IntroduceHealthFragmentNew extends BaseFragment<HealthIntroducePres
 
 
     @Override
-    protected void viewBeShow() {
+    public void viewBeShow() {
         super.viewBeShow();
         if (zipResourceDownload != null) {
             zipResourceDownload.initZipResource();

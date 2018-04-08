@@ -3,6 +3,7 @@ package com.cgbsoft.privatefund.mvp.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,6 +67,17 @@ public class PrivateBanksFragment extends BasePageFragment {
         return R.layout.title_fragment_privatebancks;
     }
 
+    @Override
+    public void viewBeShow() {
+        super.viewBeShow();
+        Log.i("testviewshowhind","私人银行开始显示");
+    }
+
+    @Override
+    public void viewBeHide() {
+        super.viewBeHide();
+        Log.i("testviewshowhind","私人银行开始隐藏");
+    }
     @Override
     protected ArrayList<TabBean> list() {
         isDoneFreash = true;

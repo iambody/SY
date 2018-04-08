@@ -19,7 +19,6 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
-import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.lib.widget.recycler.SimpleItemDecoration;
@@ -35,8 +34,6 @@ import app.mall.com.mvp.presenter.ElegantLivingPresenterImpl;
 import butterknife.BindView;
 import qcloud.mall.R;
 import qcloud.mall.R2;
-
-import static com.cgbsoft.lib.BaseApplication.getContext;
 
 
 /**
@@ -200,7 +197,7 @@ public class ElegantLivingFragment extends BaseFragment<ElegantLivingPresenterIm
     }
 
     @Override
-    protected void viewBeShow() {
+    public void viewBeShow() {
         DataStatistApiParam.intoElegantLiving();
     }
 

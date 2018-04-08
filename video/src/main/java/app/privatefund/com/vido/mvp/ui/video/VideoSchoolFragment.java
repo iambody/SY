@@ -278,13 +278,13 @@ public class VideoSchoolFragment extends BaseFragment<VideoSchoolAllInfPresenter
     private boolean isvisible;
 
     @Override
-    protected void viewBeShow() {
+    public void viewBeShow() {
         super.viewBeShow();
         isvisible = true;
     }
 
     @Override
-    protected void viewBeHide() {
+    public void viewBeHide() {
         super.viewBeHide();
         isvisible = false;
     }

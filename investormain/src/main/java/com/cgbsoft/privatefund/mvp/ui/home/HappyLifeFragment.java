@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.mall.com.mvp.ui.ElegantGoodsFragment;
-import app.mall.com.mvp.ui.ElegantLivingFragment;
 import app.ndk.com.enter.mvp.ui.LoginActivity;
 import app.privatefund.com.im.MessageListActivity;
 
@@ -41,7 +39,7 @@ import app.privatefund.com.im.MessageListActivity;
  *         <p>
  *         乐享生活
  */
-public class HappyLifeFragment extends BasePageFragment implements View.OnClickListener ,Toolbar.OnMenuItemClickListener{
+public class HappyLifeFragment extends BasePageFragment implements View.OnClickListener, Toolbar.OnMenuItemClickListener {
 
     private final String NAVIGATION_CODE = "30";
     private final String LIFE_HOME_CODE = "3001";
@@ -165,13 +163,6 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     protected void bindTitle(View titleView) {
 
     }
-
-    @Override
-    protected void viewBeShow() {
-        super.viewBeShow();
-        TrackingLifeDataStatistics.goLifeHomePage(getContext());
-    }
-
     @Override
     protected int indexSel() {
         return 0;
@@ -180,6 +171,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     public void setCode(int index) {
         super.setIndex(index);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -191,9 +183,7 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     @Override
     protected void clickTabButton(String tabName) {
         super.clickTabButton(tabName);
-//        if (!TextUtils.isEmpty(tabName) && tabName.equals("尚品")) {
         DataStatistApiParam.clickElegantGoodsButton(tabName);
-//        }
     }
 
     @Override
@@ -208,5 +198,17 @@ public class HappyLifeFragment extends BasePageFragment implements View.OnClickL
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         return false;
+    }
+
+
+    @Override
+    public void viewBeShow() {
+        super.viewBeShow();
+        TrackingLifeDataStatistics.goLifeHomePage(getContext());
+    }
+
+    @Override
+    public void viewBeHide() {
+        super.viewBeHide();
     }
 }

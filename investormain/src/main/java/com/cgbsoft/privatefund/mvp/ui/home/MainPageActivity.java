@@ -155,6 +155,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void after() {
         super.after();
+
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 //            透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -399,14 +400,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     }
 
     private void todo() {
-//        if (mContentFragment instanceof StarFragment) {
-//            RxBus.get().post(RELEASE_STAR_OBSERVABLE, true);
-//        }
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        Log.i("testviewshowhind","主页开始显示************");
         initUserInfo();
         if (null != liveTimerObservable) {
             liveTimerObservable = Observable.interval(0, 10000, TimeUnit.MILLISECONDS)
@@ -419,20 +418,19 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                         }
                     });
         }
-//        getPresenter().getProLiveList();
-//        RxBus.get().post(RxConstant.PAUSR_HEALTH_VIDEO, 0);
+
         RxBus.get().post(RxConstant.RefreshRiskState, true);
-//        int index = getIntent().getIntExtra("index", 0);
-//        onTabSelected(index);
+        (MainTabManager.getInstance().getFragmentByIndex(switchID, code)).viewBeShow();
+
     }
 
-    int switchID = -1;
+    int switchID  = -1;
     int currentPostion = -1;
     boolean isHaveClickProduct;
 
     @Override
     public void onTabSelected(int position, int code) {
-        int switchID = -1;
+//        int switchID = -1;
         switch (position) {
             case 0://左1
                 StatusBarUtil.translucentStatusBar(this);
@@ -755,22 +753,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             });
         }
 
-//        //刷新webview的信息配置
-//        freshWebObservable= RxBus.get().register(RxConstant.MAIN_FRESH_WEB_CONFIG, Integer.class);
-//        freshWebObservable.subscribe(new RxSubscriber<Integer>() {
-//            @Override
-//            protected void onEvent(Integer integer) {
-//                LogUtils.Log("JavaScriptObjectToc","开始调用");
-//
-////                baseWebview.reload();
-//
-//            }
-//
-//            @Override
-//            protected void onRxError(Throwable error) {
-//
-//            }
-//        });
+
     }
 
     private int getUnreadNoticeInfoCount() {
@@ -922,6 +905,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onPause() {
         super.onPause();
+
         MobclickAgent.onPause(this);//结束统计时长
         try {
             if (liveJsonData != null)
@@ -934,9 +918,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
 
     @Override
     public void onBackPressed() {
-//        if (1 == currentPostion && MainTabManager.getInstance().getProductFragment().isShow()) {
-//            MainTabManager.getInstance().getProductFragment().backClick();
-//        } else
         if (((BaseFragment) mContentFragment).onBackPressed(MainPageActivity.this)) {
             return;
         }
@@ -1025,25 +1006,6 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
         RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBean);
 
-//            liveDialog.setVisibility(View.VISIBLE);
-//            Animation animation = AnimationUtils.loadAnimation(
-//                    this, R.anim.live_dialog_anim);
-//            liveDialog.startAnimation(animation);
-//            try {
-//                liveTitle.setText(jsonObject.getString("title"));
-//                Imageload.display(this, jsonObject.getString("image"), liveIcon);
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-
-//        } else {
-//            LiveInfBean liveInfBeanerr = new LiveInfBean();
-//            liveInfBeanerr.isLiveing = false;
-////            RxBus.get().post(MainHomeFragment.LIVERXOBSERBER_TAG, liveInfBeanerr);
-////            liveJsonData = null;
-////            liveDialog.setVisibility(View.GONE);
-////            liveDialog.clearAnimation();
-//        }
 
     }
 
@@ -1118,4 +1080,5 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         int heightPixels = dm.heightPixels;
         return (float) heightPixels / (float) widthPixels;
     }
+
 }

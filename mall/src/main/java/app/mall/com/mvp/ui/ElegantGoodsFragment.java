@@ -310,7 +310,7 @@ public class ElegantGoodsFragment extends BaseFragment<ElegantGoodsPresenterImpl
     }
 
     @Override
-    protected void viewBeShow() {
+    public void viewBeShow() {
         super.viewBeShow();
         DataStatistApiParam.intoElegantGoods();
     }

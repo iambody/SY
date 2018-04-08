@@ -210,7 +210,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     }
 
     @Override
-    protected void viewBeShow() {
+    public void viewBeShow() {
         super.viewBeShow();
         TrackingDiscoveryDataStatistics.discoveryClickFlag(getContext(), "资讯");
     }
@@ -274,7 +274,7 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
     }
 
     @Override
-    protected void viewBeHide() {
+    public void viewBeHide() {
         super.viewBeHide();
     }
 

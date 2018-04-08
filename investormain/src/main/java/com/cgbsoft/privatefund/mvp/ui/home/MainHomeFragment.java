@@ -246,13 +246,25 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         getPresenter().getPublicFundRecommend();
     }
 
+//    @Override
+//    protected void viewBeShow() {
+//        super.viewBeShow();
+//
+//    }
+//
+//    @Override
+//    protected void viewBeHide() {
+//        super.viewBeHide();
+//
+//    }
+
     @Override
-    protected void viewBeShow() {
+    public void viewBeShow() {
         super.viewBeShow();
     }
 
     @Override
-    protected void viewBeHide() {
+    public void viewBeHide() {
         super.viewBeHide();
     }
 
