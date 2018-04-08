@@ -168,7 +168,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
             if(isFund){
                 this.bankLimit.setText("可卖出份额"+bankCardInfo.getAvailBalMode1()+"份");
             }else {
-                this.bankLimit.setText("可体现金额"+bankCardInfo.getAvailBalMode1()+"元");
+                this.bankLimit.setText("可提现金额"+bankCardInfo.getAvailBalMode1()+"元");
             }
             Imageload.display(bankIcon.getContext(),bankCardInfo.getIcon(),bankIcon,R.drawable.bank_icon,R.drawable.bank_icon);
             //bankIcon.setBackgroundResource(R.drawable.bank_icon);
