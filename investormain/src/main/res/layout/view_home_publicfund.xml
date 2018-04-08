@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:layout_marginLeft="@dimen/ui_10_dip"
+    android:layout_marginRight="@dimen/ui_10_dip">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home_publicfund_bg" />
+
+    <ImageView
+        android:id="@+id/home_publicfund_bt"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/ui_20_dip"
+        android:scaleType="centerCrop"
+        android:src="@drawable/home_publicfund_bt" />
+
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:layout_toLeftOf="@+id/home_flexible"
+            android:background="@drawable/shape_home_publicfund_txt"
+            android:paddingLeft="@dimen/ui_5_dip"
+            android:paddingRight="@dimen/ui_5_dip"
+            android:text="@string/low_risk"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/home_flexible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_home_publicfund_txt"
+            android:paddingLeft="@dimen/ui_5_dip"
+            android:paddingRight="@dimen/ui_5_dip"
+            android:text="@string/flexible"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:layout_toRightOf="@id/home_flexible"
+            android:background="@drawable/shape_home_publicfund_txt"
+            android:paddingLeft="@dimen/ui_5_dip"
+            android:paddingRight="@dimen/ui_5_dip"
+            android:text="@string/thousand_subscription"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/home_publicfund_up_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:text="+12%"
+        android:textColor="@color/red_new_select1"
+        android:textSize="@dimen/ui_40_dip"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/home_publicfund_down_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_publicfund_up_value"
+        android:layout_centerHorizontal="true"
+        android:text="sjkjkjajajk"
+        android:textColor="@color/red_new_select1"
+        android:textSize="@dimen/ui_15_dip" />
+
+</RelativeLayout>

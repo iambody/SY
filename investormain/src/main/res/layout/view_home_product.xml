@@ -476,6 +476,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
         <!-- 公募开户-->
+        <include layout="@layout/view_home_publicfund"/>
         <!-- 公募基金的详情布局 -->
         <LinearLayout
             android:id="@+id/view_home_public_fund_detial_lay"
@@ -485,7 +486,9 @@
             android:layout_marginRight="@dimen/ui_10_dip"
             android:background="@drawable/shape_home_public_fund"
             android:clickable="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"

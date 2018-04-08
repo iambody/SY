@@ -77,7 +77,7 @@
     <color name="messge_list_item_cornor">#ececec</color>
     <color name="red_new">#ea1202</color> <!-- 5.0红 -->
     <color name="red_new_select">#be0f02</color> <!-- 5.0红 -->
-
+    <color name="red_new_select1">#E63945</color>
 
     <color name="c_low_black">#999999</color>
 

@@ -176,4 +176,7 @@
     <!--图片查看器下标-->
     <string name="viewpager_indicator">%1$d/%2$d</string>
     <string name="public_risk_evaluation">未完成风险评测，是否离开？</string>
+    <string name="low_risk">低风险</string>
+    <string name="flexible">灵活存取</string>
+    <string name="thousand_subscription">千元起购</string>
 </resources>

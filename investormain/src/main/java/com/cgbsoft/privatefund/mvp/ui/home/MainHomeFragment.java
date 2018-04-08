@@ -128,6 +128,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     LinearLayout viewHomePublicFundDetialLay;
     @BindView(R.id.view_home_public_fund_lay)
     LinearLayout viewHomePublicFundLay;
+    @BindView(R.id.home_publicfund_down_key)
+    TextView homePublicfundDownKey;
+    @BindView(R.id.home_publicfund_up_value)
+    TextView homePublicfundUpValue;
+    @BindView(R.id.home_publicfund_bt)
+    ImageView homePublicfundBt;
     //私募基金
     @BindView(R.id.home_product_title)
     TextView homeProductTitle;
@@ -979,6 +985,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (isRato) {
             SpannableString spannableString = SpannableUtils.setTextSize1(publishFundRecommendBean.getLeftUpValue(), publishFundRecommendBean.getLeftUpValue().length() - 1, publishFundRecommendBean.getLeftUpValue().length(), DimensionPixelUtil.dip2px(baseActivity, 15));
             viewHomePublicFundLeftvalues.setText(spannableString);
+
+
         }
         BStrUtils.setTv(viewHomePublicFundFundname, publishFundRecommendBean.getFundName());
         BStrUtils.setTv(viewHomePublicFundFunddes, publishFundRecommendBean.getFundDes());
@@ -986,6 +994,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         BStrUtils.setTv(viewHomePublicFundLeftdes, publishFundRecommendBean.getLeftDownDes());
         BStrUtils.setTv(viewHomePublicFundRightvalues, publishFundRecommendBean.getRightUpValue());
         BStrUtils.setTv(viewHomePublicFundRightdes, publishFundRecommendBean.getRightDownDes());
+//新的
+
+        BStrUtils.setTv(homePublicfundUpValue, publishFundRecommendBean.getLeftUpValue());
+        BStrUtils.setTv(homePublicfundDownKey, publishFundRecommendBean.getLeftDownDes());
+
+
 
         initPublicFundLay();
     }
@@ -1218,6 +1232,15 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         TrackingDataManger.homeBuyClick(baseActivity);
     }
 
+    /**
+     * 公募基金转入
+     */
+    @OnClick(R.id.home_publicfund_bt)
+    public void homePublicfundBt() {
+        UiSkipUtils.toBuyPublicFundFromNative(baseActivity, publishFundRecommend.getFundCode(), publishFundRecommend.getFundName(), publishFundRecommend.getFundType(), publishFundRecommend.getRiskLevel());
+        //ssssss
+        TrackingDataManger.homeBuyClick(baseActivity);
+    }
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
