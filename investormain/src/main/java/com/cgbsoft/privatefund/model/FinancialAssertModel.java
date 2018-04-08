@@ -174,7 +174,7 @@ public class FinancialAssertModel {
 
         private String addIncome;
 
-        private String yestincome;
+        private String yestIncome;
 
         public String getSurvivingAssets() {
             return survivingAssets;
@@ -193,11 +193,11 @@ public class FinancialAssertModel {
         }
 
         public String getYestincome() {
-            return yestincome;
+            return yestIncome;
         }
 
         public void setYestincome(String yestincome) {
-            this.yestincome = yestincome;
+            this.yestIncome = yestincome;
         }
 
         public String isBuyIn() {
