@@ -52,6 +52,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
+import rx.Observable;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by user on 2016/11/4.
  */
@@ -83,13 +88,11 @@ public class Utils {
     }
 
 
-
     /**
      * 将px值转换为sp值，保证文字大小不变
      *
      * @param pxValue
-     * @param fontScale
-     *            （DisplayMetrics类中属性scaledDensity）
+     * @param fontScale （DisplayMetrics类中属性scaledDensity）
      * @return
      */
     public static int convertPx2Sp(Context context, float pxValue) {
@@ -101,8 +104,7 @@ public class Utils {
      * 将sp值转换为px值，保证文字大小不变
      *
      * @param spValue
-     * @param fontScale
-     *            （DisplayMetrics类中属性scaledDensity）
+     * @param fontScale （DisplayMetrics类中属性scaledDensity）
      * @return
      */
     public static int convertSp2Px(Context context, float spValue) {
@@ -120,8 +122,6 @@ public class Utils {
     public static int getScreenWidth(@NonNull final Context context) {
         return context.getApplicationContext().getResources().getDisplayMetrics().widthPixels;
     }
-
-
 
 
     /**
@@ -863,5 +863,14 @@ public class Utils {
             textView.setVisibility(View.GONE);
         }
 
+    }
+
+    static <T> Observable.Transformer<T, T> applay() {
+        return new Observable.Transformer<T, T>() {
+            @Override
+            public Observable<T> call(Observable<T> tObservable) {
+                return tObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            }
+        };
     }
 }

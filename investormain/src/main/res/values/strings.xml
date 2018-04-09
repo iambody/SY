@@ -180,8 +180,8 @@
     <string name="account_info_mine_wish_card">我的贺卡</string>
     <string name="account_info_user_level">会员等级</string>
     <string name="account_bank_asset_zuhe">资产组合</string>
-    <string name="account_bank_hide_assert">隐藏</string>
-    <string name="account_bank_show_assert">显示</string>
+    <string name="account_bank_hide_assert">隐藏资产</string>
+    <string name="account_bank_show_assert">显示资产</string>
     <string name="account_bank_invistor_carlendar">投资日历</string>
     <string name="account_bank_info_manager">资料管理</string>
     <string name="account_bank_no_bugy">您没有在存资产，可以</string>

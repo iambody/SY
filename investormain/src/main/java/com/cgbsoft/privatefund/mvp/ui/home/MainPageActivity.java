@@ -420,12 +420,14 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
 
         RxBus.get().post(RxConstant.RefreshRiskState, true);
+ 
         (MainTabManager.getInstance().getFragmentByIndex(switchID, code)).viewBeShow();
 
     }
 
-    int switchID  = -1;
-    int currentPostion = -1;
+    int switchID  =  R.id.nav_left_first;
+    int currentPostion = 0;
+
     boolean isHaveClickProduct;
 
     @Override

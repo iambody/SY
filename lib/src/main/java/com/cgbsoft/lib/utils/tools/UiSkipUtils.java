@@ -12,7 +12,6 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -93,7 +92,7 @@ public class UiSkipUtils {
      *
      * @param activity
      */
-    public static void toPublicFundRegist(Activity activity ) {
+    public static void toPublicFundRegist(Activity activity) {
 
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(activity.getApplicationContext());
         String fundinf = publicFundInf.getCustNo();//客户号 空=》未开户；非空=》开户
@@ -108,8 +107,8 @@ public class UiSkipUtils {
 //                @Override
 //                public void right() {
 
-                    //没开户=》跳转到开户页面ton
-                    NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRegistUrl, "公募基金开户", false);
+            //没开户=》跳转到开户页面ton
+            NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRegistUrl, "公募基金开户", false);
 //                    dismiss();
 //                }
 //            };
@@ -166,68 +165,68 @@ public class UiSkipUtils {
     /**
      * 原生跳转到公募基金申购页面
      */
-    public static void toBuyPublicFundFromNative(Activity activity, String fundCode,String fundName,String fundType, String risklevel) {
+    public static void toBuyPublicFundFromNative(Activity activity, String fundCode, String fundName, String fundType, String risklevel) {
         //需要先判断是否注册绑卡
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(activity.getApplicationContext());
         String fundinf = publicFundInf.getCustNo();//客户号 空=》未开户；非空=》开户
         if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {//未开户
             //没开户=》跳转到开户页面ton
-//            DefaultDialog dialog = new DefaultDialog(activity, "您还未开户，马上去开户吧～", "取消", "确定") {
-//                @Override
-//                public void left() {
-//                    dismiss();
-//                }
-//
-//                @Override
-//                public void right() {
-//                    //没开户=》跳转到开户页面ton
-//                    NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRegistUrl, "公募基金开户", false);
-//                    dismiss();
-//                }
-//            };
-//            dialog.show();
+            DefaultDialog dialog = new DefaultDialog(activity, "您还未开户，马上去开户吧～", "取消", "确定") {
+                @Override
+                public void left() {
+                    dismiss();
+                }
+
+                @Override
+                public void right() {
+                    //没开户=》跳转到开户页面ton
+                    NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRegistUrl, "公募基金开户", false);
+                    dismiss();
+                }
+            };
+            dialog.show();
             //没开户=》跳转到开户页面ton
-            NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRegistUrl, "公募基金开户", false);
+//            NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRegistUrl, "公募基金开户", false);
         } else if (!BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()))) {
 //            //没绑定银行卡=》跳转到绑定银行卡页面
-//            DefaultDialog dialog = new DefaultDialog(activity, "您还未绑卡，马上去绑卡吧～", "取消", "确定") {
-//                @Override
-//                public void left() {
-//                    dismiss();
-//                }
-//
-//                @Override
-//                public void right() {
-//                    //没绑定银行卡=》跳转到绑定银行卡页面
-//                    String bankParam = new Gson().toJson(publicFundInf);
-//                    HashMap<String, Object> map = new HashMap<>();
-//                    map.put("tag_parameter", bankParam);
-//                    NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
-//                    dismiss();
-//                }
-//            };
-//            dialog.show();
+            DefaultDialog dialog = new DefaultDialog(activity, "您还未绑卡，马上去绑卡吧～", "取消", "确定") {
+                @Override
+                public void left() {
+                    dismiss();
+                }
+
+                @Override
+                public void right() {
+                    //没绑定银行卡=》跳转到绑定银行卡页面
+                    String bankParam = new Gson().toJson(publicFundInf);
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("tag_parameter", bankParam);
+                    NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
+                    dismiss();
+                }
+            };
+            dialog.show();
             //没绑定银行卡=》跳转到绑定银行卡页面
-            String bankParam = new Gson().toJson(publicFundInf);
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("tag_parameter", bankParam);
-            NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
+//            String bankParam = new Gson().toJson(publicFundInf);
+//            HashMap<String, Object> map = new HashMap<>();
+//            map.put("tag_parameter", bankParam);
+//            NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
         } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
 //            //没风险测评=》跳转到公共的页面
-//            DefaultDialog dialog = new DefaultDialog(activity, "您还未进行风险测评，马上去开展测评吧～", "取消", "确定") {
-//                @Override
-//                public void left() {
-//                    dismiss();
-//                }
-//
-//                @Override
-//                public void right() {
-//                    //去风险测评
-//                    UiSkipUtils.gotoPublicFundRisk(activity);
-//                    dismiss();
-//                }
-//            };
-//            dialog.show();
+            DefaultDialog dialog = new DefaultDialog(activity, "您还未进行风险测评，马上去开展测评吧～", "取消", "确定") {
+                @Override
+                public void left() {
+                    dismiss();
+                }
+
+                @Override
+                public void right() {
+                    //去风险测评
+                    UiSkipUtils.gotoPublicFundRisk(activity);
+                    dismiss();
+                }
+            };
+            dialog.show();
             //去风险测评
             UiSkipUtils.gotoPublicFundRisk(activity);
         } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
@@ -235,7 +234,7 @@ public class UiSkipUtils {
             // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
             //判断风险等级
             if (!isMatchRisk(activity, risklevel)) {
-                buyRiskShow(activity, fundCode, fundName,fundType,risklevel);
+                buyRiskShow(activity, fundCode, fundName, fundType, risklevel);
                 return;
             }
 
@@ -251,7 +250,6 @@ public class UiSkipUtils {
 
     /**
      * 跳转到公募基金赎回页面
-     *
      */
     public static void gotoRedeemFund(Activity activity, String action) {
         HashMap<String, Object> map = new HashMap<>();
@@ -273,22 +271,10 @@ public class UiSkipUtils {
      * pageType(0 私享宝) allMoney(赎回份额/卖出金额) appsheetserialno confirmeddate operdate opertime redeemrefunddate transactiondate
      */
     public static void gotoRedeemResult(Activity activity, String pageType, String allMoney, String result) {
-        String appsheetserialno = "";
-        String confirmeddate = "";
-        String operdate = "";
-        String opertime = "";
-        String redeemrefunddate = "";
-        String transactiondate = "";
         String serialNo = "";
         try {
 //            JSONArray jsonArray=new JSONArray(result).getJSONArray(0).getJSONObject(0);
             JSONObject jsonObject = new JSONObject(result);
-            appsheetserialno = jsonObject.getString("appSheetSerialNo");
-            confirmeddate = jsonObject.getString("confirmedDate");
-            operdate = jsonObject.getString("operDate");
-            opertime = jsonObject.getString("operTime");
-            redeemrefunddate = jsonObject.getString("redeemReFundDate");
-            transactiondate = jsonObject.getString("transactionDate");
             serialNo = jsonObject.getString("serialNo");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -297,12 +283,6 @@ public class UiSkipUtils {
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("pageType", pageType);
         paramMap.put("allMoney", allMoney);
-        paramMap.put("appsheetserialno", appsheetserialno);
-        paramMap.put("confirmeddate", confirmeddate);
-        paramMap.put("operdate", operdate);
-        paramMap.put("opertime", opertime);
-        paramMap.put("redeemrefunddate", redeemrefunddate);
-        paramMap.put("transactiondate", transactiondate);
         paramMap.put("serialNo", serialNo);
 
         NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundRedeemResult, paramMap), "交易结果", false);
@@ -314,22 +294,20 @@ public class UiSkipUtils {
      *
      */
     /**
-     *
      * @param buyOrBuy 1:买入,2:卖出
      * @param fungType 基金类型  0:FOF型基金,1:货币基金,2:QDll基金,3:股票型，债券型，混合型，指数型基金
      * @param allMoney 买入钱数
      * @param serialNo 订单流水号
-     *       https://t4-app.simuyun.com/app6.0/biz/publicfund/deal_prompt.html?pageType=2&fundType=0&allMoney=2000
+     *                 https://t4-app.simuyun.com/app6.0/biz/publicfund/deal_prompt.html?pageType=2&fundType=0&allMoney=2000
      */
-    public static void gotoNewFundResult(Activity activity,int buyOrBuy,String fungType, String allMoney,String redeemReFundDate,String serialNo){
+    public static void gotoNewFundResult(Activity activity, int buyOrBuy, String fungType, String allMoney, String serialNo) {
         HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("pageType", buyOrBuy+"");
+        paramMap.put("pageType", buyOrBuy + "");
         paramMap.put("fundType", fungType);
-        paramMap.put("redeemReFundDate", redeemReFundDate);
         paramMap.put("serialNo", serialNo);
-        if(buyOrBuy == 1){
+        if (buyOrBuy == 1) {
             paramMap.put("allMoney", allMoney);
-        }else if(buyOrBuy == 2){
+        } else if (buyOrBuy == 2) {
             paramMap.put("allShare", allMoney);
         }
         NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果", false);
@@ -383,7 +361,7 @@ public class UiSkipUtils {
     /**
      * 只有风险不匹配时候显示弹出框  匹配时候不用显示
      */
-    public static void buyRiskShow(final Activity acontext, String fundCode,String fundName,String fundType, String fundRisk) {
+    public static void buyRiskShow(final Activity acontext, String fundCode, String fundName, String fundType, String fundRisk) {
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(acontext.getApplicationContext());
 
         String riskNote = String.format("该产品风险等级为【%s】，与您的风险评测【%s】不匹配。购买后可能面临风险匹配不适当，给您的投资带来不确定性风险因素。\n 您确定购买么？", fundRisk(fundRisk), customRiskToStr(acontext));
@@ -410,6 +388,7 @@ public class UiSkipUtils {
 
     /**
      * 客户的风险测评
+     *
      * @param
      * @return
      */
