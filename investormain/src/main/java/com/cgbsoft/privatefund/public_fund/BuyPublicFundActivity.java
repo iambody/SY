@@ -87,8 +87,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         bankTailCode = (TextView) findViewById(R.id.tv_bank_tailcode);
         bankLimit = (TextView) findViewById(R.id.tv_bank_limit);
         buyConfirm = (Button) findViewById(R.id.bt_Confirm);
-
-
         bindView();
     }
 
@@ -312,6 +310,9 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 //    Map<String, String> dictionaryTable = null;
 
     private void showBankView() {
+        // 首先撤销白色遮盖
+        findViewById(R.id.view_default_diplay).setVisibility(View.GONE);
+
         findViewById(R.id.iv_direct).setBackgroundResource(R.drawable.direct_right);
         Imageload.display(BuyPublicFundActivity.this, currectPayBank.getIcon(), this.bankIcon, R.drawable.bank_icon, R.drawable.bank_icon);
         this.bankName.setText(currectPayBank.getBankShortName());
@@ -358,12 +359,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     } catch (JSONException e) {
                         e.printStackTrace();
                         loadingDialog.dismiss();
-                        MToast.makeText(BuyPublicFundActivity.this, " 交易失败", Toast.LENGTH_LONG).show();
+                        MToast.makeText(BuyPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG).show();
                     }
                 }
                 if(TextUtils.isEmpty(serialNo)){
                     loadingDialog.dismiss();
-                    MToast.makeText(BuyPublicFundActivity.this, " 交易失败", Toast.LENGTH_LONG).show();
+                    MToast.makeText(BuyPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG).show();
                     return;
                 }
 

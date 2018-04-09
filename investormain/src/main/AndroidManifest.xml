@@ -145,9 +145,11 @@
             android:value="${DATABASE_VER}" />
         <meta-data
             android:name="versionCode"
+            tools:replace="android:value"
             android:value="${VERSION_CODE}" />
         <meta-data
             android:name="versionName"
+            tools:replace="android:value"
             android:value="${VERSION_NAME}" />
         <meta-data
             android:name="dbVersion"

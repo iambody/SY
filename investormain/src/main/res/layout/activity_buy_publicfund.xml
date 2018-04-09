@@ -12,7 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-
+    <View android:id="@+id/view_default_diplay"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/white"
+        />
     <LinearLayout
         android:id="@+id/ll_fundinfo"
         android:layout_width="match_parent"
@@ -143,7 +147,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:text="份额"
+            android:text="金额"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_16" />
 
