@@ -18,6 +18,7 @@ import android.view.WindowManager;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.InvestorAppli;
 import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.bean.ConversationBean;
@@ -122,7 +123,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
-    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable, publicFundInfObservable;
+    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable, publicFundInfObservable, goPublicBuyObservable;
     private Observable<Boolean> liveRefreshObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
@@ -231,7 +232,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             initDayTask();
             initRongInterface();
 //            getPresenter().loadPublicFundInf();
-            AppInfStore.saveLatestPhone(baseContext,AppManager.getUserInfo(baseContext).getPhoneNum());
+            AppInfStore.saveLatestPhone(baseContext, AppManager.getUserInfo(baseContext).getPhoneNum());
         }
         RxBus.get().post(RxConstant.LOGIN_KILL, 1);
         // 推送过来的跳转
@@ -292,6 +293,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        if (null!=getIntent().getExtras()&&getIntent().getExtras().containsKey("tobuypublicfund")) {
+            HashMap<String, Object> maps = ((BaseApplication) baseContext.getApplication()).getPublicBuyMaps();
+            if (null != maps&&!maps.isEmpty())
+                NavigationUtils.startActivityByRouter(baseContext, RouteConfig.GOTO_PUBLIC_FUND_BUY, maps);
+            return;
+        }
+
         code = getIntent().getIntExtra("code", 0);
         if (getIntent().getBooleanExtra("gotoMainPage", false)) {
             RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 0);
@@ -405,7 +413,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.i("testviewshowhind","主页开始显示************");
+        Log.i("testviewshowhind", "主页开始显示************");
         initUserInfo();
         if (null != liveTimerObservable) {
             liveTimerObservable = Observable.interval(0, 10000, TimeUnit.MILLISECONDS)
@@ -420,12 +428,12 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         }
 
         RxBus.get().post(RxConstant.RefreshRiskState, true);
- 
+
         (MainTabManager.getInstance().getFragmentByIndex(switchID, code)).viewBeShow();
 
     }
 
-    int switchID  =  R.id.nav_left_first;
+    int switchID = R.id.nav_left_first;
     int currentPostion = 0;
 
     boolean isHaveClickProduct;
@@ -755,6 +763,25 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             });
         }
 
+        if (null != goPublicBuyObservable) {
+            goPublicBuyObservable = RxBus.get().register(RxConstant.MAIN_PUBLIC_TO_BUY, Integer.class);
+            goPublicBuyObservable.subscribe(new RxSubscriber<Integer>() {
+                @Override
+                protected void onEvent(Integer publicFundInf) {
+                    if (11 == publicFundInf) {
+                        HashMap<String, Object> maps = ((BaseApplication) baseContext.getApplication()).getPublicBuyMaps();
+                        if (null != maps)
+                            NavigationUtils.startActivityByRouter(baseContext, RouteConfig.GOTO_PUBLIC_FUND_BUY, maps);
+                    }
+                }
+
+                @Override
+                protected void onRxError(Throwable error) {
+
+                }
+            });
+        }
+
 
     }
 
@@ -876,6 +903,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             publicFundInfObservable = null;
 
         }
+        if (null != goPublicBuyObservable) {
+            RxBus.get().unregister(RxConstant.MAIN_PUBLIC_TO_BUY, goPublicBuyObservable);
+            goPublicBuyObservable = null;
+
+        }
+
+
         MainTabManager.getInstance().destory();
         FloatVideoService.stopService();
         zipResourceDownload.closeDilaog();

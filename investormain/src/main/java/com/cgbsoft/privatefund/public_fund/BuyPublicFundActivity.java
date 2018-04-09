@@ -368,12 +368,17 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     return;
                 }
 
-                TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.bean.getFundName());
-                if (isPublicFund) {
+                 if (isPublicFund) {
                     UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, fundType, formatMoney, serialNo);
+
+
                 } else {
-                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney+"&serialNo="+serialNo, "买入结果", false);
+//                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney+"&serialNo="+serialNo, "买入结果", false);
+
+                    NavigationUtils.gotoNavWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney+"&serialNo="+serialNo, "买入结果" );
                 }
+                TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.bean.getFundName());
+
                 finish();
 
             /*

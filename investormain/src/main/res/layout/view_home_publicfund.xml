@@ -76,7 +76,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/ui_10_dip"
-        android:text="+12%"
+
         android:textColor="@color/red_new_select1"
         android:textSize="@dimen/ui_40_dip"
         android:clickable="true"
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/home_publicfund_up_value"
         android:layout_centerHorizontal="true"
-        android:text="sjkjkjajajk"
+
         android:textColor="@color/red_new_select1"
         android:textSize="@dimen/ui_15_dip" />
 
