@@ -340,13 +340,20 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      * @param psw
      */
     private void starPay(final String money, String psw) {
-        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在支付", false, false);
-        final String formatMoney = new DecimalFormat("0.00").format(new BigDecimal(money));
-
         if ("0".equals(currectPayBank.getBankEnableStatus())) {
             MToast.makeText(BuyPublicFundActivity.this, getString(R.string.public_fund_bank_not_useable), Toast.LENGTH_LONG).show();
             return;
         }
+
+        final String formatMoney = new DecimalFormat("0.00").format(new BigDecimal(money));
+        String limitAmt = bean != null ? bean.getLimitOrderAmt().trim() : "0";// 最少购买限额
+        if(new BigDecimal(money).compareTo(new BigDecimal(limitAmt)) < 0){
+            MToast.makeText(BuyPublicFundActivity.this,"购买金额不少于"+limitAmt+"元",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在支付", false, false);
+
         getPresenter().sure(bean, currectPayBank, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
