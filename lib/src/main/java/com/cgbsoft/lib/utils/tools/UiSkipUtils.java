@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.BaseApplication;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
@@ -169,6 +170,16 @@ public class UiSkipUtils {
         //需要先判断是否注册绑卡
         PublicFundInf publicFundInf = AppManager.getPublicFundInf(activity.getApplicationContext());
         String fundinf = publicFundInf.getCustNo();//客户号 空=》未开户；非空=》开户
+
+        HashMap<String, Object> ffmaps = new HashMap<>();
+        ffmaps.put("tag_fund_code", fundCode);
+        ffmaps.put("tag_fund_name", fundName);
+        ffmaps.put("tag_fund_type", fundType);
+        ffmaps.put("tag_fund_risk_level", risklevel);
+        ((BaseApplication) activity.getApplication()).setPublicBuyMaps(ffmaps);
+
+
+
         if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {//未开户
             //没开户=》跳转到开户页面ton
             DefaultDialog dialog = new DefaultDialog(activity, "您还未开户，马上去开户吧～", "取消", "确定") {
@@ -189,6 +200,8 @@ public class UiSkipUtils {
 //            NavigationUtils.gotoWebActivity(activity, CwebNetConfig.publicFundRegistUrl, "公募基金开户", false);
         } else if (!BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()))) {
 //            //没绑定银行卡=》跳转到绑定银行卡页面
+
+
             DefaultDialog dialog = new DefaultDialog(activity, "您还未绑卡，马上去绑卡吧～", "取消", "确定") {
                 @Override
                 public void left() {
@@ -228,7 +241,7 @@ public class UiSkipUtils {
             };
             dialog.show();
             //去风险测评
-            UiSkipUtils.gotoPublicFundRisk(activity);
+//            UiSkipUtils.gotoPublicFundRisk(activity);
         } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && !BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
             //开过户并且已经完成绑卡 跳转到数据里面
             // 开过户绑过卡风险测评过后 在跳转到申购之前 需要进行 风险的匹配检测   不匹配时候弹框提示 点击确认风险后就跳转到申购页面
@@ -243,7 +256,9 @@ public class UiSkipUtils {
             maps.put("tag_fund_name", fundName);
             maps.put("tag_fund_type", fundType);
             maps.put("tag_fund_risk_level", risklevel);
+            ((BaseApplication) activity.getApplication()).setPublicBuyMaps(maps);
             NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_BUY, maps);
+
 
         }
     }
@@ -310,7 +325,9 @@ public class UiSkipUtils {
         } else if (buyOrBuy == 2) {
             paramMap.put("allShare", allMoney);
         }
-        NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果", false);
+//        NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果", false);
+        NavigationUtils.gotoNavWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果");
+
     }
 
     public static String getUrl(String host, HashMap<String, String> params) {

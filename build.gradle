@@ -3,7 +3,10 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
-//        google()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -24,6 +27,7 @@ allprojects {
         jcenter()
         maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
         maven { url "https://jitpack.io" }
+        maven { url 'http://192.168.19.102:8089/nexus/content/groups/public/' }
         flatDir {
             // 由于Library module中引用了 ipay 库的 aar，在多 module 的情况下，
             // 其他的module编译会报错，所以需要在所有工程的repositories
@@ -33,7 +37,10 @@ allprojects {
             dirs file(rootDir.absolutePath+'/ocrlib/libs'),file(rootDir.absolutePath+'/mall/libs')
 //            dirs project(':ocrlib').file('libs'),project(':mall').file('libs')
         }
-//        google()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }
 
@@ -44,15 +51,15 @@ def keystorePropertiesFile = rootProject.file("gradle.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 ext {
-    compileSdkVersion = 24
-    buildToolsVersion = "25.0.0"
+    compileSdkVersion = 26
+    buildToolsVersion = "26.0.1"
     minSdkVersion = 17
-    targetSdkVersion = 23
+    targetSdkVersion = 26
     databaseName = "sxydb.db";
     databaseVer = 1;
 
-    support_v4_version = '24.1.0'
-    android_need_version = '25.0.1'
+    support_v4_version = '26.0.0'
+    android_need_version = '26.0.1'
     okhttp_need_version = '3.5.0'
     okio_need_version = '1.11.0'
     retrofit_need_version = '2.1.0'

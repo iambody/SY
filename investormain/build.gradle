@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.chenenyu.router'
 apply plugin: 'io.fabric'
-apply plugin: 'com.growingio.android'
+//apply plugin: 'com.growingio.android'
 
 repositories {
     mavenCentral()
@@ -205,6 +205,8 @@ dependencies {
     compile project(':ocrlib')
 
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    compile 'com.android.support:multidex:1.0.1'
     //    //1. 云刷脸SDK
 //    compile(name: 'WbCloudFaceVerifySdk-proRelease-v1.5.27-bc15c6e', ext: 'aar')
 //    //2. 云OCR SDK

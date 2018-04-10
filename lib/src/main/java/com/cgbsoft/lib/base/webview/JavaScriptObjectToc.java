@@ -72,7 +72,7 @@ public class JavaScriptObjectToc {
     private android.webkit.WebView googleWebView;
     private String url;
     private LoadingDialog mLoadingDialog;
-
+    private boolean isHindBack;
     public JavaScriptObjectToc(Context context, WebView webView) {
         this.context = context;
         this.webView = webView;
@@ -658,6 +658,11 @@ public class JavaScriptObjectToc {
     //完成开户流程
     @JavascriptInterface
     public void finishOpeningFundAccount(String jsostr) {
+
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
+        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 9);
+        Router.build(RouteConfig.GOTOCMAINHONE).with("tobuypublicfund","1").go(context);
+//        RxBus.get().post(RxConstant.MAIN_PUBLIC_TO_BUY, 11);
         try {
             JSONObject object = new JSONObject(jsostr);
             String callBack = object.getString("callback");
@@ -665,10 +670,6 @@ public class JavaScriptObjectToc {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
-        RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 9);
-        Router.build(RouteConfig.GOTOCMAINHONE).go(context);
-
     }
 
     //开户
@@ -913,20 +914,20 @@ public class JavaScriptObjectToc {
     }
 
 
-    /**
-     * 单纯的 隐藏返回键盘 或者物理键盘无反应
-     */
-    @JavascriptInterface
-    public void hideReturnButton(String data) {
-        try {
-            ((Activity)context).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-//                    ((BaseWebViewActivity) context).setWebRightTopViewConfig(webRightTopViewConfigBean);
-                }
-            });
-        } catch (Exception e) {
-        }
-    }
+//    /**
+//     * 单纯的 隐藏返回键盘 或者物理键盘无反应
+//     */
+//    @JavascriptInterface
+//    public void hideReturnButton(String data) {
+//        try {
+//            ((Activity)context).runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    ((BaseWebViewActivity) context).hideBackIv();
+//                }
+//            });
+//        } catch (Exception e) {
+//        }
+//    }
 
 }

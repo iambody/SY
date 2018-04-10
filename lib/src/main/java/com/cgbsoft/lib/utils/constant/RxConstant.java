@@ -162,4 +162,6 @@ public interface RxConstant {
     String REFRESH_PUBLIC_FUND_RESGIST_LAY = "refresh_public_fund_regist_lay";
 
     String REFRESH_INVESTOR_INFO = "REFRESH_INVESTOR_INFO";
+
+    String MAIN_PUBLIC_TO_BUY = "main_buy_publicfund";
 }

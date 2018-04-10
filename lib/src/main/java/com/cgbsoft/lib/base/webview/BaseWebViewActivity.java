@@ -33,6 +33,7 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.shake.ShakeListener;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.utils.tools.TrackingHealthDataStatistics;
@@ -133,6 +134,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
     private boolean isH5ControlRight;
     private boolean isDivTitle;//是否需要html的形式显示
     private boolean isHideBar;//是否隐藏toolbar
+    private boolean isHindBack;
 
     @Override
     protected int layoutID() {
@@ -481,13 +483,18 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 //            publicRiskEvaluation();
 //            return;
 //        }
+
+
         mWebview.loadUrl("javascript:WebView.back(1)");
         if ("风险评测".equals(title)) {
             backEvent();
             return;
         }
 
-
+        if (isHindBack) {
+            PromptManager.ShowCustomToast(baseContext,"请确认");
+            return;
+        }
         if (hasPushMessage) {
 //			NavigationUtils.startMessageList(context);
         }
@@ -766,6 +773,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 
     public void setWebRightTopViewConfig(WebRightTopViewConfigBean webRightTopViewConfig) {
         TextView myTitleRightText = (TextView) findViewById(R.id.title_right);
+
         ImageView baseweb_title_right_iv = (ImageView) findViewById(R.id.baseweb_title_right_iv);
         switch (webRightTopViewConfig.getRightButtonType()) {
             case 1:
@@ -798,7 +806,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                 }
                 break;
         }
-
+        isHindBack = false;
+        if (webRightTopViewConfig.isHideReturnButton()) {
+            findViewById(R.id.title_left).setVisibility(View.GONE);
+            isHindBack = true;
+        }
 
     }
 
@@ -807,6 +819,9 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
      */
     public void hideBackIv() {
 
+//        findViewById(R.id.title_left).setVisibility(View.GONE);
+//        if (null != toolbar)
+//            toolbar.setNavigationIcon(R.color.transparent);
     }
 }
 

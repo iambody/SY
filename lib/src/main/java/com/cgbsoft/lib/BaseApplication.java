@@ -18,6 +18,7 @@ import com.tencent.smtt.sdk.QbSdk;
 
 import org.greenrobot.greendao.database.Database;
 
+import java.util.HashMap;
 import java.util.logging.Level;
 
 /**
@@ -30,8 +31,16 @@ public class BaseApplication extends MultiDexApplication {
     protected static Context context;
     protected DaoSession daoSession;
     private BackgroundManager backgroundManager;
+    private HashMap<String, Object> publicBuyMaps ;
 
-//    static {
+    public HashMap<String, Object> getPublicBuyMaps() {
+        return publicBuyMaps;
+    }
+
+    public void setPublicBuyMaps(HashMap<String, Object> publicBuyMaps) {
+        this.publicBuyMaps = publicBuyMaps;
+    }
+    //    static {
 //        //设置umeng分享 微信
 //        PlatformConfig.setWeixin(Constant.WEIXIN_APPID, Constant.WEIXIN_APPSECRET);
 //    }

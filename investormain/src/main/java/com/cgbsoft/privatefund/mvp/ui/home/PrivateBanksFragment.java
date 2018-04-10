@@ -58,7 +58,7 @@ public class PrivateBanksFragment extends BasePageFragment {
     private ImageView privatebank_title_right;
     private UnreadInfoNumber unreadInfoNumber;
     private boolean isDoneFreash;
-    private boolean isInit;
+    volatile boolean isInit;
 
     @Override
     protected int titleLayoutId() {

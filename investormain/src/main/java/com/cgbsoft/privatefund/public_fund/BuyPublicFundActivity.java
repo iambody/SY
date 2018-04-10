@@ -126,8 +126,10 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 if (TextUtils.isEmpty(s.toString().trim()) || new BigDecimal(s.toString().trim()).compareTo(new BigDecimal(limitAmt)) < 0) {
                     buyConfirm.setBackgroundResource(0);
                     buyConfirm.setBackgroundResource(R.drawable.public_fund_conrner_gray);
+                    buyConfirm.setEnabled(false);
                 } else {
                     buyConfirm.setBackgroundResource(R.drawable.public_fund_conrner_golden);
+                    buyConfirm.setEnabled(true);
                 }
             }
         });
@@ -370,7 +372,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
                 TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.bean.getFundName());
                 if (isPublicFund) {
-                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, bean.fundType, formatMoney, serialNo);
+                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, bean == null?"":bean.getFundType(), formatMoney, serialNo);
                 } else {
                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney+"&serialNo="+serialNo, "买入结果", false);
                 }
