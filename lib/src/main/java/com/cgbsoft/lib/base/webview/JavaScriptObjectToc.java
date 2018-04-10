@@ -73,6 +73,7 @@ public class JavaScriptObjectToc {
     private String url;
     private LoadingDialog mLoadingDialog;
     private boolean isHindBack;
+
     public JavaScriptObjectToc(Context context, WebView webView) {
         this.context = context;
         this.webView = webView;
@@ -156,7 +157,9 @@ public class JavaScriptObjectToc {
             String callback = ja.getString("callback");
             String d = data.getString("d");
             String e = data.optString("e");
-            this.webView.loadUrl("javascript:" + callback + "()");
+            ThreadUtils.runOnMainThread(()->{
+                this.webView.loadUrl("javascript:" + callback + "()");
+            });
             TrackingDataUtils.save(context, e, d);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -185,7 +188,9 @@ public class JavaScriptObjectToc {
 //            hashMap.put(WebViewConstant.push_message_url, BaseWebNetConfig.baseSxyParentUrl + url);
 //            hashMap.put(WebViewConstant.push_message_title, title);
 //            NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
-            this.webView.loadUrl("javascript:" + callback + "()");
+            ThreadUtils.runOnMainThread(()->{
+                this.webView.loadUrl("javascript:" + callback + "()");
+            });
 
         } catch (Exception e) {
         }
@@ -197,7 +202,9 @@ public class JavaScriptObjectToc {
             JSONObject ja = new JSONObject(param);
             JSONObject data = ja.getJSONObject("data");
             String callback = ja.getString("callback");
-            this.webView.loadUrl("javascript:" + callback + "()");
+            ThreadUtils.runOnMainThread(()->{
+                this.webView.loadUrl("javascript:" + callback + "()");
+            });
             CredentialStateMedel credentialStateMedel = new Gson().fromJson(data.toString(), CredentialStateMedel.class);
             if (!TextUtils.isEmpty(credentialStateMedel.getCustomerIdentity())) {
                 if ("1001".equals(credentialStateMedel.getCustomerIdentity())) {  //身份证
@@ -261,13 +268,27 @@ public class JavaScriptObjectToc {
             @Override
             public void completShare(int shareType) {
                 if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
-                    webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
+                    ThreadUtils.runOnMainThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (webView != null) {
+                                webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
+                            }
+                        }
+                    });
             }
 
             @Override
             public void cancleShare() {
                 if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
-                    webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
+                    ThreadUtils.runOnMainThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (webView != null) {
+                                webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
+                            }
+                        }
+                    });
             }
         });
         commonSharePosterDialog.show();
@@ -284,13 +305,27 @@ public class JavaScriptObjectToc {
             @Override
             public void completShare() {
                 if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
-                    webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
+                    ThreadUtils.runOnMainThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (webView != null) {
+                                webView.loadUrl(String.format("javascript:%s(1)", jscall.getCallback()));
+                            }
+                        }
+                    });
             }
 
             @Override
             public void cancleShare() {
                 if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
-                    webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
+                    ThreadUtils.runOnMainThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (webView != null) {
+                                webView.loadUrl(String.format("javascript:%s(0)", jscall.getCallback()));
+                            }
+                        }
+                    });
             }
         });
         commonScreenDialog.show();
@@ -492,11 +527,14 @@ public class JavaScriptObjectToc {
                         String key = jsonObject.optString("identification");
                         String callName = jsonObject.optString("callback");
                         String vas = getStringValue(key);
-                        if (webView != null) {
-                            webView.loadUrl("javaScript:" + callName + "('" + vas + "')");
-                        } else if (googleWebView != null) {
-                            googleWebView.loadUrl("javaScript:" + callName + "('" + vas + "')");
-                        }
+                        ThreadUtils.runOnMainThread(() -> {
+                            if (webView != null) {
+                                webView.loadUrl("javaScript:" + callName + "('" + vas + "')");
+                            } else if (googleWebView != null) {
+                                googleWebView.loadUrl("javaScript:" + callName + "('" + vas + "')");
+                            }
+                        });
+
                         break;
                 }
             } catch (JSONException e) {
@@ -585,7 +623,9 @@ public class JavaScriptObjectToc {
             JSONObject object = new JSONObject(jsonstr);
             String data = object.getString("data");
             String callback = object.getString("callback");
-            webView.loadUrl(String.format("javascript:%s()", callback));
+            ThreadUtils.runOnMainThread(() -> {
+                webView.loadUrl(String.format("javascript:%s()", callback));
+            });
             RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
             HashMap<String, Object> map = new HashMap<>();
             map.put("tag_parameter", data);
@@ -646,7 +686,15 @@ public class JavaScriptObjectToc {
 
 
                 if (object.has("callback")) {//调用js
-                    webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+                    ThreadUtils.runOnMainThread(() -> {
+                        if (webView != null) {
+                            try {
+                                webView.loadUrl(String.format("javascript:%s()", object.getString("callback")));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
 
             } catch (JSONException e) {
@@ -661,12 +709,16 @@ public class JavaScriptObjectToc {
 
         RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
         RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 9);
-        Router.build(RouteConfig.GOTOCMAINHONE).with("tobuypublicfund","1").go(context);
+        Router.build(RouteConfig.GOTOCMAINHONE).with("tobuypublicfund", "1").go(context);
 //        RxBus.get().post(RxConstant.MAIN_PUBLIC_TO_BUY, 11);
         try {
             JSONObject object = new JSONObject(jsostr);
             String callBack = object.getString("callback");
-            webView.loadUrl(String.format("javascript:%s()", callBack));
+            ThreadUtils.runOnMainThread(() -> {
+                if (webView != null) {
+                    webView.loadUrl(String.format("javascript:%s()", callBack));
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -810,8 +862,13 @@ public class JavaScriptObjectToc {
 //        Map<String, String> map = new HashMap<>(1, 1);
 //        JSONObject object=new Gson().fromJson(new Gson().toJson(userInf),JSONObject.class);new Gson().toJson(userInf)
 //          webView.loadUrl("javascript:Command.aaaa()");
-        if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
-            webView.loadUrl(String.format("javascript:%s(\'%s\')", jscall.getCallback(), new Gson().toJson(userInf)));
+        ThreadUtils.runOnMainThread(() -> {
+            if (webView != null) {
+                if (null != jscall && !BStrUtils.isEmpty(jscall.getCallback()))
+                    webView.loadUrl(String.format("javascript:%s(\'%s\')", jscall.getCallback(), new Gson().toJson(userInf)));
+            }
+        });
+
     }
 
     /**
@@ -836,7 +893,11 @@ public class JavaScriptObjectToc {
 
 
             String callback = jsonObject.getString("callback");
-            webView.loadUrl(String.format("javascript:%s()", callback));
+            ThreadUtils.runOnMainThread(() -> {
+                if (webView != null) {
+                    webView.loadUrl(String.format("javascript:%s()", callback));
+                }
+            });
 
 
         } catch (JSONException e) {
@@ -860,7 +921,11 @@ public class JavaScriptObjectToc {
             PromptManager.ShowCustomLongToast(context, text, duration);
 
             String callback = jsonObject.getString("callback");
-            webView.loadUrl(String.format("javascript:%s()", callback));
+            ThreadUtils.runOnMainThread(() -> {
+                if (webView != null) {
+                    webView.loadUrl(String.format("javascript:%s()", callback));
+                }
+            });
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -885,7 +950,11 @@ public class JavaScriptObjectToc {
             intent.setPhotoPaths(ivs);//预览图片对象列表
             intent.setDefluatDrawble(R.drawable.logo);//加载错误时的图片
             intent.launch();
-            webView.loadUrl(String.format("javascript:%s()", callback));
+            ThreadUtils.runOnMainThread(() -> {
+                if (webView != null) {
+                    webView.loadUrl(String.format("javascript:%s()", callback));
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
