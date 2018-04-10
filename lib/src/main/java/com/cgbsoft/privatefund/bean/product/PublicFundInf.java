@@ -62,7 +62,9 @@ public class PublicFundInf {
     }
 
     public String getWhiteUserListFlg() {
-        return whiteUserListFlg;
+        // TODO 不能提交的库中
+        return "1";
+       // return whiteUserListFlg;
     }
 
     public void setWhiteUserListFlg(String whiteUserListFlg) {

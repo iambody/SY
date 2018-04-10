@@ -58,7 +58,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
     private String fundCode; // 基金号
     // private String fundName; // 基金名字
-    private String fundType; // 基金类型
+   // private String fundType; // 基金类型
     private String unit = "元"; //银行卡单笔限额
 
     private boolean isPublicFund = true; // 是公募基金还是盈泰钱包
@@ -77,7 +77,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     protected void init(Bundle savedInstanceState) {
         fundCode = getIntent().getStringExtra(TAG_FUND_CODE);
 //        fundName = getIntent().getStringExtra(TAG_FUND_NAME);
-        fundType = getIntent().getStringExtra(TAG_FUND_Type);
+      //  fundType = getIntent().getStringExtra(TAG_FUND_Type);
         if (YINGTAI_QIANBAO.equals(fundCode.trim())) isPublicFund = false;
         fundRiskLevel = getIntent().getStringExtra(TAG_FUND_RISK_LEVEL);
 
@@ -126,8 +126,10 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 if (TextUtils.isEmpty(s.toString().trim()) || new BigDecimal(s.toString().trim()).compareTo(new BigDecimal(limitAmt)) < 0) {
                     buyConfirm.setBackgroundResource(0);
                     buyConfirm.setBackgroundResource(R.drawable.public_fund_conrner_gray);
+                    buyConfirm.setEnabled(false);
                 } else {
                     buyConfirm.setBackgroundResource(R.drawable.public_fund_conrner_golden);
+                    buyConfirm.setEnabled(true);
                 }
             }
         });
@@ -166,7 +168,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 }*/
                 BigDecimal bigDecimal = new BigDecimal(inputText);
                 String money = new DecimalFormat("0.00").format(bigDecimal);
-                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, bean.getFundName(), money + "元");
+                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, bean == null?"":bean.getFundName(), money + "元");
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                     @Override
                     public void onInputFinish(String psw) {
@@ -368,17 +370,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     return;
                 }
 
-                 if (isPublicFund) {
-                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, fundType, formatMoney, serialNo);
-
-
-                } else {
-//                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney+"&serialNo="+serialNo, "买入结果", false);
-
-                    NavigationUtils.gotoNavWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney+"&serialNo="+serialNo, "买入结果" );
-                }
                 TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.bean.getFundName());
-
+                if (isPublicFund) {
+                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, bean == null?"":bean.getFundType(), formatMoney, serialNo);
+                } else {
+                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney+"&serialNo="+serialNo, "买入结果", false);
+                }
                 finish();
 
             /*
