@@ -1,17 +1,2 @@
-//include ':investormain', ':adviser', ':lib', ':order', ':share', ':advisermain', ':commonui', ':live', ':im', ':ndk', ':product', ':enter', ':video', ':picselect', ':libzxing', ':mall', ':IMKit', ':liveold', ':health', 'IMLib',':gsyVideoPlayer-java'
-//include ':investormain',':gsyVideoPlayer-java'
-buildscript {
-    repositories {
-        maven {
-             // url "https://dl.bintray.com/wgpeng/AndroidRepo"
-            url uri('file:../libPlugin')
-        }
-    }
-    dependencies {
-        classpath 'com.ytc.wpplugin:fasedepplugin:1.0.2'
-    }
-}
-
-apply plugin:'ycf.wangpeng.fasedep'
-// ndk live adviser
-
+include ':investormain', ':adviser', ':lib', ':order', ':commonui', ':live', ':im', ':ndk', ':product', ':enter', ':video', ':libzxing', ':mall', ':IMKit', ':liveold', ':health', 'IMLib', 'gsyVideoPlayer-java','ocrlib'
+//':advisermain',':picselect'

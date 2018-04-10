@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:layout_marginLeft="@dimen/ui_15_dip"
             android:clickable="true"
             android:onClick="toback"
             android:src="@drawable/ic_back_white_24dp" />

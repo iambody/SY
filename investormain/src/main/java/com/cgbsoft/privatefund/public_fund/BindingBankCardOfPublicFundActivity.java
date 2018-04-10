@@ -153,7 +153,6 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         findViewById(R.id.bt_get_verification_code).setOnClickListener(this);
         // 确认购买
         findViewById(R.id.bt_Confirm).setOnClickListener(this);
-        findViewById(R.id.bt_Confirm).setEnabled(false);
 
         // 选择银行
         findViewById(R.id.rl_select_bankcard).setOnClickListener(this);

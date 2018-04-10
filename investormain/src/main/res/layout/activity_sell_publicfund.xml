@@ -158,7 +158,7 @@
 
         <EditText
             android:id="@+id/ev_sell_money_input"
-            android:layout_width="160dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@null"
@@ -191,6 +191,7 @@
         android:layout_marginTop="@dimen/ui_40_dip"
         android:textSize="@dimen/dimens_sp_18"
         android:textColor="@color/white"
+        android:enabled="false"
         android:text="确认卖出"
         android:background="@drawable/public_fund_conrner_gray"
         style="?android:attr/borderlessButtonStyle"

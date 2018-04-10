@@ -11,6 +11,8 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.privatefund.utils.service.InitializeService;
+import com.growingio.android.sdk.collection.Configuration;
+import com.growingio.android.sdk.collection.GrowingIO;
 
 import java.util.List;
 
@@ -42,12 +44,10 @@ public class InitApplication extends InvestorAppli {
     public void onCreate() {
         super.onCreate();
         InitializeService.startService(this);
-        // TODO 暂时删除
-       /* GrowingIO.startWithConfiguration(this, new Configuration()
+        GrowingIO.startWithConfiguration(this, new Configuration()
                 .useID()
                 .trackAllFragments()
-                .setChannel("guangwang"));*/
-
+                .setChannel("guangwang"));
 //        ShareSDK.initSDK(baseContext);
      //   MobSDK.init(this);
 //        Fabric.with(this, new Crashlytics());

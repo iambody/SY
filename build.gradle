@@ -3,10 +3,9 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+//        maven { url "http://mvn.mob.com/android"}
+//        google()
+        maven{url "https://oss.sonatype.org/content/repositories/snapshots"}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -19,28 +18,38 @@ buildscript {
         classpath 'com.chenenyu.router:gradle-plugin:latest.integration'
         classpath 'io.fabric.tools:gradle:1.24.2'
         classpath 'com.growingio.android:vds-gradle-plugin:1.1.2'
+
+//        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2.1'
     }
 }
-
+//apply plugin: 'org.sonarqube'
+//
+//sonarqube{
+//    properties{
+//        property "sonar.host.url","http://172.168.9.10:9000"
+//        property "sonar.projectName","Android-Sxy"
+//        property "sonar.projectKey","Sxy"
+//        property "sonar.sourceEncoding","UTF-8"
+//        property "sonar.login","admin"
+//        property "sonar.password","admin"
+//
+//    }
+//}
 allprojects {
     repositories {
         jcenter()
         maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
         maven { url "https://jitpack.io" }
-        maven { url 'http://192.168.19.102:8089/nexus/content/groups/public/' }
         flatDir {
             // 由于Library module中引用了 ipay 库的 aar，在多 module 的情况下，
             // 其他的module编译会报错，所以需要在所有工程的repositories
             // 下把mall module中的libs目录添加到依赖关系中
             //TOdo
 //            dirs file(rootDir.absolutePath+'/mall/libs')
-            dirs file(rootDir.absolutePath+'/ocrlib/libs'),file(rootDir.absolutePath+'/mall/libs')
+            dirs file(rootDir.absolutePath + '/ocrlib/libs'), file(rootDir.absolutePath + '/mall/libs')
 //            dirs project(':ocrlib').file('libs'),project(':mall').file('libs')
         }
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+//        google()
     }
 }
 
@@ -51,15 +60,15 @@ def keystorePropertiesFile = rootProject.file("gradle.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 ext {
-    compileSdkVersion = 26
-    buildToolsVersion = "26.0.1"
+    compileSdkVersion = 24
+    buildToolsVersion = "25.0.0"
     minSdkVersion = 17
-    targetSdkVersion = 26
+    targetSdkVersion = 23
     databaseName = "sxydb.db";
     databaseVer = 1;
 
-    support_v4_version = '26.0.0'
-    android_need_version = '26.0.1'
+    support_v4_version = '24.1.0'
+    android_need_version = '25.0.1'
     okhttp_need_version = '3.5.0'
     okio_need_version = '1.11.0'
     retrofit_need_version = '2.1.0'

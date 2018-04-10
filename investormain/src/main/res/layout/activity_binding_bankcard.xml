@@ -499,6 +499,7 @@
                 android:layout_marginRight="@dimen/ui_15_dip"
                 android:layout_marginTop="@dimen/ui_30_dip"
                 android:layout_marginBottom="@dimen/ui_100_dip"
+                android:enabled="false"
                 android:textSize="@dimen/dimens_sp_18"
                 android:textColor="@color/white"
                 android:background="@drawable/public_fund_conrner_gray"
