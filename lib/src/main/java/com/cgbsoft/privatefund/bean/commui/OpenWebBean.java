@@ -5,16 +5,25 @@ package com.cgbsoft.privatefund.bean.commui;
  * author wangyongkui
  */
 public class OpenWebBean {
-   boolean hasHTMLTag;
+    boolean hasHTMLTag;
     String title;//":"不正经",
     String autoTitle;//":true,
-//    String landscape;//":0,
+    //    String landscape;//":0,
     //    String navigationBar;//":{
     String barTextStyle;//":"#ff0000",
     String backgroundColor;//":"transparent"
     String ignoreMarginTop;//":true,
     String URL;//":"testsharing1.html"
+    int switchTab = -1;
     NavigationBar navigationBar;
+
+    public int getSwitchTab() {
+        return switchTab;
+    }
+
+    public void setSwitchTab(int switchTab) {
+        this.switchTab = switchTab;
+    }
 
     public void setNavigationBar(NavigationBar navigationBar) {
         this.navigationBar = navigationBar;

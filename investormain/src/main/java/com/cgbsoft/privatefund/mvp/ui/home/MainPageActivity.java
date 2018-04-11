@@ -24,6 +24,7 @@ import com.cgbsoft.lib.base.model.CommonEntity;
 import com.cgbsoft.lib.base.model.bean.ConversationBean;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.mvp.ui.BaseFragment;
+import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
 import com.cgbsoft.lib.base.webview.BaseWebview;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -38,6 +39,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.net.ApiClient;
+import com.cgbsoft.lib.utils.net.NetConfig;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.CollectionUtils;
@@ -51,6 +53,7 @@ import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
+import com.cgbsoft.privatefund.bean.commui.OpenWebBean;
 import com.cgbsoft.privatefund.bean.location.LocationBean;
 import com.cgbsoft.privatefund.mvp.contract.home.MainPageContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainPagePresenter;
@@ -123,7 +126,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
-    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable, publicFundInfObservable, goPublicBuyObservable;
+    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable, publicFundInfObservable, goPublicBuyObservable, jumpWebIndex;
     private Observable<Boolean> liveRefreshObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;
@@ -293,19 +296,39 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        if (null!=getIntent().getExtras()&&getIntent().getExtras().containsKey("tobuypublicfund")) {
+        if (null != getIntent().getExtras() && getIntent().getExtras().containsKey("tobuypublicfund")) {
             HashMap<String, Object> maps = ((BaseApplication) baseContext.getApplication()).getPublicBuyMaps();
-            if (null != maps&&!maps.isEmpty())
+            if (null != maps && !maps.isEmpty())
                 NavigationUtils.startActivityByRouter(baseContext, RouteConfig.GOTO_PUBLIC_FUND_BUY, maps);
             return;
         }
+        if (null != getIntent().getExtras() && getIntent().getExtras().containsKey("goWebTab") && "1".equals(getIntent().getExtras().getString("goWebTab"))) {
+            OpenWebBean webBean = ((InvestorAppli) InvestorAppli.getContext()).getWebBean();
+            int switchTab=50;
+            if (getIntent().getExtras().containsKey("switchTab")) {
+                switchTab = getIntent().getExtras().getInt("switchTab");
+            }
 
-        code = getIntent().getIntExtra("code", 0);
+            initIndex(switchTab);
+            if (null == webBean) return;
+            Intent intentWeb = new Intent(baseContext, BaseWebViewActivity.class);
+            intentWeb.putExtra(WebViewConstant.push_message_url, NetConfig.SERVER_ADD + webBean.getURL());
+            intentWeb.putExtra(WebViewConstant.push_message_title, webBean.getTitle());
+            intentWeb.putExtra(WebViewConstant.push_message_title_isdiv, webBean.isHasHTMLTag());
+            intentWeb.putExtra(WebViewConstant.push_message_title_is_hidetoolbar, true);
+            baseContext.startActivity(intentWeb);
+
+            return;
+        }
+
         if (getIntent().getBooleanExtra("gotoMainPage", false)) {
             RxBus.get().post(RxConstant.INVERSTOR_MAIN_PAGE, 0);
         }
         Log.i("MainPageActivity", "----code=" + code);
-        initIndex(code);
+        if (null != getIntent().getExtras() && getIntent().getExtras().containsKey("code")) {
+            code = getIntent().getIntExtra("code", 0);
+            initIndex(code);
+        }
     }
 
     private void initIndex(int code) {
@@ -315,6 +338,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
             bottomNavigationBar.selectNavaigationPostion(substring - 1);
         }
     }
+
 
     private void initActionPoint() {
         HashMap<String, Object> map = new HashMap<>();
@@ -550,7 +574,13 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
         jumpIndexObservable.subscribe(new RxSubscriber<Integer>() {
             @Override
             protected void onEvent(Integer integer) {
-                initIndex(integer);
+                baseContext.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initIndex(integer);
+                    }
+                });
+
             }
 
             @Override
@@ -781,6 +811,26 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
                 }
             });
         }
+//        if (null == jumpWebIndex) {
+//            jumpWebIndex = RxBus.get().register(RxConstant.JUMP_H5_INDEX, Integer.class);
+//            jumpWebIndex.subscribe(new RxSubscriber<Integer>() {
+//                @Override
+//                protected void onEvent(Integer integer) {
+//                    baseContext.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//
+//                        }
+//                    });
+//
+//                }
+//
+//                @Override
+//                protected void onRxError(Throwable error) {
+//
+//                }
+//            });
+//        }
 
 
     }

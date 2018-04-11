@@ -437,7 +437,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="公募基金 (内测)"
+                android:text="公募基金（内测）"
                 android:textColor="@color/app_golden"
                 android:textStyle="bold" />
 

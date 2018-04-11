@@ -141,7 +141,9 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
         disCoveryNavigationAdapter = new DiscoverIndicatorAdapter(getActivity(), viewPager);
         commonNavigator.setAdapter(disCoveryNavigationAdapter);
         commonNavigator.setSmoothScroll(true);
+
         magicIndicator.setNavigator(commonNavigator);
+
     }
 
     private void initStockIndexView() {

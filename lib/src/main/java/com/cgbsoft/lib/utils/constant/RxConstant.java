@@ -105,7 +105,7 @@ public interface RxConstant {
 
     //全局跳转
     String JUMP_INDEX = "junp_index";
-
+    String JUMP_H5_INDEX = "junp_h5_index";
     String PAUSR_HEALTH_VIDEO = "pause_health_video";
 
     String UNREAD_MESSAGE_OBSERVABLE = "unread_message_observable";

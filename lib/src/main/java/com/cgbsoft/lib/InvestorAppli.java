@@ -1,6 +1,7 @@
 package com.cgbsoft.lib;
 
 import com.cgbsoft.lib.base.model.bean.UserInfo;
+import com.cgbsoft.privatefund.bean.commui.OpenWebBean;
 import com.chenenyu.router.Router;
 
 import java.util.HashMap;
@@ -29,6 +30,16 @@ public class InvestorAppli extends BaseApplication {
     }
 
     public boolean isFristClickPublicTab;
+
+    public OpenWebBean webBean;
+
+    public OpenWebBean getWebBean() {
+        return webBean;
+    }
+
+    public void setWebBean(OpenWebBean webBean) {
+        this.webBean = webBean;
+    }
 
     public boolean isFristClickPublicTab() {
         return isFristClickPublicTab;

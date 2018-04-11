@@ -73,7 +73,7 @@
     <string name="bing_phone_succ_str">绑定成功</string>
     <string name="bing_phone_fail_str">绑定失败</string>
     <string name="bind_phone_not_repeat_str">您的手机号正在绑定中，不用重复绑定</string>
-    <string name="app_name_customer">私享云</string>
+    <string name="app_name_customer">私享云-公募内测版</string>
 
     <string name="shouchishenfenzheng">请上传本人手持证件照片</string>
     <string name="paizhaoshifan">拍照示范:</string>

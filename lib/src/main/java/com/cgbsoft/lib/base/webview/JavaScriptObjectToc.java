@@ -157,7 +157,7 @@ public class JavaScriptObjectToc {
             String callback = ja.getString("callback");
             String d = data.getString("d");
             String e = data.optString("e");
-            ThreadUtils.runOnMainThread(()->{
+            ThreadUtils.runOnMainThread(() -> {
                 this.webView.loadUrl("javascript:" + callback + "()");
             });
             TrackingDataUtils.save(context, e, d);
@@ -182,17 +182,41 @@ public class JavaScriptObjectToc {
             intent.putExtra(WebViewConstant.push_message_title, webBean.getTitle());
             intent.putExtra(WebViewConstant.push_message_title_isdiv, webBean.isHasHTMLTag());
             intent.putExtra(WebViewConstant.push_message_title_is_hidetoolbar, true);
-            context.startActivity(intent);
 
-//            HashMap<String, Object> hashMap = new HashMap<>();
-//            hashMap.put(WebViewConstant.push_message_url, BaseWebNetConfig.baseSxyParentUrl + url);
-//            hashMap.put(WebViewConstant.push_message_title, title);
-//            NavigationUtils.startActivityByRouter(InvestorAppli.getContext(), RouteConfig.GOTO_BASE_WEBVIEW, hashMap);
-            ThreadUtils.runOnMainThread(()->{
+            InvestorAppli investorAppli = ((InvestorAppli) InvestorAppli.getContext());
+            investorAppli.setWebBean(webBean);
+            if (data.has("switchTab") && -1 != webBean.getSwitchTab()) {
+//                RxBus.get().post(RxConstant.JUMP_H5_INDEX, getNavigation(webBean.getSwitchTab()));
+                Router.build(RouteConfig.GOTOCMAINHONE).with("goWebTab", "1").with("switchTab", getNavigation(webBean.getSwitchTab())).go(context);
+                return;
+            }
+
+            context.startActivity(intent);
+            ThreadUtils.runOnMainThread(() -> {
                 this.webView.loadUrl("javascript:" + callback + "()");
             });
 
         } catch (Exception e) {
+        }
+    }
+
+    private int getNavigation(int tabPostion) {
+
+        switch (tabPostion) {
+            case 0:
+                return WebViewConstant.Navigation.MAIN_PAGE;
+            case 1:
+                return WebViewConstant.Navigation.PRIVATE_BANK_PAGE;
+            case 2:
+                return WebViewConstant.Navigation.LIFE_ENJOY_PAGE;
+            case 3:
+                return WebViewConstant.Navigation.HEALTH_PAGE;
+            case 4:
+                return WebViewConstant.Navigation.MINE_PAGE;
+            default:
+                return WebViewConstant.Navigation.MINE_PAGE;
+
+
         }
     }
 
@@ -202,7 +226,7 @@ public class JavaScriptObjectToc {
             JSONObject ja = new JSONObject(param);
             JSONObject data = ja.getJSONObject("data");
             String callback = ja.getString("callback");
-            ThreadUtils.runOnMainThread(()->{
+            ThreadUtils.runOnMainThread(() -> {
                 this.webView.loadUrl("javascript:" + callback + "()");
             });
             CredentialStateMedel credentialStateMedel = new Gson().fromJson(data.toString(), CredentialStateMedel.class);
