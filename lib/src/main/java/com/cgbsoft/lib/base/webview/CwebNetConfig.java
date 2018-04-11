@@ -130,8 +130,13 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String publicFundRedeemResult;
     public static String publicFundBuyOrSell;
     public static String publicFundBuyResult;
-   //私享宝详情页
-    public static  String sxbFundDetailUrl;
+
+    //交易记录
+    public static String private_share_bao_record;
+    public static String public_fund_record;
+    //私享宝详情页
+    public static String sxbFundDetailUrl;
+
     static {
         initApi();
         initSxyUrl();
@@ -221,6 +226,12 @@ public class CwebNetConfig extends BaseWebNetConfig {
         //赎回成功后 跳转的赎回结果页
         publicFundRedeemResult = baseSxyParentUrl + "/biz/publicfund/redemption_end.html";
         // 盈泰钱包的赎回和购买结果页
-        publicFundBuyOrSell = baseSxyParentUrl+"/biz/publicfund/deal_prompt.html";
+        publicFundBuyOrSell = baseSxyParentUrl + "/biz/publicfund/deal_prompt.html";
+
+        //盈泰钱包交易记录地址
+        private_share_bao_record = baseSxyParentUrl + "/biz/publicfund/record.html?type=1";
+        //公募基金交易记录地址
+        public_fund_record = baseSxyParentUrl + "/biz/publicfund/record.html?type=2";
+
     }
 }

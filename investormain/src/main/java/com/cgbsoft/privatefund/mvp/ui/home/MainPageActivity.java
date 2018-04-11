@@ -126,7 +126,7 @@ public class MainPageActivity extends BaseActivity<MainPagePresenter> implements
     private JSONObject liveJsonData;
     private LoginHelper loginHelper;
     private ProfileInfoHelper profileInfoHelper;
-    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable, publicFundInfObservable, goPublicBuyObservable, jumpWebIndex;
+    private Observable<Integer> showIndexObservable, userLayObservable, killObservable, killstartObservable, publicFundInfObservable, goPublicBuyObservable;
     private Observable<Boolean> liveRefreshObservable;
     private LocationManger locationManger;
     private Subscription liveTimerObservable;

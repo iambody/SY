@@ -71,7 +71,6 @@ import com.cgbsoft.privatefund.mvp.ui.center.UploadIndentityCradActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.CustomViewPage;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
-import com.chenenyu.router.Router;
 import com.lzy.okserver.download.DownloadInfo;
 import com.lzy.okserver.download.DownloadManager;
 import com.lzy.okserver.download.DownloadService;
@@ -289,6 +288,12 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @BindView(R.id.viewpager)
     CustomViewPage viewPager;
+
+    @BindView(R.id.public_fund_record)
+    TextView publicFundRecord;
+
+    @BindView(R.id.private_share_bao_record)
+    TextView privateShareBaoRecord;
 
     private DaoUtils daoUtils;
     private String[] videos;
@@ -989,6 +994,16 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+    }
+
+    @OnClick(R.id.public_fund_record)
+    void publicFundRecordDetial(){
+        NavigationUtils.gotoNavWebActivity(baseActivity, CwebNetConfig.public_fund_record, getString(R.string.public_fund_record));
+    }
+
+    @OnClick(R.id.private_share_bao_record)
+    void privateShareBaoRecordDetial(){
+        NavigationUtils.gotoNavWebActivity(baseActivity, CwebNetConfig.private_share_bao_record, getString(R.string.public_fund_record));
     }
 
     @OnClick(R.id.mine_title_set_id)

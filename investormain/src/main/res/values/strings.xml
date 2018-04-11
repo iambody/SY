@@ -316,4 +316,5 @@
     <!-- 公募基金 -->
     <string name="public_fund_bank_not_useable">因支付渠道发生变更，此银行卡无法支付， 请您重新选择或添加银行卡进行支付。</string>
     <string name="public_fund_bankls_foot_notes">更多银行洽谈中，敬请期待！</string>
+    <string name="public_fund_record">交易记录</string>
 </resources>
