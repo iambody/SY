@@ -246,18 +246,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         getPresenter().getPublicFundRecommend();
     }
 
-//    @Override
-//    protected void viewBeShow() {
-//        super.viewBeShow();
-//
-//    }
-//
-//    @Override
-//    protected void viewBeHide() {
-//        super.viewBeHide();
-//
-//    }
-
     @Override
     public void viewBeShow() {
         super.viewBeShow();
@@ -467,7 +455,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             if ("1004".equals(data.jumpId)) {// 云豆乐园 需要显示充值按钮
                 NavigationUtils.gotoWebActivityWithPay(baseActivity, data.url, data.title);
             } else {
-                NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
+//                NavigationUtils.gotoWebActivity(baseActivity, data.url, data.title, false);
+                NavigationUtils.gotoNavWebActivity(baseActivity, data.url, data.title);
             }
 
         } else if ("app".equals(data.jumpType)) {
@@ -1360,8 +1349,22 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        //TODO Auto-generated method stub
+
     }
 
+//    static class softHandler extends Handler {
+//        WeakReference<Activity> softActivity;
+//
+//        public softHandler(Activity activity) {
+//            softActivity = new WeakReference<Activity>(activity);
+//        }
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+////            super.handleMessage(msg);
+//            Activity activity=  softActivity.get();
+//
+//        }
+//    }
 
 }

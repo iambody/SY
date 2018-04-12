@@ -20,7 +20,6 @@ import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
@@ -38,8 +37,6 @@ import app.privatefund.com.vido.mvp.ui.video.VideoSchoolFragment;
 import app.product.com.mvc.ui.SearchBaseActivity;
 import app.product.com.mvp.ui.OnLineProductListFragment;
 import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action0;
 
 /**
  * desc  ${DESC}
@@ -58,11 +55,11 @@ public class PrivateBanksFragment extends BasePageFragment {
     private ImageView privatebank_title_right;
     private UnreadInfoNumber unreadInfoNumber;
     private boolean isDoneFreash;
-    volatile boolean isInit;
+//    volatile boolean isInit;
 
     @Override
     protected int titleLayoutId() {
-        isInit = true;
+//        isInit = true;
         return R.layout.title_fragment_privatebancks;
     }
 
@@ -109,7 +106,7 @@ public class PrivateBanksFragment extends BasePageFragment {
             protected void onEvent(Integer integer) {
                 switch (integer) {
                     case 1:
-                        isInit=true;
+//                        isInit=true;
                         setCode(2001);
 
                         break;
@@ -240,34 +237,34 @@ public class PrivateBanksFragment extends BasePageFragment {
     }
 
     public void setCode(int index) {
-
-        if (!isInit) {
-            RxCountDown.countdown(2).doOnSubscribe(new Action0() {
-                @Override
-                public void call() {
-
-                }
-            }).subscribe(new Subscriber<Integer>() {
-                @Override
-                public void onCompleted() {
-                    setIndex1(1);
-                }
-
-                @Override
-                public void onError(Throwable e) {
-
-                }
-
-                @Override
-                public void onNext(Integer integer) {
-
-
-                }
-            });
-
-
-
-        } else
+//
+//        if (!isInit) {
+//            RxCountDown.countdown(2).doOnSubscribe(new Action0() {
+//                @Override
+//                public void call() {
+//
+//                }
+//            }).subscribe(new Subscriber<Integer>() {
+//                @Override
+//                public void onCompleted() {
+//                    setIndex1(1);
+//                }
+//
+//                @Override
+//                public void onError(Throwable e) {
+//
+//                }
+//
+//                @Override
+//                public void onNext(Integer integer) {
+//
+//
+//                }
+//            });
+//
+//
+//
+//        } else
             super.setIndex(index);
 
     }
