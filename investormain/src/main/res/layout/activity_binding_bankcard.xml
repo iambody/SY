@@ -419,19 +419,6 @@
                     android:textColorHint="#A5A5A5"
                     android:textSize="@dimen/dimens_sp_16" />
 
-                <Button
-                    android:id="@+id/bt_get_verification_code"
-                    android:layout_width="86dp"
-                    android:layout_height="32dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/ui_15_dip"
-                    android:background="@color/app_golden"
-                    android:gravity="center"
-                    android:text="获取验证码"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dimens_sp_14" />
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -469,6 +456,20 @@
                     android:textColor="@color/black"
                     android:textColorHint="#A5A5A5"
                     android:textSize="@dimen/dimens_sp_16" />
+
+
+                <Button
+                    android:id="@+id/bt_get_verification_code"
+                    android:layout_width="86dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ui_15_dip"
+                    android:background="@color/app_golden"
+                    android:gravity="center"
+                    android:text="获取验证码"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimens_sp_14" />
 
                 <View
                     android:layout_width="match_parent"
