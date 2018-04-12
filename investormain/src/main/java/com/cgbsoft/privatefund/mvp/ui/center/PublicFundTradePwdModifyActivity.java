@@ -1,8 +1,12 @@
 package com.cgbsoft.privatefund.mvp.ui.center;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,9 +24,6 @@ import com.cgbsoft.privatefund.mvp.contract.center.PublicFundTradePwdModifyContr
 import com.cgbsoft.privatefund.mvp.presenter.center.PublicFundTradePwdModifyPresenterImpl;
 import com.chenenyu.router.annotation.Route;
 
-import org.w3c.dom.Text;
-
-import app.product.com.utils.ViewUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -48,6 +49,10 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
     EditText et_trade_password;
     @BindView(R.id.commit)
     TextView commit;
+    @BindView(R.id.hide_state)
+    TextView hideState;
+
+    private boolean hide_state = true;
 
     private CountDownTimer timer;
     private LoadingDialog mLoadingDialog;
@@ -96,6 +101,20 @@ public class PublicFundTradePwdModifyActivity extends BaseActivity<PublicFundTra
         }
         timer.start();
         getPresenter().getPhoneValidateCode(et_phone_number.getText().toString());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @OnClick(R.id.hide_state)
+    void hideState(){
+        if (hide_state){
+            hideState.setBackground(getDrawable(R.drawable.show_psw_icon));
+            et_trade_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            hide_state = false;
+        }else {
+            et_trade_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            hideState.setBackground(getDrawable(R.drawable.hide_icon));
+            hide_state = true;
+        }
     }
 
     @OnClick(R.id.commit)
