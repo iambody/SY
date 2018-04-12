@@ -11,7 +11,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -24,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.BaseWebNetConfig;
 import com.cgbsoft.lib.base.webview.BaseWebViewActivity;
@@ -52,12 +52,10 @@ import com.cgbsoft.privatefund.bean.living.FaceInf;
 import com.cgbsoft.privatefund.bean.living.IdentityCard;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.model.CredentialModel;
-import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.UploadIndentityContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.UploadIndentityPresenterImpl;
 import com.cgbsoft.privatefund.utils.Bimp;
 import com.cgbsoft.privatefund.utils.StorageKit;
-import com.chenenyu.router.Router;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 
@@ -260,6 +258,11 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
                 startPermissionsActivity(REQUEST_CODE_PERMISSON_FIRST);
                 return;
             }
+        } else {
+            if (!CameraUtils.getCameraPermission(this)) {
+                PromptManager.ShowCustomToast(baseContext, "您没有相机权限请去设置中允许拍照权限");
+                return;
+            }
         }
         // 拍照
         if (credentialModel.getCode().equals("100101"))
@@ -277,6 +280,11 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             // 缺少权限时, 进入权限配置页面
             if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
                 startPermissionsActivity(REQUEST_CODE_PERMISSON_SECOND);
+                return;
+            }
+        } else {
+            if (!CameraUtils.getCameraPermission(this)) {
+                PromptManager.ShowCustomToast(baseContext, "您没有相机权限请去设置中允许拍照权限");
                 return;
             }
         }
@@ -304,6 +312,11 @@ public class UploadIndentityCradActivity extends BaseActivity<UploadIndentityPre
             // 缺少权限时, 进入权限配置页面
             if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
                 startPermissionsActivity(REQUEST_CODE_PERMISSON_SECOND);
+                return;
+            }
+        } else {
+            if (!CameraUtils.getCameraPermission(this)) {
+                PromptManager.ShowCustomToast(baseContext, "您没有相机权限请去设置中允许拍照权限");
                 return;
             }
         }

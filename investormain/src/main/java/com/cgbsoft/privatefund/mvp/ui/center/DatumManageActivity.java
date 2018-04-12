@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.AppManager;
+import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
 import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.base.webview.WebViewConstant;
@@ -19,8 +20,10 @@ import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
+import com.cgbsoft.lib.utils.tools.CameraUtils;
 import com.cgbsoft.lib.utils.tools.DataStatistApiParam;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.widget.SettingItemNormal;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
@@ -28,7 +31,6 @@ import com.cgbsoft.privatefund.bean.living.FaceInf;
 import com.cgbsoft.privatefund.bean.living.LivingResultData;
 import com.cgbsoft.privatefund.bean.living.PersonCompare;
 import com.cgbsoft.privatefund.model.CredentialModel;
-import com.cgbsoft.lib.base.model.bean.CredentialStateMedel;
 import com.cgbsoft.privatefund.mvp.contract.center.DatumManageContract;
 import com.cgbsoft.privatefund.mvp.presenter.center.DatumManagePresenterImpl;
 import com.cgbsoft.privatefund.mvp.ui.home.AssetProveActivity;
@@ -91,7 +93,7 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
         assetStatus = getResources().getStringArray(R.array.assert_certify);
         credentialStateMedel = new CredentialStateMedel();
         initCallBack();
-        SPreference.putBoolean(this,"isFromMine",false);
+        SPreference.putBoolean(this, "isFromMine", false);
     }
 
     private void initCallBack() {
@@ -121,12 +123,12 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                     if (0 == personCompare.getResultTage()) {
                         if (isClickRisk)
                             NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
-                        Toast.makeText(baseContext,"身份验证通过",Toast.LENGTH_LONG).show();
-                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"成功","拍照");
+                        Toast.makeText(baseContext, "身份验证通过", Toast.LENGTH_LONG).show();
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(), "成功", "拍照");
 
                     } else {
                         Toast.makeText(baseContext, "识别失败，请点击重试", Toast.LENGTH_LONG).show();
-                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"失败","拍照");
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(), "失败", "拍照");
                     }
                 }
             }
@@ -261,6 +263,10 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
     }
 
     private void startMatchImg() {
+        if (!CameraUtils.getCameraPermission(this)) {
+            PromptManager.ShowCustomToast(baseContext, "您没有相机权限请去设置中允许拍照权限");
+            return;
+        }
         startActivity(new Intent(this, FacePictureActivity.class).putExtra(FacePictureActivity.TAG_NEED_PERSON, true).putExtra(FacePictureActivity.PAGE_TAG, TAG));
     }
 
@@ -271,20 +277,20 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                 switch (resultData.getRecognitionCode()) {
                     case "0":
                         NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
-                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"成功","活体");
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(), "成功", "活体");
                         break;
                     case "1":
                         Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
 //                        Toast.makeText(baseContext, "识别成功进入客服审核。", Toast.LENGTH_LONG).show();
 //                                NavigationUtils.startActivity(DatumManageActivity.this, RiskEvaluationActivity.class);
-                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"失败","活体");
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(), "失败", "活体");
                         break;
                     case "2":
-                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"失败","活体");
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(), "失败", "活体");
                         break;
                     case "3":
                         Toast.makeText(baseContext, "识别失败。", Toast.LENGTH_LONG).show();
-                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(),"失败","活体");
+                        DataStatistApiParam.sensitiveBodyExam(credentialModel.getCode(), "失败", "活体");
                         break;
                 }
             }
@@ -572,6 +578,10 @@ public class DatumManageActivity extends BaseActivity<DatumManagePresenterImpl> 
                 livingMangerPrivate.startLivingMatch();
             }
         } else {
+            if (!CameraUtils.getCameraPermission(baseContext)) {
+                PromptManager.ShowCustomToast(baseContext, "您没有相机权限请去设置中允许拍照权限");
+                return;
+            }
             startActivity(new Intent(baseContext, FacePictureActivity.class).putExtra(FacePictureActivity.PAGE_TAG, TAG));
         }
     }
