@@ -55,7 +55,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     private String fundcode;
     private String largeredemptionflag;
     public String fundType;
-    private String fastredeemflag = "0"; // 1 快速赎回
+  //  private String fastredeemflag = "0"; // 1 快速赎回
     // private String availbal = ""; //
     private boolean isFund; // 是否私享宝
     private String issxb = ""; // 1是基金　　０是盈泰钱包
@@ -146,7 +146,6 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             } else {
                 isFund = false;
             }
-            fastredeemflag = jsonObject.getString("fastRedeemFlag");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -214,7 +213,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     sellFinsh.setEnabled(true);
                 }
                 if (TextUtils.isEmpty(s) || s.equals(input.getText())) return;
-                if (curruntBankCard != null && new BigDecimal(s.toString()).subtract(new BigDecimal(curruntBankCard.getAvailBalMode1())).doubleValue() > 0) {
+                if (curruntBankCard != null && new BigDecimal(s.toString()).compareTo(new BigDecimal(curruntBankCard.getAvailBalMode1())) > 0) {
                     if(isFund){
                         MToast.makeText(SellPublicFundActivity.this,"该卡最大可卖出"+curruntBankCard.getAvailBalMode1()+"份",Toast.LENGTH_LONG).show();
                     }else {
@@ -255,10 +254,8 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             this.bankLimit.setText("可提现金额" + bankCardInfo.getAvailBalMode1() + "元");
         }
         if (isFund) {
-            fastredeemflag = "0";
             prompt.setText("卖出至尾号为 " + tailCode + " 的" + bankCardInfo.getBankShortName() + "卡，具体到账时间以银行到账时间为准。");
         } else {
-            fastredeemflag = "1";
             prompt.setText("转出至尾号为 " + tailCode + " 的" + bankCardInfo.getBankShortName() + "卡。\n\r·本转出为快速到账（一般两小时内），不享受转出 当天收益，以实际到账时间为准。\n\r·单次转出限额20万；单日转出限额20万。");
         }
     }
@@ -331,8 +328,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     private void starSell(String money, String payPassword) {
         if (curruntBankCard == null) return;
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在交易", false, false);
-        getPresenter().sureSell(fundcode, this.largeredemptionflag, this.curruntBankCard.getTransactionAccountId(), this.curruntBankCard.getBranchCode(),
-                fastredeemflag, money, payPassword, new BasePublicFundPresenter.PreSenterCallBack<String>() {
+        getPresenter().sureSell(fundcode,this.curruntBankCard.getTransactionAccountId(), this.curruntBankCard.getBranchCode(),money, payPassword, new BasePublicFundPresenter.PreSenterCallBack<String>() {
 
                     @Override
                     public void even(String result) {
@@ -346,15 +342,21 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                                 e.printStackTrace();
                             }
                         }
+                        if(TextUtils.isEmpty(serialNo)){
+                            MToast.makeText(SellPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG).show();
+                            return;
+                        }
 
                         TrackingDataManger.sellPublicFund(SellPublicFundActivity.this, SellPublicFundActivity.this.fundName);
-                        // 跳转到成功页面
+                   /*     // 跳转到成功页面
                         if (isFund) {
                             UiSkipUtils.gotoNewFundResult(SellPublicFundActivity.this, 2, fundType, money,serialNo);
                         } else {
                             UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, issxb, money, result);
                         }
+                        */
 
+                        UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, money, serialNo,!isFund);
                         finish();
                       /*
                         BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);

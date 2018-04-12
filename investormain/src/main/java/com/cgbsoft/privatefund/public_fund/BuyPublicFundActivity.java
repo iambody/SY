@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
-import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -367,22 +366,25 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                         serialNo = new JSONObject(result).getString("serialNo");
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        loadingDialog.dismiss();
-                        MToast.makeText(BuyPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG).show();
                     }
                 }
                 if(TextUtils.isEmpty(serialNo)){
-                    loadingDialog.dismiss();
                     MToast.makeText(BuyPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.bean.getFundName());
-                if (isPublicFund) {
-                    UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this, 1, bean == null?"":bean.getFundType(), formatMoney, serialNo);
+             /*   int wallet = 0;
+                if (isPublicFund) { // 公募是0
+                    wallet = 0;
                 } else {
+                    wallet = 1;
                     NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney+"&serialNo="+serialNo, "买入结果", false);
-                }
+                }*/
+                UiSkipUtils.gotoBuyFundResult(BuyPublicFundActivity.this, bean == null?"":bean.getFundType(), formatMoney, serialNo,!isPublicFund);
+
+
+
                 finish();
 
             /*
@@ -769,7 +771,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             return branchCode;
         }
 
-        public void setBranchCode(String branchCode) {
+        public  void setBranchCode(String branchCode) {
             this.branchCode = branchCode;
         }
 

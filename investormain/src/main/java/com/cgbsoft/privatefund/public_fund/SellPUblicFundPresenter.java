@@ -18,8 +18,8 @@ class SellPUblicFundPresenter extends BasePublicFundPresenter {
         super(context, view);
     }
 
-    public void sureSell(String fundcode, String largeredemptionflag, String transactionaccountid, String branchcode,
-                        String fastredeemflag, String money, String payPassword,PreSenterCallBack preSenterCallBack) {
+    public void sureSell(String fundcode, String transactionaccountid, String branchcode,
+                        String money, String payPassword,PreSenterCallBack preSenterCallBack) {
       /* {
             trantype: '520004',
                     applicationvol:'100000',//申请份额(必填 String)[用户手动填写]

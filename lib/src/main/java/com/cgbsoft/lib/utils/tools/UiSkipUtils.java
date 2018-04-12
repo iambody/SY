@@ -13,9 +13,6 @@ import com.cgbsoft.lib.widget.dialog.DefaultDialog;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -285,23 +282,19 @@ public class UiSkipUtils {
      * 赎回成功之后需要跳转到一个H5网页（赎回结果页）
      * pageType(0 私享宝) allMoney(赎回份额/卖出金额) appsheetserialno confirmeddate operdate opertime redeemrefunddate transactiondate
      */
-    public static void gotoRedeemResult(Activity activity, String pageType, String allMoney, String result) {
-        String serialNo = "";
-        try {
-//            JSONArray jsonArray=new JSONArray(result).getJSONArray(0).getJSONObject(0);
-            JSONObject jsonObject = new JSONObject(result);
-            serialNo = jsonObject.getString("serialNo");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+    public static void gotoRedeemResult(Activity activity, String allMoney, String serialNo,boolean isWallet) {
         HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("pageType", pageType);
-        paramMap.put("allMoney", allMoney);
+        paramMap.put("pageType", "2");
         paramMap.put("serialNo", serialNo);
-
-        NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundRedeemResult, paramMap), "交易结果", false);
-
+        if(isWallet){ // 钱包
+            paramMap.put("wallet", "1");
+            paramMap.put("allMoney", allMoney);
+            NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundRedeemResult, paramMap), "交易结果", false);
+        }else {
+            paramMap.put("allShare", allMoney);
+            paramMap.put("wallet", "0");
+            NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果", false);
+        }
     }
 
     /**
@@ -328,6 +321,28 @@ public class UiSkipUtils {
 //        NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果", false);
         NavigationUtils.gotoNavWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果");
 
+    }
+
+    /**
+     * 跳转购买结果页
+     * @param activity
+     * @param fundType
+     * @param allMoney
+     * @param serialNo
+     * @param isWallet  是否是钱包
+     */
+    public static void gotoBuyFundResult(Activity activity,String fundType,String allMoney,String serialNo,boolean isWallet){
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("pageType",  "1");
+        paramMap.put("fundType", fundType);
+        paramMap.put("allMoney", allMoney);
+        paramMap.put("serialNo", serialNo);
+        if(isWallet){
+            paramMap.put("wallet", "1");
+        }else {
+            paramMap.put("wallet", "0");
+        }
+        NavigationUtils.gotoNavWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果");
     }
 
     public static String getUrl(String host, HashMap<String, String> params) {
