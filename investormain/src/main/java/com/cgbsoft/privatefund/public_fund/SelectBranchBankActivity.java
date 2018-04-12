@@ -144,7 +144,7 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
 
     private void loadBranchbankData() {
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"加载中",false,false);
-        getPresenter().getBranchBankInfo(cityName.concat("市"), BStrUtils.nullToEmpty(bankNameId), new BasePublicFundPresenter.PreSenterCallBack<String>() {
+        getPresenter().getBranchBankInfo(cityName, BStrUtils.nullToEmpty(bankNameId), new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
