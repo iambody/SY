@@ -6,12 +6,33 @@
     android:layout_marginBottom="@dimen/ui_10_dip"
     android:orientation="vertical">
 
-    <TextView
-        style="@style/private_assert_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="@string/private_share_bao" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/private_assert_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/private_share_bao" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/private_share_bao_record"
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:layout_gravity="right"
+            android:text="@string/public_fund_record"
+            />
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

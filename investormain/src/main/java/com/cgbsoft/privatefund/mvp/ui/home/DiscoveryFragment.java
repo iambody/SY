@@ -144,6 +144,31 @@ public class DiscoveryFragment extends BaseFragment<DiscoveryPresenter> implemen
 
         magicIndicator.setNavigator(commonNavigator);
 
+        //通过反射找到滑动的view并且进行  事件的拦截  避免抖动
+//        try {
+//            Class<?>classType=CommonNavigator.class.getClass();
+//
+////            Field cl=classType.getDeclaredMethod("mScrollView");
+////            cl.
+//
+//
+//
+//            //******
+//            Field commonNavigatorField = CommonNavigator.class.getDeclaredField("mScrollView");
+//
+//            commonNavigatorField.setAccessible(true);
+//            HorizontalScrollView mScrollView = (HorizontalScrollView) commonNavigatorField.get(commonNavigator);
+//            mScrollView.setOnTouchListener(new View.OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    return false;
+//                }
+//            });
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
     }
 
     private void initStockIndexView() {
