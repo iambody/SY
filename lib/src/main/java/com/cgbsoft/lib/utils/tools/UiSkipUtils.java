@@ -289,11 +289,11 @@ public class UiSkipUtils {
         if(isWallet){ // 钱包
             paramMap.put("wallet", "1");
             paramMap.put("allMoney", allMoney);
-            NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundRedeemResult, paramMap), "交易结果", false);
+            NavigationUtils.gotoNavWebActivity(activity, getUrl(CwebNetConfig.publicFundRedeemResult, paramMap), "交易结果");
         }else {
             paramMap.put("allShare", allMoney);
             paramMap.put("wallet", "0");
-            NavigationUtils.gotoWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果", false);
+            NavigationUtils.gotoNavWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果");
         }
     }
 

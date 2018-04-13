@@ -264,6 +264,8 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         } else {
             prompt.setText("转出至尾号为 " + tailCode + " 的" + bankCardInfo.getBankShortName() + "卡。\n\r·本转出为快速到账（一般两小时内），不享受转出 当天收益，以实际到账时间为准。\n\r·单次转出限额20万；单日转出限额20万。");
         }
+        input.setText("");
+        input.setHint(input.getHint());
     }
 
 
