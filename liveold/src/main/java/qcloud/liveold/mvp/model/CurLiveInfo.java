@@ -103,7 +103,7 @@ public class CurLiveInfo {
     }
 
     public static void setShareUrl(String shareUrl) {
-        CurLiveInfo.shareUrl = shareUrl
+        CurLiveInfo.shareUrl = shareUrl;
         SPreference.putString(BaseApplication.getContext(), "liveShareUrl", shareUrl);
     }
 
