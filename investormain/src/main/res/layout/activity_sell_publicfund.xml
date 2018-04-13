@@ -164,6 +164,7 @@
             android:background="@null"
             android:hint="请输入您卖出的份额"
             android:inputType="numberDecimal"
+            android:maxLength="20"
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_16" />

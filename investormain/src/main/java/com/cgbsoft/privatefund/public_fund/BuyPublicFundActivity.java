@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -109,6 +110,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         findViewById(R.id.rl_bank_card).setOnClickListener(this);
 
         buyInput.setHint("请输入金额");
+        buyInput.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
         buyInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

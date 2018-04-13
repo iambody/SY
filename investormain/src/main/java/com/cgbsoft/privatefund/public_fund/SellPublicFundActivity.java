@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -158,6 +159,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         sellFinsh = (Button) findViewById(R.id.bt_finsh);
         sellFinsh.setOnClickListener(this);
         input = (EditText) findViewById(R.id.ev_sell_money_input);
+        input.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
         // 跳转到成功页面
         // UiSkipUtils.gotoRedeemResult(this,"","","","");
 
@@ -204,23 +206,27 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
 
             @Override
             public void afterTextChanged(Editable s) {
-                // 修改按钮颜色
-                if(TextUtils.isEmpty(s)){
-                    sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_gray);
-                    sellFinsh.setEnabled(false);
-                }else {
-                    sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_golden);
-                    sellFinsh.setEnabled(true);
-                }
-                if (TextUtils.isEmpty(s) || s.equals(input.getText())) return;
-                if (curruntBankCard != null && new BigDecimal(s.toString()).compareTo(new BigDecimal(curruntBankCard.getAvailBalMode1())) > 0) {
-                    if(isFund){
-                        MToast.makeText(SellPublicFundActivity.this,"该卡最大可卖出"+curruntBankCard.getAvailBalMode1()+"份",Toast.LENGTH_LONG).show();
+                try{
+                    // 修改按钮颜色
+                    if(TextUtils.isEmpty(s) && new BigDecimal(s.toString()).compareTo(BigDecimal.valueOf(0)) <= 0){
+                        sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_gray);
+                        sellFinsh.setEnabled(false);
                     }else {
-                        MToast.makeText(SellPublicFundActivity.this,"该卡最大可提现"+curruntBankCard.getAvailBalMode1()+"元",Toast.LENGTH_LONG).show();
+                        sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_golden);
+                        sellFinsh.setEnabled(true);
                     }
-                    input.setText(curruntBankCard.getAvailBalMode1());
-                    input.setSelection(curruntBankCard.getAvailBalMode1().length());
+                    if (TextUtils.isEmpty(s) || s.equals(input.getText())) return;
+                    if (curruntBankCard != null && new BigDecimal(s.toString()).compareTo(new BigDecimal(curruntBankCard.getAvailBalMode1())) > 0) {
+                        if(isFund){
+                            MToast.makeText(SellPublicFundActivity.this,"该卡最大可卖出"+curruntBankCard.getAvailBalMode1()+"份",Toast.LENGTH_LONG).show();
+                        }else {
+                            MToast.makeText(SellPublicFundActivity.this,"该卡最大可提现"+curruntBankCard.getAvailBalMode1()+"元",Toast.LENGTH_LONG).show();
+                        }
+                        input.setText(curruntBankCard.getAvailBalMode1());
+                        input.setSelection(curruntBankCard.getAvailBalMode1().length());
+                    }
+                }catch (Exception e){
+                   e.printStackTrace();
                 }
             }
         });
