@@ -88,7 +88,7 @@ public class CurLiveInfo {
 
     public static String getShareUrl() {
         try {
-            return String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxce9d4299424abb97&redirect_uri=%s&response_type=code&scope=snsapi_login&state=00000#wechat_redirect",
+            return String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxce9d4299424abb97&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect",
                     URLEncoder.encode(
                             String.format(
                                     "%s?userId=%s&roomId=%d",
@@ -103,7 +103,7 @@ public class CurLiveInfo {
     }
 
     public static void setShareUrl(String shareUrl) {
-        CurLiveInfo.shareUrl = shareUrl;
+        CurLiveInfo.shareUrl = shareUrl
         SPreference.putString(BaseApplication.getContext(), "liveShareUrl", shareUrl);
     }
 
