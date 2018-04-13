@@ -166,43 +166,6 @@ public class PayFundBankSelectDialog extends BaseDialog {
             return new FootViewHolder(linearLayout, selectListener);
         }
 
-        /*
-             public FootViewHolder(Context context){
-
-                 this(linearLayout);
-             *//*    LinearLayout
-
-                    super();
-
-               <LinearLayout
-            android:id="@+id/ll_add_new_bankcord"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center_vertical">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/ui_15_dip"
-            android:src="@drawable/bank_icon" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/ui_10_dip"
-            android:text="使用新卡支付"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dimens_sp_16" />
-
-    </LinearLayout>
-
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#E2E1E6" />*//*
-        }
-        */
         public FootViewHolder(View itemView, final SelectListener selectListener) {
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
