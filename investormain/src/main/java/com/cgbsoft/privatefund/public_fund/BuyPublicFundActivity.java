@@ -122,6 +122,11 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
             @Override
             public void afterTextChanged(Editable s) {
+                if(!TextUtils.isEmpty(s)&&s.length() > 20){
+                    buyInput.setText(s.toString().substring(0,20));
+                    buyInput.setSelection(20);
+                    return;
+                }
                 // 设置输入框提示文本
                 String limitAmt = bean != null ? bean.getLimitOrderAmt().trim() :"0";// 最少购买限额
                 if (TextUtils.isEmpty(s.toString().trim()) || new BigDecimal(s.toString().trim()).compareTo(new BigDecimal(limitAmt)) < 0) {
@@ -135,7 +140,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         });
 
         buyConfirm.setOnClickListener(this);
-
         requestData(fundCode);
     }
 
@@ -263,7 +267,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
     private void requestData(String fundCode) {
         loadingDialog = LoadingDialog.getLoadingDialog(this, "加载中", false, false);
-        //  requestDictionary();
+        loadingDialog.show();
         getPresenter().getData(fundCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String o) {
@@ -303,7 +307,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             }
         });
 
-        loadingDialog.show();
     }
 
     /**
@@ -353,17 +356,14 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         }
 
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在支付", false, false);
-
+        loadingDialog.show();
         getPresenter().sure(bean, currectPayBank, money, psw, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
-
-//                String redeemReFundDate = "";
                 String serialNo = "";
                 if (!TextUtils.isEmpty(result)) {
                     try {
-//                        redeemReFundDate = new JSONObject(result).getString("redeemReFundDate");
                         serialNo = new JSONObject(result).getString("serialNo");
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -373,57 +373,9 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     MToast.makeText(BuyPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG).show();
                     return;
                 }
-
                 TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.bean.getFundName());
-             /*   int wallet = 0;
-                if (isPublicFund) { // 公募是0
-                    wallet = 0;
-                } else {
-                    wallet = 1;
-                    NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + formatMoney+"&serialNo="+serialNo, "买入结果", false);
-                }*/
                 UiSkipUtils.gotoBuyFundResult(BuyPublicFundActivity.this, bean == null?"":bean.getFundType(), formatMoney, serialNo,!isPublicFund);
-
-
-
                 finish();
-
-            /*
-                try {
-                    String code = new JSONObject(result).getString("code");
-                    String message = new JSONObject(result).getString("message");
-                    if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
-                        TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this,BuyPublicFundActivity.this.fundName);
-                        if(isPublicFund){
-                            UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,2,fundType,money);
-                        }else {
-                            NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + money, "申购成功", false);
-                        }
-                        finish();
-                    } else {
-                        MToast.makeText(BuyPublicFundActivity.this, message, Toast.LENGTH_LONG);
-                    }
-
-                } catch (JSONException e) {
-                    MToast.makeText(BuyPublicFundActivity.this, "申购失败", Toast.LENGTH_LONG);
-                    e.printStackTrace();
-                }*/
-/*
-
-                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
-
-                if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) {
-                    TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this,BuyPublicFundActivity.this.fundName);
-                    if(isPublicFund){
-                        UiSkipUtils.gotoNewFundResult(BuyPublicFundActivity.this,2,fundType,money);
-                    }else {
-                        NavigationUtils.gotoWebActivity(BuyPublicFundActivity.this, CwebNetConfig.publicFundBuyResult + "?amount=" + money, "申购成功", false);
-                    }
-                    finish();
-                } else {
-                    MToast.makeText(BuyPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG);
-                }
-*/
 
             }
 
@@ -431,10 +383,8 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             public void field(String errorCode, String errorMsg) {
                 loadingDialog.dismiss();
                 Log.e("Test", " 申购异常 " + errorMsg);
-                //  MToast.makeText(BuyPublicFundActivity.this, " 支付失败", Toast.LENGTH_LONG).show();;
             }
         });
-        loadingDialog.show();
     }
 
     @Override

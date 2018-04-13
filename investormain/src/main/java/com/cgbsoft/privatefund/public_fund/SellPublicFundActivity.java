@@ -334,6 +334,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     private void starSell(String money, String payPassword) {
         if (curruntBankCard == null) return;
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在交易", false, false);
+        loadingDialog.show();
         getPresenter().sureSell(fundcode,this.curruntBankCard.getTransactionAccountId(), this.curruntBankCard.getBranchCode(),money, payPassword, new BasePublicFundPresenter.PreSenterCallBack<String>() {
 
                     @Override
@@ -361,32 +362,8 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                             UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, issxb, money, result);
                         }
                         */
-
                         UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, money, serialNo,!isFund);
                         finish();
-                      /*
-                        BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result, BankListOfJZSupport.class);
-                        if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
-                            TrackingDataManger.sellPublicFund(SellPublicFundActivity.this, SellPublicFundActivity.this.fundName);
-                         *//*   String successData = "";
-                            try {
-                                successData = new JSONObject(result).getString("datasets");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }*//*
-                            // 跳转到成功页面
-                            if (isFund) {
-                                UiSkipUtils.gotoNewFundResult(SellPublicFundActivity.this, 2, fundType, money);
-                            } else {
-                                UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, issxb, money, result);
-                            }
-
-                            finish();
-                        } else if (PublicFundContant.REQEUSTING.equals(bankListOfJZSupport.getErrorCode())) {// 处理中
-                            Toast.makeText(SellPublicFundActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(SellPublicFundActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG).show();
-                        }*/
                     }
 
                     @Override
@@ -396,7 +373,6 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                         MToast.makeText(SellPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG);
                     }
                 });
-        loadingDialog.show();
     }
 
 

@@ -610,7 +610,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         }
 
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在绑定", false, false);
-
+        loadingDialog.show();
         getPresenter().sureBind(bindingBankCardBean, payBankName, bankCode, phoneCode, verificationCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String s) {
@@ -677,8 +677,6 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 loadingDialog.dismiss();
             }
         });
-
-        loadingDialog.show();
     }
 
     @Override
