@@ -13,11 +13,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.Utils;
-import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.BaseDialog;
 import com.cgbsoft.privatefund.R;
 
@@ -114,10 +112,8 @@ public class PayFundBankSelectDialog extends BaseDialog {
             return new MyViewHolder(view, new SelectListener() {
                 @Override
                 public void select(int index) {
-                    if ("0".equals(list.get(index).getBankEnableStatus())) {
-                        MToast.makeText(parent.getContext(), parent.getContext().getString(R.string.public_fund_bank_not_useable), Toast.LENGTH_LONG).show();
-                        return;
-                    }
+                    if ("0".equals(list.get(index).getBankEnableStatus())) return;
+                    //   MToast.makeText(parent.getContext(), parent.getContext().getString(R.string.public_fund_bank_not_useable), Toast.LENGTH_LONG).show();
                     if (selectListener != null) MyAdapter.this.selectListener.select(index);
                 }
             });

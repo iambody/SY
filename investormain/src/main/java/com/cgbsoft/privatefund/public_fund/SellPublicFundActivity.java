@@ -208,12 +208,12 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             public void afterTextChanged(Editable s) {
                 try{
                     // 修改按钮颜色
-                    if(TextUtils.isEmpty(s) && new BigDecimal(s.toString()).compareTo(BigDecimal.valueOf(0)) <= 0){
+                    if(TextUtils.isEmpty(s) || new BigDecimal(s.toString()).compareTo(BigDecimal.valueOf(0)) <= 0){
                         sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_gray);
                         sellFinsh.setEnabled(false);
-                    }else {
-                        sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_golden);
-                        sellFinsh.setEnabled(true);
+                    }else if(new BigDecimal(s.toString()).compareTo(BigDecimal.valueOf(0)) > 0){
+                            sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_golden);
+                            sellFinsh.setEnabled(true);
                     }
                     if (TextUtils.isEmpty(s) || s.equals(input.getText())) return;
                     if (curruntBankCard != null && new BigDecimal(s.toString()).compareTo(new BigDecimal(curruntBankCard.getAvailBalMode1())) > 0) {

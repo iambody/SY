@@ -125,7 +125,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 // 设置输入框提示文本
                 String limitAmt = bean != null ? bean.getLimitOrderAmt().trim() :"0";// 最少购买限额
                 if (TextUtils.isEmpty(s.toString().trim()) || new BigDecimal(s.toString().trim()).compareTo(new BigDecimal(limitAmt)) < 0) {
-                    buyConfirm.setBackgroundResource(0);
                     buyConfirm.setBackgroundResource(R.drawable.public_fund_conrner_gray);
                     buyConfirm.setEnabled(false);
                 } else {
