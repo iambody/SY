@@ -177,7 +177,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     @Override
                     public void onInputFinish(String psw) {
                         starPay(money, psw);
-                        payPasswordDialog.dismiss();
                     }
 
                     @Override

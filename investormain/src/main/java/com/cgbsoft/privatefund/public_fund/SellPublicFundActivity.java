@@ -290,7 +290,6 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     @Override
                     public void onInputFinish(String psw) {
                         starSell(money, psw);
-                        payPasswordDialog.dismiss();
                     }
 
                     @Override
