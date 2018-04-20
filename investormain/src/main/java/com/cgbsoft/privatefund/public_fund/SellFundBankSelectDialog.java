@@ -52,6 +52,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
         getWindow().setAttributes(lp);
         window.setAttributes(lp);
         setContentView(R.layout.dialog_paybank_select);
+        this.setCanceledOnTouchOutside(true);
         initView();
         bindViews();
     }

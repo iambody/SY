@@ -6,6 +6,7 @@
     android:layout_marginRight="@dimen/ui_8_dip">
 
     <ImageView
+        android:id="@+id/public_fund_bg"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="fitCenter"

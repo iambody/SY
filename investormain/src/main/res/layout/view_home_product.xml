@@ -606,7 +606,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="195dp"
+            android:layout_height="187dp"
             android:layout_marginLeft="@dimen/ui_10_dip"
             android:layout_marginRight="@dimen/ui_10_dip"
             android:scaleType="centerCrop"

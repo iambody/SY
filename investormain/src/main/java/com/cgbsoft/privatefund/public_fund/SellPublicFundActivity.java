@@ -183,7 +183,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             skipDeclare = CwebNetConfig.fundSellDeclareUrl;
             declareTitle = "卖出说明";
         } else {
-            ((TextView) findViewById(R.id.title_mid)).setText("快速提现");
+            ((TextView) findViewById(R.id.title_mid)).setText("盈泰钱包");
             findViewById(R.id.ll_fundinfo).setVisibility(View.GONE);
             ((TextView) findViewById(R.id.tv_sell_money)).setText("提现金额");
 

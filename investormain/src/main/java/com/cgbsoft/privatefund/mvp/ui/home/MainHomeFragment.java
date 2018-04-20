@@ -162,6 +162,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     TextView homeProductThreeDown;
     @BindView(R.id.main_home_live_level_div)
     ImageView mainHomeLiveLevelDiv;
+    @BindView(R.id.public_fund_bg)
+    ImageView public_fund_bg;
 
     //等级
     @BindView(R.id.view_home_member)
@@ -1192,6 +1194,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
+    @OnClick(R.id.public_fund_bg)
+    public void jumpIntimeWell(){
+//        publicShareBaoDetail
+        NavigationUtils.gotoNavWebActivity(baseActivity, CwebNetConfig.publicShareBaoDetail, getString(R.string.private_share_bao));
+        TrackingDataManger.homePrivateMore(baseActivity);
+    }
+
     /**
      * 私募基金跳转到navagation
      */
@@ -1199,8 +1208,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     public void onViewHomePrivateFundSkipClicked() {
         NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE);
         TrackingDataManger.homePrivateMore(baseActivity);
-
-
     }
 
 

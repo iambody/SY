@@ -893,7 +893,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         this.financialAssertModel = financialAssertModel;
         initPrivateShareMoneyData(financialAssertModel);
         initPublicFundData(financialAssertModel);
-        textViewShowAssert.setVisibility((!isNullPrivateBank(mineModel) || isExistPrivateShareMoney(financialAssertModel) || isExistPublicFundMoney(financialAssertModel)) ? View.VISIBLE : View.GONE);
+//        textViewShowAssert.setVisibility((!isNullPrivateBank(mineModel) || isExistPrivateShareMoney(financialAssertModel) || isExistPublicFundMoney(financialAssertModel)) ? View.VISIBLE : View.GONE);
         if (showAssert) {
             showPublicAssert();
         } else {
@@ -1522,7 +1522,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         boolean isNullPrivateBank = isNullPrivateBank(mineModel);
         linearLayoutBankNoData.setVisibility(isNullPrivateBank ? View.VISIBLE : View.GONE);
         linearLayoutBankHadData.setVisibility(isNullPrivateBank ? View.GONE : View.VISIBLE);
-        textViewShowAssert.setVisibility((!isNullPrivateBank || isExistPrivateShareMoney(financialAssertModel) || isExistPublicFundMoney(financialAssertModel)) ? View.VISIBLE : View.GONE);
+//        textViewShowAssert.setVisibility((!isNullPrivateBank || isExistPrivateShareMoney(financialAssertModel) || isExistPublicFundMoney(financialAssertModel)) ? View.VISIBLE : View.GONE);
         if (!TextUtils.isEmpty(mineModel.getBank().getDebtRatio())) {
             float zhaiQuanValue = Float.parseFloat(mineModel.getBank().getDebtRatio());
             roundProgressbar.setProgress((int) zhaiQuanValue);
