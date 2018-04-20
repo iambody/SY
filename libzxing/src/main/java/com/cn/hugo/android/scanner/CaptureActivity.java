@@ -443,7 +443,7 @@ public final class CaptureActivity extends Activity implements
                 this.finish();
             }
         } else {
-            Toast.makeText(this, "不是有效的推荐人二维码", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "不是有效的二维码", Toast.LENGTH_SHORT).show();
             restartPreviewAfterDelay(0L);
         }
         finish();
@@ -477,7 +477,7 @@ public final class CaptureActivity extends Activity implements
 //                e.printStackTrace();
 //            }
 //        } else {
-//            Toast.makeText(this, "不是有效的推荐人二维码", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "不是有效的二维码", Toast.LENGTH_SHORT).show();
 //            restartPreviewAfterDelay(0L);
 //        }
 //    }

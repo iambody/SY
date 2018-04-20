@@ -231,7 +231,7 @@ public class PrivateBanksFragment extends BasePageFragment {
         }
 
         if (!BStrUtils.isEmpty(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg()) && "1".equals(AppManager.getPublicFundInf(baseActivity.getApplicationContext()).getWhiteUserListFlg())) {
-            tabBeens.add(1, new TabBean("公募(内测)", new PublicFundFragment(), Integer.parseInt(PUBLIC_FUND_CODE)));
+            tabBeens.add(1, new TabBean("公募(公测)", new PublicFundFragment(), Integer.parseInt(PUBLIC_FUND_CODE)));
         }
         return tabBeens;
     }

@@ -53,6 +53,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
         lp.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING;
         window.setAttributes(lp);
         setContentView(R.layout.dialog_paybank_select);
+        this.setCanceledOnTouchOutside(true);
         initView();
         bindViews();
     }
@@ -159,6 +160,17 @@ public class PayFundBankSelectDialog extends BaseDialog {
             text.setTextColor(context.getResources().getColor(R.color.black));
             text.setTextSize(16);
             linearLayout.addView(text, textLayoutParams);
+
+            LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,1.0f);
+            View view = new View(context);
+            linearLayout.addView(view,viewParams);
+
+            LinearLayout.LayoutParams rightParams = new LinearLayout.LayoutParams(Utils.convertDipOrPx(context, 21), Utils.convertDipOrPx(context, 21));
+            rightParams.setMargins(0, 0, Utils.convertDipOrPx(context, 15), 0);
+            ImageView rightIcon = new ImageView(context);
+            rightIcon.setBackgroundResource(R.drawable.direct_right);
+            linearLayout.addView(rightIcon, rightParams);
+
             return new FootViewHolder(linearLayout, selectListener);
         }
 

@@ -12,7 +12,7 @@ import com.cgbsoft.lib.utils.tools.DeviceUtils;
 import com.cgbsoft.lib.utils.tools.LogUtils;
 import com.cgbsoft.privatefund.InitApplication;
 import com.cgbsoft.privatefund.utils.SimuyunUncaughtExceptionHandler;
-import com.crashlytics.android.Crashlytics;
+//import com.crashlytics.android.Crashlytics;
 import com.google.android.exoplayer.C;
 import com.lzy.okgo.OkGo;
 import com.tencent.msdk.dns.MSDKDnsResolver;
@@ -33,7 +33,7 @@ import app.privatefund.com.im.listener.NewMessageItemProvider;
 import app.privatefund.com.im.listener.PdfMessageItemProvider;
 import app.privatefund.com.im.listener.ProductInputModule;
 import app.privatefund.com.im.listener.ProductMessageItemProvider;
-import io.fabric.sdk.android.Fabric;
+//import io.fabric.sdk.android.Fabric;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import qcloud.liveold.mvp.presenters.InitBusinessHelper;
@@ -95,7 +95,7 @@ public class InitializeService extends IntentService {
     }
 
     private void initFabric() {
-        Fabric.with(InitializeService.this.getApplicationContext(), new Crashlytics());
+//        Fabric.with(InitializeService.this.getApplicationContext(), new Crashlytics());
     }
 
     private void initGreenDao() {

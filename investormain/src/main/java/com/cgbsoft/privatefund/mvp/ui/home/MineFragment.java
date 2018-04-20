@@ -1166,16 +1166,17 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
 
     @OnClick(R.id.account_bank_hide_assert)
     void switchAssetNumber() {
-
-        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
-            if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
-                intercepterAssertGesturePassword();
-            } else {
-                jumpInvestorInfo();
-            }
-        } else {
+//        if (null != credentialStateMedel.getDurationAmt() && credentialStateMedel.getDurationAmt() > 0) {
+//            if ("1".equals(credentialStateMedel.getSpecialInvestorState()) && "1".equals(credentialStateMedel.getInvestorInfoState())) {
+//                intercepterAssertGesturePassword();
+//            } else if ("50".equals(credentialStateMedel.getCredentialCode())) {
+//                jumpInvestorInfo();
+//            }else {
+//                intercepterAssertGesturePassword();
+//            }
+//        } else {
             intercepterAssertGesturePassword();
-        }
+//        }
     }
 
     private void intercepterAssertGesturePassword() {

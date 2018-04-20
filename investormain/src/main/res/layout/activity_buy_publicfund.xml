@@ -12,11 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <View android:id="@+id/view_default_diplay"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@color/white"
-        />
+    <View
+        android:id="@+id/view_default_diplay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" />
+
     <LinearLayout
         android:id="@+id/ll_fundinfo"
         android:layout_width="match_parent"
@@ -73,17 +74,17 @@
             android:id="@+id/iv_bank_icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:scaleType="fitXY"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="@dimen/ui_15_dip"
-            android:layout_marginTop="@dimen/ui_14_dip" />
+            android:layout_marginTop="@dimen/ui_14_dip"
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/tv_bank_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/iv_bank_icon"
             android:layout_alignTop="@+id/iv_bank_icon"
+            android:layout_toRightOf="@+id/iv_bank_icon"
             android:text="银行"
             android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_16" />
@@ -93,10 +94,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/tv_bank_name"
-            android:layout_toRightOf="@+id/tv_bank_name"
             android:layout_marginLeft="@dimen/ui_10_dip"
+            android:layout_toRightOf="@+id/tv_bank_name"
             android:text="----"
-            android:textColor="@color/app_golden"
+            android:textColor="@color/black"
             android:textSize="@dimen/dimens_sp_16" />
 
         <TextView
@@ -104,8 +105,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/tv_bank_name"
-            android:layout_marginTop="@dimen/ui_4_dip"
             android:layout_below="@id/tv_bank_name"
+            android:layout_marginTop="@dimen/ui_4_dip"
             android:text="银行限额"
             android:textColor="@color/color_595959"
             android:textSize="@dimen/dimens_sp_12" />
@@ -130,8 +131,8 @@
             android:layout_width="wrap_content"
             android:layout_height="22dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="@dimen/ui_10_dip" />
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:layout_marginTop="20dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -171,9 +172,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ui_15_dip"
         android:layout_marginTop="@dimen/ui_10_dip"
-        android:text="温馨提示：
- 1. 申购费率0.15%；
- 2. 预计1月16日可计算收益。"
+        android:text=""
         android:textColor="#595959"
         android:textSize="@dimen/dimens_sp_15"
         android:visibility="gone" />
@@ -198,8 +197,8 @@
         android:layout_marginLeft="@dimen/ui_15_dip"
         android:layout_marginRight="@dimen/ui_15_dip"
         android:layout_marginTop="@dimen/ui_30_dip"
-        android:enabled="false"
         android:background="@drawable/public_fund_conrner_gray"
+        android:enabled="false"
         android:text="确认购买"
         android:textColor="@color/white"
         android:textSize="@dimen/dimens_sp_18" />
