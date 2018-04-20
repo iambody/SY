@@ -67,6 +67,7 @@
             android:id="@+id/iv_bank_icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:scaleType="fitXY"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ui_15_dip"
@@ -96,7 +97,7 @@
                 android:layout_marginLeft="@dimen/ui_10_dip"
                 android:layout_toRightOf="@+id/tv_bank_name"
                 android:text="----"
-                android:textColor="@color/app_golden"
+                android:textColor="@color/black"
                 android:textSize="@dimen/dimens_sp_16" />
 
             <TextView

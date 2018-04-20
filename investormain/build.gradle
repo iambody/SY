@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 //apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.chenenyu.router'
-apply plugin: 'io.fabric'
+//apply plugin: 'io.fabric'
 apply plugin: 'com.growingio.android'
 
 repositories {
     mavenCentral()
-    maven { url 'https://maven.fabric.io/public' }
+//    maven { url 'https://maven.fabric.io/public' }
 }
 
 // 打包时间
@@ -198,11 +198,11 @@ dependencies {
     compile project(':mall')
     compile project(':health')
 //    compile('com.crashlytics.sdk.android:crashlytics:2.5.2') {
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
-        transitive = true;
-    }
+//    compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
+//        transitive = true;
+//    }
 
-        compile files('libs/gradle-1.24.0.jar')
+//        compile files('libs/gradle-1.24.0.jar')
     compile project(':ocrlib')
 
     compile 'com.squareup.picasso:picasso:2.5.2'

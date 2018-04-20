@@ -49,8 +49,8 @@ public class PublicFundTradePwdModifyPresenterImpl extends BasePresenterImpl<Pub
 
             @Override
             protected void onRxError(Throwable error) {
-                Log.i("s", error.getMessage());
-                getView().modifyPwdFailure("重置交易密码失败");
+                Log.i("resetPsd--error", error.getMessage());
+                getView().modifyPwdFailure(error.getMessage());
             }
         }));
     }

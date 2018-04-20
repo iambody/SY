@@ -67,6 +67,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     private List<DataDictionary> channlidDictionarys;
     private BankCardInfo currectPayBank;
     private TextView bankLimit;
+    private TextView tv_prompt;
 
     @Override
     protected int layoutID() {
@@ -87,6 +88,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         bankTailCode = (TextView) findViewById(R.id.tv_bank_tailcode);
         bankLimit = (TextView) findViewById(R.id.tv_bank_limit);
         buyConfirm = (Button) findViewById(R.id.bt_Confirm);
+        tv_prompt = (TextView) findViewById(R.id.tv_prompt);
         bindView();
     }
 
@@ -101,6 +103,8 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         } else {
             ((TextView) findViewById(R.id.title_mid)).setText("盈泰钱包");
             buyConfirm.setText("确认转入");
+            tv_prompt.setText(getString(R.string.intime_income_prompt));
+            tv_prompt.setVisibility(View.VISIBLE);
         }
 
 

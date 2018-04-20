@@ -55,6 +55,7 @@ import com.cgbsoft.lib.widget.MyGridView;
 import com.cgbsoft.lib.widget.MySwipeRefreshLayout;
 import com.cgbsoft.lib.widget.SmartScrollView;
 import com.cgbsoft.lib.widget.dialog.DefaultDialog;
+import com.cgbsoft.lib.widget.dialog.DownloadDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.adapter.OperationAdapter;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
@@ -194,6 +195,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @BindView(R.id.festival_style)
     LinearLayout festival_style;
 
+    @BindView(R.id.view_home_public_fund_upload)
+    LinearLayout view_home_public_fund_upload;
+
     //新的直播
     @BindView(R.id.view_home_public_fund_skip_lay)
     LinearLayout viewHomePublicFundSkipLay;
@@ -236,8 +240,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         timeCountDown();
         initCache();
         getPresenter().getHomeData();
-
-
     }
 
     @Override
@@ -1003,15 +1005,28 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         //新添加了白名单的逻辑处理
         if (!BStrUtils.isEmpty(publicFundInf.getWhiteUserListFlg()) && "1".equals(publicFundInf.getWhiteUserListFlg())) {
             viewHomePublicFundLay.setVisibility(View.VISIBLE);
+            view_home_public_fund_upload.setVisibility(View.GONE);
             //在白名单内 需要显示
             if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustRisk()) || BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
                 viewPublicFundRegist.setVisibility(View.VISIBLE);
             } else {
                 viewPublicFundRegist.setVisibility(View.GONE);
             }
+        } else if (!BStrUtils.isEmpty(publicFundInf.getWhiteUserListFlg()) && "2".equals(publicFundInf.getWhiteUserListFlg())) {
+            viewHomePublicFundLay.setVisibility(View.GONE);
+            view_home_public_fund_upload.setVisibility(View.VISIBLE);
+            view_home_public_fund_upload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!SPreference.isThisRunOpenDownload(getActivity())) {
+                        new DownloadDialog(getActivity(), true, false);
+                    }
+                }
+            });
         } else {
             //不在白名单内  不需要显示
             viewHomePublicFundLay.setVisibility(View.GONE);
+            view_home_public_fund_upload.setVisibility(View.GONE);
             return;
         }
 

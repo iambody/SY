@@ -437,7 +437,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="left"
-                android:text="公募基金（内测）"
+                android:text="公募基金（公测）"
                 android:textColor="@color/app_golden"
                 android:textStyle="bold" />
 
@@ -569,6 +569,50 @@
     <!--******************公募基金的布局结束*********************** -->
 
 
+    <!--公募基金升级布局-->
+    <LinearLayout
+        android:id="@+id/view_home_public_fund_upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ui_5_dip"
+            android:layout_marginTop="@dimen/ui_5_dip"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:padding="@dimen/ui_10_dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="公募基金（公测）"
+                android:textColor="@color/app_golden"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/arrorw_right_glod" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="195dp"
+            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:layout_marginRight="@dimen/ui_10_dip"
+            android:scaleType="centerCrop"
+            android:background="@drawable/public_fund_upload"/>
+        <!-- 公募基金的详情布局************ -->
+    </LinearLayout>
 
 
 </LinearLayout>

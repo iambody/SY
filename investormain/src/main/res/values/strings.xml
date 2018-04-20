@@ -317,4 +317,5 @@
     <string name="public_fund_bank_not_useable">因支付渠道发生变更，此银行卡无法支付， 请您重新选择或添加银行卡进行支付。</string>
     <string name="public_fund_bankls_foot_notes">更多银行洽谈中，敬请期待！</string>
     <string name="public_fund_record">交易记录</string>
+    <string name="intime_income_prompt">· 预计T+2日查看收益。（以实际查看收益时间为准）\n· T日：交易日，以每天15:00为界限，15:00之前为T日，之后为T+1日。周末和法定节假日不属于交易日。</string>
 </resources>
