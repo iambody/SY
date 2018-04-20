@@ -131,8 +131,6 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         } else {
             findViewById(R.id.rl_cusno_name).setVisibility(View.GONE);
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.VISIBLE);
-
-
         }
 
         bindView();
