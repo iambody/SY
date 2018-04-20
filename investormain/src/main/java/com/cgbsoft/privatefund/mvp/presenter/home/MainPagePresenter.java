@@ -93,7 +93,6 @@ public class MainPagePresenter extends BasePresenterImpl<MainPageContract.View> 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
