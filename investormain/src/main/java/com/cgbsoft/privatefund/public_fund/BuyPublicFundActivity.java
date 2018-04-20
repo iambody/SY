@@ -106,7 +106,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             dealDeclare = CwebNetConfig.fundBuyDeclareUrl;
 
         } else {
-            ((TextView) findViewById(R.id.title_mid)).setText("盈泰钱包");
+            ((TextView) findViewById(R.id.title_mid)).setText("立即转入");
             buyConfirm.setText("确认转入");
             dealDeclare = CwebNetConfig.sxbBuyDeclareUrl;
         }
