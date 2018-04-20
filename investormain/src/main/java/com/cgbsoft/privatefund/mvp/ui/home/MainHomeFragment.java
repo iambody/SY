@@ -1018,9 +1018,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             view_home_public_fund_upload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!SPreference.isThisRunOpenDownload(getActivity())) {
-                        new DownloadDialog(getActivity(), true, false);
-                    }
+                    new DownloadDialog(getActivity(), true, true);
                 }
             });
         } else {
