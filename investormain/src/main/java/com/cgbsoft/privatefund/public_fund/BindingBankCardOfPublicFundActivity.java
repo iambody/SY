@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.cgbsoft.lib.AppInfStore;
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
 import com.cgbsoft.lib.utils.cache.SPreference;
@@ -24,6 +26,7 @@ import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
+import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.MToast;
@@ -66,13 +69,14 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     private EditText mPhoneCode; // 手机号
     private EditText mVerificationCode; // 验证码
     private Button getVerificationCode; // 获取验证码
-
+    private CheckBox public_bindcard_cb_ar;//授权协议
     private BindingBankCardBean bindingBankCardBean;
-
+    private LinearLayout public_bindcard_cb_ar_lay;
     private TextView mAddressBank;
     private String cityName;
 
     private int style;// 1 为赠卡风格 其它数字为开户流程风格
+    private boolean isCheckBoxSel = true;
 
     @Override
     protected int layoutID() {
@@ -101,6 +105,9 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         getVerificationCode = (Button) findViewById(R.id.bt_get_verification_code);
         mAddressBank = (TextView) findViewById(R.id.actv_bank_city);
 
+        public_bindcard_cb_ar = (CheckBox) findViewById(R.id.public_bindcard_cb_ar);
+        public_bindcard_cb_ar_lay = (LinearLayout) findViewById(R.id.public_bindcard_cb_ar_lay);
+
 
         style = getIntent().getIntExtra(STYLE, 0);
         String data = getIntent().getStringExtra(TAG_PARAMETER);
@@ -119,9 +126,13 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             TextView textView = (TextView) findViewById(R.id.tv_cusno_name);
             textView.setText(bindingBankCardBean.getDepositAcctName());
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.GONE);
+            public_bindcard_cb_ar.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckBoxSel = isChecked);
+//            public_bindcard_cb_ar_lay.setVerticalGravity(View.GONE);
         } else {
             findViewById(R.id.rl_cusno_name).setVisibility(View.GONE);
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.VISIBLE);
+
+
         }
 
         bindView();
@@ -159,7 +170,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
         // 选择支行
         mBankBranchName.setOnClickListener(this);
-
+        findViewById(R.id.public_bindcard_tv_ar_proto).setOnClickListener(this);
         // 返回键
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
         findViewById(R.id.title_left).setOnClickListener(this);
@@ -191,19 +202,21 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             private boolean isRun = false;
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(isRun){
-                    isRun=false;
+                if (isRun) {
+                    isRun = false;
                     return;
                 }
                 isRun = true;
-                String  d = "";
+                String d = "";
                 String newStr = s.toString();
                 newStr = newStr.replace(" ", "");
                 int index = 0;
-                while ((index + 4) < newStr.length()){
+                while ((index + 4) < newStr.length()) {
                     d += (newStr.substring(index, index + 4) + " ");
                     index += 4;
                 }
@@ -217,13 +230,13 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                         } else {
                             mPankcardCode.setSelection(d.length());
                         }
-                    } else if ((before == 1 || before == 0 ) && i < d.length()) {
+                    } else if ((before == 1 || before == 0) && i < d.length()) {
                         mPankcardCode.setSelection(i);
-                    }else {
+                    } else {
                         mPankcardCode.setSelection(d.length());
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -237,7 +250,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
         mPhoneCode.addTextChangedListener(mTextWatcher);
       /*  mPhoneCode.addTextChangedListener(new TextWatcher() {
@@ -263,13 +277,15 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         mVerificationCode.addTextChangedListener(mTextWatcher);
     }
 
-    private TextWatcher mTextWatcher = new  TextWatcher() {
+    private TextWatcher mTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {//
         }
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {//
         }
+
         @Override
         public void afterTextChanged(Editable s) {
             requestChangConfirmColor();
@@ -363,6 +379,9 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             case R.id.title_left:// 返回键
                 finish();
                 break;
+            case R.id.public_bindcard_tv_ar_proto://银行转账授权协议
+                NavigationUtils.gotoNavWebActivity(baseContext, CwebNetConfig.bankTransferState, "申购说明");
+                break;
             default: //
         }
     }
@@ -397,32 +416,31 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
     /**
      * 改变确定按钮颜色
-     *
      */
-    private void requestChangConfirmColor(){
+    private void requestChangConfirmColor() {
         boolean isEnabled = true;
         //支行名字
-        if(TextUtils.isEmpty(mBankBranchName.getText())){
+        if (TextUtils.isEmpty(mBankBranchName.getText())) {
             isEnabled = false;
         }
         // 银行卡号
-        String bankcard =mPankcardCode.getText() !=null ? mPankcardCode.getText().toString().replace(" ","") : "";
-        if(TextUtils.isEmpty(bankcard)){
+        String bankcard = mPankcardCode.getText() != null ? mPankcardCode.getText().toString().replace(" ", "") : "";
+        if (TextUtils.isEmpty(bankcard)) {
             isEnabled = false;
         }
         //
-        if(TextUtils.isEmpty(mPhoneCode.getText())){
+        if (TextUtils.isEmpty(mPhoneCode.getText())) {
             isEnabled = false;
         }
 
-        if(TextUtils.isEmpty(mVerificationCode.getText())){
+        if (TextUtils.isEmpty(mVerificationCode.getText())) {
             isEnabled = false;
         }
 
         findViewById(R.id.bt_Confirm).setEnabled(isEnabled);
-        if(isEnabled){
+        if (isEnabled) {
             findViewById(R.id.bt_Confirm).setBackgroundResource(R.drawable.public_fund_conrner_golden);
-        }else {
+        } else {
             findViewById(R.id.bt_Confirm).setBackgroundResource(R.drawable.public_fund_conrner_gray);
         }
     }
@@ -449,45 +467,45 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         }
 
 
-        String bankCode =mPankcardCode.getText() !=null ? mPankcardCode.getText().toString().replace(" ","") : "";
+        String bankCode = mPankcardCode.getText() != null ? mPankcardCode.getText().toString().replace(" ", "") : "";
         if (isCheck && BStrUtils.isEmpty(bankCode)) {
             MToast.makeText(this, "银行号不能为空", Toast.LENGTH_LONG);
             return;
         }
 
-            if (!isCheck) return;
-            lastBankCode = bankCode;
-            if(TextUtils.isEmpty(bindingBankCardBean.getChannelid())){
-                MToast.makeText(BindingBankCardOfPublicFundActivity.this, "请先填写银行信息", Toast.LENGTH_LONG);
-                return;
-            }
-            v.setEnabled(false);
-            v.setBackgroundResource(R.drawable.public_fund_conrner_gray);
-            getPresenter().getVerificationCodeFormServer(bindingBankCardBean.getChannelid(), phoneCode, bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
-                @Override
-                public void even(String s) {
+        if (!isCheck) return;
+        lastBankCode = bankCode;
+        if (TextUtils.isEmpty(bindingBankCardBean.getChannelid())) {
+            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "请先填写银行信息", Toast.LENGTH_LONG);
+            return;
+        }
+        v.setEnabled(false);
+        v.setBackgroundResource(R.drawable.public_fund_conrner_gray);
+        getPresenter().getVerificationCodeFormServer(bindingBankCardBean.getChannelid(), phoneCode, bankCode, new BasePublicFundPresenter.PreSenterCallBack<String>() {
+            @Override
+            public void even(String s) {
 
-                    try {
-                        String code = new JSONObject(s).getString("code");
-                        String msg = new JSONObject(s).getString("msg");
-                        if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
-                            // 发送成功
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "验证码发送成功", Toast.LENGTH_LONG).show();
-                            // 开启倒计时
-                            startCountdown(v,maxTime);
-                        } else if (PublicFundContant.REQEUSTING.equals(code)) {
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this, "处理中", Toast.LENGTH_LONG).show();
-                        } else {
-                            MToast.makeText(BindingBankCardOfPublicFundActivity.this,msg, Toast.LENGTH_LONG).show();
-                            // 关闭倒计时
-                            closeConutDown(getVerificationCode);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        MToast.makeText(BindingBankCardOfPublicFundActivity.this,"发送验证码失败", Toast.LENGTH_LONG);
+                try {
+                    String code = new JSONObject(s).getString("code");
+                    String msg = new JSONObject(s).getString("msg");
+                    if (PublicFundContant.REQEUST_SUCCESS.equals(code)) {
+                        // 发送成功
+                        MToast.makeText(BindingBankCardOfPublicFundActivity.this, "验证码发送成功", Toast.LENGTH_LONG).show();
+                        // 开启倒计时
+                        startCountdown(v, maxTime);
+                    } else if (PublicFundContant.REQEUSTING.equals(code)) {
+                        MToast.makeText(BindingBankCardOfPublicFundActivity.this, "处理中", Toast.LENGTH_LONG).show();
+                    } else {
+                        MToast.makeText(BindingBankCardOfPublicFundActivity.this, msg, Toast.LENGTH_LONG).show();
                         // 关闭倒计时
                         closeConutDown(getVerificationCode);
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    MToast.makeText(BindingBankCardOfPublicFundActivity.this, "发送验证码失败", Toast.LENGTH_LONG);
+                    // 关闭倒计时
+                    closeConutDown(getVerificationCode);
+                }
              /*       BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(s, BankListOfJZSupport.class);
                     if (bankListOfJZSupport != null) {
                         String code = bankListOfJZSupport.getErrorCode();
@@ -503,21 +521,20 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                         }
                     }*/
 
-                }
+            }
 
-                @Override
-                public void field(String errorCode, String errorMsg) {
-                    // 关闭倒计时
-                    closeConutDown(getVerificationCode);
-                }
-            });
-
+            @Override
+            public void field(String errorCode, String errorMsg) {
+                // 关闭倒计时
+                closeConutDown(getVerificationCode);
+            }
+        });
 
 
     }
 
 
-    private void closeConutDown(Button v){
+    private void closeConutDown(Button v) {
         ThreadUtils.runOnMainThread(new Runnable() {
             @Override
             public void run() {
@@ -527,7 +544,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             }
         });
         Timer timer = (Timer) v.getTag();
-        if(timer == null) return; // 当timer为空时，说明验证码倒计时还有没有启动
+        if (timer == null) return; // 当timer为空时，说明验证码倒计时还有没有启动
         timer.cancel();
         v.setTag(TIME, null);
     }
@@ -535,7 +552,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     /**
      * 开启倒计时
      */
-    private void startCountdown(View v,int maxTime) {
+    private void startCountdown(View v, int maxTime) {
 
         if (v.getTag(TIME) == null || (Integer) v.getTag(TIME) == 0) {
             v.setTag(TIME, maxTime);
@@ -567,6 +584,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
      */
 
     private String lastBankCode = "";
+
     private void finshBanding() {
         String phoneCode = mPhoneCode.getText().toString();
         if (BStrUtils.isEmpty(phoneCode)) {
@@ -596,8 +614,11 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             MToast.makeText(this, "请选择银行", Toast.LENGTH_LONG);
             return;
         }
-
-        String bankCode =mPankcardCode.getText() !=null ? mPankcardCode.getText().toString().replace(" ","") : "";
+        if (!isCheckBoxSel) {//银行授权协议
+            MToast.makeText(this, "请同意银行授权协议", Toast.LENGTH_LONG);
+            return;
+        }
+        String bankCode = mPankcardCode.getText() != null ? mPankcardCode.getText().toString().replace(" ", "") : "";
         if (BStrUtils.isEmpty(bankCode)) {
             MToast.makeText(this, "银行号不能为空", Toast.LENGTH_LONG);
             return;
@@ -616,7 +637,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             public void even(String s) {
                 loadingDialog.dismiss();
 
-                 Log.i("绑定成功"," 银行卡信息：-->"+s);
+                Log.i("绑定成功", " 银行卡信息：-->" + s);
                 if (style == ADD_BANK) {
                     Gson gson = new Gson();
                     BuyPublicFundActivity.BankCardInfo bankCordInfo = gson.fromJson(s, BuyPublicFundActivity.BankCardInfo.class);
@@ -672,7 +693,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
             @Override
             public void field(String errorCode, String errorMsg) {
-                if(!"500".equals(errorCode)) MToast.makeText(BindingBankCardOfPublicFundActivity.this, "绑定失败", Toast.LENGTH_LONG);
+                if (!"500".equals(errorCode))
+                    MToast.makeText(BindingBankCardOfPublicFundActivity.this, "绑定失败", Toast.LENGTH_LONG);
                 Log.e("绑定页面", " 网络错误 " + errorMsg);
                 loadingDialog.dismiss();
             }

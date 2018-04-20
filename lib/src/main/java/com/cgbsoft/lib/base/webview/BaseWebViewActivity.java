@@ -492,7 +492,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
         }
 
         if (isHindBack) {
-            PromptManager.ShowCustomToast(baseContext,"请确认");
+            PromptManager.ShowCustomToast(baseContext, "请确认");
             return;
         }
         if (hasPushMessage) {
@@ -822,6 +822,11 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
 //        findViewById(R.id.title_left).setVisibility(View.GONE);
 //        if (null != toolbar)
 //            toolbar.setNavigationIcon(R.color.transparent);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
     }
 }
 

@@ -23,7 +23,8 @@
         android:src="@drawable/home_publicfund_bt" />
 
     <RelativeLayout
-        android:layout_width="280dp"
+        android:id="@+id/home_public_tags_lay"
+        android:layout_width="500dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -31,41 +32,40 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/ui_10_dip"
-            android:layout_toLeftOf="@+id/home_flexible"
-            android:background="@drawable/shape_home_publicfund_txt"
-            android:paddingLeft="@dimen/ui_5_dip"
-            android:paddingRight="@dimen/ui_5_dip"
+            android:id="@+id/home_public_tagl0"
+            style="@style/style_home_public_tag"
+            android:layout_marginRight="@dimen/ui_12_dip"
+            android:layout_toLeftOf="@+id/home_public_tagl1"
             android:text="@string/low_risk"
-            android:textColor="@color/white"
-            android:textSize="10sp" />
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/home_public_tagl1"
+            style="@style/style_home_public_tag"
+            android:layout_marginRight="@dimen/ui_8_dip"
+            android:layout_toLeftOf="@+id/home_flexible"
+            android:text="@string/low_risk" />
 
         <TextView
             android:id="@+id/home_flexible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/style_home_public_tag"
             android:layout_centerInParent="true"
-            android:background="@drawable/shape_home_publicfund_txt"
-            android:paddingLeft="@dimen/ui_5_dip"
-            android:paddingRight="@dimen/ui_5_dip"
-            android:text="@string/flexible"
-            android:textColor="@color/white"
-            android:textSize="10sp" />
+            android:text="@string/flexible" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/ui_10_dip"
+            android:id="@+id/home_public_tagr1"
+            style="@style/style_home_public_tag"
+            android:layout_marginLeft="@dimen/ui_8_dip"
             android:layout_toRightOf="@id/home_flexible"
-            android:background="@drawable/shape_home_publicfund_txt"
-            android:paddingLeft="@dimen/ui_5_dip"
-            android:paddingRight="@dimen/ui_5_dip"
-            android:text="@string/thousand_subscription"
-            android:textColor="@color/white"
-            android:textSize="10sp" />
+            android:text="@string/thousand_subscription" />
 
+        <TextView
+            android:id="@+id/home_public_tagr2"
+            style="@style/style_home_public_tag"
+            android:layout_marginLeft="@dimen/ui_12_dip"
+            android:layout_toRightOf="@id/home_public_tagr1"
+            android:text="@string/thousand_subscription"
+            android:visibility="gone" />
     </RelativeLayout>
 
 

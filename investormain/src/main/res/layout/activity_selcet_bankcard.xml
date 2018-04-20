@@ -14,17 +14,36 @@
         android:layout_height="wrap_content" />
 
     <!-- <include layout="@layout/title_public_fund"/>-->
-    <TextView
+    <LinearLayout
+        android:id="@+id/fund_select_bank_tips_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/ui_5_dip"
-        android:paddingBottom="@dimen/ui_10_dip"
-        android:paddingLeft="@dimen/ui_10_dip"
-        android:paddingRight="@dimen/ui_10_dip"
-        android:layout_marginBottom="@dimen/ui_10_dip"
-        android:textColor="@color/black"
-        android:background="@color/white"
-        android:text="@string/public_bankcard_select_up_notes" />
+        android:background="#ACACAC"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fund_select_bank_tips"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/ui_5_dip"
+            android:paddingBottom="@dimen/ui_10_dip"
+            android:paddingLeft="@dimen/ui_10_dip"
+            android:paddingRight="@dimen/ui_15_dip"
+            android:paddingTop="@dimen/ui_10_dip"
+            android:text="@string/public_bankcard_select_up_notes"
+            android:textColor="@color/white"
+            />
+        <ImageView
+            android:id="@+id/fund_select_bank_tips_del_iv"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/bank_ls_del_iv"
+            android:clickable="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/ui_6_dip"
+            />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_bank_list"

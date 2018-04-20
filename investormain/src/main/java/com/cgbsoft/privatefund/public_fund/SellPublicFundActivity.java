@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -56,7 +57,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     private String fundcode;
     private String largeredemptionflag;
     public String fundType;
-  //  private String fastredeemflag = "0"; // 1 快速赎回
+    //  private String fastredeemflag = "0"; // 1 快速赎回
     // private String availbal = ""; //
     private boolean isFund; // 是否私享宝
     private String issxb = ""; // 1是基金　　０是盈泰钱包
@@ -67,7 +68,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
     private ImageView bankIcon;
     private TextView bankTailCode;
     private TextView bankLimit;
-
+    private String redeemWalletMessage;//转出规则
     private BuyPublicFundActivity.BankCardInfo curruntBankCard;
 
     @Override
@@ -134,7 +135,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
             // transactionaccountid = jsonObject.getString("transactionaccountid");
             largeredemptionflag = jsonObject.getString("largeRedemptionFlag");
             fundType = jsonObject.getString("fundType");
-
+            if (jsonObject.has("redeemWalletMessage")) {//卖出说明
+                redeemWalletMessage = jsonObject.getString("redeemWalletMessage");
+            }
             // branchcode = jsonObject.getString("branchcode");
             // availbal = jsonObject.getString("availbal");
             issxb = jsonObject.getString("isSxb");
@@ -164,6 +167,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         // UiSkipUtils.gotoRedeemResult(this,"","","","");
 
 
+        BStrUtils.setTv((TextView) findViewById(R.id.title_right), "说明");
+        String skipDeclare;
+        String declareTitle;
         // 该表标题
         if (isFund) {
             ((TextView) findViewById(R.id.title_mid)).setText("卖出");
@@ -174,6 +180,8 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
 
             sellFinsh.setText("确认卖出");
             input.setHint("请输入您要卖出的份额");
+            skipDeclare = CwebNetConfig.fundSellDeclareUrl;
+            declareTitle = "卖出说明";
         } else {
             ((TextView) findViewById(R.id.title_mid)).setText("盈泰钱包");
             findViewById(R.id.ll_fundinfo).setVisibility(View.GONE);
@@ -181,8 +189,10 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
 
             input.setHint("请输入您要提现的金额");
             sellFinsh.setText("确认提现");
+            skipDeclare = CwebNetConfig.sxbSellDeclareUrl;
+            declareTitle = "提现说明";
         }
-
+        findViewById(R.id.title_right).setOnClickListener((view) -> NavigationUtils.gotoNavWebActivity(baseContext, skipDeclare, declareTitle));
         if (bankcardlist != null && bankcardlist.size() > 0) {
             curruntBankCard = bankcardlist.get(0);
             this.changeBankInfo(bankcardlist.get(0));
@@ -206,27 +216,27 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
 
             @Override
             public void afterTextChanged(Editable s) {
-                try{
+                try {
                     // 修改按钮颜色
-                    if(TextUtils.isEmpty(s) || new BigDecimal(s.toString()).compareTo(BigDecimal.valueOf(0)) <= 0){
+                    if (TextUtils.isEmpty(s) || new BigDecimal(s.toString()).compareTo(BigDecimal.valueOf(0)) <= 0) {
                         sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_gray);
                         sellFinsh.setEnabled(false);
-                    }else if(new BigDecimal(s.toString()).compareTo(BigDecimal.valueOf(0)) > 0){
-                            sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_golden);
-                            sellFinsh.setEnabled(true);
+                    } else if (new BigDecimal(s.toString()).compareTo(BigDecimal.valueOf(0)) > 0) {
+                        sellFinsh.setBackgroundResource(R.drawable.public_fund_conrner_golden);
+                        sellFinsh.setEnabled(true);
                     }
                     if (TextUtils.isEmpty(s) || s.equals(input.getText())) return;
                     if (curruntBankCard != null && new BigDecimal(s.toString()).compareTo(new BigDecimal(curruntBankCard.getAvailBalMode1())) > 0) {
-                        if(isFund){
-                            MToast.makeText(SellPublicFundActivity.this,"该卡最大可卖出"+curruntBankCard.getAvailBalMode1()+"份",Toast.LENGTH_LONG).show();
-                        }else {
-                            MToast.makeText(SellPublicFundActivity.this,"该卡最大可提现"+curruntBankCard.getAvailBalMode1()+"元",Toast.LENGTH_LONG).show();
+                        if (isFund) {
+                            MToast.makeText(SellPublicFundActivity.this, "该卡最大可卖出" + curruntBankCard.getAvailBalMode1() + "份", Toast.LENGTH_LONG).show();
+                        } else {
+                            MToast.makeText(SellPublicFundActivity.this, "该卡最大可提现" + curruntBankCard.getAvailBalMode1() + "元", Toast.LENGTH_LONG).show();
                         }
                         input.setText(curruntBankCard.getAvailBalMode1());
                         input.setSelection(curruntBankCard.getAvailBalMode1().length());
                     }
-                }catch (Exception e){
-                   e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -262,7 +272,14 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         if (isFund) {
             prompt.setText("卖出至尾号为 " + tailCode + " 的" + bankCardInfo.getBankShortName() + "卡，具体到账时间以银行到账时间为准。");
         } else {
-            prompt.setText("转出至尾号为 " + tailCode + " 的" + bankCardInfo.getBankShortName() + "卡。\n\r·本转出为快速到账（一般两小时内），不享受转出 当天收益，以实际到账时间为准。\n\r·单次转出限额20万；单日转出限额20万。");
+//            prompt.setText("转出至尾号为 " + tailCode + " 的" + bankCardInfo.getBankShortName() + "卡。\n\r·本转出为快速到账（一般两小时内），不享受转出 当天收益，以实际到账时间为准。\n\r·单次转出限额20万；单日转出限额20万。");
+
+            if (BStrUtils.isEmpty(redeemWalletMessage)) {//是空的
+                prompt.setText("转出至尾号为 " + tailCode + " 的" + bankCardInfo.getBankShortName() + "卡。\n\r");
+            } else {//不是空的
+                prompt.setText("转出至尾号为 " + tailCode + " 的" + bankCardInfo.getBankShortName() + "卡。\n\r"+redeemWalletMessage);
+
+            }
         }
         input.setText("");
         input.setHint(input.getHint());
@@ -280,9 +297,9 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                 }
                 BigDecimal bigDecimal = new BigDecimal(inputText);
                 String money = new DecimalFormat("0.00").format(bigDecimal);
-                if(isFund){
+                if (isFund) {
                     unit = "份";
-                }else {
+                } else {
                     unit = "元";
                 }
                 PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, fundName, money + unit);
@@ -295,7 +312,7 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                     @Override
                     public void onForgetPassWord() {
                         NavigationUtils.startActivityByRouter(SellPublicFundActivity.this, RouteConfig.GOTO_PUBLIC_FUND_TRADE_PWD_MODIFY_ACTIVITY);
-                }
+                    }
 
 
                 });
@@ -336,26 +353,26 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
         if (curruntBankCard == null) return;
         LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "正在交易", false, false);
         loadingDialog.show();
-        getPresenter().sureSell(fundcode,this.curruntBankCard.getTransactionAccountId(), this.curruntBankCard.getBranchCode(),money, payPassword, new BasePublicFundPresenter.PreSenterCallBack<String>() {
+        getPresenter().sureSell(fundcode, this.curruntBankCard.getTransactionAccountId(), this.curruntBankCard.getBranchCode(), money, payPassword, new BasePublicFundPresenter.PreSenterCallBack<String>() {
 
-                    @Override
-                    public void even(String result) {
-                        loadingDialog.dismiss();
+            @Override
+            public void even(String result) {
+                loadingDialog.dismiss();
 
-                        String serialNo = "";
-                        if(!TextUtils.isEmpty(result)) {
-                            try {
-                                serialNo = new JSONObject(result).getString("serialNo");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        if(TextUtils.isEmpty(serialNo)){
-                            MToast.makeText(SellPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG).show();
-                            return;
-                        }
+                String serialNo = "";
+                if (!TextUtils.isEmpty(result)) {
+                    try {
+                        serialNo = new JSONObject(result).getString("serialNo");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (TextUtils.isEmpty(serialNo)) {
+                    MToast.makeText(SellPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-                        TrackingDataManger.sellPublicFund(SellPublicFundActivity.this, SellPublicFundActivity.this.fundName);
+                TrackingDataManger.sellPublicFund(SellPublicFundActivity.this, SellPublicFundActivity.this.fundName);
                    /*     // 跳转到成功页面
                         if (isFund) {
                             UiSkipUtils.gotoNewFundResult(SellPublicFundActivity.this, 2, fundType, money,serialNo);
@@ -363,17 +380,17 @@ public class SellPublicFundActivity extends BaseActivity<SellPUblicFundPresenter
                             UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, issxb, money, result);
                         }
                         */
-                        UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, money, serialNo,!isFund);
-                        finish();
-                    }
+                UiSkipUtils.gotoRedeemResult(SellPublicFundActivity.this, money, serialNo, !isFund);
+                finish();
+            }
 
-                    @Override
-                    public void field(String errorCode, String errorMsg) {
-                        loadingDialog.dismiss();
-                        Log.e("赎回页面", " 网络异常 " + errorMsg);
-                        MToast.makeText(SellPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG);
-                    }
-                });
+            @Override
+            public void field(String errorCode, String errorMsg) {
+                loadingDialog.dismiss();
+                Log.e("赎回页面", " 网络异常 " + errorMsg);
+                MToast.makeText(SellPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG);
+            }
+        });
     }
 
 

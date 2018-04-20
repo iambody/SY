@@ -14,9 +14,6 @@ import android.widget.TextView;
 import com.cgbsoft.lib.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 /**
  * @author DingLei
  * @version : v1.0
@@ -149,21 +146,21 @@ public class LoadingDialog extends Dialog {
     @Override
     public void show() {
         super.show();
-        showTime = System.currentTimeMillis();
+//        showTime = System.currentTimeMillis();
     }
 
     @Override
     public void dismiss() {
-        if(System.currentTimeMillis()-showTime<300){
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    dismiss();
-                }
-            },System.currentTimeMillis()-showTime+50);
-            return;
-        }
-        showTime = 0;
+//        if(System.currentTimeMillis()-showTime<300){
+//            new Timer().schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    dismiss();
+//                }
+//            },System.currentTimeMillis()-showTime+50);
+//            return;
+//        }
+//        showTime = 0;
         super.dismiss();
     }
 }

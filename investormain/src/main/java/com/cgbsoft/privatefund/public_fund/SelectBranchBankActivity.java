@@ -23,6 +23,8 @@ import com.cgbsoft.privatefund.public_fund.passworddiglog.BankBranchBean;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,7 @@ import java.util.List;
  */
 
 public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPublicFundPresenter> {
-    public final static String BANK_NAME_ID= "banknameid";
+    public final static String BANK_NAME_ID = "banknameid";
     public final static String CITY_NAME = "cityName";
 
     public final static String CHANNEL_NAME = "Channelname";
@@ -42,7 +44,7 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
     private String bankNameId = "";
     private String cityName = "";
     private ArrayList<BankBranchBean> originBankListBranchs;
-    private ArrayList<BankBranchBean> bankListBranchs =  new ArrayList<>();
+    private ArrayList<BankBranchBean> bankListBranchs = new ArrayList<>();
 
     private ClearEditText searchTitle;
 
@@ -53,7 +55,7 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        searchTitle = (ClearEditText)findViewById(R.id.search_title_ed);
+        searchTitle = (ClearEditText) findViewById(R.id.search_title_ed);
         searchTitle.setHint("请输入支行关键字");
 
         bankList = (RecyclerView) findViewById(R.id.rv_bank_list);
@@ -79,9 +81,9 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
         bankList.setAdapter(new SelectBankAdapter(bankListBranchs, new SelectBankAdapter.SelectBankCardLinsterer() {
             @Override
             public void seclecBranchBankCard(BankBranchBean bankBranchBean) {
-                getIntent().putExtra(PARATYPE,bankBranchBean.getParaType());
-                getIntent().putExtra(CHANNEL_NAME,bankBranchBean.getParaValue());
-                setResult(Activity.RESULT_OK,getIntent());
+                getIntent().putExtra(PARATYPE, bankBranchBean.getParaType());
+                getIntent().putExtra(CHANNEL_NAME, bankBranchBean.getParaValue());
+                setResult(Activity.RESULT_OK, getIntent());
                 finish();
             }
         }));
@@ -91,11 +93,12 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
             @Override
             public void onTextChanged(String value) {
                 bankListBranchs.clear();
-                if(BStrUtils.isEmpty(value)){
+                if (BStrUtils.isEmpty(value)) {
                     bankListBranchs.addAll(originBankListBranchs);
-                }else {
-                    for(BankBranchBean bankBranchBean:originBankListBranchs){
-                        if(BStrUtils.NullToStr1(bankBranchBean.getParaValue()).contains(value)) bankListBranchs.add(bankBranchBean);
+                } else {
+                    for (BankBranchBean bankBranchBean : originBankListBranchs) {
+                        if (BStrUtils.NullToStr1(bankBranchBean.getParaValue()).contains(value))
+                            bankListBranchs.add(bankBranchBean);
                     }
                 }
                 bankList.getAdapter().notifyDataSetChanged();
@@ -121,13 +124,13 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
                 return false;
             }
         });
-
+        findViewById(R.id.fund_select_branch_tips_del_iv).setOnClickListener((view) -> findViewById(R.id.fund_select_branch_tips_lay).setVisibility(View.GONE));
         loadBranchbankData();
     }
 
     @Override
     protected BindingBankCardOfPublicFundPresenter createPresenter() {
-        return new BindingBankCardOfPublicFundPresenter(this,null);
+        return new BindingBankCardOfPublicFundPresenter(this, null);
     }
 
 
@@ -143,17 +146,26 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
 
 
     private void loadBranchbankData() {
-        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this,"加载中",false,false);
+        LoadingDialog loadingDialog = LoadingDialog.getLoadingDialog(this, "加载中", false, false);
         getPresenter().getBranchBankInfo(cityName, BStrUtils.nullToEmpty(bankNameId), new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
                 try {
+                    JSONObject obj = new JSONObject(result);
+                    String branchList = obj.getString("branchList");
+
+                    String tips = obj.getString("tip");
+
+                    BStrUtils.setTv((TextView) findViewById(R.id.fund_select_branch_tips), tips);
                     Gson gson = new Gson();
-                    originBankListBranchs = gson.fromJson(result, new TypeToken<ArrayList<BankBranchBean>>(){}.getType());
+
+
+                    originBankListBranchs = gson.fromJson(branchList, new TypeToken<ArrayList<BankBranchBean>>() {
+                    }.getType());
                     bankListBranchs.clear();
                     bankListBranchs.addAll(originBankListBranchs);
-                    RecyclerView.Adapter adapter =  bankList.getAdapter();
+                    RecyclerView.Adapter adapter = bankList.getAdapter();
                     adapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -187,38 +199,38 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
             @Override
             public void field(String errorCode, String errorMsg) {
                 loadingDialog.dismiss();
-                Log.e(this.getClass().getSimpleName()," "+errorMsg);
+                Log.e(this.getClass().getSimpleName(), " " + errorMsg);
             }
         });
         loadingDialog.show();
     }
 
-   /*
-    private void bindBankCardData() {
-        getPresenter().getBinidedBankList(AppManager.getPublicFundInf(SelectBranchBankActivity.this).getCustno(),new BasePublicFundPresenter.PreSenterCallBack<String>() {
-            @Override
-            public void even(String result) {
-                loadingDialog.dismiss();
-                BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result,BankListOfJZSupport.class);
-                if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
-                    bankOfJZSupportList.addAll(bankListOfJZSupport.getDatasets());
-                    bankList.getAdapter().notifyDataSetChanged();
-                } else if (PublicFundContant.REQEUSTING.equals(bankListOfJZSupport.getErrorCode())) {// 处理中
-                    Toast.makeText(SelectBranchBankActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(SelectBranchBankActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
+    /*
+     private void bindBankCardData() {
+         getPresenter().getBinidedBankList(AppManager.getPublicFundInf(SelectBranchBankActivity.this).getCustno(),new BasePublicFundPresenter.PreSenterCallBack<String>() {
+             @Override
+             public void even(String result) {
+                 loadingDialog.dismiss();
+                 BankListOfJZSupport bankListOfJZSupport = new Gson().fromJson(result,BankListOfJZSupport.class);
+                 if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
+                     bankOfJZSupportList.addAll(bankListOfJZSupport.getDatasets());
+                     bankList.getAdapter().notifyDataSetChanged();
+                 } else if (PublicFundContant.REQEUSTING.equals(bankListOfJZSupport.getErrorCode())) {// 处理中
+                     Toast.makeText(SelectBranchBankActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
+                 } else {
+                     Toast.makeText(SelectBranchBankActivity.this, bankListOfJZSupport.getErrorMessage(), Toast.LENGTH_LONG).show();
+                 }
+             }
 
-            @Override
-            public void field(String errorCode, String errorMsg) {
-                loadingDialog.dismiss();
-                Log.e(this.getClass().getSimpleName()," "+errorMsg);
-            }
-        });
-        loadingDialog.show();
-    }
-*/
+             @Override
+             public void field(String errorCode, String errorMsg) {
+                 loadingDialog.dismiss();
+                 Log.e(this.getClass().getSimpleName()," "+errorMsg);
+             }
+         });
+         loadingDialog.show();
+     }
+ */
     static class SelectBankAdapter extends RecyclerView.Adapter<SelectBankAdapter.SelectBankViewHolder> {
         private List<BankBranchBean> bankCardList;
         private SelectBankCardLinsterer linsterer;
@@ -253,7 +265,7 @@ public class SelectBranchBankActivity extends BaseActivity<BindingBankCardOfPubl
 
             public SelectBankViewHolder(View itemView, final SelectBankCardLinsterer linsterer) {
                 super(itemView);
-                bankName = (TextView)itemView.findViewById(R.id.tv_bank_name);
+                bankName = (TextView) itemView.findViewById(R.id.tv_bank_name);
                 bankLogn = (ImageView) itemView.findViewById(R.id.item_public_fund_bankls_iv);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

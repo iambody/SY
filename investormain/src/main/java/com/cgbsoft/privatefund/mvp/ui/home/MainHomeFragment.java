@@ -194,6 +194,18 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @BindView(R.id.festival_style)
     LinearLayout festival_style;
 
+    @BindView(R.id.home_public_tagl0)
+    TextView homePublicTagl0;
+    @BindView(R.id.home_public_tagl1)
+    TextView homePublicTagl1;
+    @BindView(R.id.home_flexible)
+    TextView homeFlexible;
+    @BindView(R.id.home_public_tagr1)
+    TextView homPublicTagr1;
+    @BindView(R.id.home_public_tagr2)
+    TextView homePublicTagr2;
+    @BindView(R.id.home_public_tags_lay)
+    RelativeLayout homePublicTagsLay;
     //新的直播
     @BindView(R.id.view_home_public_fund_skip_lay)
     LinearLayout viewHomePublicFundSkipLay;
@@ -236,8 +248,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         timeCountDown();
         initCache();
         getPresenter().getHomeData();
-
-
     }
 
     @Override
@@ -667,6 +677,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             RxBus.get().unregister(RxConstant.REFRESH_INVESTOR_INFO, investorInfoRefreshObservable);
         }
 
+        //baseActivity.getApplication().getApplicationInfo().targetSdkVersion
 
     }
 
@@ -987,12 +998,70 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         BStrUtils.setTv(viewHomePublicFundRightvalues, publishFundRecommendBean.getRightUpValue());
         BStrUtils.setTv(viewHomePublicFundRightdes, publishFundRecommendBean.getRightDownDes());
 //新的
-
         BStrUtils.setTv(homePublicfundUpValue, publishFundRecommendBean.getLeftUpValue());
         BStrUtils.setTv(homePublicfundDownKey, publishFundRecommendBean.getLeftDownDes());
 
+//处理标签的东西
+        if (!BStrUtils.isEmpty(publishFundRecommendBean.getDescribeTags())) {
+            List<String> tags = BStrUtils.regexUtilSplit(publishFundRecommendBean.getDescribeTags(), ",");
+            if (null != tags && tags.size() >= 0) splitTages(tags);
 
+        }
         initPublicFundLay();
+    }
+
+    private void splitTages(List<String> tags) {
+
+//        TextView homePublicTagl0, homePublicTagl1, homeFlexible, homPublicTagr1, homePublicTagr2;
+
+        switch (tags.size()) {
+            case 1:
+                homePublicTagl1.setVisibility(View.GONE);
+                homPublicTagr1.setVisibility(View.GONE);
+                BStrUtils.setTv(homeFlexible, tags.get(0));
+                break;
+            case 2:
+                homeFlexible.setLayoutParams(new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(baseActivity, 10), DimensionPixelUtil.dip2px(baseActivity, 5)));
+                homeFlexible.setVisibility(View.INVISIBLE);
+                BStrUtils.setTv(homePublicTagl1, tags.get(0));
+                BStrUtils.setTv(homPublicTagr1, tags.get(1));
+                break;
+            case 3:
+                BStrUtils.setTv(homePublicTagl1, tags.get(0));
+                BStrUtils.setTv(homeFlexible, tags.get(1));
+                BStrUtils.setTv(homPublicTagr1, tags.get(2));
+                break;
+            case 4:
+
+                homeFlexible.setVisibility(View.INVISIBLE);
+                homeFlexible.setWidth(DimensionPixelUtil.dip2px(baseActivity, 1));
+//
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(DimensionPixelUtil.dip2px(baseActivity, 500), DimensionPixelUtil.dip2px(baseActivity, 30));
+                params.setMargins(0, DimensionPixelUtil.dip2px(baseActivity, 50), 0, DimensionPixelUtil.dip2px(baseActivity, 5));
+                params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                homePublicTagsLay.setLayoutParams(params);
+
+                BStrUtils.setTv(homePublicTagl0, tags.get(0));
+                BStrUtils.setTv(homePublicTagl1, tags.get(1));
+                BStrUtils.setTv(homPublicTagr1, tags.get(2));
+                BStrUtils.setTv(homePublicTagr2, tags.get(3));
+                homePublicTagl0.setVisibility(View.VISIBLE);
+                homePublicTagl1.setVisibility(View.VISIBLE);
+                homPublicTagr1.setVisibility(View.VISIBLE);
+                homePublicTagr2.setVisibility(View.VISIBLE);
+                break;
+            case 5:
+            default:
+                homePublicTagr2.setVisibility(View.VISIBLE);
+                homePublicTagl0.setVisibility(View.VISIBLE);
+                BStrUtils.setTv(homePublicTagl0, tags.get(0));
+                BStrUtils.setTv(homePublicTagl1, tags.get(1));
+                BStrUtils.setTv(homeFlexible, tags.get(2));
+                BStrUtils.setTv(homPublicTagr1, tags.get(3));
+                BStrUtils.setTv(homePublicTagr2, tags.get(4));
+                break;
+
+        }
     }
 
     /**
@@ -1352,19 +1421,5 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
-//    static class softHandler extends Handler {
-//        WeakReference<Activity> softActivity;
-//
-//        public softHandler(Activity activity) {
-//            softActivity = new WeakReference<Activity>(activity);
-//        }
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-////            super.handleMessage(msg);
-//            Activity activity=  softActivity.get();
-//
-//        }
-//    }
 
 }

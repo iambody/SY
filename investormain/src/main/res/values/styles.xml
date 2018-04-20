@@ -304,4 +304,16 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="style_home_public_tag">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/shape_home_publicfund_txt</item>
+        <item name="android:paddingLeft">@dimen/ui_5_dip</item>
+        <item name="android:paddingRight">@dimen/ui_5_dip</item>
+        <item name="android:paddingTop">@dimen/ui_1_dip</item>
+        <item name="android:paddingBottom">@dimen/ui_1_dip</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
 </resources>

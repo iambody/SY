@@ -309,7 +309,15 @@ public class VideoDetailPresenter extends BasePresenterImpl<VideoDetailContract.
             @Override
             public void onFailure(Call call, IOException e) {
                 if (NetUtils.isNetworkAvailable(getContext())) {
-                    getView().setAddressValidateResult(TextUtils.equals(((ApiException) e).getCode(), "404") ? "1" : "0", refreshPage);
+                    try {
+                        if (e instanceof ApiException)
+                            getView().setAddressValidateResult(TextUtils.equals(((ApiException) e).getCode(), "404") ? "1" : "0", refreshPage);
+                        else
+                            getView().setAddressValidateResult("1", refreshPage);
+
+                    } catch (Exception ee) {
+
+                    }
                 }
             }
         });

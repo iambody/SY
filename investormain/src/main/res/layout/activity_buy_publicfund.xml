@@ -21,6 +21,7 @@
         android:id="@+id/ll_fundinfo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ui_70_dip"
+        android:clickable="true"
         android:layout_marginBottom="@dimen/ui_10_dip"
         android:layout_marginTop="@dimen/ui_10_dip"
         android:background="@color/white"
@@ -177,7 +178,17 @@
         android:textSize="@dimen/dimens_sp_15"
         android:visibility="gone" />
 
-
+    <TextView
+        android:id="@+id/buy_sxb_state_tv_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ui_15_dip"
+        android:layout_marginTop="@dimen/ui_10_dip"
+        android:layout_marginRight="@dimen/ui_5_dip"
+        android:text="· 预计T+2日查看收益。(以实际查看收益时间为准)\n· T日：交易日，以每天15:00为界限，15:00之前为T日，之后为T+1日。周末和法定节假日不属于交易日。 "
+        android:textColor="#595959"
+        android:textSize="@dimen/dimens_sp_11"
+        android:visibility="gone" />
     <Button
         android:id="@+id/bt_Confirm"
         style="?android:attr/borderlessButtonStyle"

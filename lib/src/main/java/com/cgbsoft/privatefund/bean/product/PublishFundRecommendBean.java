@@ -28,6 +28,7 @@ public class PublishFundRecommendBean {
     private String depositAcct;// //客户银行卡号
     private String custRisk;// 客户的风险等级！！！ 不为空就是风险风等级   1:安全型 2:保守型 3:稳健型 4:积极 型 5:进取型)
     private String riskLevel;//产品的风险等级！！
+    private String describeTags;
 
     public String getIsHaveAccount() {
         return isHaveAccount;
@@ -187,5 +188,13 @@ public class PublishFundRecommendBean {
 
     public void setRiskLevel(String riskLevel) {
         this.riskLevel = riskLevel;
+    }
+
+    public String getDescribeTags() {
+        return describeTags;
+    }
+
+    public void setDescribeTags(String describeTags) {
+        this.describeTags = describeTags;
     }
 }

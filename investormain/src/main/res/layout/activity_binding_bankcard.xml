@@ -488,8 +488,46 @@
                 android:layout_marginTop="@dimen/ui_10_dip"
                 android:text="手机号请填写您在该银行预留的手机号。"
                 android:textColor="#595959"
-                android:textSize="@dimen/dimens_sp_15" />
+                android:textSize="@dimen/dimens_sp_15"
+                android:visibility="gone"/>
+            <LinearLayout
+                android:id="@+id/public_bindcard_cb_ar_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginLeft="@dimen/ui_15_dip"
+                android:layout_marginTop="@dimen/ui_10_dip"
+                android:orientation="horizontal">
 
+                <CheckBox
+                    android:id="@+id/public_bindcard_cb_ar"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/publicbuy_btn_check"
+                    android:button="@null"
+                    android:checked="true" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="您已阅读并同意"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/public_bindcard_tv_ar_proto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:clickable="true"
+                    android:text="《银行转账授权协议》"
+                    android:textColor="@color/app_golden"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/bt_Confirm"

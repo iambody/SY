@@ -448,18 +448,20 @@ public class NetConfig {
         final static String DIRECT_JZ_URL = PUBLIC_FUND_API_V2 + "/kz/proxy";
         static final String PUBLIBC_FUND_INF = PUBLIC_FUND_API_V2 + "/kz/proxy";
         static final String NEW_BANKCORD_INFO = PUBLIC_FUND_API_V2 + "/kz/bankacctinfo";
-        static final String USEABLE_BANK_LIST_INFO = PUBLIC_FUND_API_V2 + "/bankcardlist";
-
+        //        static final String USEABLE_BANK_LIST_INFO = PUBLIC_FUND_API_V2 + "/bankcardlist";
+        static final String USEABLE_BANK_LIST_INFO = PUBLIC_FUND_API_V2 + "/bankcardlistandtip";
 
         //static final String BUY_CONFIG = PUBLIC_FUND_API_V2 + "/kz/fundbuyinginfo";//申购配置信息
         static final String BUY_CONFIG = PUBLIC_FUND_API_V2 + "/buyinfo";//申购配置信息
         static final String BINDCARD_CAPTCHA = PUBLIC_FUND_API_V2 + "/bindcardcaptcha";
-        static final String BANK_BRANCH= PUBLIC_FUND_API_V2 + "/bankbranch";
-        static final String BINDCARD= PUBLIC_FUND_API_V2 + "/bindcard";
+        //        static final String BANK_BRANCH= PUBLIC_FUND_API_V2 + "/bankbranch";//老的支行信息
+        static final String BANK_BRANCH = PUBLIC_FUND_API_V2 + "/bankbranchandtip";
 
-        static final String ORDER_AND_PAY= PUBLIC_FUND_API_V2 + "/orderandpay";
+        static final String BINDCARD = PUBLIC_FUND_API_V2 + "/bindcard";
 
-        static final String REDEEM= PUBLIC_FUND_API_V2 + "/redeem";
+        static final String ORDER_AND_PAY = PUBLIC_FUND_API_V2 + "/orderandpay";
+
+        static final String REDEEM = PUBLIC_FUND_API_V2 + "/redeem";
         static final String RESET_PWD = PUBLIC_FUND_API_V2 + "/resetpassword";
         static final String BOUND_CARD = PUBLIC_FUND_API_V2 + "/boundcards";
     }

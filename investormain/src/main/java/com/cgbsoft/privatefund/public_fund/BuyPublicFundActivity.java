@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.base.webview.CwebNetConfig;
 import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -58,7 +59,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
     private String fundCode; // 基金号
     // private String fundName; // 基金名字
-   // private String fundType; // 基金类型
+    // private String fundType; // 基金类型
     private String unit = "元"; //银行卡单笔限额
 
     private boolean isPublicFund = true; // 是公募基金还是盈泰钱包
@@ -77,7 +78,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
     protected void init(Bundle savedInstanceState) {
         fundCode = getIntent().getStringExtra(TAG_FUND_CODE);
 //        fundName = getIntent().getStringExtra(TAG_FUND_NAME);
-      //  fundType = getIntent().getStringExtra(TAG_FUND_Type);
+        //  fundType = getIntent().getStringExtra(TAG_FUND_Type);
         if (YINGTAI_QIANBAO.equals(fundCode.trim())) isPublicFund = false;
         fundRiskLevel = getIntent().getStringExtra(TAG_FUND_RISK_LEVEL);
 
@@ -90,19 +91,32 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         bindView();
     }
 
+    String dealDeclare = "";
+
     /**
      * 绑定View的监听与数据
      */
     private void bindView() {
+        ((TextView) findViewById(R.id.title_right)).setText("说明");
+
         // 该表标题
         if (isPublicFund) {
             ((TextView) findViewById(R.id.title_mid)).setText("立即购买");
             buyConfirm.setText("确认购买");
+            dealDeclare = CwebNetConfig.fundBuyDeclareUrl;
+
         } else {
             ((TextView) findViewById(R.id.title_mid)).setText("盈泰钱包");
             buyConfirm.setText("确认转入");
+            dealDeclare = CwebNetConfig.sxbBuyDeclareUrl;
         }
+        ((TextView) findViewById(R.id.title_right)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavigationUtils.gotoNavWebActivity(baseContext, dealDeclare, "申购说明");
 
+            }
+        });
 
         // 返回键
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
@@ -114,21 +128,23 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         buyInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!TextUtils.isEmpty(s)&&s.length() > 20){
-                    buyInput.setText(s.toString().substring(0,20));
+                if (!TextUtils.isEmpty(s) && s.length() > 20) {
+                    buyInput.setText(s.toString().substring(0, 20));
                     buyInput.setSelection(20);
                     return;
                 }
                 // 设置输入框提示文本
-                String limitAmt = bean != null ? bean.getLimitOrderAmt().trim() :"0";// 最少购买限额
+                String limitAmt = bean != null ? bean.getLimitOrderAmt().trim() : "0";// 最少购买限额
                 if (TextUtils.isEmpty(s.toString().trim()) || new BigDecimal(s.toString().trim()).compareTo(new BigDecimal(limitAmt)) < 0) {
                     buyConfirm.setBackgroundResource(R.drawable.public_fund_conrner_gray);
                     buyConfirm.setEnabled(false);
@@ -140,6 +156,11 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         });
 
         buyConfirm.setOnClickListener(this);
+        if (!isPublicFund) {//钱包能点击
+            findViewById(R.id.ll_fundinfo).setOnClickListener((view) -> NavigationUtils.gotoNavWebActivity(baseContext, CwebNetConfig.sxbFundDetailUrl, "盈泰钱包"));
+            findViewById(R.id.buy_sxb_state_tv_prompt).setVisibility(View.VISIBLE);
+        }
+
         requestData(fundCode);
     }
 
@@ -172,7 +193,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                 }*/
                 BigDecimal bigDecimal = new BigDecimal(inputText);
                 String money = new DecimalFormat("0.00").format(bigDecimal);
-                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, bean == null?"":bean.getFundName(), money + "元");
+                PayPasswordDialog payPasswordDialog = new PayPasswordDialog(this, null, bean == null ? "" : bean.getFundName(), money + "元");
                 payPasswordDialog.setmPassWordInputListener(new PayPasswordDialog.PassWordInputListener() {
                     @Override
                     public void onInputFinish(String psw) {
@@ -278,12 +299,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                     currectPayBank = bean.getUserBankCardInfo().get(0);
                 }
 
-                if (!isPublicFund) {
-                    findViewById(R.id.ll_fundinfo).setVisibility(View.GONE);
-                } else {
-                    ((TextView) findViewById(R.id.tv_fundname)).setText(bean.getFundName());
-                    ((TextView) findViewById(R.id.tv_fundcode)).setText(fundCode);
-                }
+//                if (!isPublicFund) {
+//                    findViewById(R.id.ll_fundinfo).setVisibility(View.GONE);
+//                } else {
+                ((TextView) findViewById(R.id.tv_fundname)).setText(bean.getFundName());
+                ((TextView) findViewById(R.id.tv_fundcode)).setText(fundCode);
+//                }
 
                 // 设置输入框提示文本
                 String limitAmt = bean != null ? bean.getLimitOrderAmt().trim() : "";// 最少购买限额
@@ -312,7 +333,6 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
      * 显示支付银行
      */
 //    Map<String, String> dictionaryTable = null;
-
     private void showBankView() {
         // 首先撤销白色遮盖
         findViewById(R.id.view_default_diplay).setVisibility(View.GONE);
@@ -322,7 +342,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         this.bankName.setText(currectPayBank.getBankShortName());
         String bankCoade = currectPayBank.getDepositAcct();
         if (bankCoade.length() > 4) {
-            bankTailCode.setText("尾号 "+bankCoade.substring(bankCoade.length() - 4));
+            bankTailCode.setText("尾号 " + bankCoade.substring(bankCoade.length() - 4));
         }
 
         if ("0".equals(currectPayBank.getBankEnableStatus())) {
@@ -349,8 +369,8 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
         final String formatMoney = new DecimalFormat("0.00").format(new BigDecimal(money));
         String limitAmt = bean != null ? bean.getLimitOrderAmt().trim() : "0";// 最少购买限额
-        if(new BigDecimal(money).compareTo(new BigDecimal(limitAmt)) < 0){
-            MToast.makeText(BuyPublicFundActivity.this,"购买金额不少于"+limitAmt+"元",Toast.LENGTH_LONG).show();
+        if (new BigDecimal(money).compareTo(new BigDecimal(limitAmt)) < 0) {
+            MToast.makeText(BuyPublicFundActivity.this, "购买金额不少于" + limitAmt + "元", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -368,12 +388,12 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
                         e.printStackTrace();
                     }
                 }
-                if(TextUtils.isEmpty(serialNo)){
+                if (TextUtils.isEmpty(serialNo)) {
                     MToast.makeText(BuyPublicFundActivity.this, "交易失败", Toast.LENGTH_LONG).show();
                     return;
                 }
                 TrackingDataManger.buyPublicFund(BuyPublicFundActivity.this, BuyPublicFundActivity.this.bean.getFundName());
-                UiSkipUtils.gotoBuyFundResult(BuyPublicFundActivity.this, bean == null?"":bean.getFundType(), formatMoney, serialNo,!isPublicFund);
+                UiSkipUtils.gotoBuyFundResult(BuyPublicFundActivity.this, bean == null ? "" : bean.getFundType(), formatMoney, serialNo, !isPublicFund);
                 finish();
 
             }
@@ -721,7 +741,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
             return branchCode;
         }
 
-        public  void setBranchCode(String branchCode) {
+        public void setBranchCode(String branchCode) {
             this.branchCode = branchCode;
         }
 

@@ -412,7 +412,20 @@ public class BStrUtils {
 
     public static boolean homeIsRato(String rato) {
         if (BStrUtils.isEmpty(rato)) return false;
-        if (rato.endsWith("%"))return true;
-        return  false;
+        if (rato.endsWith("%")) return true;
+        return false;
+    }
+
+    /**
+     * 以逗号隔开
+     */
+    public static List<String> regexUtilSplit(String str, String regx) {
+        String[] dataStr = str.split(regx);
+        List<String> ls = new ArrayList<>();
+        if (null == dataStr || dataStr.length <= 0) return null;
+        for (String s : dataStr) {
+            ls.add(s);
+        }
+        return ls;
     }
 }

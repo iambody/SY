@@ -22,6 +22,9 @@ import com.cgbsoft.privatefund.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +80,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
 //                finish();
 //            }
 //        }));
-
+        findViewById(R.id.fund_select_bank_tips_del_iv).setOnClickListener((view) -> findViewById(R.id.fund_select_bank_tips_lay).setVisibility(View.GONE));
         bindBankCardData();
     }
 
@@ -102,19 +105,29 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
             @Override
             public void even(String result) {
                 loadingDialog.dismiss();
-                List<BuyPublicFundActivity.BankCardInfo> bankListOfJZSupports = new Gson().fromJson(result, new TypeToken<List<BuyPublicFundActivity.BankCardInfo>>(){}.getType());
-                bankOfJZSupportList.addAll(bankListOfJZSupports);
+                try {
+                    JSONObject object = new JSONObject(result);
+                    String tip = object.getString("tip");
+                    String bankLsStr = object.getString("bankList");
+                    BStrUtils.setTv((TextView) findViewById(R.id.fund_select_bank_tips), tip);
+                    List<BuyPublicFundActivity.BankCardInfo> bankListOfJZSupports = new Gson().fromJson(bankLsStr, new TypeToken<List<BuyPublicFundActivity.BankCardInfo>>() {
+                    }.getType());
+                    bankOfJZSupportList.addAll(bankListOfJZSupports);
 //                    bankList.getAdapter().notifyDataSetChanged();
-                bankList.setAdapter(new SelectBankAdapter(baseContext, bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
-                    @Override
-                    public void seclecBackCard(BuyPublicFundActivity.BankCardInfo bankOfJZSupport) {
-                        getIntent().putExtra(BANK_NAME_ID, bankOfJZSupport.getBankNameId());
-                        getIntent().putExtra(CHANNEL_ID, bankOfJZSupport.getChannelId());
-                        getIntent().putExtra(CHANNEL_NAME, bankOfJZSupport.getFullName());
-                        setResult(Activity.RESULT_OK, getIntent());
-                        finish();
-                    }
-                }));
+                    bankList.setAdapter(new SelectBankAdapter(baseContext, bankOfJZSupportList, new SelectBankAdapter.SelectBankCardLinsterer() {
+                        @Override
+                        public void seclecBackCard(BuyPublicFundActivity.BankCardInfo bankOfJZSupport) {
+                            getIntent().putExtra(BANK_NAME_ID, bankOfJZSupport.getBankNameId());
+                            getIntent().putExtra(CHANNEL_ID, bankOfJZSupport.getChannelId());
+                            getIntent().putExtra(CHANNEL_NAME, bankOfJZSupport.getFullName());
+                            setResult(Activity.RESULT_OK, getIntent());
+                            finish();
+                        }
+                    }));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
               /*  if (PublicFundContant.REQEUST_SUCCESS.equals(bankListOfJZSupport.getErrorCode())) { //成功
                 } else if (PublicFundContant.REQEUSTING.equals(bankListOfJZSupport.getErrorCode())) {// 处理中
                     Toast.makeText(SelectBankCardActivity.this, "服务器正在处理中", Toast.LENGTH_LONG).show();
@@ -160,7 +173,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
         public SelectBankAdapter(Context context, List<BuyPublicFundActivity.BankCardInfo> bankCardList, SelectBankCardLinsterer linsterer) {
             this.bankCardList = bankCardList;
             this.linsterer = linsterer;
-            this.context=context;
+            this.context = context;
             mFooterView = LayoutInflater.from(context).inflate(R.layout.item_publicfund_banckls_foot, null);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             mFooterView.setLayoutParams(params);
@@ -172,7 +185,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
                 return new SelectBankFootViewHolder(mFooterView);
             } else {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_select_bankcard, parent, false);
-                return new SelectBankViewHolder(context,view, linsterer);
+                return new SelectBankViewHolder(context, view, linsterer);
             }
         }
 
@@ -233,7 +246,7 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
                 this.bankOfJZSupport = bankOfJZSupport;
                 bankName.setText(bankOfJZSupport.getBankShortName());
                 BStrUtils.setTv(item_public_fund_bankls_notes, bankOfJZSupport.getBankLimit());
-                Imageload.display(context instanceof Activity? context.getApplicationContext():context, bankOfJZSupport.getIcon(), item_public_fund_bankls_iv);
+                Imageload.display(context instanceof Activity ? context.getApplicationContext() : context, bankOfJZSupport.getIcon(), item_public_fund_bankls_iv);
             }
 
         }

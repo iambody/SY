@@ -136,6 +136,15 @@ public class CwebNetConfig extends BaseWebNetConfig {
     public static String public_fund_record;
     //私享宝详情页
     public static String sxbFundDetailUrl;
+    //公募基金的买入卖出协议wallet=1钱包 wallet=0普通基金 type=1买入 type=2卖出
+
+    public static String fundBuyDeclareUrl;//
+    public static String fundSellDeclareUrl;
+    public static String sxbBuyDeclareUrl;
+    public static String sxbSellDeclareUrl;
+
+    //银行卡转账说明
+    public static String bankTransferState;
 
     static {
         initApi();
@@ -232,6 +241,16 @@ public class CwebNetConfig extends BaseWebNetConfig {
         private_share_bao_record = baseSxyParentUrl + "/biz/publicfund/record.html?type=1";
         //公募基金交易记录地址
         public_fund_record = baseSxyParentUrl + "/biz/publicfund/record.html?type=2";
-
+        //公募基金的买入卖出协议wallet=1钱包 wallet=0普通基金 type=1买入 type=2卖出
+        // 正常的买说明
+        fundBuyDeclareUrl = baseSxyParentUrl + "/biz/publicfund/exchange_instruction.html?wallet=0&type=1";
+        //正常的卖
+        fundSellDeclareUrl = baseSxyParentUrl + "/biz/publicfund/exchange_instruction.html?wallet=0&type=2";
+        //钱包的买
+        sxbBuyDeclareUrl = baseSxyParentUrl + "/biz/publicfund/exchange_instruction.html?wallet=1&type=1";
+        //钱包的卖
+        sxbSellDeclareUrl = baseSxyParentUrl + "/biz/publicfund/exchange_instruction.html?wallet=1&type=2";
+        //银行转帐授权协议
+        bankTransferState = baseSxyParentUrl + "/biz/publicfund/licensing_agreements.html";
     }
 }

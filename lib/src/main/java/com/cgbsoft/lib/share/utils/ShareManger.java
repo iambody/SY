@@ -329,5 +329,7 @@ public class ShareManger implements PlatformActionListener {
 //        ShareSDK.stopSDK();
     }
 
-
+    public Object readResolve() {
+        return shareManger;
+    }
 }
