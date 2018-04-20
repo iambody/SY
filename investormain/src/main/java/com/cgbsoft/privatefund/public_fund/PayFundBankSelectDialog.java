@@ -229,7 +229,7 @@ public class PayFundBankSelectDialog extends BaseDialog {
             if (bankCoade.length() > 4) {
                 bankCoade = bankCoade.substring(bankCoade.length() - 4);
             }
-            bankName.setText(bankCardInfo.getBankShortName() + "　尾号(" + bankCoade + ")");
+            bankName.setText(bankCardInfo.getBankShortName() + "　尾号 " + bankCoade);
             bankLimit.setText(bankCardInfo.getBankLimit());
             if ("0".equals(bankCardInfo.getBankEnableStatus())) {
                 bankLimit.setVisibility(View.GONE);

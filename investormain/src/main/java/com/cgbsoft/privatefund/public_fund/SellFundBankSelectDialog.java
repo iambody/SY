@@ -164,7 +164,7 @@ public class SellFundBankSelectDialog extends BaseDialog {
             if (bankCoade.length() > 4) {
                 bankCoade = bankCoade.substring(bankCoade.length() - 4);
             }
-            bankName.setText(bankCardInfo.getBankShortName() + "　尾号(" + bankCoade + ")");
+            bankName.setText(bankCardInfo.getBankShortName() + "　尾号 " + bankCoade);
             if(isFund){
                 this.bankLimit.setText("可卖出份额"+bankCardInfo.getAvailBalMode1()+"份");
             }else {
