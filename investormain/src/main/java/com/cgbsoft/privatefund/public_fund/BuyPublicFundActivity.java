@@ -157,7 +157,7 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
 
         buyConfirm.setOnClickListener(this);
         if (!isPublicFund) {//钱包能点击
-            findViewById(R.id.ll_fundinfo).setOnClickListener((view) -> NavigationUtils.gotoNavWebActivity(baseContext, CwebNetConfig.sxbFundDetailUrl, "盈泰钱包"));
+//            findViewById(R.id.ll_fundinfo).setOnClickListener((view) -> NavigationUtils.gotoNavWebActivity(baseContext, CwebNetConfig.sxbFundDetailUrl, "盈泰钱包"));
             findViewById(R.id.buy_sxb_state_tv_prompt).setVisibility(View.VISIBLE);
         }
 

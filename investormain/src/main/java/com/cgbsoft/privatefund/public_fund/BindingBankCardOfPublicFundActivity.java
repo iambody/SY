@@ -127,7 +127,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             textView.setText(bindingBankCardBean.getDepositAcctName());
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.GONE);
             public_bindcard_cb_ar.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckBoxSel = isChecked);
-//            public_bindcard_cb_ar_lay.setVerticalGravity(View.GONE);
+            public_bindcard_cb_ar_lay.setVerticalGravity(View.GONE);
         } else {
             findViewById(R.id.rl_cusno_name).setVisibility(View.GONE);
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.VISIBLE);
