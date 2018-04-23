@@ -24,6 +24,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
@@ -77,7 +78,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     private TextView mAddressBank;
     private TextView fund_bindcard_tips;//tip的字
     private ImageView fund_bindcard_tips_del_iv;
-
+    private ImageView tv_pay_bank_iv;
+    private TextView tv_pay_bank_name_des;
     private String cityName;
 
     private int style;// 1 为赠卡风格 其它数字为开户流程风格
@@ -115,7 +117,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
         fund_bindcard_tips = (TextView) findViewById(R.id.fund_bindcard_tips);
         fund_bindcard_tips_del_iv = (ImageView) findViewById(R.id.fund_bindcard_tips_del_iv);
-
+        tv_pay_bank_iv = (ImageView) findViewById(R.id.tv_pay_bank_iv);
+        tv_pay_bank_name_des = (TextView) findViewById(R.id.tv_pay_bank_name_des);
         findViewById(R.id.phone_number_query).setOnClickListener(this);
         style = getIntent().getIntExtra(STYLE, 0);
         String data = getIntent().getStringExtra(TAG_PARAMETER);
@@ -392,7 +395,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 break;
             case R.id.phone_number_query:
 
-                new BankNumberDialog(baseContext,"银行预留手机号是在办理该银行卡时候所填写的手机号码.没有预留,手机号忘记或者停用,请联系银行客服更新处理") {
+                new BankNumberDialog(baseContext, "银行预留手机号是在办理该银行卡时候所填写的手机号码.没有预留,手机号忘记或者停用,请联系银行客服更新处理") {
                     @Override
                     public void affirm() {
 
@@ -414,11 +417,17 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             mPayBankName.setText(data.getStringExtra(SelectBankCardActivity.CHANNEL_NAME));
             bindingBankCardBean.setChannelid(data.getStringExtra(SelectBankCardActivity.CHANNEL_ID));
             bindingBankCardBean.setBanknameid(data.getStringExtra(SelectBankCardActivity.BANK_NAME_ID));
+            String iv = data.getStringExtra(SelectBankCardActivity.CHANNEL_IV);
+            String dec = data.getStringExtra(SelectBankCardActivity.CHANNEL_DEC);
+            Imageload.display(baseContext, iv, tv_pay_bank_iv);
+            BStrUtils.setTv(tv_pay_bank_name_des, dec);
             if (mAddressBank != null && !TextUtils.isEmpty(mAddressBank.getText())) {
                 mAddressBank.setText("");
                 mAddressBank.setHint("请选择开户行地址");
                 mBankBranchName.setText("");
                 mBankBranchName.setHint(mBankBranchName.getHint());
+
+
             }
         }
 

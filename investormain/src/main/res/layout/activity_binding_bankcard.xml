@@ -383,17 +383,54 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimens_sp_16" />
 
-                <TextView
-                    android:id="@+id/tv_pay_bank_name"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/ui_30_dip"
-                    android:layout_toRightOf="@+id/tv_select_bankcard"
-                    android:hint="请选择银行"
-                    android:textColor="@color/black"
-                    android:textColorHint="#A5A5A5"
-                    android:textSize="@dimen/dimens_sp_16" />
+                    android:layout_toRightOf="@+id/tv_select_bankcard">
+
+                    <ImageView
+                        android:id="@+id/tv_pay_bank_iv"
+                        android:layout_width="@dimen/ui_30_dip"
+                        android:layout_height="@dimen/ui_30_dip"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/logo" />
+
+                    <TextView
+                        android:id="@+id/tv_pay_bank_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/ui_10_dip"
+                        android:layout_marginTop="@dimen/ui_10_dip"
+                        android:layout_toRightOf="@+id/tv_pay_bank_iv"
+                        android:hint="请选择银行"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="@dimen/dimens_sp_16" />
+
+                    <TextView
+                        android:id="@+id/tv_pay_bank_name_des"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/ui_10_dip"
+                        android:layout_toRightOf="@+id/tv_pay_bank_iv"
+                        android:text="暂无银行卡信息"
+                        android:textColor="#A5A5A5"
+                        android:textColorHint="#A5A5A5"
+                        android:textSize="@dimen/dimens_sp_13" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ui_5_dip"
+                    android:src="@drawable/arrow_right" />
 
                 <View
                     android:layout_width="match_parent"
@@ -432,6 +469,13 @@
                     android:textColorHint="#A5A5A5"
                     android:textSize="@dimen/dimens_sp_16" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ui_5_dip"
+                    android:src="@drawable/arrow_right" />
 
                 <View
                     android:layout_width="match_parent"
@@ -471,6 +515,13 @@
                     android:textColorHint="#A5A5A5"
                     android:textSize="@dimen/dimens_sp_16" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ui_5_dip"
+                    android:src="@drawable/arrow_right" />
 
                 <View
                     android:layout_width="match_parent"
@@ -559,9 +610,9 @@
                     android:layout_height="@dimen/ui_24_dip"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ui_5_dip"
                     android:clickable="true"
-                    android:src="@drawable/fund_bindcard_wenhao"
-                    android:layout_marginRight="@dimen/ui_5_dip"/>
+                    android:src="@drawable/fund_bindcard_wenhao" />
 
                 <View
                     android:layout_width="match_parent"
