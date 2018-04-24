@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
+import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -20,6 +21,7 @@ import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.publicfund.BindCardOperationInf;
 import com.cgbsoft.privatefund.public_fund.model.TransactionPwdContract;
 import com.cgbsoft.privatefund.public_fund.passworddiglog.CustomPasswordView;
+import com.chenenyu.router.annotation.Route;
 import com.commui.prompt.PromptManager;
 import com.google.gson.Gson;
 
@@ -29,6 +31,7 @@ import java.util.HashMap;
  * desc 交易密码
  * author wangyongkui
  */
+@Route(RouteConfig.GOTO_PUBLIC_FUND_TRANCACTION)
 public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPresenter> implements TransactionPwdContract.transactionPwdView, View.OnClickListener {
     CustomPasswordView transaction_password_input;
     private String transactionPwd;

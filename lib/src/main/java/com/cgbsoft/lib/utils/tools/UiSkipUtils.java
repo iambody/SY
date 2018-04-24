@@ -85,7 +85,7 @@ public class UiSkipUtils {
     }
 
     /**
-     * 跳转到公募基金开户页面的公用方法
+     * 跳转到公募基金开户页面的公用方法  下边的dialog防止产品需求改变暂时注掉不删除
      * H5
      *
      * @param activity
@@ -137,7 +137,10 @@ public class UiSkipUtils {
             HashMap<String, Object> map = new HashMap<>();
             map.put("tag_parameter", bankParam);
             NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
-        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
+        } else if (!BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "1".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getTransactionPasswd())) {//跳转到设置交易密码
+            //跳转到设置交易密码
+            NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_TRANCACTION);
+        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk()) && !BStrUtils.isEmpty(publicFundInf.getTransactionPasswd())) {//跳转到风险测评
 //            //没风险测评=》跳转到公共的页面
 //            DefaultDialog dialog = new DefaultDialog(activity, "您还未进行风险测评，马上去开展测评吧～", "取消", "确定") {
 //                @Override
@@ -174,7 +177,6 @@ public class UiSkipUtils {
         ffmaps.put("tag_fund_type", fundType);
         ffmaps.put("tag_fund_risk_level", risklevel);
         ((BaseApplication) activity.getApplication()).setPublicBuyMaps(ffmaps);
-
 
 
         if (BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {//未开户
@@ -282,15 +284,15 @@ public class UiSkipUtils {
      * 赎回成功之后需要跳转到一个H5网页（赎回结果页）
      * pageType(0 私享宝) allMoney(赎回份额/卖出金额) appsheetserialno confirmeddate operdate opertime redeemrefunddate transactiondate
      */
-    public static void gotoRedeemResult(Activity activity, String allMoney, String serialNo,boolean isWallet) {
+    public static void gotoRedeemResult(Activity activity, String allMoney, String serialNo, boolean isWallet) {
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("pageType", "2");
         paramMap.put("serialNo", serialNo);
-        if(isWallet){ // 钱包
+        if (isWallet) { // 钱包
             paramMap.put("wallet", "1");
             paramMap.put("allMoney", allMoney);
             NavigationUtils.gotoNavWebActivity(activity, getUrl(CwebNetConfig.publicFundRedeemResult, paramMap), "交易结果");
-        }else {
+        } else {
             paramMap.put("allShare", allMoney);
             paramMap.put("wallet", "0");
             NavigationUtils.gotoNavWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果");
@@ -325,21 +327,22 @@ public class UiSkipUtils {
 
     /**
      * 跳转购买结果页
+     *
      * @param activity
      * @param fundType
      * @param allMoney
      * @param serialNo
-     * @param isWallet  是否是钱包
+     * @param isWallet 是否是钱包
      */
-    public static void gotoBuyFundResult(Activity activity,String fundType,String allMoney,String serialNo,boolean isWallet){
+    public static void gotoBuyFundResult(Activity activity, String fundType, String allMoney, String serialNo, boolean isWallet) {
         HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("pageType",  "1");
+        paramMap.put("pageType", "1");
         paramMap.put("fundType", fundType);
         paramMap.put("allMoney", allMoney);
         paramMap.put("serialNo", serialNo);
-        if(isWallet){
+        if (isWallet) {
             paramMap.put("wallet", "1");
-        }else {
+        } else {
             paramMap.put("wallet", "0");
         }
         NavigationUtils.gotoNavWebActivity(activity, getUrl(CwebNetConfig.publicFundBuyOrSell, paramMap), "交易结果");

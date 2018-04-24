@@ -125,4 +125,6 @@ public class RouteConfig {
     public static final String GOTO_PUBLIC_FUND_BUY="public_fund_buy_activity";
     public static final String GOTO_PUBLIC_FUND_BIND_BANK_CARD="BindingBankCardOfPublicFund";
     public static final String  GOTO_PUBLIC_FUND_REDEMPTION="public_fund_redemption";
+    public static final String  GOTO_PUBLIC_FUND_TRANCACTION="public_fund_tranactionsetpwd";
+
 }

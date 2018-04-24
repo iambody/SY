@@ -27,6 +27,8 @@ public class PublicFundInf {
 
     private String userId;
     private String depositName;
+
+    private String transactionPasswd;//交易密码 为空标识没设置 不为空标识已经设置
     public String getCustNo() {
         return custNo;
     }
@@ -131,5 +133,13 @@ public class PublicFundInf {
 
     public void setDepositName(String depositName) {
         this.depositName = depositName;
+    }
+
+    public String getTransactionPasswd() {
+        return transactionPasswd;
+    }
+
+    public void setTransactionPasswd(String transactionPasswd) {
+        this.transactionPasswd = transactionPasswd;
     }
 }
