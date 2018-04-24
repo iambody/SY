@@ -17,6 +17,7 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
+import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.cgbsoft.privatefund.bean.publicfund.BindCardOperationInf;
 import com.cgbsoft.privatefund.public_fund.model.TransactionPwdContract;
@@ -87,6 +88,8 @@ public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPres
     //获取成功
     @Override
     public void getTransactionPwdSuccess(String str) {
+        if (null != loadingDialog)
+            loadingDialog.dismiss();
         UiSkipUtils.gotoPublicFundRisk(TransactionPasswordActivity.this);
         RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
     }
@@ -94,7 +97,9 @@ public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPres
     //获取失败
     @Override
     public void getTransactionPwdError(String error) {
-        Log.i("ssss", error);
+        if (null != loadingDialog)
+            loadingDialog.dismiss();
+        PromptManager.ShowCustomToast(baseContext, error);
     }
 
     BindCardOperationInf bindCardOperationInf;
@@ -117,6 +122,8 @@ public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPres
         Log.i("ssss", error);
     }
 
+    LoadingDialog loadingDialog;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -127,6 +134,8 @@ public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPres
                 }
                 HashMap<String, String> obj = new HashMap<>();
                 obj.put("tPasswd", transactionPwd);
+                loadingDialog = LoadingDialog.getLoadingDialog(this, "设置密码中", false, false);
+                loadingDialog.show();
                 getPresenter().transactionPwdAction(obj);
                 break;
         }
