@@ -222,7 +222,8 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
 
 
         static class SelectBankViewHolder extends RecyclerView.ViewHolder {
-            private TextView bankName, item_public_fund_bankls_notes;
+            private TextView bankName;
+            private TextView dailyLimit,singleLimit;
             private ImageView item_public_fund_bankls_iv;
             private Context context;
             private SelectBankCardLinsterer linsterer;
@@ -232,7 +233,8 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
                 super(itemView);
                 context = contexts;
                 bankName = (TextView) itemView.findViewById(R.id.tv_bank_name);
-                item_public_fund_bankls_notes = (TextView) itemView.findViewById(R.id.item_public_fund_bankls_notes);
+                dailyLimit = (TextView) itemView.findViewById(R.id.tv_bank_dailylimit);
+                singleLimit = (TextView) itemView.findViewById(R.id.tv_bank_singlelimit);
                 item_public_fund_bankls_iv = (ImageView) itemView.findViewById(R.id.item_public_fund_bankls_iv);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -245,7 +247,8 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
             public void bindView(BuyPublicFundActivity.BankCardInfo bankOfJZSupport) {
                 this.bankOfJZSupport = bankOfJZSupport;
                 bankName.setText(bankOfJZSupport.getBankShortName());
-                BStrUtils.setTv(item_public_fund_bankls_notes, bankOfJZSupport.getBankLimit());
+                BStrUtils.setTv(dailyLimit, bankOfJZSupport.getDailyLimit());
+                BStrUtils.setTv(singleLimit, bankOfJZSupport.getSingleLimit());
                 Imageload.display(context instanceof Activity ? context.getApplicationContext() : context, bankOfJZSupport.getIcon(), item_public_fund_bankls_iv);
             }
 

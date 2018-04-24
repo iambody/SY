@@ -639,6 +639,25 @@ public class BuyPublicFundActivity extends BaseActivity<BuyPublicFundPresenter> 
         private String fullName;  //　渠道名字
         private String bankNameId;  //银行Id
 
+        private String dailyLimit;
+        private String singleLimit;
+
+        public String getDailyLimit() {
+            return dailyLimit;
+        }
+
+        public void setDailyLimit(String dailyLimit) {
+            this.dailyLimit = dailyLimit;
+        }
+
+        public String getSingleLimit() {
+            return singleLimit;
+        }
+
+        public void setSingleLimit(String singleLimit) {
+            this.singleLimit = singleLimit;
+        }
+
         public String getChannelId() {
             return channelId;
         }

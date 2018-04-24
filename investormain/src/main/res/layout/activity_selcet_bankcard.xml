@@ -25,32 +25,71 @@
             android:id="@+id/fund_select_bank_tips"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginBottom="@dimen/ui_5_dip"
+            android:layout_weight="1"
             android:paddingBottom="@dimen/ui_10_dip"
             android:paddingLeft="@dimen/ui_10_dip"
             android:paddingRight="@dimen/ui_15_dip"
             android:paddingTop="@dimen/ui_10_dip"
-            android:text="@string/public_bankcard_select_up_notes"
-            android:textColor="@color/white"
-            />
+            android:text=""
+            android:textColor="@color/white" />
+
         <ImageView
             android:id="@+id/fund_select_bank_tips_del_iv"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:src="@drawable/bank_ls_del_iv"
-            android:clickable="true"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/ui_6_dip"
-            />
+            android:clickable="true"
+            android:src="@drawable/bank_ls_del_iv" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_44_dip"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ui_15_dip"
+            android:text="支持银行"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_14" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ui_34_dip"
+            android:text="单笔限额"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ui_22_dip"
+            android:text="单日限额"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimens_sp_14" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f2f3f5"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_bank_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
-
     </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

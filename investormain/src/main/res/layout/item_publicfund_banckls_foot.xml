@@ -6,12 +6,15 @@
     android:background="@color/app_bg">
 
     <TextView
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/ui_30_dip"
+        android:layout_margin="@dimen/ui_15_dip"
         android:gravity="center"
         android:text="@string/public_fund_bankls_foot_notes"
         android:textColor="@color/black"
+        android:paddingTop="29dp"
+        android:paddingBottom="29dp"
         android:textSize="@dimen/dimens_sp_16" />
 </LinearLayout>
