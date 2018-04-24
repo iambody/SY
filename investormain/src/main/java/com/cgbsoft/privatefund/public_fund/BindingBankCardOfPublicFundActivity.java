@@ -397,7 +397,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 break;
 
             case R.id.tv_bank_branch:// 选址支行
-            case R.id.actv_bank_city_arrow:
+
                 if (bindingBankCardBean == null || BStrUtils.isEmpty(bindingBankCardBean.getBanknameid())) {
                     MToast.makeText(this, "请先选择银行", Toast.LENGTH_LONG);
                     return;

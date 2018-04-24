@@ -1,9 +1,13 @@
 package com.cgbsoft.privatefund.public_fund;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.base.mvp.ui.BaseActivity;
@@ -99,9 +103,10 @@ public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPres
         bindCardOperationInf = new Gson().fromJson(str, BindCardOperationInf.class);
         BStrUtils.setTv((TextView) findViewById(R.id.transaction_pwd_declare), bindCardOperationInf.getPasswordSetupInfo());
         BStrUtils.setTv((TextView) findViewById(R.id.transaction_pwd_assist_declare), bindCardOperationInf.getPasswordSetupPswMessage());
-        ((Button)findViewById(R.id.transaction_pwd_confirm)).setText(bindCardOperationInf.getPasswordAffirmBtnTitle());
-        ((Button)findViewById(R.id.transaction_pwd_confirm)).setVisibility(View.VISIBLE);
-
+        ((Button) findViewById(R.id.transaction_pwd_confirm)).setText(bindCardOperationInf.getPasswordAffirmBtnTitle());
+        ((Button) findViewById(R.id.transaction_pwd_confirm)).setVisibility(View.VISIBLE);
+        textWdithMesure((TextView) findViewById(R.id.transaction_pwd_declare), (TextView) findViewById(R.id.transaction_pwd_assist_declare), (ImageView) findViewById(R.id.transaction_pwd_assist_line));
+        transaction_password_input.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -122,6 +127,18 @@ public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPres
                 getPresenter().transactionPwdAction(obj);
                 break;
         }
+
+    }
+
+    private void textWdithMesure(TextView currentTextView, TextView targetView, ImageView lineView) {
+        Paint paint = new Paint();
+        paint.setTextSize(currentTextView.getTextSize());
+        float size = paint.measureText(currentTextView.getText().toString());
+        targetView.setMaxWidth((int) size + 6);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int) size, 2);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        lineView.setLayoutParams(params);
+        findViewById(R.id.transaction_pwd_assist_line).setVisibility(View.VISIBLE);
 
     }
 }
