@@ -48,6 +48,7 @@ import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.RxCountDown;
 import com.cgbsoft.lib.utils.tools.SpannableUtils;
 import com.cgbsoft.lib.utils.tools.TrackingDataManger;
+import com.cgbsoft.lib.utils.tools.TrackingDiscoveryDataStatistics;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.utils.tools.ViewHolders;
@@ -67,6 +68,7 @@ import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.FloatStewardView;
+import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
 import com.chenenyu.router.Router;
 
 import java.util.ArrayList;
@@ -768,7 +770,12 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         homeNewsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO
+                HashMap<String, String> hashMap1 = new HashMap<>();
+                hashMap1.put(WebViewConstant.push_message_url, CwebNetConfig.discoveryDetail.concat("?id=").concat(content.get(position).id).concat("&category=").concat(content.get(position).category));
+                hashMap1.put(WebViewConstant.push_message_title, content.get(position).label);
+                NavigationUtils.startActivity(getActivity(), RightShareWebViewActivity.class, hashMap1);
+                DataStatistApiParam.operatePrivateBankDiscoverDetailClick(content.get(position).title, content.get(position).label);
+                TrackingDiscoveryDataStatistics.gotoDiscoveryDetail(getContext(), content.get(position).title);
             }
         });
 
