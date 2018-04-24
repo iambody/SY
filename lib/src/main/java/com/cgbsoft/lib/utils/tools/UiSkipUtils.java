@@ -223,7 +223,11 @@ public class UiSkipUtils {
 //            HashMap<String, Object> map = new HashMap<>();
 //            map.put("tag_parameter", bankParam);
 //            NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_BIND_BANK_CARD, map);
-        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
+        } else if (!BStrUtils.isEmpty(fundinf) && (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "1".equals(publicFundInf.getIsHaveCustBankAcct())) && BStrUtils.isEmpty(publicFundInf.getTransactionPasswd())) {
+            //跳转到设置交易密码
+            NavigationUtils.startActivityByRouter(activity, RouteConfig.GOTO_PUBLIC_FUND_TRANCACTION);
+
+        } else if (!BStrUtils.isEmpty(fundinf) && "1".equals(publicFundInf.getIsHaveCustBankAcct()) && BStrUtils.isEmpty(publicFundInf.getCustRisk())&& !BStrUtils.isEmpty(publicFundInf.getTransactionPasswd())) {
 //            //没风险测评=》跳转到公共的页面
             DefaultDialog dialog = new DefaultDialog(activity, "您还未进行风险测评，马上去开展测评吧～", "取消", "确定") {
                 @Override
