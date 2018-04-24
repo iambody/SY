@@ -13,7 +13,7 @@
         android:layout_margin="@dimen/ui_15_dip"
         android:gravity="center"
         android:text="@string/public_fund_bankls_foot_notes"
-        android:textColor="@color/black"
+        android:textColor="@color/app_golden"
         android:paddingTop="29dp"
         android:paddingBottom="29dp"
         android:textSize="@dimen/dimens_sp_16" />
