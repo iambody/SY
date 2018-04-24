@@ -35,6 +35,7 @@ import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.BankNumberDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.publicfund.BindCardOperationInf;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -117,9 +118,11 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
         fund_bindcard_tips = (TextView) findViewById(R.id.fund_bindcard_tips);
         fund_bindcard_tips_del_iv = (ImageView) findViewById(R.id.fund_bindcard_tips_del_iv);
+        fund_bindcard_tips_del_iv.setOnClickListener((view)->findViewById(R.id.fund_bindcard_tips_lay).setVisibility(View.GONE));
         tv_pay_bank_iv = (ImageView) findViewById(R.id.tv_pay_bank_iv);
         tv_pay_bank_name_des = (TextView) findViewById(R.id.tv_pay_bank_name_des);
         findViewById(R.id.phone_number_query).setOnClickListener(this);
+        findViewById(R.id.actv_bank_city_arrow).setOnClickListener(this);
         style = getIntent().getIntExtra(STYLE, 0);
         String data = getIntent().getStringExtra(TAG_PARAMETER);
         if (style == 1) data = AppInfStore.getPublicFundInfo(this.getApplicationContext());
@@ -139,7 +142,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.GONE);
             public_bindcard_cb_ar.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckBoxSel = isChecked);
             public_bindcard_cb_ar_lay.setVerticalGravity(View.GONE);
-            findViewById(R.id.fund_bindcard_tips_lay).setVisibility(View.GONE);
+//            findViewById(R.id.fund_bindcard_tips_lay).setVisibility(View.GONE);
         } else {
             findViewById(R.id.rl_cusno_name).setVisibility(View.GONE);
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.VISIBLE);
@@ -147,6 +150,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         }
 
         bindView();
+
     }
 
     @Override
@@ -168,7 +172,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         if (style == ADD_BANK) {
             ((TextView) findViewById(R.id.bt_Confirm)).setText("完成");
         } else {
-            ((TextView) findViewById(R.id.bt_Confirm)).setText("去风险测评");
+            ((TextView) findViewById(R.id.bt_Confirm)).setText("下一步");
         }
 
         // 获取验证码按钮
@@ -286,8 +290,28 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             }
         });*/
         mVerificationCode.addTextChangedListener(mTextWatcher);
+
+
+        //获取运营信息   注意绑卡时候需要显示运营信息 赠卡时候不需要绑卡信息***********************
+//        if(style == 1)return;
+        getPresenter().getBindCardOperationinf(new BasePublicFundPresenter.PreSenterCallBack<String>() {
+            @Override
+            public void even(String s) {
+                if (BStrUtils.isEmpty(s)) return;
+                bindCardOperationInf = new Gson().fromJson(s, BindCardOperationInf.class);
+                if (null != bindCardOperationInf)
+                    BStrUtils.setTv((TextView) findViewById(R.id.fund_bindcard_tips), bindCardOperationInf.getBindCardCardholderExplanation());
+            }
+
+            @Override
+            public void field(String errorCode, String errorMsg) {
+
+            }
+        });
     }
 
+    //运营信息
+    BindCardOperationInf bindCardOperationInf;
     private TextWatcher mTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {//
@@ -373,6 +397,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 break;
 
             case R.id.tv_bank_branch:// 选址支行
+            case R.id.actv_bank_city_arrow:
                 if (bindingBankCardBean == null || BStrUtils.isEmpty(bindingBankCardBean.getBanknameid())) {
                     MToast.makeText(this, "请先选择银行", Toast.LENGTH_LONG);
                     return;
@@ -395,7 +420,13 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 break;
             case R.id.phone_number_query:
 
-                new BankNumberDialog(baseContext, "银行预留手机号是在办理该银行卡时候所填写的手机号码.没有预留,手机号忘记或者停用,请联系银行客服更新处理") {
+                String phonInf;
+                if (null == bindCardOperationInf || BStrUtils.isEmpty(bindCardOperationInf.getBindCardPhoneIntroductionInfo()))
+                    phonInf = getResources().getString(R.string.bind_card_phone_inf);
+                else {
+                    phonInf = bindCardOperationInf.getBindCardPhoneIntroductionInfo();
+                }
+                new BankNumberDialog(baseContext, phonInf) {
                     @Override
                     public void affirm() {
 
@@ -421,6 +452,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             String dec = data.getStringExtra(SelectBankCardActivity.CHANNEL_DEC);
             Imageload.display(baseContext, iv, tv_pay_bank_iv);
             BStrUtils.setTv(tv_pay_bank_name_des, dec);
+            findViewById(R.id.tv_pay_bank_name_lf_tv).setVisibility(View.GONE);
+            findViewById(R.id.select_bank_card_right_rl).setVisibility(View.VISIBLE);
             if (mAddressBank != null && !TextUtils.isEmpty(mAddressBank.getText())) {
                 mAddressBank.setText("");
                 mAddressBank.setHint("请选择开户行地址");
@@ -676,7 +709,9 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                     BindingBankCardOfPublicFundActivity.this.setResult(Activity.RESULT_OK, getIntent());
                 } else {
                     // 去风险测评页面
-                    UiSkipUtils.gotoPublicFundRisk(BindingBankCardOfPublicFundActivity.this);
+//                    UiSkipUtils.gotoPublicFundRisk(BindingBankCardOfPublicFundActivity.this);
+                    //之前是直接跳转到风险测评 现在直接跳转到 设置交易密码页面
+                    UiSkipUtils.toNextActivity(BindingBankCardOfPublicFundActivity.this, TransactionPasswordActivity.class);
                     RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
                 }
                 MToast.makeText(BindingBankCardOfPublicFundActivity.this, "绑定成功", Toast.LENGTH_LONG);

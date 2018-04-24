@@ -464,6 +464,10 @@ public class NetConfig {
         static final String REDEEM = PUBLIC_FUND_API_V2 + "/redeem";
         static final String RESET_PWD = PUBLIC_FUND_API_V2 + "/resetpassword";
         static final String BOUND_CARD = PUBLIC_FUND_API_V2 + "/boundcards";
+
+        static final String BIND_OR_SETPWD_OPERATION = PUBLIC_FUND_API_V2 + "/operationsinfo";//获取运营位
+
+        static final String SET_TRANCACTION = PUBLIC_FUND_API_V2 + "/settraderpassword";//公募基金设置交易密码
     }
 
 

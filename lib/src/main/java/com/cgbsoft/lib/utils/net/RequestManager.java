@@ -1037,4 +1037,14 @@ interface RequestManager {
 
     @POST(NetConfig.PUBLIC_FUND.REDEEM)
     Observable<ResponseBody> redeem(@Body RequestBody responseBody);
+
+
+
+    @GET(NetConfig.PUBLIC_FUND.BIND_OR_SETPWD_OPERATION)
+    Observable<ResponseBody> getBindCardOperation(@QueryMap Map<String, String> program);
+
+    @POST(NetConfig.PUBLIC_FUND.SET_TRANCACTION)
+    Observable<ResponseBody> resetTrancactionPwd(@Body RequestBody responseBody);
+
+
 }

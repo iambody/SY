@@ -15,4 +15,15 @@ public interface TransactionPwdListener {
      */
 
     public void getTransactionPwdError(String error);
+
+
+    /**
+     * 运营信息
+     */
+    public void getOperationSuccess(String str);
+
+    /**
+     * 运营信息失败
+     */
+    public void getOperationError(String error);
 }

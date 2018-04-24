@@ -270,7 +270,7 @@
                     android:paddingLeft="@dimen/ui_10_dip"
                     android:paddingRight="@dimen/ui_15_dip"
                     android:paddingTop="@dimen/ui_10_dip"
-                    android:text="@string/public_bankcard_tips"
+
                     android:textColor="@color/white" />
 
                 <ImageView
@@ -382,13 +382,26 @@
                     android:text="银行名字"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimens_sp_16" />
+                <TextView
+                    android:id="@+id/tv_pay_bank_name_lf_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ui_30_dip"
+                    android:hint="请选择银行"
+                    android:textColor="#A5A5A5"
+                    android:textColorHint="#A5A5A5"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_select_bankcard"
+                    android:textSize="@dimen/dimens_sp_16" />
 
                 <RelativeLayout
+                    android:id="@+id/select_bank_card_right_rl"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/ui_30_dip"
-                    android:layout_toRightOf="@+id/tv_select_bankcard">
+                    android:layout_toRightOf="@+id/tv_select_bankcard"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/tv_pay_bank_iv"
@@ -429,7 +442,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/ui_5_dip"
+                    android:layout_marginRight="@dimen/ui_10_dip"
                     android:src="@drawable/arrow_right" />
 
                 <View
@@ -470,12 +483,14 @@
                     android:textSize="@dimen/dimens_sp_16" />
 
                 <ImageView
+                    android:id="@+id/actv_bank_city_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/ui_5_dip"
-                    android:src="@drawable/arrow_right" />
+                    android:layout_marginRight="@dimen/ui_10_dip"
+                    android:src="@drawable/arrow_right"
+                    android:clickable="true"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -489,7 +504,8 @@
                 android:id="@+id/rl_select_bankcard_branch"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ui_70_dip"
-                android:background="@color/white">
+                android:background="@color/white"
+               >
 
                 <com.cgbsoft.lib.widget.AverageTextView
                     android:id="@+id/tv_select_bankcard_branch"
@@ -513,14 +529,17 @@
                     android:hint="请选择开户行地址"
                     android:textColor="@color/black"
                     android:textColorHint="#A5A5A5"
+                    android:layout_toLeftOf="@+id/tv_bank_branch_arrow"
                     android:textSize="@dimen/dimens_sp_16" />
 
                 <ImageView
+                    android:id="@+id/tv_bank_branch_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/ui_5_dip"
+                    android:clickable="true"
+                    android:layout_marginRight="@dimen/ui_10_dip"
                     android:src="@drawable/arrow_right" />
 
                 <View

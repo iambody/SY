@@ -319,4 +319,6 @@
     <string name="public_fund_record">交易记录</string>
     <string name="intime_income_prompt">· 预计T+2日查看收益。（以实际查看收益时间为准）\n· T日：交易日，以每天15:00为界限，15:00之前为T日，之后为T+1日。周末和法定节假日不属于交易日。</string>
     <string name="public_bankcard_tips">运营文字</string>
+    <string name="set_transaction_pwd">请先输入交易密码</string>
+    <string name="bind_card_phone_inf">\"银行预留手机号是在办理该银行卡时候所填写的手机号码.没有预留,手机号忘记或者停用,请联系银行客服更新处理\"</string>
 </resources>

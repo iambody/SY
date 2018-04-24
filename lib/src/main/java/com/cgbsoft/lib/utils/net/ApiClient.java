@@ -1986,6 +1986,25 @@ public class ApiClient {
 
     }
 
+    /**
+     * 获取绑卡或者设置密码时候的运营位
+     */
+    public static Observable<String> getBindOrSetPwdOperationInf() {
+        HashMap<String, String> map = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().getBindCardOperation(createProgram(map)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
+    /**
+     * 公募基金设置交易密码
+     */
+    public static Observable<String> setTrancactionPwd(HashMap<String, String> param) {
+//    SET_TRANCACTION
+        HashMap<String, String> map = new HashMap<>();
+        return OKHTTP.getInstance().getRequestManager().resetTrancactionPwd(mapToBody(param)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
+
 
  /*   */
 

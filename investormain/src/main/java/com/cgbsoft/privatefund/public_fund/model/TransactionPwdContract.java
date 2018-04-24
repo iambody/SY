@@ -32,10 +32,25 @@ public class TransactionPwdContract {
 
         void getTransactionPwdError(String error);
 
+        /**
+         * 运营信息成功
+         *
+         * @param str
+         */
+        void getOperationInfSuccess(String str);
+
+        /**
+         * 运营信息失败
+         *
+         * @param error
+         */
+        void getOperationError(String error);
 
     }
 
     public interface transactionPwdPresenter extends BasePresenter {
-        void transactionPwdAction(HashMap<String, Object> map );
+        void transactionPwdAction(HashMap<String, String> map);
+
+        void getOperation();
     }
 }
