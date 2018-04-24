@@ -145,12 +145,12 @@
             android:value="${DATABASE_VER}" />
         <meta-data
             android:name="versionCode"
-            tools:replace="android:value"
-            android:value="${VERSION_CODE}" />
+            android:value="${VERSION_CODE}"
+            tools:replace="android:value" />
         <meta-data
             android:name="versionName"
-            tools:replace="android:value"
-            android:value="${VERSION_NAME}" />
+            android:value="${VERSION_NAME}"
+            tools:replace="android:value" />
         <meta-data
             android:name="dbVersion"
             android:value="${DATABASE_VER}" />
@@ -456,7 +456,9 @@
         <activity
             android:name=".mvp.ui.center.PublicFundTradePwdModifyActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".public_fund.TransactionPasswordActivity"
+            android:screenOrientation="portrait" />
         <!-- <activity -->
         <!-- android:name="com.cgbsoft.privatefund.widget.CloudMenuActivity" -->
         <!-- android:theme="@style/transcutestyle" -->

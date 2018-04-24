@@ -380,6 +380,9 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
+//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, TransactionPasswordActivity.class));
+
+
         if (AppManager.isVisitor(baseActivity)) {
             Intent intent = new Intent(baseActivity, LoginActivity.class);
             intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
@@ -1011,15 +1014,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (!BStrUtils.isEmpty(publishFundRecommendBean.getDescribeTags())) {
             List<String> tags = BStrUtils.regexUtilSplit(publishFundRecommendBean.getDescribeTags(), ",");
             if (null != tags && tags.size() >= 0) splitTages(tags);
-
+        } else {
+            homePublicTagsLay.setVisibility(View.INVISIBLE);
         }
         initPublicFundLay();
     }
 
     private void splitTages(List<String> tags) {
-
-//        TextView homePublicTagl0, homePublicTagl1, homeFlexible, homPublicTagr1, homePublicTagr2;
-
         switch (tags.size()) {
             case 1:
                 homePublicTagl1.setVisibility(View.GONE);
@@ -1195,7 +1196,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     }
 
     @OnClick(R.id.public_fund_bg)
-    public void jumpIntimeWell(){
+    public void jumpIntimeWell() {
 //        publicShareBaoDetail
         NavigationUtils.gotoNavWebActivity(baseActivity, CwebNetConfig.publicShareBaoDetail, getString(R.string.private_share_bao));
         TrackingDataManger.homePrivateMore(baseActivity);

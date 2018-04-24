@@ -1003,7 +1003,11 @@ public class JavaScriptObjectToc {
     public void closeWebview(String data) {
         RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 10);
         RxBus.get().post(RxConstant.REFRESH_PUBLIC_FUND_INFO, 9);
-        Router.build(RouteConfig.GOTOCMAINHONE).go(context);
+        try {
+            ((Activity) context).finish();
+        } catch (Exception e) {
+        }
+//        Router.build(RouteConfig.GOTOCMAINHONE).go(context);
     }
 
 

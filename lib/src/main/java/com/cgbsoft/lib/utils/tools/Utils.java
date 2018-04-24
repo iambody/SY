@@ -25,6 +25,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.cgbsoft.lib.AppManager;
@@ -53,7 +54,6 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import rx.Observable;
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -872,5 +872,14 @@ public class Utils {
                 return tObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
             }
         };
+    }
+
+    public static void hideKeyboard(Activity context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive() && context.getCurrentFocus() != null) {
+            if (context.getCurrentFocus().getWindowToken() != null) {
+                imm.hideSoftInputFromWindow(context.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
     }
 }

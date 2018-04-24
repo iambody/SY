@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:id="@+id/default_dialog_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dialog_ios2"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/default_dialog_title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:text="银行预留手机说明"
+                android:layout_marginTop="18dp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/default_dialog_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="22dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                android:gravity="left"
+                android:lineSpacingExtra="5sp"
+
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:background="#D1D1D1" />
+
+
+        <LinearLayout
+            android:id="@+id/dialog_single_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="44dp"
+
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/default_dialog_queren1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_kown_btn_shape1"
+                android:gravity="center"
+                android:text="知道了"
+
+                android:textColor="#CEA16E" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

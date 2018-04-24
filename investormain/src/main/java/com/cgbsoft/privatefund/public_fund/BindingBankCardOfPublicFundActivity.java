@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.dialog.WheelDialogAddress;
 import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.RxConstant;
+import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
@@ -30,6 +32,7 @@ import com.cgbsoft.lib.utils.tools.NavigationUtils;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.lib.widget.dialog.BankNumberDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
 import com.chenenyu.router.annotation.Route;
@@ -73,6 +76,10 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     private BindingBankCardBean bindingBankCardBean;
     private LinearLayout public_bindcard_cb_ar_lay;
     private TextView mAddressBank;
+    private TextView fund_bindcard_tips;//tip的字
+    private ImageView fund_bindcard_tips_del_iv;
+    private ImageView tv_pay_bank_iv;
+    private TextView tv_pay_bank_name_des;
     private String cityName;
 
     private int style;// 1 为赠卡风格 其它数字为开户流程风格
@@ -108,7 +115,11 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         public_bindcard_cb_ar = (CheckBox) findViewById(R.id.public_bindcard_cb_ar);
         public_bindcard_cb_ar_lay = (LinearLayout) findViewById(R.id.public_bindcard_cb_ar_lay);
 
-
+        fund_bindcard_tips = (TextView) findViewById(R.id.fund_bindcard_tips);
+        fund_bindcard_tips_del_iv = (ImageView) findViewById(R.id.fund_bindcard_tips_del_iv);
+        tv_pay_bank_iv = (ImageView) findViewById(R.id.tv_pay_bank_iv);
+        tv_pay_bank_name_des = (TextView) findViewById(R.id.tv_pay_bank_name_des);
+        findViewById(R.id.phone_number_query).setOnClickListener(this);
         style = getIntent().getIntExtra(STYLE, 0);
         String data = getIntent().getStringExtra(TAG_PARAMETER);
         if (style == 1) data = AppInfStore.getPublicFundInfo(this.getApplicationContext());
@@ -128,9 +139,11 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.GONE);
             public_bindcard_cb_ar.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckBoxSel = isChecked);
             public_bindcard_cb_ar_lay.setVerticalGravity(View.GONE);
+            findViewById(R.id.fund_bindcard_tips_lay).setVisibility(View.GONE);
         } else {
             findViewById(R.id.rl_cusno_name).setVisibility(View.GONE);
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.VISIBLE);
+            findViewById(R.id.fund_bindcard_tips_lay).setVisibility(View.VISIBLE);
         }
 
         bindView();
@@ -378,7 +391,18 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 finish();
                 break;
             case R.id.public_bindcard_tv_ar_proto://银行转账授权协议
-                NavigationUtils.gotoNavWebActivity(baseContext, CwebNetConfig.bankTransferState, "申购说明");
+                NavigationUtils.gotoNavWebActivity(baseContext, CwebNetConfig.bankTransferState, "银行转账授权协议");
+                break;
+            case R.id.phone_number_query:
+
+                new BankNumberDialog(baseContext, "银行预留手机号是在办理该银行卡时候所填写的手机号码.没有预留,手机号忘记或者停用,请联系银行客服更新处理") {
+                    @Override
+                    public void affirm() {
+
+                        dismiss();
+                    }
+                }.show();
+
                 break;
             default: //
         }
@@ -393,11 +417,17 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
             mPayBankName.setText(data.getStringExtra(SelectBankCardActivity.CHANNEL_NAME));
             bindingBankCardBean.setChannelid(data.getStringExtra(SelectBankCardActivity.CHANNEL_ID));
             bindingBankCardBean.setBanknameid(data.getStringExtra(SelectBankCardActivity.BANK_NAME_ID));
+            String iv = data.getStringExtra(SelectBankCardActivity.CHANNEL_IV);
+            String dec = data.getStringExtra(SelectBankCardActivity.CHANNEL_DEC);
+            Imageload.display(baseContext, iv, tv_pay_bank_iv);
+            BStrUtils.setTv(tv_pay_bank_name_des, dec);
             if (mAddressBank != null && !TextUtils.isEmpty(mAddressBank.getText())) {
                 mAddressBank.setText("");
                 mAddressBank.setHint("请选择开户行地址");
                 mBankBranchName.setText("");
                 mBankBranchName.setHint(mBankBranchName.getHint());
+
+
             }
         }
 

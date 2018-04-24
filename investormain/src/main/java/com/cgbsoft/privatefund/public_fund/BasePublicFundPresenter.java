@@ -15,6 +15,7 @@ import com.cgbsoft.lib.widget.MToast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import rx.Observable;
@@ -32,19 +33,20 @@ public class BasePublicFundPresenter extends BasePresenterImpl {
 
     /**
      * 从金证获取公募基金的相关信息
+     *
      * @param parms 请求参数
      */
-    public void getFundDataFormJZ(Map<String,Object> parms,PreSenterCallBack preSenterCallBack){
+    public void getFundDataFormJZ(Map<String, Object> parms, PreSenterCallBack preSenterCallBack) {
         ApiClient.getPublicFundFormProxy(parms).subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                parseResultFormServer(s,preSenterCallBack);
+                parseResultFormServer(s, preSenterCallBack);
             }
 
             @Override
             protected void onRxError(Throwable error) {
-                if(error instanceof ApiException && preSenterCallBack!=null){
-                    preSenterCallBack.field(((ApiException) error).getCode(),error.getMessage());
+                if (error instanceof ApiException && preSenterCallBack != null) {
+                    preSenterCallBack.field(((ApiException) error).getCode(), error.getMessage());
                 }
                 error.printStackTrace();
             }
@@ -55,50 +57,85 @@ public class BasePublicFundPresenter extends BasePresenterImpl {
 
     /**
      * 处理公募基金接口信息
+     *
      * @param observable
      */
-    public void handlerPublicFundResult(Observable<String> observable,PreSenterCallBack preSenterCallBack){
+    public void handlerPublicFundResult(Observable<String> observable, PreSenterCallBack preSenterCallBack) {
         observable.subscribe(new RxSubscriber<String>() {
             @Override
             protected void onEvent(String s) {
-                parseResultFormServer(s,preSenterCallBack);
+                parseResultFormServer(s, preSenterCallBack);
             }
 
             @Override
             protected void onRxError(Throwable error) {
                 error.printStackTrace();
                 String errorCode = UNEXPECTED;
-                if(error instanceof ApiException && "500".equals(((ApiException) error).getCode())){
+                if (error instanceof ApiException && "500".equals(((ApiException) error).getCode())) {
                     MToast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                     errorCode = ((ApiException) error).getCode();
                 }
-                if(preSenterCallBack!=null){
-                    preSenterCallBack.field(errorCode,error.getMessage());
+                if (preSenterCallBack != null) {
+                    preSenterCallBack.field(errorCode, error.getMessage());
                 }
             }
         });
     }
 
+    /**
+     * 根据银行卡号获取银行的相关信息
+     *
+     * @param s
+     * @param
+     */
+    public void getBankInfFromNumber(String number, PreSenterCallBack preSenterCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("test", number);
+        addSubscription(ApiClient.getBankInfFromNumber(map).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                if (preSenterCallBack != null) {
+                    preSenterCallBack.even(s);
+                }
+            }
 
-    public void parseResultFormServer(String s ,PreSenterCallBack preSenterCallBack){
+            @Override
+            protected void onRxError(Throwable error) {
+                String errorCode = UNEXPECTED;
+                if (error instanceof ApiException && "500".equals(((ApiException) error).getCode())) {
+                    MToast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    errorCode = ((ApiException) error).getCode();
+                }
+                if (preSenterCallBack != null) {
+                    preSenterCallBack.field(errorCode, error.getMessage());
+                }
+            }
+        }));
+    }
+
+    public void parseResultFormServer(String s, PreSenterCallBack preSenterCallBack) {
         String message = "";
         String result = "";
         try {
-            result =  new JSONObject(s).getString("result");
-            message =  new JSONObject(s).getString("message");
+            result = new JSONObject(s).getString("result");
+            message = new JSONObject(s).getString("message");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if(!BStrUtils.isEmpty(message)){
-            if(preSenterCallBack!=null) preSenterCallBack.field(0+"",message);
-        }else {
-            if(preSenterCallBack!=null) preSenterCallBack.even(result);
+        if (!BStrUtils.isEmpty(message)) {
+            if (preSenterCallBack != null) preSenterCallBack.field(0 + "", message);
+        } else {
+            if (preSenterCallBack != null) preSenterCallBack.even(result);
         }
     }
 
+    public void setTransactionPwd(Map<String, Object> parms, PreSenterCallBack p) {
+
+    }
 
     public interface PreSenterCallBack<T> {
         void even(T t);
-        void field(String errorCode,String errorMsg);
+
+        void field(String errorCode, String errorMsg);
     }
 }

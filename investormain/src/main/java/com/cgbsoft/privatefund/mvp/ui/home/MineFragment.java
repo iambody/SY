@@ -1098,6 +1098,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         intent.putExtra(WebViewConstant.push_message_title, getString(R.string.mine_members));
         intent.putExtra(WebViewConstant.RIGHT_MEMBER_RULE_HAS, true);
         startActivity(intent);
+
     }
 
 //     private Runnable runnable = () -> {

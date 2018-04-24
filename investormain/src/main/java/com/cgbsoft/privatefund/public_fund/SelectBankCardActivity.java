@@ -36,6 +36,9 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
     public final static String BANK_NAME_ID = "banknameid";
     public final static String CHANNEL_ID = "channelid";
     public final static String CHANNEL_NAME = "channelname";
+    public final static String CHANNEL_IV = "channelbankiv";
+    public final static String CHANNEL_DEC = "channelbankdes";
+
 
     private RecyclerView bankList;
     private List<BuyPublicFundActivity.BankCardInfo> bankOfJZSupportList = new ArrayList<>();
@@ -120,6 +123,8 @@ public class SelectBankCardActivity extends BaseActivity<BindingBankCardOfPublic
                             getIntent().putExtra(BANK_NAME_ID, bankOfJZSupport.getBankNameId());
                             getIntent().putExtra(CHANNEL_ID, bankOfJZSupport.getChannelId());
                             getIntent().putExtra(CHANNEL_NAME, bankOfJZSupport.getFullName());
+                            getIntent().putExtra(CHANNEL_IV, bankOfJZSupport.getIcon());
+                            getIntent().putExtra(CHANNEL_DEC, bankOfJZSupport.getBankLimit());
                             setResult(Activity.RESULT_OK, getIntent());
                             finish();
                         }
