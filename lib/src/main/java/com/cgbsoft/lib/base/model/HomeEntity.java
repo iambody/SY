@@ -20,7 +20,7 @@ public class HomeEntity extends BaseResult<HomeEntity.Result> {
     public static class Banner {
         public String jumpId;//": "200100",
         public String url;//": "https://",
-        public String imageUrl;//": "https://",
+        public String imageUrlV3;//": "https://",
         public String title;//": "简单生活物语"
         public String jumpType;//
     }
@@ -48,6 +48,7 @@ public class HomeEntity extends BaseResult<HomeEntity.Result> {
         public String title;//":"尊享私行",
         public String subtitle;//":"连接人与财富",
         public bankBean product;
+        public Infomation information;
     }
 
     public static class bankBean {
@@ -73,5 +74,20 @@ public class HomeEntity extends BaseResult<HomeEntity.Result> {
         public String term;//":"12个月",
         public String shortName;//":"恒山十七号",
         public String productName;//":"天和盈泰恒山十七号私募投资基金"
+    }
+
+    public static class Infomation {
+        public List<InfoContent> content;
+        public String title;
+        public String jumpId;
+
+        public class InfoContent {
+            public String id;
+            public String title;
+            public String category;
+            public String imageUrl;
+            public String readCount;
+            public String label;
+        }
     }
 }

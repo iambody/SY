@@ -55,14 +55,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ui_15_dip"
                         android:background="@color/app_bg"
-                        android:visibility="gone"
-                        />
-                    <!-- 会员等级的布局 -->
-                    <include
-                        android:id="@+id/main_home_level_lay"
-                        layout="@layout/view_home_level_lay" />
+                        android:visibility="gone" />
                     <!-- 运营位的布局 -->
-
                     <com.cgbsoft.lib.widget.MyGridView
                         android:id="@+id/main_home_gvw"
                         android:layout_width="match_parent"
@@ -76,16 +70,19 @@
                         android:id="@+id/festival_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/ui_10_dip"
-                        android:paddingBottom="@dimen/ui_10_dip"
                         android:background="@color/white"
                         android:orientation="horizontal"
-                        />
+                        android:paddingBottom="@dimen/ui_10_dip"
+                        android:paddingTop="@dimen/ui_10_dip" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/ui_15_dip"
                         android:background="@color/app_bg" />
+
+                    <include
+                        android:id="@+id/home_news_view"
+                        layout="@layout/view_home_news" />
                     <!--产品的 -->
                     <include
                         android:id="@+id/home_product_view"

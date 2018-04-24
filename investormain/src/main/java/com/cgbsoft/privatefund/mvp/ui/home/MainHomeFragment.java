@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -102,8 +103,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     BannerView homeBannerview;
     @BindView(R.id.home_floatstewardview)
     FloatStewardView home_floatstewardview;
-    @BindView(R.id.view_home_level_str)
-    TextView viewHomeLevelStr;
     @BindView(R.id.main_home_swiperefreshlayout)
     MySwipeRefreshLayout mainHomeSwiperefreshlayout;
     @BindView(R.id.main_home_smartscrollview)
@@ -136,10 +135,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @BindView(R.id.home_publicfund_bt)
     ImageView homePublicfundBt;
     //私募基金
-    @BindView(R.id.home_product_title)
-    TextView homeProductTitle;
-    @BindView(R.id.home_peoduct_subtitle)
-    TextView homePeoductSubtitle;
     @BindView(R.id.view_home_product_bg)
     ImageView viewHomeProductBg;
     @BindView(R.id.view_home_product_tag)
@@ -165,11 +160,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @BindView(R.id.public_fund_bg)
     ImageView public_fund_bg;
 
-    //等级
-    @BindView(R.id.view_home_member)
-    TextView viewHomeMember;
-    @BindView(R.id.view_home_level_arrow)
-    ImageView viewHomeLevelArrow;
     @BindView(R.id.main_home_gvw)
     MyGridView mainHomeGvw;
     //新的直播新增
@@ -185,8 +175,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     TextView viewNewliveTitleTag;
     @BindView(R.id.view_newlive_number)
     TextView viewNewliveNumber;
-    @BindView(R.id.view_home_level_bg)
-    ImageView viewHomeLevelBg;
     @BindView(R.id.home_newlive_foreshow_lay)
     RelativeLayout homeNewliveForeshowLay;
     @BindView(R.id.home_newlive_now_lay)
@@ -219,8 +207,14 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     LinearLayout viewHomePrivateFundSkipLay;
     @BindView(R.id.view_home_product_focus)
     LinearLayout viewHomeProductFocus;
+    @BindView(R.id.home_news_list)
+    ListView homeNewsList;
+    @BindView(R.id.home_news_title)
+    LinearLayout homeNewsTitle;
+    @BindView(R.id.home_news_title_name)
+    TextView homeNewsTitleName;
     //产品新增
-    View home_product_view, main_home_level_lay, main_home_newlive_lay;
+    View home_product_view, main_home_newlive_lay;
     //一些控制标识
     boolean isLoading, bannerIsLeft, bannerIsRight, isRolling, isVisible;
     //一些数据&标示为
@@ -425,7 +419,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             }
         });
 
-        RelativeLayout.LayoutParams bannerParames = new RelativeLayout.LayoutParams(screenWidth, (int) ((screenWidth * 120) / 188));
+        RelativeLayout.LayoutParams bannerParames = new RelativeLayout.LayoutParams(screenWidth, (int) ((screenWidth * 167) / 375));
         homeBannerview.setLayoutParams(bannerParames);
 
         //新直播
@@ -434,9 +428,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         home_product_view = ViewHolders.get(mFragmentView, R.id.home_product_view);
         //标题和内容
         /* 直播*/
-        main_home_level_lay = mFragmentView.findViewById(R.id.main_home_level_lay);
-        main_home_level_lay.setOnClickListener(this);
-        //等级
         mainHomeSwiperefreshlayout.setProgressBackgroundColorSchemeResource(R.color.white);
         // 设置下拉进度的主题颜色
         mainHomeSwiperefreshlayout.setColorSchemeResources(R.color.app_golden_disable, R.color.app_golden, R.color.app_golden_click, R.color.app_golden_click);
@@ -704,7 +695,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
         for (HomeEntity.Banner h : banner) {
             BannerBean b = new BannerBean();
-            b.setImageUrl(h.imageUrl);
+            b.setImageUrl(h.imageUrlV3);
             b.setJumpUrl(h.url);
             b.setTitle(h.title);
             bannerBeen.add(b);
@@ -755,8 +746,32 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         initViewPage(data.banner);
         initOperation(data.module);
         //用户等级信息
-        initLevel(data.myInfo);
         initProduct(data.bank);
+        initInfomation(data.bank.information);
+
+    }
+
+    private void initInfomation(HomeEntity.Infomation infomation) {
+        String title = infomation.title;
+        String jumpId = infomation.jumpId;
+        List<HomeEntity.Infomation.InfoContent> content = infomation.content;
+        homeNewsTitleName.setText(title);
+
+        homeNewsTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavigationUtils.jumpNativePage(baseActivity, Integer.decode(jumpId));
+            }
+        });
+
+        homeNewsList.setAdapter(new HomeNewsAdapter(getActivity(), infomation.content));
+        homeNewsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //TODO
+            }
+        });
+
 
     }
 
@@ -765,8 +780,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             home_product_view.setVisibility(View.GONE);
             return;
         }
-        BStrUtils.setTv(homeProductTitle, bank.title);
-        BStrUtils.setTv(homePeoductSubtitle, bank.subtitle);
         home_product_view.setVisibility(View.VISIBLE);
         if (null == bank.product || null == bank.product.content) {
             baseActivity.findViewById(R.id.home_product_view).setVisibility(View.GONE);
@@ -922,18 +935,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         return resId;
     }
 
-    /**
-     * 用户等级的数据填充
-     */
-    private void initLevel(HomeEntity.Level level) {
-        BStrUtils.setTv1(viewHomeLevelStr, level.memberLevel);
-        viewHomeMember.setTextColor(getResources().getColor("0".equals(level.level) ? R.color.home_level_gray : R.color.home_level_golde));
-        viewHomeLevelStr.setTextColor(getResources().getColor("0".equals(level.level) ? R.color.home_level_gray : R.color.home_level_white));
-        viewHomeLevelBg.setImageResource("0".equals(level.level) ? R.drawable.home_level_normal_bg : R.drawable.home_level_level_bg);
-
-        viewHomeLevelArrow.setImageResource("0".equals(level.level) ? R.drawable.home_level_gray_arrow : R.drawable.home_level_arrow);
-    }
-
     @Override
     public void getResultError(String error) {
         if (mainHomeSwiperefreshlayout.isRefreshing()) {
@@ -949,8 +950,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
         if (null == cachesData) return;
         //banner
         initViewPage(cachesData.banner);
-        //用户等级信息
-        initLevel(cachesData.myInfo);
         //产品
         initProduct(cachesData.bank);
     }
@@ -1138,11 +1137,6 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.main_home_level_lay://等级
-                String url = CwebNetConfig.membercenter;
-                UiSkipUtils.toNextActivity(baseActivity, MembersAreaActivity.class);
-                TrackingDataManger.homeMember(baseActivity);
-                break;
             case R.id.main_home_newlive_lay:
                 if (null == homeliveInfBean) return;
                 switch (homeliveInfBean.type) {
