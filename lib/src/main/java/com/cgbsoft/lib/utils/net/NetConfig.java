@@ -468,6 +468,7 @@ public class NetConfig {
         static final String BIND_OR_SETPWD_OPERATION = PUBLIC_FUND_API_V2 + "/operationsinfo";//获取运营位
 
         static final String SET_TRANCACTION = PUBLIC_FUND_API_V2 + "/settraderpassword";//公募基金设置交易密码
+        static final String GET_BANCK_BY_NUMBER= PUBLIC_FUND_API_V2 +"/bankacctinfobyacct";//更银行卡号获取银行名字支行信息;
     }
 
 

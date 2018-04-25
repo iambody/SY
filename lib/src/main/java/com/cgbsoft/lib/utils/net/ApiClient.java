@@ -2005,7 +2005,15 @@ public class ApiClient {
 
     }
 
+    /**
+     * 根据银行卡号获取银行名字支行信息
+     */
 
+    public static Observable<String> getBanckinfByNumber(HashMap<String, String> param) {
+
+        return OKHTTP.getInstance().getRequestManager().getBankInfByNumber(createProgram(param)).compose(RxSchedulersHelper.io_main()).compose(RxResultHelper.filterResultToString());
+
+    }
  /*   */
 
     /**

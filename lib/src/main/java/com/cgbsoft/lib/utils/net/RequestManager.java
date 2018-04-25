@@ -1046,5 +1046,7 @@ interface RequestManager {
     @POST(NetConfig.PUBLIC_FUND.SET_TRANCACTION)
     Observable<ResponseBody> resetTrancactionPwd(@Body RequestBody responseBody);
 
+    @GET(NetConfig.PUBLIC_FUND.GET_BANCK_BY_NUMBER)
+    Observable<ResponseBody> getBankInfByNumber(@QueryMap Map<String, String> program);
 
 }

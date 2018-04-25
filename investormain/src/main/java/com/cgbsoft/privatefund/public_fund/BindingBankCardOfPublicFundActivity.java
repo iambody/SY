@@ -146,7 +146,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         } else {
             findViewById(R.id.rl_cusno_name).setVisibility(View.GONE);
             ((ViewGroup) mPankcardCode.getParent()).getChildAt(2).setVisibility(View.VISIBLE);
-            findViewById(R.id.fund_bindcard_tips_lay).setVisibility(View.VISIBLE);
+//            findViewById(R.id.fund_bindcard_tips_lay).setVisibility(View.VISIBLE);
         }
 
         bindView();
@@ -297,10 +297,12 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         getPresenter().getBindCardOperationinf(new BasePublicFundPresenter.PreSenterCallBack<String>() {
             @Override
             public void even(String s) {
+
                 if (BStrUtils.isEmpty(s)) return;
                 bindCardOperationInf = new Gson().fromJson(s, BindCardOperationInf.class);
                 if (null != bindCardOperationInf)
                     BStrUtils.setTv((TextView) findViewById(R.id.fund_bindcard_tips), bindCardOperationInf.getBindCardCardholderExplanation());
+                findViewById(R.id.fund_bindcard_tips_lay).setVisibility(View.VISIBLE);
             }
 
             @Override

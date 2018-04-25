@@ -920,7 +920,7 @@ public class MineFragment extends BaseFragment<MinePresenter> implements MineCon
         String custno = publicFundInf.getCustNo();
         String isHaveBanckAccount = publicFundInf.getIsHaveCustBankAcct();
         String ristPingce = publicFundInf.getCustRisk();
-        ll_public_fund_create_account.setVisibility((Utils.isWhiteUserFlag(getContext())) && (TextUtils.isEmpty(custno) || (!TextUtils.equals("1", isHaveBanckAccount) || TextUtils.isEmpty(ristPingce))) ? View.VISIBLE : View.GONE);
+        ll_public_fund_create_account.setVisibility((Utils.isWhiteUserFlag(getContext())) && (TextUtils.isEmpty(custno) ||BStrUtils.isEmpty(publicFundInf.getTransactionPasswd()) ||(!TextUtils.equals("1", isHaveBanckAccount) || TextUtils.isEmpty(ristPingce))) ? View.VISIBLE : View.GONE);
         if (isExistPrivateShareMoney(financialAssertModel)) {
             ll_private_share_bao_empty.setVisibility(View.GONE);
             ll_private_share_bao_fill.setVisibility(View.VISIBLE);

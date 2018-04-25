@@ -10,6 +10,8 @@ import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.widget.MToast;
+import com.cgbsoft.privatefund.bean.publicfund.BankBranchInf;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -131,7 +133,7 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
             protected void onEvent(String s) {
                 if (null != preSenterCallBack) {
                     try {
-                        JSONObject obj=new JSONObject(s);
+                        JSONObject obj = new JSONObject(s);
                         preSenterCallBack.even(obj.getString("result"));
 
                     } catch (JSONException e) {
@@ -155,5 +157,46 @@ public class BindingBankCardOfPublicFundPresenter extends BasePublicFundPresente
                 }
             }
         }));
+    }
+
+
+    /**
+     * 根据银行卡号获取银行信息
+     */
+    public void getBanckInfByNumber(String bankNumber,PreSenterCallBack<BankBranchInf> preSenterCallBack) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("depositAcct", bankNumber);
+        getCompositeSubscription().add(ApiClient.getBanckinfByNumber(map).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                if (null != preSenterCallBack) {
+                    try {
+                        JSONObject obj = new JSONObject(s);
+                        String result=obj.getString("result");
+                        preSenterCallBack.even(new Gson().fromJson(result,BankBranchInf.class));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                error.printStackTrace();
+                String errorCode = UNEXPECTED;
+                if (error instanceof ApiException && "500".equals(((ApiException) error).getCode())) {
+                    MToast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                    errorCode = ((ApiException) error).getCode();
+                }
+                if (preSenterCallBack != null) {
+                    preSenterCallBack.field(errorCode, error.getMessage());
+                }
+            }
+        }));
+
+//        getBanckinfByNumber
     }
 }

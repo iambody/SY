@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
+import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -63,10 +65,8 @@ import com.cgbsoft.privatefund.adapter.OperationAdapter;
 import com.cgbsoft.privatefund.bean.LiveInfBean;
 import com.cgbsoft.privatefund.bean.product.PublicFundInf;
 import com.cgbsoft.privatefund.bean.product.PublishFundRecommendBean;
-import com.cgbsoft.privatefund.mvc.ui.MembersAreaActivity;
 import com.cgbsoft.privatefund.mvp.contract.home.MainHomeContract;
 import com.cgbsoft.privatefund.mvp.presenter.home.MainHomePresenter;
-import com.cgbsoft.privatefund.public_fund.TransactionPasswordActivity;
 import com.cgbsoft.privatefund.utils.UnreadInfoNumber;
 import com.cgbsoft.privatefund.widget.FloatStewardView;
 import com.cgbsoft.privatefund.widget.RightShareWebViewActivity;
@@ -376,7 +376,22 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, TransactionPasswordActivity.class));
+        HashMap<String,String>map=new HashMap<>();
+        map.put("depositAcct","9558820200001323775");
+        ApiClient.getBanckinfByNumber(map).subscribe(new RxSubscriber<String>() {
+            @Override
+            protected void onEvent(String s) {
+                Log.d("ss",s);
+            }
+
+            @Override
+            protected void onRxError(Throwable error) {
+                Log.d("ss",error.getMessage());
+            }
+        });
+
+
+//        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, TransactionPasswordActivity.class));
 
 //        if (AppManager.isVisitor(baseActivity)) {
 //            Intent intent = new Intent(baseActivity, LoginActivity.class);
@@ -1086,7 +1101,7 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
             viewHomePublicFundLay.setVisibility(View.VISIBLE);
             view_home_public_fund_upload.setVisibility(View.GONE);
             //在白名单内 需要显示
-            if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustRisk()) || BStrUtils.isEmpty(publicFundInf.getCustRisk())) {
+            if (BStrUtils.isEmpty(publicFundInf.getIsHaveCustBankAcct()) || "0".equals(publicFundInf.getIsHaveCustBankAcct()) || BStrUtils.isEmpty(publicFundInf.getCustRisk()) || BStrUtils.isEmpty(publicFundInf.getCustRisk())||BStrUtils.isEmpty(publicFundInf.getTransactionPasswd())) {
                 viewPublicFundRegist.setVisibility(View.VISIBLE);
             } else {
                 viewPublicFundRegist.setVisibility(View.GONE);
