@@ -7,6 +7,7 @@ package com.cgbsoft.privatefund.bean.publicfund;
 public class BankBranchInf {
 
     String channelId;//":"金证中银行卡的渠道ID",
+    String bankNameId;//去获取支行时候需要用到的
 
     String bankName;//":"银行卡名称",
 
@@ -15,6 +16,8 @@ public class BankBranchInf {
     String icon;//":"银行卡图标",
 
     String depositAcct;//":"银行卡号"
+
+    String bankLimit;//提现说明
 
     public String getChannelId() {
         return channelId;
@@ -54,5 +57,21 @@ public class BankBranchInf {
 
     public void setDepositAcct(String depositAcct) {
         this.depositAcct = depositAcct;
+    }
+
+    public String getBankLimit() {
+        return bankLimit;
+    }
+
+    public void setBankLimit(String bankLimit) {
+        this.bankLimit = bankLimit;
+    }
+
+    public String getBankNameId() {
+        return bankNameId;
+    }
+
+    public void setBankNameId(String bankNameId) {
+        this.bankNameId = bankNameId;
     }
 }

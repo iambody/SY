@@ -401,6 +401,7 @@
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/ui_30_dip"
+                    android:layout_marginRight="@dimen/ui_20_dip"
                     android:layout_toRightOf="@+id/tv_select_bankcard"
                     android:visibility="gone">
 
@@ -433,6 +434,8 @@
                         android:layout_marginLeft="@dimen/ui_10_dip"
                         android:layout_toRightOf="@+id/tv_pay_bank_iv"
                         android:text="暂无银行卡信息"
+                        android:lines="1"
+                        android:ellipsize="end"
                         android:textColor="#A5A5A5"
                         android:textColorHint="#A5A5A5"
                         android:textSize="@dimen/dimens_sp_13" />

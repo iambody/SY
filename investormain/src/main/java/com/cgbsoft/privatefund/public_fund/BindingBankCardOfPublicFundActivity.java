@@ -29,12 +29,14 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
+import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.BankNumberDialog;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
 import com.cgbsoft.privatefund.R;
+import com.cgbsoft.privatefund.bean.publicfund.BankBranchInf;
 import com.cgbsoft.privatefund.bean.publicfund.BindCardOperationInf;
 import com.chenenyu.router.annotation.Route;
 import com.google.gson.Gson;
@@ -118,7 +120,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
         fund_bindcard_tips = (TextView) findViewById(R.id.fund_bindcard_tips);
         fund_bindcard_tips_del_iv = (ImageView) findViewById(R.id.fund_bindcard_tips_del_iv);
-        fund_bindcard_tips_del_iv.setOnClickListener((view)->findViewById(R.id.fund_bindcard_tips_lay).setVisibility(View.GONE));
+        fund_bindcard_tips_del_iv.setOnClickListener((view) -> findViewById(R.id.fund_bindcard_tips_lay).setVisibility(View.GONE));
         tv_pay_bank_iv = (ImageView) findViewById(R.id.tv_pay_bank_iv);
         tv_pay_bank_name_des = (TextView) findViewById(R.id.tv_pay_bank_name_des);
         findViewById(R.id.phone_number_query).setOnClickListener(this);
@@ -203,6 +205,10 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         mAddressBank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (BStrUtils.isEmpty(mBankBranchName.getText().toString())) {
+                    MToast.makeText(BindingBankCardOfPublicFundActivity.this, "请先选择银行卡类型", Toast.LENGTH_LONG);
+                    return;
+                }
                 if (null != bindingBankCardBean && null != bindingBankCardBean.getBanknameid()) {
                     showAddressSelector();
                 } else {
@@ -382,6 +388,19 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         dialogAddress.show();
     }
 
+    LoadingDialog loadingDialog;
+
+    private boolean isHaseBankInf(BankBranchInf bankBranchInf) {
+        if (null == bankBranchInf) return false;
+        if (BStrUtils.isEmpty(bankBranchInf.getBankName())) return false;
+        if (BStrUtils.isEmpty(bankBranchInf.getChannelId())) return false;
+        if (BStrUtils.isEmpty(bankBranchInf.getBankNameId())) return false;
+        if (BStrUtils.isEmpty(bankBranchInf.getParaCity())) return false;
+        if (BStrUtils.isEmpty(bankBranchInf.getDepositAcct())) return false;
+        return true;
+
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -395,7 +414,65 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 break;
 
             case R.id.rl_select_bankcard: //选择银行卡
-                startActivityForResult(new Intent(this, SelectBankCardActivity.class), SELECT_BANK);
+                //之前代码留着 体验不好 防止产品修改需求 之前逻辑只有这一个跳转
+//                startActivityForResult(new Intent(this, SelectBankCardActivity.class), SELECT_BANK);
+                //新逻辑需要先请求接口   成功了设置银行名字和支行地区 不成功进行跳转银行列表操作
+                String bankNumber = mPankcardCode.getText().toString();
+                if (BStrUtils.isEmpty(bankNumber)) {
+                    PromptManager.ShowCustomToast(baseContext, "请填写银行卡号");
+                    return;
+                }
+                loadingDialog = LoadingDialog.getLoadingDialog(this, "获取银行信息", false, false);
+                loadingDialog.show();
+                getPresenter().getBanckInfByNumber(bankNumber, new BasePublicFundPresenter.PreSenterCallBack<BankBranchInf>() {
+                    @Override
+                    public void even(BankBranchInf bankBranchInf) {
+                        loadingDialog.hide();
+                        //获取成功  需要依托显示逻辑
+                        if (!isHaseBankInf(bankBranchInf))
+                            startActivityForResult(new Intent(BindingBankCardOfPublicFundActivity.this, SelectBankCardActivity.class), SELECT_BANK);
+                        //*************银行卡展示逻辑***************
+                        BStrUtils.setTv(mPayBankName, bankBranchInf.getBankName());
+//                        mPayBankName.setText(data.getStringExtra(SelectBankCardActivity.CHANNEL_NAME));
+                        bindingBankCardBean.setChannelid(bankBranchInf.getBankNameId());
+//                        bindingBankCardBean.setBanknameid(data.getStringExtra(SelectBankCardActivity.BANK_NAME_ID));
+                        String iv = bankBranchInf.getIcon();
+                        String dec = bankBranchInf.getBankLimit();
+//                        String iv = data.getStringExtra(SelectBankCardActivity.CHANNEL_IV);
+//                        String dec = data.getStringExtra(SelectBankCardActivity.CHANNEL_DEC);
+                        Imageload.display(baseContext, iv, tv_pay_bank_iv);
+                        BStrUtils.setTv(tv_pay_bank_name_des, dec);
+                        findViewById(R.id.tv_pay_bank_name_lf_tv).setVisibility(View.GONE);
+                        findViewById(R.id.select_bank_card_right_rl).setVisibility(View.VISIBLE);
+                        if (mAddressBank != null && !TextUtils.isEmpty(mAddressBank.getText())) {
+                            mAddressBank.setText("");
+                            mAddressBank.setHint("请选择开户行地址");
+                            mBankBranchName.setText("");
+                            mBankBranchName.setHint(mBankBranchName.getHint());
+
+
+                        }
+
+                        //***************地区***********
+                        cityName = bankBranchInf.getParaCity();
+
+                        if (!cityName.equals(mAddressBank.getText().toString())) {
+                            mBankBranchName.setText("");
+                            mBankBranchName.setHint(mBankBranchName.getHint());
+                        }
+                        mAddressBank.setText(cityName);
+
+                    }
+
+                    @Override
+                    public void field(String errorCode, String errorMsg) {
+                        loadingDialog.hide();
+                        //获取失败
+                        startActivityForResult(new Intent(BindingBankCardOfPublicFundActivity.this, SelectBankCardActivity.class), SELECT_BANK);
+                    }
+                });
+
+
                 break;
 
             case R.id.tv_bank_branch:// 选址支行
