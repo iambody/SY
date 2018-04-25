@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +37,6 @@ import com.cgbsoft.lib.utils.cache.SPreference;
 import com.cgbsoft.lib.utils.constant.Constant;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.imgNetLoad.Imageload;
-import com.cgbsoft.lib.utils.net.ApiClient;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.rxjava.RxSubscriber;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
@@ -77,6 +75,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import app.ndk.com.enter.mvp.ui.LoginActivity;
+import app.privatefund.com.im.MessageListActivity;
 import app.privatefund.com.vido.VideoNavigationUtils;
 import app.product.com.utils.ProductNavigationUtils;
 import butterknife.BindView;
@@ -376,32 +375,32 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
      */
     @OnClick(R.id.main_home_new_iv)
     public void onNewClicked() {
-        HashMap<String,String>map=new HashMap<>();
-        map.put("depositAcct","9558820200001323775");
-        ApiClient.getBanckinfByNumber(map).subscribe(new RxSubscriber<String>() {
-            @Override
-            protected void onEvent(String s) {
-                Log.d("ss",s);
-            }
-
-            @Override
-            protected void onRxError(Throwable error) {
-                Log.d("ss",error.getMessage());
-            }
-        });
+//        HashMap<String,String>map=new HashMap<>();
+//        map.put("depositAcct","9558820200001323775");
+//        ApiClient.getBanckinfByNumber(map).subscribe(new RxSubscriber<String>() {
+//            @Override
+//            protected void onEvent(String s) {
+//                Log.d("ss",s);
+//            }
+//
+//            @Override
+//            protected void onRxError(Throwable error) {
+//                Log.d("ss",error.getMessage());
+//            }
+//        });
 
 
 //        UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, TransactionPasswordActivity.class));
 
-//        if (AppManager.isVisitor(baseActivity)) {
-//            Intent intent = new Intent(baseActivity, LoginActivity.class);
-//            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
-//        } else {
-//            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
-//        }
-//        DataStatistApiParam.homeClickNew();
-//        TrackingDataManger.homeNew(baseActivity);
+        if (AppManager.isVisitor(baseActivity)) {
+            Intent intent = new Intent(baseActivity, LoginActivity.class);
+            intent.putExtra(LoginActivity.TAG_GOTOLOGIN, true);
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, intent);
+        } else {
+            UiSkipUtils.toNextActivityWithIntent(baseActivity, new Intent(baseActivity, MessageListActivity.class));
+        }
+        DataStatistApiParam.homeClickNew();
+        TrackingDataManger.homeNew(baseActivity);
 
     }
 
