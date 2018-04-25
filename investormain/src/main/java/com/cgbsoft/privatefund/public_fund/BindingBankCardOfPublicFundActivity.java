@@ -133,6 +133,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         }
 
         if (style == 1) {
+//            rl_step_flow_up
+            findViewById(R.id.rl_step_flow_up).setVisibility(View.GONE);
             findViewById(R.id.rl_step_flow).setVisibility(View.GONE);
             View view = findViewById(R.id.rl_phonenum_root);
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) view.getLayoutParams();
