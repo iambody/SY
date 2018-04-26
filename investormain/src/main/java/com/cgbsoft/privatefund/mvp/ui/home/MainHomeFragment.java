@@ -1237,7 +1237,8 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
     @OnClick(R.id.view_home_public_fund_skip_lay)
     public void onViewPublicFundSkipClicked() {
 
-        NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
+        NavigationUtils.jumpNativePage(baseActivity, 2004);
+//        NavigationUtils.jumpNativePage(baseActivity, WebViewConstant.Navigation.PRIVATE_BANK_PAGE);
     }
 
     private void gotoRiskevalust() {

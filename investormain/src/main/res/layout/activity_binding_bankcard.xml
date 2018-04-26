@@ -12,7 +12,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <!-- <include layout="@layout/title_public_fund" />-->
+    <!-- TIPS -->
+    <LinearLayout
+        android:id="@+id/fund_bindcard_tips_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ACACAC"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
+        <TextView
+            android:id="@+id/fund_bindcard_tips"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/ui_10_dip"
+            android:paddingLeft="@dimen/ui_10_dip"
+            android:paddingRight="@dimen/ui_15_dip"
+            android:paddingTop="@dimen/ui_10_dip"
+
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/fund_bindcard_tips_del_iv"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/ui_6_dip"
+            android:clickable="true"
+            android:src="@drawable/bank_ls_del_iv" />
+    </LinearLayout>
+    <!-- TIPS....... -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -255,40 +288,7 @@
 
             </LinearLayout>
             <!-- 提示布局.....-->
-            <!-- TIPS -->
-            <LinearLayout
-                android:id="@+id/fund_bindcard_tips_lay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ACACAC"
-                android:orientation="horizontal"
-                android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/fund_bindcard_tips"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="@dimen/ui_10_dip"
-                    android:paddingLeft="@dimen/ui_10_dip"
-                    android:paddingRight="@dimen/ui_15_dip"
-                    android:paddingTop="@dimen/ui_10_dip"
-
-                    android:textColor="@color/white" />
-
-                <ImageView
-                    android:id="@+id/fund_bindcard_tips_del_iv"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/ui_6_dip"
-                    android:clickable="true"
-                    android:src="@drawable/bank_ls_del_iv" />
-            </LinearLayout>
-            <!-- TIPS....... -->
             <RelativeLayout
                 android:id="@+id/rl_cusno_name"
                 android:layout_width="match_parent"
@@ -340,6 +340,7 @@
                     android:id="@+id/ev_bankcard_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/ui_10_dip"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/ui_30_dip"
                     android:layout_toRightOf="@+id/tv_bankcard_number"
@@ -385,7 +386,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/ui_15_dip"
-                    android:text="银行名字"
+                    android:text="银行名称"
                     android:textColor="@color/black"
                     android:textSize="@dimen/dimens_sp_16" />
 

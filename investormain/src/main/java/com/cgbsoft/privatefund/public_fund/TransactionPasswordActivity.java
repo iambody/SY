@@ -46,6 +46,8 @@ public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPres
     @Override
     protected void init(Bundle savedInstanceState) {
         ((TextView) findViewById(R.id.title_mid)).setText("公募基金开户");
+        findViewById(R.id.title_left).setVisibility(View.VISIBLE);
+        findViewById(R.id.title_left).setOnClickListener((view)->finish());
         transaction_password_input = (CustomPasswordView) findViewById(R.id.transaction_password_input);
         findViewById(R.id.transaction_pwd_confirm).setOnClickListener(this);
         //设置输入密码监听

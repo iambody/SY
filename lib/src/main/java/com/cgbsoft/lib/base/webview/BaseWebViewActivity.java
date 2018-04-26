@@ -797,7 +797,7 @@ public class BaseWebViewActivity<T extends BasePresenterImpl> extends BaseActivi
                     baseweb_title_right_iv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mWebview.loadUrl(String.format("javascript:%s(%s)", webRightTopViewConfig.getRightButtons().get(0).getEvent()));
+                            mWebview.loadUrl(String.format("javascript:%s()", webRightTopViewConfig.getRightButtons().get(0).getEvent()));
                         }
                     });
                 }

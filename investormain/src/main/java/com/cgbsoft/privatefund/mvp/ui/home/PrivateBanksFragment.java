@@ -49,7 +49,7 @@ public class PrivateBanksFragment extends BasePageFragment {
     private final String PRODUCT_CODE = "2001";
     private final String INFOMATION_CODE = "2002";
     private final String VIDEO_CODE = "2003";
-    public final String PUBLIC_FUND_CODE = "2004";//公募基金新增加的code
+    public  final String PUBLIC_FUND_CODE = "2004";//公募基金新增加的code
 
     private Observable<Integer> privateFundIdex, registLayFresh;
     private ImageView privatebank_title_right;

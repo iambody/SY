@@ -93,7 +93,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:scaleType="centerCrop"
-              android:visibility="gone"
+                android:visibility="gone"
                 android:layout_toLeftOf="@+id/baseweb_title_right_iv"
                 android:layout_marginRight="@dimen/ui_5_dip"
                 android:layout_centerVertical="true"

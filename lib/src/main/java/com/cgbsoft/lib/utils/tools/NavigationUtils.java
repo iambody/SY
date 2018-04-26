@@ -148,18 +148,20 @@ public class NavigationUtils {
         intent.putExtra(WebViewConstant.PAGE_SHOW_TITLE, isShowRightShare);
         activity.startActivity(intent);
     }
+
     /**
      * 跳转到统一的webactivity页面
      */
-    public static void gotoNavWebActivity(Activity activity, String url, String title ) {
+    public static void gotoNavWebActivity(Activity activity, String url, String title) {
 
         Intent intent = new Intent(activity, BaseWebViewActivity.class);
-        intent.putExtra(WebViewConstant.push_message_url,url);
-        intent.putExtra(WebViewConstant.push_message_title,title);
-        intent.putExtra(WebViewConstant.push_message_title_isdiv,false);
+        intent.putExtra(WebViewConstant.push_message_url, url);
+        intent.putExtra(WebViewConstant.push_message_title, title);
+        intent.putExtra(WebViewConstant.push_message_title_isdiv, false);
         intent.putExtra(WebViewConstant.push_message_title_is_hidetoolbar, true);
         activity.startActivity(intent);
     }
+
     /**
      * 跳转到公募基金
      */
@@ -341,11 +343,14 @@ public class NavigationUtils {
                 jumpNativeMain(context, map);
                 RxBus.get().post(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, 2);
                 break;
-            case  WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE:
+            case WebViewConstant.Navigation.PRIVATE_BANK_PAGE_PRIVATE:
                 jumpNativeMain(context, map);
                 RxBus.get().post(RxConstant.MAIN_FRESH_PRIVATE_IDEXLAY, 1);
                 break;
             case WebViewConstant.Navigation.PRODUCT_PAGE:
+                jumpNativeMain(context, map);
+                break;
+            case WebViewConstant.Navigation.PUBLIC_FUND_PAGE:
                 jumpNativeMain(context, map);
                 break;
             case WebViewConstant.Navigation.INFORMATION_PAGE:
