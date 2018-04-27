@@ -29,8 +29,8 @@ import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
 import com.cgbsoft.lib.utils.tools.DimensionPixelUtil;
 import com.cgbsoft.lib.utils.tools.NavigationUtils;
-import com.cgbsoft.lib.utils.tools.PromptManager;
 import com.cgbsoft.lib.utils.tools.ThreadUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.widget.MToast;
 import com.cgbsoft.lib.widget.dialog.BankNumberDialog;
@@ -176,7 +176,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
 
         if (style == ADD_BANK) {
-            ((TextView) findViewById(R.id.bt_Confirm)).setText("完成");
+            ((TextView) findViewById(R.id.bt_Confirm)).setText("完成添加");
             ((TextView) findViewById(R.id.title_mid)).setText("添加银行卡");
         } else {
             ((TextView) findViewById(R.id.bt_Confirm)).setText("下一步");
@@ -483,6 +483,8 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
             case R.id.bt_Confirm: // 确认绑定
                 finshBanding();
+
+                TrackingDataManger.bindCardNext(baseContext);
                 break;
 
             case R.id.rl_select_bankcard: //选择银行卡
@@ -493,7 +495,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                 bankNumber = bankNumber.trim();
                 bankNumber.replace(" ", "");
                 if (BStrUtils.isEmpty(bankNumber)) {
-                    PromptManager.ShowCustomToast(baseContext, "请填写银行卡号");
+                    startActivityForResult(new Intent(BindingBankCardOfPublicFundActivity.this, SelectBankCardActivity.class), SELECT_BANK);
                     return;
                 }
                 if (findViewById(R.id.select_bank_card_right_rl).getVisibility() == View.VISIBLE) {
@@ -511,6 +513,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
                             startActivityForResult(new Intent(BindingBankCardOfPublicFundActivity.this, SelectBankCardActivity.class), SELECT_BANK);
                             return;
                         }
+                        comeBackBankName = bankBranchInf.getChannelId();
                         //*************银行卡展示逻辑***************
                         BStrUtils.setTv(mPayBankName, bankBranchInf.getBankName());
 //                        mPayBankName.setText(data.getStringExtra(SelectBankCardActivity.CHANNEL_NAME));
@@ -606,10 +609,10 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
         super.onActivityResult(requestCode, resultCode, data);
         // 接收银行信息
         if (SELECT_BANK == requestCode && data != null) {
-            if (!BStrUtils.isEmpty(comeBackBankName) && comeBackBankName.equals(data.getStringExtra(SelectBankCardActivity.CHANNEL_NAME))) {
+            if (!BStrUtils.isEmpty(comeBackBankName) && comeBackBankName.equals(data.getStringExtra(SelectBankCardActivity.CHANNEL_ID))) {
                 return;
             }
-            comeBackBankName = data.getStringExtra(SelectBankCardActivity.CHANNEL_NAME);
+            comeBackBankName = data.getStringExtra(SelectBankCardActivity.CHANNEL_ID);
             mPayBankName.setText(data.getStringExtra(SelectBankCardActivity.CHANNEL_NAME));
             bindingBankCardBean.setChannelid(data.getStringExtra(SelectBankCardActivity.CHANNEL_ID));
             bindingBankCardBean.setBanknameid(data.getStringExtra(SelectBankCardActivity.BANK_NAME_ID));
@@ -644,6 +647,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
     /**
      * 改变确定按钮颜色
      */
+
     private void requestChangConfirmColor() {
         boolean isEnabled = true;
         //支行名字

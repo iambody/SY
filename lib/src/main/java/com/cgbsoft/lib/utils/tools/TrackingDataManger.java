@@ -3,8 +3,6 @@ package com.cgbsoft.lib.utils.tools;
 import android.content.Context;
 import android.util.Log;
 
-import com.cgbsoft.lib.BaseApplication;
-
 /**
  * desc 埋点的工具类
  * author wangyongkui  wangyongkui@simuyun.com
@@ -558,6 +556,7 @@ public class TrackingDataManger {
 
     /**
      * 盈泰钱包立即转入按钮
+     *
      * @param context
      */
     public static void intimeMoneyIncome(Context context) {
@@ -568,16 +567,16 @@ public class TrackingDataManger {
     /**
      * 盈泰钱包收益率七日年化图片  1055001531
      */
-    public static void intimeMoneyClick(Context context){
+    public static void intimeMoneyClick(Context context) {
         TrackingDataUtils.save(context, "1055001531", "");
         Log.i("1055001531", "intimeMoneyIncome*******");
     }
 
 
     /**
-     *查看更多公募基金产品按钮  1055001541
+     * 查看更多公募基金产品按钮  1055001541
      */
-    public static void morePublicFundProduct(Context context){
+    public static void morePublicFundProduct(Context context) {
         TrackingDataUtils.save(context, "1055001541", "");
         Log.i("1055001541", "intimeMoneyIncome*******");
     }
@@ -585,10 +584,11 @@ public class TrackingDataManger {
     /**
      * 金融资产公募基金模块图片  1055001551
      */
-    public static void publicFundAssert(Context context){
+    public static void publicFundAssert(Context context) {
         TrackingDataUtils.save(context, "1055001551", "");
         Log.i("1055001551", "intimeMoneyIncome*******");
     }
+
     /**
      * 首页=》公募基金taba按钮
      *
@@ -616,6 +616,7 @@ public class TrackingDataManger {
     public static void homeGrowthrateClick(Context context) {
         TrackingDataUtils.save(context, "1001001751", "");
     }
+
     /**
      * 首页=》
      *
@@ -624,22 +625,36 @@ public class TrackingDataManger {
     public static void homeDoneRegistPublicFundClick(Context context) {
         TrackingDataUtils.save(context, "1001001761", "");
     }
+
     /**
      * 公募基金购买
      *
      * @param context
      */
-    public static void buyPublicFund(Context context,String fundName) {
+    public static void buyPublicFund(Context context, String fundName) {
         TrackingDataUtils.save(context, "1075008011", fundName);
     }
+
     /**
      * 公募基金卖出
      *
      * @param context
      */
-    public static void sellPublicFund(Context context,String fundName) {
+    public static void sellPublicFund(Context context, String fundName) {
         TrackingDataUtils.save(context, "1075009011", fundName);
     }
 
+    /**
+     * 绑卡 下一步按钮
+     */
+    public static void bindCardNext(Context context) {
+        TrackingDataUtils.save(context, "1075011011", "");
+    }
+    /**
+     * 交易密码下一步
+     */
+    public static void setTrancactionPwdCNext(Context context) {
+        TrackingDataUtils.save(context, "1075012011", "");
+    }
 
 }

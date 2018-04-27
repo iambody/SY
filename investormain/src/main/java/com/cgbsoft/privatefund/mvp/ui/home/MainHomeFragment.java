@@ -696,13 +696,13 @@ public class MainHomeFragment extends BaseFragment<MainHomePresenter> implements
 
     }
 
-
     /**
      * 初始化banner
      */
     private void initViewPage(List<HomeEntity.Banner> banner) {
         initBanner(valuelist(banner));
     }
+
 
     private List<BannerBean> valuelist(List<HomeEntity.Banner> banner) {
         List<BannerBean> bannerBeen = new ArrayList<>();

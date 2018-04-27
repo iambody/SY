@@ -15,6 +15,7 @@ import com.cgbsoft.lib.contant.RouteConfig;
 import com.cgbsoft.lib.utils.constant.RxConstant;
 import com.cgbsoft.lib.utils.rxjava.RxBus;
 import com.cgbsoft.lib.utils.tools.BStrUtils;
+import com.cgbsoft.lib.utils.tools.TrackingDataManger;
 import com.cgbsoft.lib.utils.tools.UiSkipUtils;
 import com.cgbsoft.lib.utils.tools.Utils;
 import com.cgbsoft.lib.widget.dialog.LoadingDialog;
@@ -47,7 +48,7 @@ public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPres
     protected void init(Bundle savedInstanceState) {
         ((TextView) findViewById(R.id.title_mid)).setText("公募基金开户");
         findViewById(R.id.title_left).setVisibility(View.VISIBLE);
-        findViewById(R.id.title_left).setOnClickListener((view)->finish());
+        findViewById(R.id.title_left).setOnClickListener((view) -> finish());
         transaction_password_input = (CustomPasswordView) findViewById(R.id.transaction_password_input);
         findViewById(R.id.transaction_pwd_confirm).setOnClickListener(this);
         //设置输入密码监听
@@ -55,13 +56,21 @@ public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPres
             //正在输入密码时执行此方法
             public void onTextChanged(String psw) {
 //                PromptManager.ShowCustomToast(baseContext, "正在输入文本中....."+psw);
-
                 // 密码正在输入
+                Log.i("kolol", "正在输入值" + psw);
+
+                if (!BStrUtils.isEmpty(psw) && psw.length() < 6 && !isDone) {
+                    transactionPwd = "";
+                } else {
+                    isDone = false;
+                }
+
             }
 
             //输入密码完成时执行此方法
             public void onInputFinish(String psw) {
-//                PromptManager.ShowCustomToast(baseContext, psw);
+                isDone = true;
+                Log.i("kolol", "输入完成" + psw);
                 // 密码输入完成
                 transactionPwd = psw;
                 transaction_password_input.setPassword(psw);
@@ -71,6 +80,8 @@ public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPres
         });
         getPresenter().getOperation();
     }
+
+    boolean isDone;
 
     @Override
     protected TransactionPwdPresenter createPresenter() {
@@ -139,6 +150,8 @@ public class TransactionPasswordActivity extends BaseActivity<TransactionPwdPres
                 loadingDialog = LoadingDialog.getLoadingDialog(this, "设置密码中", false, false);
                 loadingDialog.show();
                 getPresenter().transactionPwdAction(obj);
+
+                TrackingDataManger.setTrancactionPwdCNext(baseContext);
                 break;
         }
 
