@@ -536,6 +536,7 @@ public class BindingBankCardOfPublicFundActivity extends BaseActivity<BindingBan
 
                         }
 
+
                         //***************地区***********
                         if (BStrUtils.isEmpty(bankBranchInf.getParaCity())) return;
                         cityName = bankBranchInf.getParaCity();

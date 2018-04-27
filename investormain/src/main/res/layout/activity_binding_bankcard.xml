@@ -12,6 +12,236 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <!-- <include layout="@layout/title_public_fund" />-->
+    <!-- 提示布局-->
+    <ImageView
+        android:id="@+id/rl_step_flow_up"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_20_dip"
+        android:src="@color/white" />
+    <LinearLayout
+        android:id="@+id/rl_step_flow"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_80_dip"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/circle_image"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle_gold"
+                android:gravity="center"
+
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimens_sp_16" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ui_10_dip"
+                android:gravity="center"
+                android:src="@drawable/public_bind_gou" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/circle_image"
+                android:layout_marginTop="@dimen/ui_10_dip"
+                android:text="实名认证"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimens_sp_14" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:visibility="invisible">
+
+
+            <ImageView
+                android:id="@+id/mid2"
+                android:layout_width="@dimen/ui_5_dip"
+                android:layout_height="@dimen/ui_5_dip"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/ui_10_dip"
+                android:layout_marginRight="@dimen/ui_10_dip"
+                android:background="@drawable/circle_gold" />
+
+
+            <ImageView
+                android:layout_width="@dimen/ui_5_dip"
+                android:layout_height="@dimen/ui_5_dip"
+                android:layout_toLeftOf="@+id/mid2"
+                android:background="@drawable/circle_gold" />
+
+            <ImageView
+                android:layout_width="@dimen/ui_5_dip"
+                android:layout_height="@dimen/ui_5_dip"
+                android:layout_toRightOf="@+id/mid2"
+                android:background="@drawable/circle_gold" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/circle_image2"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle_gold"
+                android:gravity="center"
+
+                android:text="2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimens_sp_16" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/circle_image2"
+                android:layout_marginTop="@dimen/ui_10_dip"
+                android:text="绑定银行卡"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimens_sp_14" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/mid1"
+                android:layout_width="@dimen/ui_5_dip"
+                android:layout_height="@dimen/ui_5_dip"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/ui_10_dip"
+                android:layout_marginRight="@dimen/ui_10_dip"
+                android:background="@drawable/circle_grey" />
+
+
+            <ImageView
+                android:layout_width="@dimen/ui_5_dip"
+                android:layout_height="@dimen/ui_5_dip"
+                android:layout_toLeftOf="@+id/mid1"
+                android:background="@drawable/circle_grey" />
+
+            <ImageView
+                android:layout_width="@dimen/ui_5_dip"
+                android:layout_height="@dimen/ui_5_dip"
+                android:layout_toRightOf="@+id/mid1"
+                android:background="@drawable/circle_grey" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/circle_image21"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle_grey"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimens_sp_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/circle_image21"
+                android:layout_marginTop="@dimen/ui_10_dip"
+                android:text="设置交易密码"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimens_sp_14" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/mid"
+                android:layout_width="@dimen/ui_5_dip"
+                android:layout_height="@dimen/ui_5_dip"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/ui_10_dip"
+                android:layout_marginRight="@dimen/ui_10_dip"
+                android:background="@drawable/circle_grey" />
+
+
+            <ImageView
+                android:layout_width="@dimen/ui_5_dip"
+                android:layout_height="@dimen/ui_5_dip"
+                android:layout_toLeftOf="@+id/mid"
+                android:background="@drawable/circle_grey" />
+
+            <ImageView
+                android:layout_width="@dimen/ui_5_dip"
+                android:layout_height="@dimen/ui_5_dip"
+                android:layout_toRightOf="@+id/mid"
+                android:background="@drawable/circle_grey" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="18dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/circle_image3"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle_grey"
+                android:gravity="center"
+                android:text="4"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimens_sp_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/circle_image3"
+                android:layout_marginTop="@dimen/ui_10_dip"
+                android:text="风险测评"
+                android:textColor="@color/black"
+                android:textSize="@dimen/dimens_sp_14" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <!-- 提示布局.....-->
     <!-- TIPS -->
     <LinearLayout
         android:id="@+id/fund_bindcard_tips_lay"
@@ -58,236 +288,236 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
+
+            <!--&lt;!&ndash; 提示布局&ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:id="@+id/rl_step_flow"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/ui_80_dip"-->
+                <!--android:background="@color/white"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/rl_1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="18dp"-->
+                    <!--android:layout_weight="1">-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/circle_image"-->
+                        <!--android:layout_width="28dp"-->
+                        <!--android:layout_height="28dp"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:background="@drawable/circle_gold"-->
+                        <!--android:gravity="center"-->
+
+                        <!--android:textColor="@color/white"-->
+                        <!--android:textSize="@dimen/dimens_sp_16" />-->
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:layout_marginTop="@dimen/ui_10_dip"-->
+                        <!--android:gravity="center"-->
+                        <!--android:src="@drawable/public_bind_gou" />-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/circle_image"-->
+                        <!--android:layout_marginTop="@dimen/ui_10_dip"-->
+                        <!--android:text="实名认证"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="@dimen/dimens_sp_14" />-->
+                <!--</RelativeLayout>-->
+
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="10dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:visibility="invisible">-->
+
+
+                    <!--<ImageView-->
+                        <!--android:id="@+id/mid2"-->
+                        <!--android:layout_width="@dimen/ui_5_dip"-->
+                        <!--android:layout_height="@dimen/ui_5_dip"-->
+                        <!--android:layout_centerInParent="true"-->
+                        <!--android:layout_marginLeft="@dimen/ui_10_dip"-->
+                        <!--android:layout_marginRight="@dimen/ui_10_dip"-->
+                        <!--android:background="@drawable/circle_gold" />-->
+
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="@dimen/ui_5_dip"-->
+                        <!--android:layout_height="@dimen/ui_5_dip"-->
+                        <!--android:layout_toLeftOf="@+id/mid2"-->
+                        <!--android:background="@drawable/circle_gold" />-->
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="@dimen/ui_5_dip"-->
+                        <!--android:layout_height="@dimen/ui_5_dip"-->
+                        <!--android:layout_toRightOf="@+id/mid2"-->
+                        <!--android:background="@drawable/circle_gold" />-->
+
+                <!--</RelativeLayout>-->
+
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/rl_2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1">-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/circle_image2"-->
+                        <!--android:layout_width="28dp"-->
+                        <!--android:layout_height="28dp"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:background="@drawable/circle_gold"-->
+                        <!--android:gravity="center"-->
+
+                        <!--android:text="2"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:textSize="@dimen/dimens_sp_16" />-->
+
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/circle_image2"-->
+                        <!--android:layout_marginTop="@dimen/ui_10_dip"-->
+                        <!--android:text="绑定银行卡"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="@dimen/dimens_sp_14" />-->
+
+                <!--</RelativeLayout>-->
+
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="10dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:visibility="invisible">-->
+
+                    <!--<ImageView-->
+                        <!--android:id="@+id/mid1"-->
+                        <!--android:layout_width="@dimen/ui_5_dip"-->
+                        <!--android:layout_height="@dimen/ui_5_dip"-->
+                        <!--android:layout_centerInParent="true"-->
+                        <!--android:layout_marginLeft="@dimen/ui_10_dip"-->
+                        <!--android:layout_marginRight="@dimen/ui_10_dip"-->
+                        <!--android:background="@drawable/circle_grey" />-->
+
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="@dimen/ui_5_dip"-->
+                        <!--android:layout_height="@dimen/ui_5_dip"-->
+                        <!--android:layout_toLeftOf="@+id/mid1"-->
+                        <!--android:background="@drawable/circle_grey" />-->
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="@dimen/ui_5_dip"-->
+                        <!--android:layout_height="@dimen/ui_5_dip"-->
+                        <!--android:layout_toRightOf="@+id/mid1"-->
+                        <!--android:background="@drawable/circle_grey" />-->
+                <!--</RelativeLayout>-->
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/rl_21"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1">-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/circle_image21"-->
+                        <!--android:layout_width="28dp"-->
+                        <!--android:layout_height="28dp"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:background="@drawable/circle_grey"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="3"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:textSize="@dimen/dimens_sp_16" />-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/circle_image21"-->
+                        <!--android:layout_marginTop="@dimen/ui_10_dip"-->
+                        <!--android:text="设置交易密码"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="@dimen/dimens_sp_14" />-->
+
+                <!--</RelativeLayout>-->
+
+
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="10dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:visibility="invisible">-->
+
+                    <!--<ImageView-->
+                        <!--android:id="@+id/mid"-->
+                        <!--android:layout_width="@dimen/ui_5_dip"-->
+                        <!--android:layout_height="@dimen/ui_5_dip"-->
+                        <!--android:layout_centerInParent="true"-->
+                        <!--android:layout_marginLeft="@dimen/ui_10_dip"-->
+                        <!--android:layout_marginRight="@dimen/ui_10_dip"-->
+                        <!--android:background="@drawable/circle_grey" />-->
+
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="@dimen/ui_5_dip"-->
+                        <!--android:layout_height="@dimen/ui_5_dip"-->
+                        <!--android:layout_toLeftOf="@+id/mid"-->
+                        <!--android:background="@drawable/circle_grey" />-->
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="@dimen/ui_5_dip"-->
+                        <!--android:layout_height="@dimen/ui_5_dip"-->
+                        <!--android:layout_toRightOf="@+id/mid"-->
+                        <!--android:background="@drawable/circle_grey" />-->
+                <!--</RelativeLayout>-->
+
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/rl_3"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginRight="18dp"-->
+                    <!--android:layout_weight="1">-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/circle_image3"-->
+                        <!--android:layout_width="28dp"-->
+                        <!--android:layout_height="28dp"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--android:background="@drawable/circle_grey"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="4"-->
+                        <!--android:textColor="@color/white"-->
+                        <!--android:textSize="@dimen/dimens_sp_16" />-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_below="@+id/circle_image3"-->
+                        <!--android:layout_marginTop="@dimen/ui_10_dip"-->
+                        <!--android:text="风险测评"-->
+                        <!--android:textColor="@color/black"-->
+                        <!--android:textSize="@dimen/dimens_sp_14" />-->
+
+                <!--</RelativeLayout>-->
+
+            <!--</LinearLayout>-->
+            <!--&lt;!&ndash; 提示布局.....&ndash;&gt;-->
             <ImageView
-                android:id="@+id/rl_step_flow_up"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/ui_20_dip"
-                android:src="@color/white" />
-            <!-- 提示布局-->
-            <LinearLayout
-                android:id="@+id/rl_step_flow"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ui_80_dip"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:id="@+id/rl_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="18dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/circle_image"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/circle_gold"
-                        android:gravity="center"
-
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dimens_sp_16" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/ui_10_dip"
-                        android:gravity="center"
-                        android:src="@drawable/public_bind_gou" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/circle_image"
-                        android:layout_marginTop="@dimen/ui_10_dip"
-                        android:text="实名认证"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimens_sp_14" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="10dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:visibility="invisible">
-
-
-                    <ImageView
-                        android:id="@+id/mid2"
-                        android:layout_width="@dimen/ui_5_dip"
-                        android:layout_height="@dimen/ui_5_dip"
-                        android:layout_centerInParent="true"
-                        android:layout_marginLeft="@dimen/ui_10_dip"
-                        android:layout_marginRight="@dimen/ui_10_dip"
-                        android:background="@drawable/circle_gold" />
-
-
-                    <ImageView
-                        android:layout_width="@dimen/ui_5_dip"
-                        android:layout_height="@dimen/ui_5_dip"
-                        android:layout_toLeftOf="@+id/mid2"
-                        android:background="@drawable/circle_gold" />
-
-                    <ImageView
-                        android:layout_width="@dimen/ui_5_dip"
-                        android:layout_height="@dimen/ui_5_dip"
-                        android:layout_toRightOf="@+id/mid2"
-                        android:background="@drawable/circle_gold" />
-
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:id="@+id/rl_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/circle_image2"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/circle_gold"
-                        android:gravity="center"
-
-                        android:text="2"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dimens_sp_16" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/circle_image2"
-                        android:layout_marginTop="@dimen/ui_10_dip"
-                        android:text="绑定银行卡"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimens_sp_14" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="10dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:visibility="invisible">
-
-                    <ImageView
-                        android:id="@+id/mid1"
-                        android:layout_width="@dimen/ui_5_dip"
-                        android:layout_height="@dimen/ui_5_dip"
-                        android:layout_centerInParent="true"
-                        android:layout_marginLeft="@dimen/ui_10_dip"
-                        android:layout_marginRight="@dimen/ui_10_dip"
-                        android:background="@drawable/circle_grey" />
-
-
-                    <ImageView
-                        android:layout_width="@dimen/ui_5_dip"
-                        android:layout_height="@dimen/ui_5_dip"
-                        android:layout_toLeftOf="@+id/mid1"
-                        android:background="@drawable/circle_grey" />
-
-                    <ImageView
-                        android:layout_width="@dimen/ui_5_dip"
-                        android:layout_height="@dimen/ui_5_dip"
-                        android:layout_toRightOf="@+id/mid1"
-                        android:background="@drawable/circle_grey" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rl_21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/circle_image21"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/circle_grey"
-                        android:gravity="center"
-                        android:text="3"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dimens_sp_16" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/circle_image21"
-                        android:layout_marginTop="@dimen/ui_10_dip"
-                        android:text="设置交易密码"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimens_sp_14" />
-
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="10dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:visibility="invisible">
-
-                    <ImageView
-                        android:id="@+id/mid"
-                        android:layout_width="@dimen/ui_5_dip"
-                        android:layout_height="@dimen/ui_5_dip"
-                        android:layout_centerInParent="true"
-                        android:layout_marginLeft="@dimen/ui_10_dip"
-                        android:layout_marginRight="@dimen/ui_10_dip"
-                        android:background="@drawable/circle_grey" />
-
-
-                    <ImageView
-                        android:layout_width="@dimen/ui_5_dip"
-                        android:layout_height="@dimen/ui_5_dip"
-                        android:layout_toLeftOf="@+id/mid"
-                        android:background="@drawable/circle_grey" />
-
-                    <ImageView
-                        android:layout_width="@dimen/ui_5_dip"
-                        android:layout_height="@dimen/ui_5_dip"
-                        android:layout_toRightOf="@+id/mid"
-                        android:background="@drawable/circle_grey" />
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:id="@+id/rl_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="18dp"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/circle_image3"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/circle_grey"
-                        android:gravity="center"
-                        android:text="4"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/dimens_sp_16" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/circle_image3"
-                        android:layout_marginTop="@dimen/ui_10_dip"
-                        android:text="风险测评"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/dimens_sp_14" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-            <!-- 提示布局.....-->
+                android:layout_height="0.2dp"
+                android:src="@color/gray_font" />
 
             <RelativeLayout
                 android:id="@+id/rl_cusno_name"
@@ -340,7 +570,6 @@
                     android:id="@+id/ev_bankcard_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="@dimen/ui_10_dip"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/ui_30_dip"
                     android:layout_toRightOf="@+id/tv_bankcard_number"
@@ -349,6 +578,7 @@
                     android:hint="请输入您的储蓄卡号"
                     android:inputType="number"
                     android:maxLength="25"
+                    android:paddingRight="@dimen/ui_10_dip"
                     android:textColor="@color/black"
                     android:textColorHint="#A5A5A5"
                     android:textSize="@dimen/dimens_sp_16" />
