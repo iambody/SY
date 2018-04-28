@@ -104,6 +104,7 @@ public class BaseWebview extends WebView {
         getSettings().setCacheMode(android.webkit.WebSettings.LOAD_NO_CACHE);
         getSettings().setAppCacheEnabled(false);
         getSettings().setDefaultFontSize(16);
+        getSettings().setLayoutAlgorithm(com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         //硬件加速暂时不用  目前Android不支持view级别开启硬件加速
 //        this.setLayerType(View.LAYER_TYPE_HARDWARE,null);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -112,7 +113,7 @@ public class BaseWebview extends WebView {
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
 //        } else {
-        getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+//        getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
 //        }
         javaScriptObject = new JavaScriptObjectToc(context, this);
         this.addJavascriptInterface(javaScriptObject, "simuyun");
